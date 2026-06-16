@@ -1,22 +1,25 @@
 """
-~/miniconda3/envs/EaBNet/bin/python -m torch.distributed.run --standalone --nproc_per_node=2 train_light.py \
-  --parallel-mode ddp \
+~/miniconda3/envs/EaBNet/bin/python -m torch.distributed.run --standalone --nproc_per_node=1 train_light.py \
+  --parallel-mode auto \
   --resume yes \
   --resume-reset-lr yes \
-  --learning-rate 1e-4 \
+  --learning-rate 1e-3 \
   --lr-reduce-metric val \
   --train-lr-patience 3 \
   --train-lr-min-delta 1e-3 \
   --train-lr-factor 0.5 \
   --use-amp yes \
+  --model-amp yes \
   --grad-clip 3.0 \
-  --batch-size 4 \
-  --num-workers 4 \
-  --pin-memory yes \
-  --prefetch-factor 2 \
-  --persistent-workers yes \
-  --strict-memory no \
-  --segment-seconds 6 \
+  --batch-size 1 \
+  --grad-accum-steps 4 \
+  --num-workers 0 \
+  --pin-memory no \
+  --prefetch-factor 1 \
+  --persistent-workers no \
+  --strict-memory yes \
+  --segment-seconds 4 \
+  --empty-cache-every-batches 0 \
   --allow-tf32 yes \
   --cudnn-benchmark yes \
   --train-dir ./training_set \
