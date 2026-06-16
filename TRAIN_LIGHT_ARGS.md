@@ -27,8 +27,8 @@ python -m torch.distributed.run --standalone --nproc_per_node=1 train_light.py \
   --segment-seconds 4 \
   --allow-tf32 yes \
   --cudnn-benchmark yes \
-  --train-dir ./training_set \
-  --val-dir ./validation_set
+  --train-dir /data/ssd1/jinrui.yang/training_set \
+  --val-dir /data/ssd1/jinrui.yang/validation_set
 ```
 
 For multi-GPU DDP, set `--nproc_per_node` to the number of GPUs and use `--parallel-mode ddp`.
@@ -37,11 +37,11 @@ For multi-GPU DDP, set `--nproc_per_node` to the number of GPUs and use `--paral
 
 | Argument | Default | Meaning |
 | --- | --- | --- |
-| `--train-dir` | `./training_set` | Training set directory. It must contain `metadata.csv`. |
-| `--val-dir` | `./validation_set` | Validation set directory. It must contain `metadata.csv`. |
-| `--checkpoint-dir` | `./checkpoints` | Directory for `checkpoint_latest.pt` and periodic checkpoints. |
-| `--best-dir` | `./bestmodels` | Directory for the best validation checkpoint. |
-| `--log-dir` | `./logs` | TensorBoard log directory. |
+| `--train-dir` | `/data/ssd1/jinrui.yang/training_set` | Training set directory. It must contain `metadata.csv`. |
+| `--val-dir` | `/data/ssd1/jinrui.yang/validation_set` | Validation set directory. It must contain `metadata.csv`. |
+| `--checkpoint-dir` | `./checkpoints` | Relative directory for `checkpoint_latest.pt` and periodic checkpoints. |
+| `--best-dir` | `./bestmodels` | Relative directory for the best validation checkpoint. |
+| `--log-dir` | `./logs` | Relative TensorBoard log directory. |
 
 `metadata.csv` should include `sample_id`, `mixture_path`, and `target_path`. `mixture_path` points to the multi-channel mixture wav, while `target_path` points to the clean target wav.
 
@@ -158,4 +158,3 @@ The script sets `PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True` by default to
 3. Keep `--use-amp yes --model-amp yes`.
 4. Try `--empty-cache-every-batches 20`.
 5. If memory is still insufficient, reduce model width with `--channels 48 --embed-dim 48 --cd1 48`.
-

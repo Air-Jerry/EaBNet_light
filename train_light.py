@@ -22,8 +22,8 @@
   --empty-cache-every-batches 0 \
   --allow-tf32 yes \
   --cudnn-benchmark yes \
-  --train-dir ./training_set \
-  --val-dir ./validation_set
+  --train-dir /data/ssd1/jinrui.yang/training_set \
+  --val-dir /data/ssd1/jinrui.yang/validation_set
 """
 """
 tensorboard --logdir /data/ssd1/jinrui.yang/logs --port 6006 --host 0.0.0.0
@@ -698,8 +698,8 @@ def auto_resume_if_available(
 def parse_args() -> argparse.Namespace:
     # CLI config surface for data, model, optimization, memory, and parallelism.
     parser = argparse.ArgumentParser(description='Train lightweight FCAE-Att-DFSMN EaBNet for multichannel speech enhancement.')
-    parser.add_argument('--train-dir', default='./training_set')
-    parser.add_argument('--val-dir', default='./validation_set')
+    parser.add_argument('--train-dir', default='/data/ssd1/jinrui.yang/training_set')
+    parser.add_argument('--val-dir', default='/data/ssd1/jinrui.yang/validation_set')
     parser.add_argument('--checkpoint-dir', default='./checkpoints')
     parser.add_argument('--best-dir', default='./bestmodels')
     parser.add_argument('--log-dir', default='./logs')
@@ -806,11 +806,11 @@ def main() -> None:
         if hasattr(torch, 'set_float32_matmul_precision'):
             torch.set_float32_matmul_precision('high' if args.allow_tf32 == 'yes' else 'highest')
 
-    train_dir = Path(args.train_dir).resolve()
-    val_dir = Path(args.val_dir).resolve()
-    checkpoint_dir = Path(args.checkpoint_dir).resolve()
-    best_dir = Path(args.best_dir).resolve()
-    log_dir = Path(args.log_dir).resolve()
+    train_dir = Path(args.train_dir).expanduser()
+    val_dir = Path(args.val_dir).expanduser()
+    checkpoint_dir = Path(args.checkpoint_dir).expanduser()
+    best_dir = Path(args.best_dir).expanduser()
+    log_dir = Path(args.log_dir).expanduser()
     latest_path = checkpoint_dir / 'checkpoint_latest.pt'
     best_path = best_dir / 'best_model.pt'
 
