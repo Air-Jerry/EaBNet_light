@@ -39,6 +39,10 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Dict, List, Tuple
 
+# Reduce CUDA allocator fragmentation on 12GB-class GPUs. Users can still
+# override this before launching if they need a different allocator policy.
+os.environ.setdefault('PYTORCH_CUDA_ALLOC_CONF', 'expandable_segments:True')
+
 import soundfile as sf
 import torch
 import torch.distributed as dist
@@ -370,11 +374,10 @@ def build_stft_batch(
         return_complex=True,
     )
     freq_bins, frames = mixture_stft.shape[-2], mixture_stft.shape[-1]
-    mixture_mag = torch.abs(mixture_stft).pow(power)
-    mixture_phase = torch.angle(mixture_stft)
     # Compress only magnitude and keep phase, matching EaBNet paper setup.
-    mixture_stft = mixture_mag * torch.exp(1j * mixture_phase)
-    mixture_stft = torch.stack([mixture_stft.real, mixture_stft.imag], dim=-1)
+    # Avoid angle() + exp(1j*phase), which creates large temporary tensors.
+    mixture_scale = torch.abs(mixture_stft).clamp_min(1e-8).pow(power - 1.0)
+    mixture_stft = torch.stack([mixture_stft.real * mixture_scale, mixture_stft.imag * mixture_scale], dim=-1)
     mixture_stft = mixture_stft.view(batch_size, num_mics, freq_bins, frames, 2).permute(0, 3, 2, 1, 4).contiguous()
 
     target_stft = torch.stft(
@@ -385,10 +388,8 @@ def build_stft_batch(
         window=window,
         return_complex=True,
     )
-    target_mag = torch.abs(target_stft).pow(power)
-    target_phase = torch.angle(target_stft)
-    target_stft = target_mag * torch.exp(1j * target_phase)
-    target_stft = torch.stack([target_stft.real, target_stft.imag], dim=1)
+    target_scale = torch.abs(target_stft).clamp_min(1e-8).pow(power - 1.0)
+    target_stft = torch.stack([target_stft.real * target_scale, target_stft.imag * target_scale], dim=1)
     target_stft = target_stft.permute(0, 1, 3, 2).contiguous()
 
     return mixture_stft, target_stft
@@ -490,6 +491,7 @@ def run_epoch(
     total_batches = 0
     total_samples = 0
     amp_enabled = device.type == 'cuda' and args.use_amp == 'yes'
+    model_amp_enabled = amp_enabled and args.model_amp == 'yes'
     accum_steps = max(1, int(args.grad_accum_steps))
     progress = tqdm(loader, desc='train' if training else 'val', leave=False, disable=not is_main_process())
     epoch_start_time = time.perf_counter()
@@ -523,10 +525,12 @@ def run_epoch(
                     device=device,
                 )
 
-            # light_EaBNet contains FFT kernels that may fail under fp16 for non-power-of-two lengths.
-            # Keep model forward/loss in fp32 for numerical compatibility.
-            estimate = model(mixture_stft.float())
-            raw_loss = com_mag_mse_loss(estimate, target_stft.float(), frame_list)
+            # Keep FFT feature construction in fp32, but allow conv/LSTM activations
+            # inside the model to use AMP. Fourier blocks cast their FFT inputs back
+            # to fp32 internally for numerical compatibility.
+            with autocast(device_type=device.type, enabled=model_amp_enabled):
+                estimate = model(mixture_stft)
+            raw_loss = com_mag_mse_loss(estimate.float(), target_stft.float(), frame_list)
 
             # In DDP, require finite loss on all ranks before stepping.
             local_is_finite = bool(torch.isfinite(raw_loss.detach()).item())
@@ -611,6 +615,9 @@ def run_epoch(
         if args.gc_every_batches > 0 and (batch_idx % args.gc_every_batches == 0):
             gc.collect()
 
+        if device.type == 'cuda' and args.empty_cache_every_batches > 0 and (batch_idx % args.empty_cache_every_batches == 0):
+            torch.cuda.empty_cache()
+
         iter_end = time.perf_counter()
         total_compute += max(0.0, iter_end - iter_start)
         prev_iter_end = iter_end
@@ -694,12 +701,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument('--best-dir', default='./bestmodels')
     parser.add_argument('--log-dir', default='./logs')
     parser.add_argument('--num-epochs', type=int, default=100)
-    parser.add_argument('--batch-size', type=int, default=4)
+    parser.add_argument('--batch-size', type=int, default=1)
     parser.add_argument('--num-workers', type=int, default=4)
     parser.add_argument('--learning-rate', type=float, default=1e-3)
     parser.add_argument('--weight-decay', type=float, default=0.0)
     parser.add_argument('--grad-clip', type=float, default=5.0)
-    parser.add_argument('--grad-accum-steps', type=int, default=1, help='Number of steps to accumulate gradients before optimizer step')
+    parser.add_argument('--grad-accum-steps', type=int, default=4, help='Number of steps to accumulate gradients before optimizer step')
     parser.add_argument('--seed', type=int, default=1234)
     parser.add_argument('--sample-rate', type=int, default=16000)
     parser.add_argument('--win-length', type=int, default=320)
@@ -709,6 +716,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument('--save-every', type=int, default=10)
     parser.add_argument('--resume', choices=['yes', 'no'], default='yes')
     parser.add_argument('--use-amp', choices=['yes', 'no'], default='yes')
+    parser.add_argument('--model-amp', choices=['yes', 'no'], default='yes', help='Run model forward under AMP while keeping FFT feature construction in fp32')
     parser.add_argument('--target-ref-mic', type=int, default=0)
     parser.add_argument('--num-mics', type=int, default=8)
     parser.add_argument('--channels', type=int, default=64)
@@ -735,11 +743,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument('--strict-memory', choices=['yes', 'no'], default='yes', help='Use conservative DataLoader memory settings')
     parser.add_argument('--log-ram-tree', choices=['yes', 'no'], default='yes', help='Log RAM for process tree (main + workers)')
     parser.add_argument('--empty-cache-each-epoch', choices=['yes', 'no'], default='yes')
+    parser.add_argument('--empty-cache-every-batches', type=int, default=0, help='Call torch.cuda.empty_cache every N batches (0 disables)')
     parser.add_argument('--mem-log-every-batches', type=int, default=100, help='Print memory usage every N batches')
     parser.add_argument('--malloc-trim-every-batches', type=int, default=100, help='Call malloc_trim every N batches (0 disables)')
     parser.add_argument('--gc-every-batches', type=int, default=100, help='Call gc.collect every N batches (0 disables)')
     parser.add_argument('--malloc-arena-max', type=int, default=2, help='Best-effort glibc M_ARENA_MAX via mallopt at startup (<=0 disables)')
-    parser.add_argument('--segment-seconds', type=float, default=6.0, help='Crop each sample to this duration in seconds (<=0 disables)')
+    parser.add_argument('--segment-seconds', type=float, default=4.0, help='Crop each sample to this duration in seconds (<=0 disables)')
     parser.add_argument('--train-random-crop', choices=['yes', 'no'], default='yes', help='Use random crop for training when segment-seconds > 0')
     parser.add_argument('--parallel-mode', choices=['auto', 'none', 'dp', 'ddp'], default='auto', help='Multi-GPU mode: dp or ddp (recommended).')
     parser.add_argument('--log-perf', choices=['yes', 'no'], default='yes', help='Print epoch-level throughput and bottleneck breakdown')
