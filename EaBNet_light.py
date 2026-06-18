@@ -400,7 +400,6 @@ class EaBNet(nn.Module):
         intra_connect: str = "cat",
         norm_type: str = "BN",
         dfsmn_layers: int = 3,
-        skip_mode: str = "att",
     ):
         super().__init__()
         self.M = M
