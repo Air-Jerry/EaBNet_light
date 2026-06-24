@@ -339,6 +339,7 @@ class CRED(nn.Module):
         )
 
     def forward(self, x: Tensor) -> Tensor:
+        input_ref = x
         skips: List[Tensor] = []
         for enc in self.encoder:
             x = enc(x)
@@ -351,7 +352,8 @@ class CRED(nn.Module):
             skip = self.skip_attention[-(idx + 1)](skips[-(idx + 1)])
             x = _match_tf(x, skip)
             x = torch.cat([x, skip], dim=1)
-            x = dec(x, target=skip)
+            target = skips[-(idx + 2)] if idx + 1 < len(skips) else input_ref
+            x = dec(x, target=target)
         return self.out_conv(x)
 
 
