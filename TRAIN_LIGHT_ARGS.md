@@ -106,7 +106,7 @@ python -m torch.distributed.run --standalone --nproc_per_node=1 train_light.py \
 | `--num-mics` | `8` | 输入麦克风通道数，必须不大于 mixture wav 的通道数。 |
 | `--channels` | `64` | CRED/FCAE/FCAD 的主通道数。 |
 | `--embed-dim` | `64` | embedding tensor 通道数，也是 LSTM beamforming 头的输入维度。 |
-| `--kd1` | `5` | 为兼容原 EaBNet 保留。轻量版 DFSMN 的 memory size 内部固定为 5。 |
+| `--kd1` | `5` | 为兼容原 EaBNet 保留，轻量版 DFSMN 的显式记忆阶数由 `--dfsmn-memory-size` 控制。 |
 | `--cd1` | `64` | DFSMN hidden units。 |
 | `--d-feat` | `256` | 为兼容原 EaBNet 保留，轻量版 CRED 不直接使用。 |
 | `--p` | `6` | 为兼容原 EaBNet 保留，轻量版 CRED 不直接使用。 |
@@ -116,6 +116,7 @@ python -m torch.distributed.run --standalone --nproc_per_node=1 train_light.py \
 | `--intra-connect` | `cat` | 为兼容原 EaBNet 保留。轻量版 CRED 的 skip path 使用 concat。 |
 | `--norm-type` | `BN` | 归一化类型，可选 `BN`、`IN`、`cLN`。论文使用 BN。 |
 | `--dfsmn-layers` | `3` | 共享 DFSMN memory layer 的重复次数，论文使用 3。 |
+| `--dfsmn-memory-size` | `20` | 共享 DFSMN block 的左上下文记忆阶数，即历史帧 memory taps 数。 |
 | `--is-causal` | `yes` | 是否使用因果时间建模。 |
 | `--is-u2` | `yes` | 为兼容原 EaBNet 保留，轻量版 CRED 不直接使用。 |
 
@@ -158,4 +159,3 @@ python -m torch.distributed.run --standalone --nproc_per_node=1 train_light.py \
 3. 保持 `--use-amp yes --model-amp yes`。
 4. 尝试设置 `--empty-cache-every-batches 20`。
 5. 如果显存仍然不足，降低模型宽度，例如 `--channels 48 --embed-dim 48 --cd1 48`。
-

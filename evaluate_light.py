@@ -73,6 +73,7 @@ class ModelConfig:
     intra_connect: str = "cat"
     norm_type: str = "BN"
     dfsmn_layers: int = 3
+    dfsmn_memory_size: int = 20
     is_causal: str = "yes"
     is_u2: str = "yes"
 
@@ -248,6 +249,7 @@ def create_model(cfg: ModelConfig, device: torch.device) -> EaBNet:
         intra_connect=str(cfg.intra_connect),
         norm_type=str(cfg.norm_type),
         dfsmn_layers=int(cfg.dfsmn_layers),
+        dfsmn_memory_size=int(cfg.dfsmn_memory_size),
     ).to(device)
     model.eval()
     return model

@@ -418,6 +418,7 @@ def create_model(args: argparse.Namespace, device: torch.device) -> EaBNet:
         intra_connect=args.intra_connect,
         norm_type=args.norm_type,
         dfsmn_layers=args.dfsmn_layers,
+        dfsmn_memory_size=args.dfsmn_memory_size,
     ).to(device)
     return model
 
@@ -734,6 +735,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument('--intra-connect', choices=['cat', 'add'], default='cat')
     parser.add_argument('--norm-type', default='BN')
     parser.add_argument('--dfsmn-layers', type=int, default=3, help='Number of repeated shared DFSMN memory layers in CRED')
+    parser.add_argument('--dfsmn-memory-size', type=int, default=20, help='Number of left-context memory taps in the shared DFSMN block')
     parser.add_argument('--is-causal', choices=['yes', 'no'], default='yes')
     parser.add_argument('--is-u2', choices=['yes', 'no'], default='yes')
     parser.add_argument('--gpu-ids', default='', help='Comma-separated GPU IDs, e.g. "0,1". Empty = use all visible GPUs.')

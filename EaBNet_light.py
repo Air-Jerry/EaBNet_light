@@ -271,37 +271,63 @@ class FCAD(nn.Module):
 
 
 class SharedDFSMN(nn.Module):
-    """A compact temporal DFSMN-style memory block shared across repeats."""
+    """Shared-weight DFSMN block with explicit temporal memory taps."""
 
-    def __init__(self, channels: int = 64, hidden_units: int = 64, memory_size: int = 5, norm_type: str = "BN", is_causal: bool = True):
+    def __init__(
+        self,
+        channels: int = 64,
+        hidden_units: int = 64,
+        memory_size: int = 20,
+        norm_type: str = "BN",
+        is_causal: bool = True,
+        right_memory_size: int = 0,
+    ):
         super().__init__()
         self.is_causal = is_causal
         self.memory_size = int(memory_size)
+        self.right_memory_size = 0 if is_causal else int(right_memory_size)
         self.in_conv = nn.Conv1d(channels, hidden_units, kernel_size=1, bias=False)
         self.norm1 = NormSwitch(norm_type, "1D", hidden_units)
         self.prelu = nn.PReLU(hidden_units)
-        self.memory_conv = nn.Conv1d(
-            hidden_units,
-            hidden_units,
-            kernel_size=memory_size,
-            groups=hidden_units,
-            bias=False,
-        )
+        self.left_memory = nn.Parameter(torch.empty(hidden_units, self.memory_size))
+        if self.right_memory_size > 0:
+            self.right_memory = nn.Parameter(torch.empty(hidden_units, self.right_memory_size))
+        else:
+            self.register_parameter("right_memory", None)
         self.norm2 = NormSwitch(norm_type, "1D", hidden_units)
         self.out_conv = nn.Conv1d(hidden_units, channels, kernel_size=1, bias=False)
+        self.reset_parameters()
+
+    def reset_parameters(self) -> None:
+        nn.init.xavier_uniform_(self.left_memory)
+        if self.right_memory is not None:
+            nn.init.xavier_uniform_(self.right_memory)
+
+    @staticmethod
+    def _shift_left(x: Tensor, steps: int) -> Tensor:
+        return nn.functional.pad(x, (steps, 0))[..., :-steps]
+
+    @staticmethod
+    def _shift_right(x: Tensor, steps: int) -> Tensor:
+        return nn.functional.pad(x, (0, steps))[..., steps:]
+
+    def _memory_filter(self, x: Tensor) -> Tensor:
+        memory = x
+        for idx in range(self.memory_size):
+            delayed = self._shift_left(x, idx + 1)
+            memory = memory + delayed * self.left_memory[:, idx].view(1, -1, 1)
+        if self.right_memory is not None:
+            for idx in range(self.right_memory_size):
+                future = self._shift_right(x, idx + 1)
+                memory = memory + future * self.right_memory[:, idx].view(1, -1, 1)
+        return memory
 
     def forward(self, x: Tensor) -> Tensor:
         b_size, channels, seq_len, freq_len = x.shape
         y = x.permute(0, 3, 1, 2).reshape(b_size * freq_len, channels, seq_len)
         residual = y
         y = self.prelu(self.norm1(self.in_conv(y)))
-        if self.is_causal:
-            y = nn.functional.pad(y, (self.memory_size - 1, 0))
-        else:
-            left = (self.memory_size - 1) // 2
-            right = self.memory_size - 1 - left
-            y = nn.functional.pad(y, (left, right))
-        y = self.memory_conv(y)
+        y = self._memory_filter(y)
         y = self.norm2(y)
         y = self.out_conv(y) + residual
         return y.reshape(b_size, freq_len, channels, seq_len).permute(0, 2, 3, 1).contiguous()
@@ -317,6 +343,7 @@ class CRED(nn.Module):
         is_causal: bool = True,
         dfsmn_layers: int = 3,
         dfsmn_hidden: int = 64,
+        dfsmn_memory_size: int = 20,
     ):
         super().__init__()
         enc_kernels = [(2, 5), (2, 3), (2, 3), (2, 3), (2, 3)]
@@ -325,7 +352,13 @@ class CRED(nn.Module):
         for idx, kernel in enumerate(enc_kernels):
             self.encoder.append(FCAE(cin if idx == 0 else channels, channels, kernel, strides[idx], norm_type))
 
-        self.dfsmn = SharedDFSMN(channels, dfsmn_hidden, memory_size=5, norm_type=norm_type, is_causal=is_causal)
+        self.dfsmn = SharedDFSMN(
+            channels,
+            dfsmn_hidden,
+            memory_size=dfsmn_memory_size,
+            norm_type=norm_type,
+            is_causal=is_causal,
+        )
         self.dfsmn_layers = int(dfsmn_layers)
         self.skip_attention = nn.ModuleList([SkipAttention(channels) for _ in range(5)])
 
@@ -402,6 +435,7 @@ class EaBNet(nn.Module):
         intra_connect: str = "cat",
         norm_type: str = "BN",
         dfsmn_layers: int = 3,
+        dfsmn_memory_size: int = 20,
     ):
         super().__init__()
         self.M = M
@@ -417,6 +451,7 @@ class EaBNet(nn.Module):
             is_causal=is_causal,
             dfsmn_layers=dfsmn_layers,
             dfsmn_hidden=cd1,
+            dfsmn_memory_size=dfsmn_memory_size,
         )
 
         if topo_type == "mimo":
