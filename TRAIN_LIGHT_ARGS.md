@@ -1,5 +1,7 @@
 # train_light.py 参数说明
 
+> 附件《Two Heads are Better Than One》的 CTS-Net 复现使用新增的 `train_cts.py`、`evaluate_cts.py`。启动命令、配置差异和验证边界见 [PAPER_REPRODUCTION.md](PAPER_REPRODUCTION.md)。本页仍说明原 EaBNet 入口，其默认训练行为保留。
+
 `train_light.py` 用于训练轻量版 FCAE-Att-DFSMN EaBNet 多通道语音增强模型。默认配置偏向 12GB 显卡稳定训练：较小的单步 batch、梯度累积、AMP，以及保守的 DataLoader 内存策略。
 
 ## 推荐启动命令

@@ -486,12 +486,20 @@ def run_epoch(
     gpu_ids: List[int],
     args: argparse.Namespace,
     training: bool,
+    loss_fn=None,
+    feature_builder=None,
+    correct_accumulation: bool = False,
+    loss_weighting: str = 'batches',
+    fail_nonfinite_grad: bool = False,
+    forward_with_lengths: bool = False,
 ) -> float:
     # Unified train/val loop.
     # - train mode: backward + optimizer step
     # - val mode: forward only
     model.train(mode=training)
     total_loss = 0.0
+    total_loss_weight = 0.0
+    accumulation_weight = 0.0
     total_batches = 0
     total_samples = 0
     amp_enabled = device.type == 'cuda' and args.use_amp == 'yes'
@@ -515,11 +523,15 @@ def run_epoch(
         target = batch['target']
         lengths = batch['lengths']
         frame_list = waveform_lengths_to_frames(lengths, args.hop_length)
+        batch_loss_weight = float(sum(frame_list)) if loss_weighting == 'frames' else 1.0
 
         with torch.set_grad_enabled(training):
             with autocast(device_type=device.type, enabled=amp_enabled):
                 # Build STFT-domain inputs/labels on the fly from waveform batches.
-                mixture_stft, target_stft = build_stft_batch(
+                feature_kwargs = {}
+                if feature_builder is not None:
+                    feature_kwargs['lengths'] = lengths
+                mixture_stft, target_stft = (feature_builder or build_stft_batch)(
                     mixture=mixture,
                     target=target,
                     n_fft=args.n_fft,
@@ -527,14 +539,18 @@ def run_epoch(
                     win_length=args.win_length,
                     power=args.power,
                     device=device,
+                    **feature_kwargs,
                 )
 
             # Keep FFT feature construction in fp32, but allow conv/LSTM activations
             # inside the model to use AMP. Fourier blocks cast their FFT inputs back
             # to fp32 internally for numerical compatibility.
             with autocast(device_type=device.type, enabled=model_amp_enabled):
-                estimate = model(mixture_stft)
-            raw_loss = com_mag_mse_loss(estimate.float(), target_stft.float(), frame_list)
+                if forward_with_lengths:
+                    estimate = model(mixture_stft, frame_lengths=torch.tensor(frame_list, device=device))
+                else:
+                    estimate = model(mixture_stft)
+            raw_loss = (loss_fn or com_mag_mse_loss)(estimate.float(), target_stft.float(), frame_list)
 
             # In DDP, require finite loss on all ranks before stepping.
             local_is_finite = bool(torch.isfinite(raw_loss.detach()).item())
@@ -548,6 +564,7 @@ def run_epoch(
                 non_finite_batches += 1
                 if training:
                     optimizer.zero_grad(set_to_none=True)
+                    accumulation_weight = 0.0
 
                 if is_main_process():
                     sid_text = ''
@@ -580,21 +597,47 @@ def run_epoch(
 
             if training:
                 # Support gradient accumulation to emulate larger batch sizes.
-                loss = raw_loss / accum_steps
+                loss = raw_loss * batch_loss_weight if correct_accumulation else raw_loss / accum_steps
+                if correct_accumulation:
+                    accumulation_weight += batch_loss_weight
                 scaler.scale(loss).backward()
                 should_step = (batch_idx % accum_steps == 0) or (batch_idx == len(loader))
                 if should_step:
-                    if args.grad_clip > 0:
+                    if args.grad_clip > 0 or correct_accumulation or fail_nonfinite_grad:
                         # Clip after unscale so threshold applies to true gradients.
                         scaler.unscale_(optimizer)
-                        torch.nn.utils.clip_grad_norm_(model.parameters(), args.grad_clip)
+                    if correct_accumulation:
+                        denominator = accumulation_weight
+                        if is_distributed():
+                            weight_t = torch.tensor([denominator], dtype=torch.float64, device=device)
+                            dist.all_reduce(weight_t, op=dist.ReduceOp.SUM)
+                            denominator = weight_t.item() / dist.get_world_size()
+                        for parameter in model.parameters():
+                            if parameter.grad is not None:
+                                parameter.grad.div_(denominator)
+                    if fail_nonfinite_grad:
+                        finite_grad = all(
+                            bool(torch.isfinite(parameter.grad).all().item())
+                            for parameter in model.parameters() if parameter.grad is not None
+                        )
+                        if is_distributed():
+                            finite_t = torch.tensor([int(finite_grad)], dtype=torch.int32, device=device)
+                            dist.all_reduce(finite_t, op=dist.ReduceOp.MIN)
+                            finite_grad = bool(finite_t.item())
+                        if not finite_grad:
+                            raise FloatingPointError('Non-finite gradient; optimizer step aborted')
+                    if args.grad_clip > 0:
+                        torch.nn.utils.clip_grad_norm_(model.parameters(), args.grad_clip,
+                                                       error_if_nonfinite=fail_nonfinite_grad)
                     scaler.step(optimizer)
                     scaler.update()
                     optimizer.zero_grad(set_to_none=True)
+                    accumulation_weight = 0.0
             else:
                 loss = raw_loss
 
-        total_loss += float(raw_loss.detach().item())
+        total_loss += float(raw_loss.detach().item()) * batch_loss_weight
+        total_loss_weight += batch_loss_weight
         total_batches += 1
         total_samples += int(mixture.shape[0])
         progress.set_postfix(loss=f'{raw_loss.detach().item():.4f}')
@@ -663,12 +706,17 @@ def run_epoch(
             f'data_wait={data_wait_pct:.1f}%, compute={compute_pct:.1f}%, non_finite_skips(local)={non_finite_batches}'
         )
 
-    avg_loss = total_loss / total_batches
+    avg_loss = total_loss / total_loss_weight
     if is_distributed():
         # Report globally averaged loss across ranks.
-        t = torch.tensor([avg_loss], dtype=torch.float64, device=device)
-        dist.all_reduce(t, op=dist.ReduceOp.SUM)
-        avg_loss = (t.item() / dist.get_world_size())
+        if loss_weighting == 'frames':
+            t = torch.tensor([total_loss, total_loss_weight], dtype=torch.float64, device=device)
+            dist.all_reduce(t, op=dist.ReduceOp.SUM)
+            avg_loss = t[0].item() / t[1].item()
+        else:
+            t = torch.tensor([avg_loss], dtype=torch.float64, device=device)
+            dist.all_reduce(t, op=dist.ReduceOp.SUM)
+            avg_loss = (t.item() / dist.get_world_size())
     return avg_loss
 
 
@@ -696,7 +744,7 @@ def auto_resume_if_available(
     return next_epoch, best_val_loss, lr_reducer_state
 
 
-def parse_args() -> argparse.Namespace:
+def parse_args(argv=None, defaults=None) -> argparse.Namespace:
     # CLI config surface for data, model, optimization, memory, and parallelism.
     parser = argparse.ArgumentParser(description='Train lightweight FCAE-Att-DFSMN EaBNet for multichannel speech enhancement.')
     parser.add_argument('--train-dir', default='/data/ssd1/jinrui.yang/training_set')
@@ -770,7 +818,9 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument('--max-non-finite-batches-per-epoch', type=int, default=20, help='Abort epoch when skipped non-finite batches exceed this number')
     parser.add_argument('--stop-on-non-finite', choices=['yes', 'no'], default='no', help='Abort immediately when NaN/Inf loss is encountered')
     parser.add_argument('--non-finite-log-max-ids', type=int, default=8, help='Maximum sample IDs to print when non-finite loss occurs')
-    return parser.parse_args()
+    if defaults:
+        parser.set_defaults(**defaults)
+    return parser.parse_args(argv)
 
 
 def main() -> None:
