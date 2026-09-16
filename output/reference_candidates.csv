@@ -1,0 +1,6 @@
+candidate_id,parameters,without_skip_parameters,dfsmn_parameters,full_match,without_skip_match,tcn_replacement_match,tcn_replacement_parameters,matches_three_rounded_counts,literal_equation_11,author_confirmed,initial_loss,final_loss,loss_decreased
+literal_per_frequency,800674,758904,9664,False,False,False,2570850,False,True,False,0.42280885577201843,0.06860347092151642,True
+literal_flat_projection64,850210,808440,59200,False,False,False,2570850,False,True,False,0.42197513580322266,0.06886905431747437,True
+cbam_per_frequency,685534,682144,9664,False,False,True,2455710,False,False,False,0.42343589663505554,0.06953231990337372,True
+cbam_flat_projection64,735070,731680,59200,True,True,True,2455710,True,False,False,0.4243048131465912,0.07080903649330139,True
+cbam_flat_hidden64,742238,738848,66368,True,False,True,2455710,False,False,False,0.42424333095550537,0.06986597925424576,True

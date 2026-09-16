@@ -1,0 +1,56 @@
+{
+  "generated_at_utc": "2026-09-16T08:13:24.491478+00:00",
+  "status": "completed_checks_only",
+  "exact_reproduction_verified": false,
+  "tests": {
+    "passed": 155,
+    "skipped": 1,
+    "xfailed": 1,
+    "failed": 0,
+    "total": 157,
+    "skip_reason": "CUDA unavailable; GPU AMP/DDP not verified",
+    "xfail_reason": "Original incomplete final gradient-accumulation window is still divided by full accumulation factor",
+    "command": ".venv/Scripts/python.exe -m pytest tests/test_light_model.py tests/test_light_pipeline.py tests/test_light_paper_evaluation.py tests/test_light_structure.py tests/test_light_structure_analysis.py tests/test_light_reference_variants.py tests/test_light_reference_workflow.py -q -ra --junitxml=tmp/light-reference-tests.xml"
+  },
+  "core_sources_unchanged": {
+    "EaBNet_light.py": "f338167a808ca3d297a4de741e7f942bdf377c87b40bbd2978d05f709bf029af",
+    "train_light.py": "608a8d7ac3dd6e615c502613e525f764fc67e9e9c4c9c3d0e167ab2a0211f391",
+    "evaluate_light.py": "1f86987e39c011293ca774866712e12e37368db31352af030d1f2ff920d4f002"
+  },
+  "candidate_sources": {
+    "light_reference_variants.py": "bf0a24e09a3d0840a2c95e231f9c69696ff98af9907d0a7d2057c6aee394a4ea",
+    "light_structure_variants.py": "caa0fce96993655552844cac4e05c73022d7493a56ff68750373aafabc455e7e",
+    "analyze_light_reference.py": "64b3c4f275c7df3271c305670bcffaf831d07c14b6805afb5f5919f7c4d9596b",
+    "analyze_light_structure.py": "ab5788fc090cdb0404baa2803bf08dc647521a0c00e8f30def54dd8f5d2f4d2c"
+  },
+  "candidate_count": 5,
+  "full_and_skip_ablated_forwards": 10,
+  "profile_input_frames": 100,
+  "synthetic_adam_steps_per_candidate": 10,
+  "real_benchmark_training": false,
+  "count_compatible_candidates": [
+    "cbam_flat_projection64"
+  ],
+  "equation_and_count_compatible_candidates": [],
+  "workflow_verified": [
+    "unchanged trainer CLI CPU epoch1",
+    "separate process resume epoch2 and Adam step2",
+    "original metadata interface on synthetic 8-mic waveform",
+    "four-metric evaluator with candidate identity",
+    "strict tensor loading and module-prefix equivalence",
+    "reject wrong candidate/source/evidence/config identity",
+    "protect compatibility best-model copy from another candidate"
+  ],
+  "artifacts_sha256": {
+    "output/reference_candidates.json": "1bd477e7638a1c19cd7789919ed5ab88ceec5aeb773fefa4c036f88dc7c306c9",
+    "output/reference_candidates.csv": "c1ce38d0cb6d51fb3cb9a07a2484c7dae1b045574758e73b7f9bbf8e2e267216",
+    "output/reference_screen_summary.md": "15068871fb6373d93c04d775cf5e06046e71d8f2361f38338e252cce4a431d91"
+  },
+  "limitations": [
+    "CBAM attention differs from target Eq11",
+    "projection64 differs from activated hidden width64",
+    "TCN replacement count is conditional on original 3x6 TCM topology and448 feature width; no TCN training",
+    "No target training/test dataset or verified target author configuration",
+    "No benchmark quality conclusion"
+  ]
+}

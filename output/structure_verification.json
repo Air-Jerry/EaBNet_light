@@ -1,0 +1,30 @@
+{
+  "generated_at_utc": "2026-09-16T03:51:07.201433+00:00",
+  "scope": "bounded structure screening, not author architecture or benchmark certification",
+  "pytest": {
+    "total": 102,
+    "passed": 100,
+    "skipped": 1,
+    "xfailed": 1,
+    "failed": 0
+  },
+  "candidate_count": 24,
+  "real_full_and_ablated_forwards": 48,
+  "forward_frames": 100,
+  "execution_errors": 0,
+  "shortlist": [],
+  "candidate_training_started": false,
+  "core_sources_unchanged": true,
+  "core_sha256": {
+    "EaBNet_light.py": "f338167a808ca3d297a4de741e7f942bdf377c87b40bbd2978d05f709bf029af",
+    "train_light.py": "608a8d7ac3dd6e615c502613e525f764fc67e9e9c4c9c3d0e167ab2a0211f391",
+    "evaluate_light.py": "1f86987e39c011293ca774866712e12e37368db31352af030d1f2ff920d4f002"
+  },
+  "analysis_and_test_sha256": {
+    "light_structure_variants.py": "caa0fce96993655552844cac4e05c73022d7493a56ff68750373aafabc455e7e",
+    "analyze_light_structure.py": "ab5788fc090cdb0404baa2803bf08dc647521a0c00e8f30def54dd8f5d2f4d2c",
+    "tests\\test_light_structure.py": "ae3e322c28e2e636d0e56d0e7383f8b93e112527a09c1aa4e2e44d0faa2564b5",
+    "tests\\test_light_structure_analysis.py": "54d909f93f46539ec92c0ac139610505c6380db8dc3eb42f54660396fed00565"
+  },
+  "exact_reproduction_verified": false
+}

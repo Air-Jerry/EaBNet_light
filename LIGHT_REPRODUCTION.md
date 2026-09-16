@@ -166,3 +166,45 @@ Windows 当前环境没有 PATH 中的 `python`，使用工作区虚拟环境：
 完整基准训练、真实测试集分数、GPU 数值稳定性、多卡训练和论文 MACs 均未完成。测试只缩小已检查实现发生错误的可能性，不能证明不存在其他复现错误。
 
 测试环境：Python/平台见 `output/light_audit.json`；PyTorch 2.14.0+cpu，NumPy 2.5.3，SciPy 1.18.1，SoundFile 0.14.0，PESQ 0.0.4，pystoi 0.4.1，mir_eval 0.8.2，pytest 9.1.1。`requirements-light.txt` 列出依赖而未声称它们是作者版本。
+
+## 后续结构排查：24 个候选已实际执行
+
+新增 `light_structure_variants.py` 和 `analyze_light_structure.py`。当前默认模型文件、训练文件及旧评估文件保持原 SHA256；默认候选同种子下的全部权重、state_dict 键和输出与原模型逐位相同。
+
+限定的假设空间为：CA groups=1/2/4，skip fusion=cat/add，五层 skip attention 独立/共享，DFSMN 按频率独立/按 C×F 展平，共 24 种。每个候选均实例化完整模型和真正移除 skip attention 的消融模型，共执行 48 次 100 帧前向。统计唯一参数、各层形状、共享调用及两种范围明确的矩阵 MAC 估算。
+
+**执行结果：24 种均运行成功，0 种同时满足论文完整模型和消融模型的参数区间；甚至所有无跳接模型都没有落入 725,000–734,999。** 因此本轮没有选择候选替换默认模型，也没有启动候选训练；未创建没有合格候选可用的训练适配入口。
+
+最接近的 `ca_groups=2 / cat / 独立skip / per_frequency` 为 739,234 / 717,944 参数。完整模型能四舍五入为 0.74M，但消融模型为 0.72M，距离 0.73M 允许区间下界仍少 7,056。不能仅以完整参数量吻合宣布解决差异。
+
+本轮选项是诊断假设，不是作者配置：分组 CA 不重排 avg/max 拼接，部分输出因此只看一种池化；跨 skip 权重共享没有正文依据；展平版本为 448→64→448，其中 64 是投影维，无法据此证明满足论文的“64 hidden units”。这些限制随每个候选写入 JSON。
+
+默认模型在 100 帧下 Conv/Linear/LSTM 矩阵 MAC 小计为 4.679433280G；把转置卷积按输出网格的稠密代理统计时为 6.366870592G，后者包含上采样零位上的假想乘法。两者都没有计入 FFT、手写 memory、BN、池化和其他逐元素操作，不能当成作者 6.42 G/s 的同口径认证。100 帧对应 10 ms 帧移下的名义 1 秒，现有 centered STFT 对真实 1 秒波形通常输出 101 帧。
+
+输出文件：
+
+- `output/baseline.json`：本轮开始时的默认基线。
+- `output/structure_candidates.csv`：24 个候选的计数、通过状态和具体淘汰原因。
+- `output/structure_candidates.json`：逐层参数、形状、共享关系、MAC 范围、假设和源码哈希。
+- `output/structure_screen_summary.md`：简明结论。
+- `output/structure_verification.json`：本轮验证记录。
+
+可复跑命令：
+
+```powershell
+& .\.venv\Scripts\python.exe analyze_light_structure.py --output-dir output --frames 100
+& .\.venv\Scripts\python.exe analyze_light_structure.py --output-dir output --frames 100 --require-match
+& .\.venv\Scripts\python.exe -m pytest tests/test_light_model.py tests/test_light_pipeline.py tests/test_light_paper_evaluation.py tests/test_light_structure.py tests/test_light_structure_analysis.py -q -ra
+```
+
+普通分析返回 0 表示执行成功；`--require-match` 在没有双约束合格候选时返回 2。发生候选运行异常则返回 1，不能把运行失败当成正常淘汰。
+
+本轮合并测试为 **100 passed、1 skipped、1 xfailed**，新增 64 项通过。新增测试包括 48 个完整/消融模型的独立参数公式与前向、默认等价性、展平索引数值 oracle、代表配置全部参数反向、共享参数去重、计数区间边界、双约束淘汰规则、MAC 独立核算与完整分析 CLI。原 CUDA 跳过和训练尾窗 xfail 保留。
+
+本轮只排除了上述 24 个具体组合；没有证明其他结构不存在，也没有证明论文表格错误。继续修改默认模型需要新的结构证据，不能把无依据的参数搜索当作论文还原。
+
+## 进一步进展：引用实现与第三组消融约束
+
+后续已核查 CBAM、原 EaBNet TCN 和 FRCRN 公开实现，新增五个有明确来源标签的候选。`cbam_flat_projection64` 的完整/去skip参数为 **735,070 / 731,680**，按原 TCN 结构替换推算为 **2,455,710**，三项都可舍入为论文的0.74M/0.73M/2.46M。它已完成10步合成优化，并通过原训练主函数的保存、独立进程续训和四指标评估。
+
+这是计数匹配候选：其 CBAM 算子仍偏离目标式(11)，且64指投影宽度、不能证明符合原文隐藏维度。没有替换默认模型，也没有宣称作者等价或真实基准达标。新增 `train_light_candidate.py` 和 `evaluate_light_candidate.py` 保留原训练与数据接口，以候选身份和源码哈希管理断点。具体证据、结果及可直接运行的命令见 [LIGHT_STRUCTURE_EVIDENCE.md](LIGHT_STRUCTURE_EVIDENCE.md)。

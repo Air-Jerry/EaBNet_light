@@ -163,6 +163,9 @@ def evaluate(args):
             ) if name in checkpoint_args
         },
         "exact_reproduction_verified": False,
+        "structure_candidate": checkpoint_args.get("structure_candidate"),
+        "candidate_implementation_sha256": checkpoint_args.get("candidate_implementation_sha256"),
+        "candidate_evidence": checkpoint_args.get("candidate_evidence"),
         "mixture_ref_mic": args.mixture_ref_mic, "device": str(device),
         "expected_samples": len(records), "completed_samples": 0,
         "versions": package_versions(), "mean": None,

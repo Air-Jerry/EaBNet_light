@@ -1,0 +1,2255 @@
+{
+  "schema_version": 1,
+  "generated_at_utc": "2026-09-16T08:11:44.299009+00:00",
+  "exact_reproduction_verified": false,
+  "default_model_replaced": false,
+  "full_benchmark_training_performed": false,
+  "synthetic_optimization_performed": true,
+  "environment": {
+    "torch": "2.14.0+cpu",
+    "device": "cpu"
+  },
+  "input_frames": 100,
+  "seed": 417,
+  "core_sources_before": {
+    "EaBNet_light.py": "f338167a808ca3d297a4de741e7f942bdf377c87b40bbd2978d05f709bf029af",
+    "train_light.py": "608a8d7ac3dd6e615c502613e525f764fc67e9e9c4c9c3d0e167ab2a0211f391",
+    "evaluate_light.py": "1f86987e39c011293ca774866712e12e37368db31352af030d1f2ff920d4f002"
+  },
+  "core_sources_after": {
+    "EaBNet_light.py": "f338167a808ca3d297a4de741e7f942bdf377c87b40bbd2978d05f709bf029af",
+    "train_light.py": "608a8d7ac3dd6e615c502613e525f764fc67e9e9c4c9c3d0e167ab2a0211f391",
+    "evaluate_light.py": "1f86987e39c011293ca774866712e12e37368db31352af030d1f2ff920d4f002"
+  },
+  "core_sources_unchanged": true,
+  "analysis_sources": {
+    "light_reference_variants.py": "bf0a24e09a3d0840a2c95e231f9c69696ff98af9907d0a7d2057c6aee394a4ea",
+    "light_structure_variants.py": "caa0fce96993655552844cac4e05c73022d7493a56ff68750373aafabc455e7e",
+    "analyze_light_reference.py": "64b3c4f275c7df3271c305670bcffaf831d07c14b6805afb5f5919f7c4d9596b",
+    "analyze_light_structure.py": "ab5788fc090cdb0404baa2803bf08dc647521a0c00e8f30def54dd8f5d2f4d2c"
+  },
+  "constraints": {
+    "full_half_open": [
+      735000,
+      745000
+    ],
+    "without_skip_half_open": [
+      725000,
+      735000
+    ],
+    "tcn_replacement_half_open": [
+      2455000,
+      2465000
+    ]
+  },
+  "tcn_protocol": {
+    "source": "https://github.com/Andong-Li-speech/EaBNet/blob/main/EaBNet.py",
+    "source_sha256": "fcca4f828765a82e2c4605b1ef1fcc630cfb30f97c70e45449eac6f62fe7e0e8",
+    "parameters": 1779840,
+    "features": 448,
+    "width": 64,
+    "kernel": 5,
+    "blocks": 6,
+    "repeats": 3,
+    "basis": "Conditional inference: original dense SqueezedTCM with feature width64*7",
+    "actual_tcn_ablation_forward_or_training_performed": false
+  },
+  "reference_attention_source": "https://github.com/Jongchan/attention-module/blob/459efad0e05ee7dde50c41ca10a3d0800bc3792a/MODELS/cbam.py",
+  "limitations": [
+    "CBAM candidates replace target Eq.11 with the different reference[13] shared two-layer MLP.",
+    "Only the ChannelGate is borrowed; spatial attention remains target Eq.5 interpretation.",
+    "Flat projection64 and flat hidden64 have different meanings; target paper does not resolve this.",
+    "Three rounded counts and synthetic loss cannot establish author-code equivalence.",
+    "Matrix MACs reuse the explicitly incomplete protocol in analyze_light_structure.py."
+  ],
+  "count_compatible_candidates": [
+    "cbam_flat_projection64"
+  ],
+  "equation_and_count_compatible_candidates": [],
+  "candidates": [
+    {
+      "candidate_id": "literal_per_frequency",
+      "parameters": 800674,
+      "without_skip_parameters": 758904,
+      "dfsmn_parameters": 9664,
+      "full_match": false,
+      "without_skip_match": false,
+      "tcn_replacement_match": false,
+      "tcn_replacement_parameters": 2570850,
+      "matches_three_rounded_counts": false,
+      "literal_equation_11": true,
+      "author_confirmed": false,
+      "initial_loss": 0.42280885577201843,
+      "final_loss": 0.06860347092151642,
+      "loss_decreased": true
+    },
+    {
+      "candidate_id": "literal_flat_projection64",
+      "parameters": 850210,
+      "without_skip_parameters": 808440,
+      "dfsmn_parameters": 59200,
+      "full_match": false,
+      "without_skip_match": false,
+      "tcn_replacement_match": false,
+      "tcn_replacement_parameters": 2570850,
+      "matches_three_rounded_counts": false,
+      "literal_equation_11": true,
+      "author_confirmed": false,
+      "initial_loss": 0.42197513580322266,
+      "final_loss": 0.06886905431747437,
+      "loss_decreased": true
+    },
+    {
+      "candidate_id": "cbam_per_frequency",
+      "parameters": 685534,
+      "without_skip_parameters": 682144,
+      "dfsmn_parameters": 9664,
+      "full_match": false,
+      "without_skip_match": false,
+      "tcn_replacement_match": true,
+      "tcn_replacement_parameters": 2455710,
+      "matches_three_rounded_counts": false,
+      "literal_equation_11": false,
+      "author_confirmed": false,
+      "initial_loss": 0.42343589663505554,
+      "final_loss": 0.06953231990337372,
+      "loss_decreased": true
+    },
+    {
+      "candidate_id": "cbam_flat_projection64",
+      "parameters": 735070,
+      "without_skip_parameters": 731680,
+      "dfsmn_parameters": 59200,
+      "full_match": true,
+      "without_skip_match": true,
+      "tcn_replacement_match": true,
+      "tcn_replacement_parameters": 2455710,
+      "matches_three_rounded_counts": true,
+      "literal_equation_11": false,
+      "author_confirmed": false,
+      "initial_loss": 0.4243048131465912,
+      "final_loss": 0.07080903649330139,
+      "loss_decreased": true
+    },
+    {
+      "candidate_id": "cbam_flat_hidden64",
+      "parameters": 742238,
+      "without_skip_parameters": 738848,
+      "dfsmn_parameters": 66368,
+      "full_match": true,
+      "without_skip_match": false,
+      "tcn_replacement_match": true,
+      "tcn_replacement_parameters": 2455710,
+      "matches_three_rounded_counts": false,
+      "literal_equation_11": false,
+      "author_confirmed": false,
+      "initial_loss": 0.42424333095550537,
+      "final_loss": 0.06986597925424576,
+      "loss_decreased": true
+    }
+  ],
+  "details": [
+    {
+      "candidate_id": "literal_per_frequency",
+      "evidence": {
+        "candidate_id": "literal_per_frequency",
+        "author_confirmed": false,
+        "exact_reproduction_verified": false,
+        "target_equation_11_matches": true,
+        "equation_deviations": [],
+        "channel_attention": "target_eq11_dense_concat",
+        "dfsmn_layout": "per_frequency",
+        "dfsmn_rule": "reference_16_memory_carry",
+        "dfsmn_hidden_units": 64,
+        "dfsmn_projection_units": 64,
+        "dfsmn_memory_taps_including_present": 21,
+        "dfsmn_past_frames": 20,
+        "sources": [],
+        "unresolved": [
+          "Target authors do not specify channel-attention reduction, sharing or biases.",
+          "Target authors do not specify DFSMN tensor layout, projection width or memory order.",
+          "Rounded parameter/MAC agreement cannot establish structural equivalence.",
+          "Combining cited modules with this target is not evidence of the authors' implementation."
+        ]
+      },
+      "parameter_components": {
+        "encoder": 255764,
+        "dfsmn": 9664,
+        "skip_attention": 41770,
+        "decoder": 425748,
+        "out_conv": 0,
+        "beamforming_head": 67728
+      },
+      "full_forward": {
+        "input_shape": [
+          1,
+          100,
+          257,
+          8,
+          2
+        ],
+        "output_shape": [
+          1,
+          2,
+          100,
+          257
+        ],
+        "finite": true,
+        "stages": [
+          {
+            "stage": "encoder.0",
+            "input": [
+              1,
+              16,
+              100,
+              257
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              127
+            ]
+          },
+          {
+            "stage": "encoder.1",
+            "input": [
+              1,
+              64,
+              100,
+              127
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              63
+            ]
+          },
+          {
+            "stage": "encoder.2",
+            "input": [
+              1,
+              64,
+              100,
+              63
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              31
+            ]
+          },
+          {
+            "stage": "encoder.3",
+            "input": [
+              1,
+              64,
+              100,
+              31
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              15
+            ]
+          },
+          {
+            "stage": "encoder.4",
+            "input": [
+              1,
+              64,
+              100,
+              15
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              7
+            ]
+          },
+          {
+            "stage": "decoder.0",
+            "input": [
+              1,
+              128,
+              100,
+              7
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              15
+            ]
+          },
+          {
+            "stage": "decoder.1",
+            "input": [
+              1,
+              128,
+              100,
+              15
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              31
+            ]
+          },
+          {
+            "stage": "decoder.2",
+            "input": [
+              1,
+              128,
+              100,
+              31
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              63
+            ]
+          },
+          {
+            "stage": "decoder.3",
+            "input": [
+              1,
+              128,
+              100,
+              63
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              127
+            ]
+          },
+          {
+            "stage": "decoder.4",
+            "input": [
+              1,
+              128,
+              100,
+              127
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              257
+            ]
+          }
+        ],
+        "dfsmn_calls": 3,
+        "dfsmn_unique_called_modules": 1,
+        "matrix_macs": {
+          "conv": 1358294080,
+          "transpose_input": 1610547200,
+          "transpose_output": 3297984512,
+          "linear": 26316800,
+          "lstm": 1684275200,
+          "total_transpose_input": 4679433280,
+          "total_transpose_output": 6366870592
+        }
+      },
+      "without_skip_forward": {
+        "input_shape": [
+          1,
+          100,
+          257,
+          8,
+          2
+        ],
+        "output_shape": [
+          1,
+          2,
+          100,
+          257
+        ],
+        "finite": true,
+        "stages": [
+          {
+            "stage": "encoder.0",
+            "input": [
+              1,
+              16,
+              100,
+              257
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              127
+            ]
+          },
+          {
+            "stage": "encoder.1",
+            "input": [
+              1,
+              64,
+              100,
+              127
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              63
+            ]
+          },
+          {
+            "stage": "encoder.2",
+            "input": [
+              1,
+              64,
+              100,
+              63
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              31
+            ]
+          },
+          {
+            "stage": "encoder.3",
+            "input": [
+              1,
+              64,
+              100,
+              31
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              15
+            ]
+          },
+          {
+            "stage": "encoder.4",
+            "input": [
+              1,
+              64,
+              100,
+              15
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              7
+            ]
+          },
+          {
+            "stage": "decoder.0",
+            "input": [
+              1,
+              128,
+              100,
+              7
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              15
+            ]
+          },
+          {
+            "stage": "decoder.1",
+            "input": [
+              1,
+              128,
+              100,
+              15
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              31
+            ]
+          },
+          {
+            "stage": "decoder.2",
+            "input": [
+              1,
+              128,
+              100,
+              31
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              63
+            ]
+          },
+          {
+            "stage": "decoder.3",
+            "input": [
+              1,
+              128,
+              100,
+              63
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              127
+            ]
+          },
+          {
+            "stage": "decoder.4",
+            "input": [
+              1,
+              128,
+              100,
+              127
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              257
+            ]
+          }
+        ],
+        "dfsmn_calls": 3,
+        "dfsmn_unique_called_modules": 1,
+        "matrix_macs": {
+          "conv": 1355871720,
+          "transpose_input": 1610547200,
+          "transpose_output": 3297984512,
+          "linear": 26316800,
+          "lstm": 1684275200,
+          "total_transpose_input": 4677010920,
+          "total_transpose_output": 6364448232
+        }
+      },
+      "synthetic_learning": {
+        "steps": 10,
+        "losses_before_updates": [
+          0.42280885577201843,
+          0.37426209449768066,
+          0.3287048935890198,
+          0.28517818450927734,
+          0.23864814639091492,
+          0.19206634163856506,
+          0.1500311940908432,
+          0.11551015079021454,
+          0.09105841815471649,
+          0.07685823738574982
+        ],
+        "loss_after_last_update": 0.06860347092151642,
+        "loss_decreased": true,
+        "all_parameter_gradients_finite": true,
+        "data": "one fixed synthetic STFT tensor, target=0.7*reference microphone",
+        "quality_metric_or_generalization_evidence": false
+      }
+    },
+    {
+      "candidate_id": "literal_flat_projection64",
+      "evidence": {
+        "candidate_id": "literal_flat_projection64",
+        "author_confirmed": false,
+        "exact_reproduction_verified": false,
+        "target_equation_11_matches": true,
+        "equation_deviations": [],
+        "channel_attention": "target_eq11_dense_concat",
+        "dfsmn_layout": "flattened",
+        "dfsmn_rule": "reference_16_memory_carry",
+        "dfsmn_hidden_units": 448,
+        "dfsmn_projection_units": 64,
+        "dfsmn_memory_taps_including_present": 21,
+        "dfsmn_past_frames": 20,
+        "sources": [],
+        "unresolved": [
+          "Target authors do not specify channel-attention reduction, sharing or biases.",
+          "Target authors do not specify DFSMN tensor layout, projection width or memory order.",
+          "Rounded parameter/MAC agreement cannot establish structural equivalence.",
+          "Combining cited modules with this target is not evidence of the authors' implementation.",
+          "448-wide output activations and a 64-wide projection do not establish the target's meaning of 64 hidden units."
+        ]
+      },
+      "parameter_components": {
+        "encoder": 255764,
+        "dfsmn": 59200,
+        "skip_attention": 41770,
+        "decoder": 425748,
+        "out_conv": 0,
+        "beamforming_head": 67728
+      },
+      "full_forward": {
+        "input_shape": [
+          1,
+          100,
+          257,
+          8,
+          2
+        ],
+        "output_shape": [
+          1,
+          2,
+          100,
+          257
+        ],
+        "finite": true,
+        "stages": [
+          {
+            "stage": "encoder.0",
+            "input": [
+              1,
+              16,
+              100,
+              257
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              127
+            ]
+          },
+          {
+            "stage": "encoder.1",
+            "input": [
+              1,
+              64,
+              100,
+              127
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              63
+            ]
+          },
+          {
+            "stage": "encoder.2",
+            "input": [
+              1,
+              64,
+              100,
+              63
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              31
+            ]
+          },
+          {
+            "stage": "encoder.3",
+            "input": [
+              1,
+              64,
+              100,
+              31
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              15
+            ]
+          },
+          {
+            "stage": "encoder.4",
+            "input": [
+              1,
+              64,
+              100,
+              15
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              7
+            ]
+          },
+          {
+            "stage": "decoder.0",
+            "input": [
+              1,
+              128,
+              100,
+              7
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              15
+            ]
+          },
+          {
+            "stage": "decoder.1",
+            "input": [
+              1,
+              128,
+              100,
+              15
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              31
+            ]
+          },
+          {
+            "stage": "decoder.2",
+            "input": [
+              1,
+              128,
+              100,
+              31
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              63
+            ]
+          },
+          {
+            "stage": "decoder.3",
+            "input": [
+              1,
+              128,
+              100,
+              63
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              127
+            ]
+          },
+          {
+            "stage": "decoder.4",
+            "input": [
+              1,
+              128,
+              100,
+              127
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              257
+            ]
+          }
+        ],
+        "dfsmn_calls": 3,
+        "dfsmn_unique_called_modules": 1,
+        "matrix_macs": {
+          "conv": 1358294080,
+          "transpose_input": 1610547200,
+          "transpose_output": 3297984512,
+          "linear": 26316800,
+          "lstm": 1684275200,
+          "total_transpose_input": 4679433280,
+          "total_transpose_output": 6366870592
+        }
+      },
+      "without_skip_forward": {
+        "input_shape": [
+          1,
+          100,
+          257,
+          8,
+          2
+        ],
+        "output_shape": [
+          1,
+          2,
+          100,
+          257
+        ],
+        "finite": true,
+        "stages": [
+          {
+            "stage": "encoder.0",
+            "input": [
+              1,
+              16,
+              100,
+              257
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              127
+            ]
+          },
+          {
+            "stage": "encoder.1",
+            "input": [
+              1,
+              64,
+              100,
+              127
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              63
+            ]
+          },
+          {
+            "stage": "encoder.2",
+            "input": [
+              1,
+              64,
+              100,
+              63
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              31
+            ]
+          },
+          {
+            "stage": "encoder.3",
+            "input": [
+              1,
+              64,
+              100,
+              31
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              15
+            ]
+          },
+          {
+            "stage": "encoder.4",
+            "input": [
+              1,
+              64,
+              100,
+              15
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              7
+            ]
+          },
+          {
+            "stage": "decoder.0",
+            "input": [
+              1,
+              128,
+              100,
+              7
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              15
+            ]
+          },
+          {
+            "stage": "decoder.1",
+            "input": [
+              1,
+              128,
+              100,
+              15
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              31
+            ]
+          },
+          {
+            "stage": "decoder.2",
+            "input": [
+              1,
+              128,
+              100,
+              31
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              63
+            ]
+          },
+          {
+            "stage": "decoder.3",
+            "input": [
+              1,
+              128,
+              100,
+              63
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              127
+            ]
+          },
+          {
+            "stage": "decoder.4",
+            "input": [
+              1,
+              128,
+              100,
+              127
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              257
+            ]
+          }
+        ],
+        "dfsmn_calls": 3,
+        "dfsmn_unique_called_modules": 1,
+        "matrix_macs": {
+          "conv": 1355871720,
+          "transpose_input": 1610547200,
+          "transpose_output": 3297984512,
+          "linear": 26316800,
+          "lstm": 1684275200,
+          "total_transpose_input": 4677010920,
+          "total_transpose_output": 6364448232
+        }
+      },
+      "synthetic_learning": {
+        "steps": 10,
+        "losses_before_updates": [
+          0.42197513580322266,
+          0.3709903359413147,
+          0.32778337597846985,
+          0.28278326988220215,
+          0.2366047501564026,
+          0.1901114583015442,
+          0.14724034070968628,
+          0.1128234714269638,
+          0.08964505791664124,
+          0.07667408883571625
+        ],
+        "loss_after_last_update": 0.06886905431747437,
+        "loss_decreased": true,
+        "all_parameter_gradients_finite": true,
+        "data": "one fixed synthetic STFT tensor, target=0.7*reference microphone",
+        "quality_metric_or_generalization_evidence": false
+      }
+    },
+    {
+      "candidate_id": "cbam_per_frequency",
+      "evidence": {
+        "candidate_id": "cbam_per_frequency",
+        "author_confirmed": false,
+        "exact_reproduction_verified": false,
+        "target_equation_11_matches": false,
+        "equation_deviations": [
+          "Target Eq.11 concatenates pooled descriptors before one convolution; CBAM sends them separately through a shared two-layer nonlinear MLP and sums."
+        ],
+        "channel_attention": "reference_13_cbam_r16_bias_true",
+        "dfsmn_layout": "per_frequency",
+        "dfsmn_rule": "reference_16_memory_carry",
+        "dfsmn_hidden_units": 64,
+        "dfsmn_projection_units": 64,
+        "dfsmn_memory_taps_including_present": 21,
+        "dfsmn_past_frames": 20,
+        "sources": [
+          {
+            "url": "https://github.com/Jongchan/attention-module/blob/459efad0e05ee7dde50c41ca10a3d0800bc3792a/MODELS/cbam.py",
+            "commit": "459efad0e05ee7dde50c41ca10a3d0800bc3792a",
+            "sha256": "6a2115f71541c77ab09c666e4cf32ab9928520f9c2bba9c1ceab8edc8fdd8ac5",
+            "class": "ChannelGate",
+            "lines": [
+              26,
+              60
+            ]
+          }
+        ],
+        "unresolved": [
+          "Target authors do not specify channel-attention reduction, sharing or biases.",
+          "Target authors do not specify DFSMN tensor layout, projection width or memory order.",
+          "Rounded parameter/MAC agreement cannot establish structural equivalence.",
+          "Combining cited modules with this target is not evidence of the authors' implementation."
+        ]
+      },
+      "parameter_components": {
+        "encoder": 217384,
+        "dfsmn": 9664,
+        "skip_attention": 3390,
+        "decoder": 387368,
+        "out_conv": 0,
+        "beamforming_head": 67728
+      },
+      "full_forward": {
+        "input_shape": [
+          1,
+          100,
+          257,
+          8,
+          2
+        ],
+        "output_shape": [
+          1,
+          2,
+          100,
+          257
+        ],
+        "finite": true,
+        "stages": [
+          {
+            "stage": "encoder.0",
+            "input": [
+              1,
+              16,
+              100,
+              257
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              127
+            ]
+          },
+          {
+            "stage": "encoder.1",
+            "input": [
+              1,
+              64,
+              100,
+              127
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              63
+            ]
+          },
+          {
+            "stage": "encoder.2",
+            "input": [
+              1,
+              64,
+              100,
+              63
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              31
+            ]
+          },
+          {
+            "stage": "encoder.3",
+            "input": [
+              1,
+              64,
+              100,
+              31
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              15
+            ]
+          },
+          {
+            "stage": "encoder.4",
+            "input": [
+              1,
+              64,
+              100,
+              15
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              7
+            ]
+          },
+          {
+            "stage": "decoder.0",
+            "input": [
+              1,
+              128,
+              100,
+              7
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              15
+            ]
+          },
+          {
+            "stage": "decoder.1",
+            "input": [
+              1,
+              128,
+              100,
+              15
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              31
+            ]
+          },
+          {
+            "stage": "decoder.2",
+            "input": [
+              1,
+              128,
+              100,
+              31
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              63
+            ]
+          },
+          {
+            "stage": "decoder.3",
+            "input": [
+              1,
+              128,
+              100,
+              63
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              127
+            ]
+          },
+          {
+            "stage": "decoder.4",
+            "input": [
+              1,
+              128,
+              100,
+              127
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              257
+            ]
+          }
+        ],
+        "dfsmn_calls": 3,
+        "dfsmn_unique_called_modules": 1,
+        "matrix_macs": {
+          "conv": 1358171200,
+          "transpose_input": 1610547200,
+          "transpose_output": 3297984512,
+          "linear": 26332160,
+          "lstm": 1684275200,
+          "total_transpose_input": 4679325760,
+          "total_transpose_output": 6366763072
+        }
+      },
+      "without_skip_forward": {
+        "input_shape": [
+          1,
+          100,
+          257,
+          8,
+          2
+        ],
+        "output_shape": [
+          1,
+          2,
+          100,
+          257
+        ],
+        "finite": true,
+        "stages": [
+          {
+            "stage": "encoder.0",
+            "input": [
+              1,
+              16,
+              100,
+              257
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              127
+            ]
+          },
+          {
+            "stage": "encoder.1",
+            "input": [
+              1,
+              64,
+              100,
+              127
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              63
+            ]
+          },
+          {
+            "stage": "encoder.2",
+            "input": [
+              1,
+              64,
+              100,
+              63
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              31
+            ]
+          },
+          {
+            "stage": "encoder.3",
+            "input": [
+              1,
+              64,
+              100,
+              31
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              15
+            ]
+          },
+          {
+            "stage": "encoder.4",
+            "input": [
+              1,
+              64,
+              100,
+              15
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              7
+            ]
+          },
+          {
+            "stage": "decoder.0",
+            "input": [
+              1,
+              128,
+              100,
+              7
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              15
+            ]
+          },
+          {
+            "stage": "decoder.1",
+            "input": [
+              1,
+              128,
+              100,
+              15
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              31
+            ]
+          },
+          {
+            "stage": "decoder.2",
+            "input": [
+              1,
+              128,
+              100,
+              31
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              63
+            ]
+          },
+          {
+            "stage": "decoder.3",
+            "input": [
+              1,
+              128,
+              100,
+              63
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              127
+            ]
+          },
+          {
+            "stage": "decoder.4",
+            "input": [
+              1,
+              128,
+              100,
+              127
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              257
+            ]
+          }
+        ],
+        "dfsmn_calls": 3,
+        "dfsmn_unique_called_modules": 1,
+        "matrix_macs": {
+          "conv": 1355789800,
+          "transpose_input": 1610547200,
+          "transpose_output": 3297984512,
+          "linear": 26327040,
+          "lstm": 1684275200,
+          "total_transpose_input": 4676939240,
+          "total_transpose_output": 6364376552
+        }
+      },
+      "synthetic_learning": {
+        "steps": 10,
+        "losses_before_updates": [
+          0.42343589663505554,
+          0.37313663959503174,
+          0.33141589164733887,
+          0.2870509922504425,
+          0.24287384748458862,
+          0.20118680596351624,
+          0.15560373663902283,
+          0.12147659808397293,
+          0.09508492797613144,
+          0.0790882557630539
+        ],
+        "loss_after_last_update": 0.06953231990337372,
+        "loss_decreased": true,
+        "all_parameter_gradients_finite": true,
+        "data": "one fixed synthetic STFT tensor, target=0.7*reference microphone",
+        "quality_metric_or_generalization_evidence": false
+      }
+    },
+    {
+      "candidate_id": "cbam_flat_projection64",
+      "evidence": {
+        "candidate_id": "cbam_flat_projection64",
+        "author_confirmed": false,
+        "exact_reproduction_verified": false,
+        "target_equation_11_matches": false,
+        "equation_deviations": [
+          "Target Eq.11 concatenates pooled descriptors before one convolution; CBAM sends them separately through a shared two-layer nonlinear MLP and sums."
+        ],
+        "channel_attention": "reference_13_cbam_r16_bias_true",
+        "dfsmn_layout": "flattened",
+        "dfsmn_rule": "reference_16_memory_carry",
+        "dfsmn_hidden_units": 448,
+        "dfsmn_projection_units": 64,
+        "dfsmn_memory_taps_including_present": 21,
+        "dfsmn_past_frames": 20,
+        "sources": [
+          {
+            "url": "https://github.com/Jongchan/attention-module/blob/459efad0e05ee7dde50c41ca10a3d0800bc3792a/MODELS/cbam.py",
+            "commit": "459efad0e05ee7dde50c41ca10a3d0800bc3792a",
+            "sha256": "6a2115f71541c77ab09c666e4cf32ab9928520f9c2bba9c1ceab8edc8fdd8ac5",
+            "class": "ChannelGate",
+            "lines": [
+              26,
+              60
+            ]
+          }
+        ],
+        "unresolved": [
+          "Target authors do not specify channel-attention reduction, sharing or biases.",
+          "Target authors do not specify DFSMN tensor layout, projection width or memory order.",
+          "Rounded parameter/MAC agreement cannot establish structural equivalence.",
+          "Combining cited modules with this target is not evidence of the authors' implementation.",
+          "448-wide output activations and a 64-wide projection do not establish the target's meaning of 64 hidden units."
+        ]
+      },
+      "parameter_components": {
+        "encoder": 217384,
+        "dfsmn": 59200,
+        "skip_attention": 3390,
+        "decoder": 387368,
+        "out_conv": 0,
+        "beamforming_head": 67728
+      },
+      "full_forward": {
+        "input_shape": [
+          1,
+          100,
+          257,
+          8,
+          2
+        ],
+        "output_shape": [
+          1,
+          2,
+          100,
+          257
+        ],
+        "finite": true,
+        "stages": [
+          {
+            "stage": "encoder.0",
+            "input": [
+              1,
+              16,
+              100,
+              257
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              127
+            ]
+          },
+          {
+            "stage": "encoder.1",
+            "input": [
+              1,
+              64,
+              100,
+              127
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              63
+            ]
+          },
+          {
+            "stage": "encoder.2",
+            "input": [
+              1,
+              64,
+              100,
+              63
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              31
+            ]
+          },
+          {
+            "stage": "encoder.3",
+            "input": [
+              1,
+              64,
+              100,
+              31
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              15
+            ]
+          },
+          {
+            "stage": "encoder.4",
+            "input": [
+              1,
+              64,
+              100,
+              15
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              7
+            ]
+          },
+          {
+            "stage": "decoder.0",
+            "input": [
+              1,
+              128,
+              100,
+              7
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              15
+            ]
+          },
+          {
+            "stage": "decoder.1",
+            "input": [
+              1,
+              128,
+              100,
+              15
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              31
+            ]
+          },
+          {
+            "stage": "decoder.2",
+            "input": [
+              1,
+              128,
+              100,
+              31
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              63
+            ]
+          },
+          {
+            "stage": "decoder.3",
+            "input": [
+              1,
+              128,
+              100,
+              63
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              127
+            ]
+          },
+          {
+            "stage": "decoder.4",
+            "input": [
+              1,
+              128,
+              100,
+              127
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              257
+            ]
+          }
+        ],
+        "dfsmn_calls": 3,
+        "dfsmn_unique_called_modules": 1,
+        "matrix_macs": {
+          "conv": 1358171200,
+          "transpose_input": 1610547200,
+          "transpose_output": 3297984512,
+          "linear": 26332160,
+          "lstm": 1684275200,
+          "total_transpose_input": 4679325760,
+          "total_transpose_output": 6366763072
+        }
+      },
+      "without_skip_forward": {
+        "input_shape": [
+          1,
+          100,
+          257,
+          8,
+          2
+        ],
+        "output_shape": [
+          1,
+          2,
+          100,
+          257
+        ],
+        "finite": true,
+        "stages": [
+          {
+            "stage": "encoder.0",
+            "input": [
+              1,
+              16,
+              100,
+              257
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              127
+            ]
+          },
+          {
+            "stage": "encoder.1",
+            "input": [
+              1,
+              64,
+              100,
+              127
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              63
+            ]
+          },
+          {
+            "stage": "encoder.2",
+            "input": [
+              1,
+              64,
+              100,
+              63
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              31
+            ]
+          },
+          {
+            "stage": "encoder.3",
+            "input": [
+              1,
+              64,
+              100,
+              31
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              15
+            ]
+          },
+          {
+            "stage": "encoder.4",
+            "input": [
+              1,
+              64,
+              100,
+              15
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              7
+            ]
+          },
+          {
+            "stage": "decoder.0",
+            "input": [
+              1,
+              128,
+              100,
+              7
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              15
+            ]
+          },
+          {
+            "stage": "decoder.1",
+            "input": [
+              1,
+              128,
+              100,
+              15
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              31
+            ]
+          },
+          {
+            "stage": "decoder.2",
+            "input": [
+              1,
+              128,
+              100,
+              31
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              63
+            ]
+          },
+          {
+            "stage": "decoder.3",
+            "input": [
+              1,
+              128,
+              100,
+              63
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              127
+            ]
+          },
+          {
+            "stage": "decoder.4",
+            "input": [
+              1,
+              128,
+              100,
+              127
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              257
+            ]
+          }
+        ],
+        "dfsmn_calls": 3,
+        "dfsmn_unique_called_modules": 1,
+        "matrix_macs": {
+          "conv": 1355789800,
+          "transpose_input": 1610547200,
+          "transpose_output": 3297984512,
+          "linear": 26327040,
+          "lstm": 1684275200,
+          "total_transpose_input": 4676939240,
+          "total_transpose_output": 6364376552
+        }
+      },
+      "synthetic_learning": {
+        "steps": 10,
+        "losses_before_updates": [
+          0.4243048131465912,
+          0.37434402108192444,
+          0.3302105963230133,
+          0.2866327464580536,
+          0.2423139065504074,
+          0.19769057631492615,
+          0.15520507097244263,
+          0.11895677447319031,
+          0.09386901557445526,
+          0.07929404824972153
+        ],
+        "loss_after_last_update": 0.07080903649330139,
+        "loss_decreased": true,
+        "all_parameter_gradients_finite": true,
+        "data": "one fixed synthetic STFT tensor, target=0.7*reference microphone",
+        "quality_metric_or_generalization_evidence": false
+      }
+    },
+    {
+      "candidate_id": "cbam_flat_hidden64",
+      "evidence": {
+        "candidate_id": "cbam_flat_hidden64",
+        "author_confirmed": false,
+        "exact_reproduction_verified": false,
+        "target_equation_11_matches": false,
+        "equation_deviations": [
+          "Target Eq.11 concatenates pooled descriptors before one convolution; CBAM sends them separately through a shared two-layer nonlinear MLP and sums."
+        ],
+        "channel_attention": "reference_13_cbam_r16_bias_true",
+        "dfsmn_layout": "flattened",
+        "dfsmn_rule": "reference_17_input_residual",
+        "dfsmn_hidden_units": 64,
+        "dfsmn_projection_units": 448,
+        "dfsmn_memory_taps_including_present": 20,
+        "dfsmn_past_frames": 19,
+        "sources": [
+          {
+            "url": "https://github.com/Jongchan/attention-module/blob/459efad0e05ee7dde50c41ca10a3d0800bc3792a/MODELS/cbam.py",
+            "commit": "459efad0e05ee7dde50c41ca10a3d0800bc3792a",
+            "sha256": "6a2115f71541c77ab09c666e4cf32ab9928520f9c2bba9c1ceab8edc8fdd8ac5",
+            "class": "ChannelGate",
+            "lines": [
+              26,
+              60
+            ]
+          },
+          {
+            "url": "https://github.com/modelscope/ClearerVoice-Studio/blob/main/clearvoice/clearvoice/models/frcrn_se/complex_nn.py",
+            "sha256": "3dcda8502c6d588493a59dcb0910624a088be3e1c8b82b9d4b9408e1c5f3b5cb",
+            "class": "UniDeepFsmn",
+            "lines": [
+              5,
+              60
+            ],
+            "qualification": "Public maintained FRCRN source, not the target FCAE author code."
+          }
+        ],
+        "unresolved": [
+          "Target authors do not specify channel-attention reduction, sharing or biases.",
+          "Target authors do not specify DFSMN tensor layout, projection width or memory order.",
+          "Rounded parameter/MAC agreement cannot establish structural equivalence.",
+          "Combining cited modules with this target is not evidence of the authors' implementation.",
+          "Public FRCRN has evolved since its paper; its real cell and C*F adaptation are diagnostic references."
+        ]
+      },
+      "parameter_components": {
+        "encoder": 217384,
+        "dfsmn": 66368,
+        "skip_attention": 3390,
+        "decoder": 387368,
+        "out_conv": 0,
+        "beamforming_head": 67728
+      },
+      "full_forward": {
+        "input_shape": [
+          1,
+          100,
+          257,
+          8,
+          2
+        ],
+        "output_shape": [
+          1,
+          2,
+          100,
+          257
+        ],
+        "finite": true,
+        "stages": [
+          {
+            "stage": "encoder.0",
+            "input": [
+              1,
+              16,
+              100,
+              257
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              127
+            ]
+          },
+          {
+            "stage": "encoder.1",
+            "input": [
+              1,
+              64,
+              100,
+              127
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              63
+            ]
+          },
+          {
+            "stage": "encoder.2",
+            "input": [
+              1,
+              64,
+              100,
+              63
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              31
+            ]
+          },
+          {
+            "stage": "encoder.3",
+            "input": [
+              1,
+              64,
+              100,
+              31
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              15
+            ]
+          },
+          {
+            "stage": "encoder.4",
+            "input": [
+              1,
+              64,
+              100,
+              15
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              7
+            ]
+          },
+          {
+            "stage": "decoder.0",
+            "input": [
+              1,
+              128,
+              100,
+              7
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              15
+            ]
+          },
+          {
+            "stage": "decoder.1",
+            "input": [
+              1,
+              128,
+              100,
+              15
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              31
+            ]
+          },
+          {
+            "stage": "decoder.2",
+            "input": [
+              1,
+              128,
+              100,
+              31
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              63
+            ]
+          },
+          {
+            "stage": "decoder.3",
+            "input": [
+              1,
+              128,
+              100,
+              63
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              127
+            ]
+          },
+          {
+            "stage": "decoder.4",
+            "input": [
+              1,
+              128,
+              100,
+              127
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              257
+            ]
+          }
+        ],
+        "dfsmn_calls": 3,
+        "dfsmn_unique_called_modules": 1,
+        "matrix_macs": {
+          "conv": 1343656000,
+          "transpose_input": 1610547200,
+          "transpose_output": 3297984512,
+          "linear": 43535360,
+          "lstm": 1684275200,
+          "total_transpose_input": 4682013760,
+          "total_transpose_output": 6369451072
+        }
+      },
+      "without_skip_forward": {
+        "input_shape": [
+          1,
+          100,
+          257,
+          8,
+          2
+        ],
+        "output_shape": [
+          1,
+          2,
+          100,
+          257
+        ],
+        "finite": true,
+        "stages": [
+          {
+            "stage": "encoder.0",
+            "input": [
+              1,
+              16,
+              100,
+              257
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              127
+            ]
+          },
+          {
+            "stage": "encoder.1",
+            "input": [
+              1,
+              64,
+              100,
+              127
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              63
+            ]
+          },
+          {
+            "stage": "encoder.2",
+            "input": [
+              1,
+              64,
+              100,
+              63
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              31
+            ]
+          },
+          {
+            "stage": "encoder.3",
+            "input": [
+              1,
+              64,
+              100,
+              31
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              15
+            ]
+          },
+          {
+            "stage": "encoder.4",
+            "input": [
+              1,
+              64,
+              100,
+              15
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              7
+            ]
+          },
+          {
+            "stage": "decoder.0",
+            "input": [
+              1,
+              128,
+              100,
+              7
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              15
+            ]
+          },
+          {
+            "stage": "decoder.1",
+            "input": [
+              1,
+              128,
+              100,
+              15
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              31
+            ]
+          },
+          {
+            "stage": "decoder.2",
+            "input": [
+              1,
+              128,
+              100,
+              31
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              63
+            ]
+          },
+          {
+            "stage": "decoder.3",
+            "input": [
+              1,
+              128,
+              100,
+              63
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              127
+            ]
+          },
+          {
+            "stage": "decoder.4",
+            "input": [
+              1,
+              128,
+              100,
+              127
+            ],
+            "output": [
+              1,
+              64,
+              100,
+              257
+            ]
+          }
+        ],
+        "dfsmn_calls": 3,
+        "dfsmn_unique_called_modules": 1,
+        "matrix_macs": {
+          "conv": 1341274600,
+          "transpose_input": 1610547200,
+          "transpose_output": 3297984512,
+          "linear": 43530240,
+          "lstm": 1684275200,
+          "total_transpose_input": 4679627240,
+          "total_transpose_output": 6367064552
+        }
+      },
+      "synthetic_learning": {
+        "steps": 10,
+        "losses_before_updates": [
+          0.42424333095550537,
+          0.37494730949401855,
+          0.32997995615005493,
+          0.28538551926612854,
+          0.24261757731437683,
+          0.1964159905910492,
+          0.15580758452415466,
+          0.12068168818950653,
+          0.094786636531353,
+          0.07877121865749359
+        ],
+        "loss_after_last_update": 0.06986597925424576,
+        "loss_decreased": true,
+        "all_parameter_gradients_finite": true,
+        "data": "one fixed synthetic STFT tensor, target=0.7*reference microphone",
+        "quality_metric_or_generalization_evidence": false
+      }
+    }
+  ]
+}
