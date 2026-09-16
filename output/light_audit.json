@@ -1,0 +1,751 @@
+{
+  "schema_version": 1,
+  "generated_at_utc": "2026-09-16T02:26:08.623053+00:00",
+  "audit_completed": true,
+  "exact_reproduction_verified": false,
+  "meaning": "Exit 0 means this data-free audit completed, not that reproduction is exact or paper metrics are reached.",
+  "environment": {
+    "python_executable": "C:\\Users\\23184\\Documents\\EaBNet\\.venv\\Scripts\\python.exe",
+    "platform": "Windows-11-10.0.26100-SP0",
+    "dependencies": {
+      "python": "3.12.14",
+      "torch": "2.14.0+cpu",
+      "numpy": "2.5.3",
+      "soundfile": "0.14.0",
+      "tensorboard": "2.21.0",
+      "tqdm": "4.70.1",
+      "pesq": "0.0.4",
+      "pystoi": "0.4.1",
+      "mir_eval": "0.8.2"
+    },
+    "torch_cuda_build": null
+  },
+  "file_fingerprints": {
+    "EaBNet_light.py": {
+      "path": "C:\\Users\\23184\\Documents\\EaBNet\\EaBNet_light.py",
+      "sha256": "F338167A808CA3D297A4DE741E7F942BDF377C87B40BBD2978D05F709BF029AF"
+    },
+    "train_light.py": {
+      "path": "C:\\Users\\23184\\Documents\\EaBNet\\train_light.py",
+      "sha256": "608A8D7AC3DD6E615C502613E525F764FC67E9E9C4C9C3D0E167AB2A0211F391",
+      "original_sha256": "608A8D7AC3DD6E615C502613E525F764FC67E9E9C4C9C3D0E167AB2A0211F391",
+      "unchanged": true
+    },
+    "evaluate_light.py": {
+      "path": "C:\\Users\\23184\\Documents\\EaBNet\\evaluate_light.py",
+      "sha256": "1F86987E39C011293CA774866712E12E37368DB31352AF030D1F2FF920D4F002",
+      "original_sha256": "1F86987E39C011293CA774866712E12E37368DB31352AF030D1F2FF920D4F002",
+      "unchanged": true
+    },
+    "evaluate_light_paper.py": {
+      "path": "C:\\Users\\23184\\Documents\\EaBNet\\evaluate_light_paper.py",
+      "sha256": "FC031C72717098EAE2E33B010A99BB4D73E1F1C69E1C6FD180D86A00A72E0F02"
+    },
+    "audit_light.py": {
+      "path": "C:\\Users\\23184\\Documents\\EaBNet\\audit_light.py",
+      "sha256": "10116BFE5ACF9EE7DC197722FB05679BC11176334EBE54FBFBD7A35330463F49"
+    }
+  },
+  "original_training_and_evaluation_preserved": true,
+  "training_defaults": {
+    "train_dir": "/data/ssd1/jinrui.yang/training_set",
+    "val_dir": "/data/ssd1/jinrui.yang/validation_set",
+    "checkpoint_dir": "./checkpoints",
+    "best_dir": "./bestmodels",
+    "log_dir": "./logs",
+    "num_epochs": 100,
+    "batch_size": 1,
+    "num_workers": 4,
+    "learning_rate": 0.001,
+    "weight_decay": 0.0,
+    "grad_clip": 5.0,
+    "grad_accum_steps": 4,
+    "seed": 1234,
+    "sample_rate": 16000,
+    "win_length": 320,
+    "hop_length": 160,
+    "n_fft": 512,
+    "power": 0.5,
+    "save_every": 10,
+    "resume": "yes",
+    "use_amp": "yes",
+    "model_amp": "yes",
+    "target_ref_mic": 0,
+    "num_mics": 8,
+    "channels": 64,
+    "embed_dim": 64,
+    "kd1": 5,
+    "cd1": 64,
+    "d_feat": 256,
+    "p": 6,
+    "q": 3,
+    "bf_type": "lstm",
+    "topo_type": "mimo",
+    "intra_connect": "cat",
+    "norm_type": "BN",
+    "dfsmn_layers": 3,
+    "dfsmn_memory_size": 20,
+    "is_causal": "yes",
+    "is_u2": "yes",
+    "gpu_ids": "",
+    "cpu_threads": 8,
+    "interop_threads": 1,
+    "cpu_thread_scale": 1.0,
+    "pin_memory": "yes",
+    "persistent_workers": "no",
+    "prefetch_factor": 2,
+    "strict_memory": "yes",
+    "log_ram_tree": "yes",
+    "empty_cache_each_epoch": "yes",
+    "empty_cache_every_batches": 0,
+    "mem_log_every_batches": 100,
+    "malloc_trim_every_batches": 100,
+    "gc_every_batches": 100,
+    "malloc_arena_max": 2,
+    "segment_seconds": 4.0,
+    "train_random_crop": "yes",
+    "parallel_mode": "auto",
+    "log_perf": "yes",
+    "allow_tf32": "yes",
+    "cudnn_benchmark": "yes",
+    "train_lr_reduce_on_plateau": "yes",
+    "lr_reduce_metric": "val",
+    "train_lr_patience": 2,
+    "train_lr_factor": 0.5,
+    "train_lr_min_delta": 0.0,
+    "min_learning_rate": 1e-06,
+    "resume_reset_lr": "no",
+    "skip_non_finite_batches": "yes",
+    "max_non_finite_batches_per_epoch": 20,
+    "stop_on_non_finite": "no",
+    "non_finite_log_max_ids": 8
+  },
+  "disclosed_config_checks": [
+    {
+      "item": "sample_rate",
+      "observed": 16000,
+      "expected": 16000,
+      "status": "matched",
+      "source": "paper section 4.2; microphones: section 4.1"
+    },
+    {
+      "item": "win_length",
+      "observed": 320,
+      "expected": 320,
+      "status": "matched",
+      "source": "paper section 4.2; microphones: section 4.1"
+    },
+    {
+      "item": "hop_length",
+      "observed": 160,
+      "expected": 160,
+      "status": "matched",
+      "source": "paper section 4.2; microphones: section 4.1"
+    },
+    {
+      "item": "n_fft",
+      "observed": 512,
+      "expected": 512,
+      "status": "matched",
+      "source": "paper section 4.2; microphones: section 4.1"
+    },
+    {
+      "item": "num_mics",
+      "observed": 8,
+      "expected": 8,
+      "status": "matched",
+      "source": "paper section 4.2; microphones: section 4.1"
+    },
+    {
+      "item": "channels",
+      "observed": 64,
+      "expected": 64,
+      "status": "matched",
+      "source": "paper section 4.2; microphones: section 4.1"
+    },
+    {
+      "item": "norm_type",
+      "observed": "BN",
+      "expected": "BN",
+      "status": "matched",
+      "source": "paper section 4.2; microphones: section 4.1"
+    },
+    {
+      "item": "dfsmn_layers",
+      "observed": 3,
+      "expected": 3,
+      "status": "matched",
+      "source": "paper section 4.2; microphones: section 4.1"
+    },
+    {
+      "item": "learning_rate",
+      "observed": 0.001,
+      "expected": 0.001,
+      "status": "matched",
+      "source": "paper section 4.2; microphones: section 4.1"
+    },
+    {
+      "item": "train_lr_reduce_on_plateau",
+      "observed": "yes",
+      "expected": "yes",
+      "status": "matched",
+      "source": "paper section 4.2; microphones: section 4.1"
+    },
+    {
+      "item": "lr_reduce_metric",
+      "observed": "val",
+      "expected": "val",
+      "status": "matched",
+      "source": "paper section 4.2; microphones: section 4.1"
+    },
+    {
+      "item": "train_lr_patience",
+      "observed": 2,
+      "expected": 2,
+      "status": "matched",
+      "source": "paper section 4.2; microphones: section 4.1"
+    },
+    {
+      "item": "train_lr_factor",
+      "observed": 0.5,
+      "expected": 0.5,
+      "status": "matched",
+      "source": "paper section 4.2; microphones: section 4.1"
+    },
+    {
+      "item": "train_lr_min_delta",
+      "observed": 0.0,
+      "expected": 0.0,
+      "status": "matched",
+      "source": "paper section 4.2; microphones: section 4.1"
+    },
+    {
+      "item": "encoder_stage_count",
+      "observed": 5,
+      "expected": 5,
+      "status": "matched",
+      "source": "section 4.2"
+    },
+    {
+      "item": "decoder_stage_count",
+      "observed": 5,
+      "expected": 5,
+      "status": "matched",
+      "source": "section 4.2"
+    },
+    {
+      "item": "encoder_kernels_time_frequency",
+      "observed": [
+        [
+          2,
+          5
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          3
+        ]
+      ],
+      "expected": [
+        [
+          2,
+          5
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          3
+        ]
+      ],
+      "status": "matched",
+      "source": "section 4.2, axes transposed to code convention"
+    },
+    {
+      "item": "encoder_strides_time_frequency",
+      "observed": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "expected": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "status": "matched",
+      "source": "section 4.2, axes transposed to code convention"
+    },
+    {
+      "item": "dfsmn_call_count",
+      "observed": 3,
+      "expected": 3,
+      "status": "matched",
+      "source": "section 4.2"
+    },
+    {
+      "item": "dfsmn_unique_called_modules",
+      "observed": 1,
+      "expected": 1,
+      "status": "matched",
+      "source": "section 4.2: shared weights"
+    },
+    {
+      "item": "dfsmn_hidden_width",
+      "observed": 64,
+      "expected": 64,
+      "status": "matched",
+      "source": "section 4.2"
+    },
+    {
+      "item": "lstm_count",
+      "observed": 2,
+      "expected": 2,
+      "status": "matched",
+      "source": "figure 1 and section 4.2"
+    },
+    {
+      "item": "lstm_hidden_widths",
+      "observed": [
+        64,
+        64
+      ],
+      "expected": [
+        64,
+        64
+      ],
+      "status": "matched",
+      "source": "section 4.2"
+    },
+    {
+      "item": "head_linear_count",
+      "observed": 1,
+      "expected": 1,
+      "status": "matched",
+      "source": "figure 1 and section 3.1"
+    }
+  ],
+  "model_observation": {
+    "device": "cpu",
+    "mode": "eval",
+    "seed": 417,
+    "input_shape": [
+      1,
+      9,
+      257,
+      8,
+      2
+    ],
+    "output_shape": [
+      1,
+      2,
+      9,
+      257
+    ],
+    "output_finite": true,
+    "stages": [
+      {
+        "stage": "encoder.0",
+        "input": [
+          1,
+          16,
+          9,
+          257
+        ],
+        "output": [
+          1,
+          64,
+          9,
+          127
+        ]
+      },
+      {
+        "stage": "encoder.1",
+        "input": [
+          1,
+          64,
+          9,
+          127
+        ],
+        "output": [
+          1,
+          64,
+          9,
+          63
+        ]
+      },
+      {
+        "stage": "encoder.2",
+        "input": [
+          1,
+          64,
+          9,
+          63
+        ],
+        "output": [
+          1,
+          64,
+          9,
+          31
+        ]
+      },
+      {
+        "stage": "encoder.3",
+        "input": [
+          1,
+          64,
+          9,
+          31
+        ],
+        "output": [
+          1,
+          64,
+          9,
+          15
+        ]
+      },
+      {
+        "stage": "encoder.4",
+        "input": [
+          1,
+          64,
+          9,
+          15
+        ],
+        "output": [
+          1,
+          64,
+          9,
+          7
+        ]
+      },
+      {
+        "stage": "decoder.0",
+        "input": [
+          1,
+          128,
+          9,
+          7
+        ],
+        "output": [
+          1,
+          64,
+          9,
+          15
+        ]
+      },
+      {
+        "stage": "decoder.1",
+        "input": [
+          1,
+          128,
+          9,
+          15
+        ],
+        "output": [
+          1,
+          64,
+          9,
+          31
+        ]
+      },
+      {
+        "stage": "decoder.2",
+        "input": [
+          1,
+          128,
+          9,
+          31
+        ],
+        "output": [
+          1,
+          64,
+          9,
+          63
+        ]
+      },
+      {
+        "stage": "decoder.3",
+        "input": [
+          1,
+          128,
+          9,
+          63
+        ],
+        "output": [
+          1,
+          64,
+          9,
+          127
+        ]
+      },
+      {
+        "stage": "decoder.4",
+        "input": [
+          1,
+          128,
+          9,
+          127
+        ],
+        "output": [
+          1,
+          64,
+          9,
+          257
+        ]
+      }
+    ],
+    "parameters": {
+      "total": 800674,
+      "by_component": {
+        "encoder": 255764,
+        "dfsmn": 9664,
+        "skip_attention": 41770,
+        "decoder": 425748,
+        "cred_output_projection": 0,
+        "beamforming_head": 67728
+      }
+    },
+    "dfsmn": {
+      "configured_layers": 3,
+      "observed_calls": 3,
+      "unique_called_modules": 1,
+      "hidden_width": 64,
+      "projection_width": 64,
+      "left_memory_order": 20,
+      "right_memory_order": 0
+    },
+    "lstms": [
+      {
+        "input_size": 64,
+        "hidden_size": 64,
+        "num_layers": 1,
+        "bidirectional": false
+      },
+      {
+        "input_size": 64,
+        "hidden_size": 64,
+        "num_layers": 1,
+        "bidirectional": false
+      }
+    ],
+    "head_linear_layers": [
+      {
+        "in_features": 64,
+        "out_features": 16
+      }
+    ],
+    "encoder_kernels_time_frequency": [
+      [
+        2,
+        5
+      ],
+      [
+        2,
+        3
+      ],
+      [
+        2,
+        3
+      ],
+      [
+        2,
+        3
+      ],
+      [
+        2,
+        3
+      ]
+    ],
+    "encoder_strides_time_frequency": [
+      [
+        1,
+        2
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        1,
+        2
+      ]
+    ]
+  },
+  "implementation_checks": [
+    {
+      "item": "output_shape",
+      "observed": [
+        1,
+        2,
+        9,
+        257
+      ],
+      "expected": [
+        1,
+        2,
+        9,
+        257
+      ],
+      "status": "matched",
+      "source": "preserved model interface"
+    },
+    {
+      "item": "finite_output",
+      "observed": true,
+      "expected": true,
+      "status": "matched",
+      "source": "bounded random-input CPU smoke check"
+    },
+    {
+      "item": "component_parameter_sum",
+      "observed": 800674,
+      "expected": 800674,
+      "status": "matched",
+      "source": "unique parameter counts"
+    }
+  ],
+  "paper_parameter_comparison": {
+    "reported_total_millions": 0.74,
+    "observed_total": 800674,
+    "matches_two_decimal_rounding": false,
+    "reported_without_skip_attention_millions": 0.73,
+    "observed_skip_attention_parameters": 41770,
+    "compatible_with_reported_ablation_rounding": false,
+    "note": "Rounding comparisons are necessary consistency checks, not proof of architecture identity."
+  },
+  "unresolved": [
+    {
+      "category": "architecture",
+      "item": "author_implementation",
+      "detail": "No verified author source/checkpoint/config was provided; equation checks do not establish author-code equivalence."
+    },
+    {
+      "category": "architecture",
+      "item": "dfsmn_unspecified_settings",
+      "detail": "Reference [16] supplies the cell equation; target-paper memory order, stride, projection width, right context and per-frequency versus flattened C*F layout remain unspecified. Current choices: order 20, stride 1, projection 64, no right context, per-frequency sequences."
+    },
+    {
+      "category": "architecture",
+      "item": "attention_and_fusion",
+      "detail": "SA kernel/padding/weight sharing, CA exact pooling and convolution details, FFT-convolution kernel/bias, skip concatenation versus addition and decoder boundary treatment are not fully specified."
+    },
+    {
+      "category": "architecture",
+      "item": "parameter_total",
+      "detail": "Observed 800,674 parameters; paper reports 0.74M. Current revision is expected to have 800,674, not the paper total."
+    },
+    {
+      "category": "architecture",
+      "item": "skip_attention_ablation",
+      "detail": "Observed 41,770 skip-attention parameters. Table 2 changes 0.73M to 0.74M; ordinary rounding permits an increment below 20,000, so 41,770 cannot explain it."
+    },
+    {
+      "category": "training",
+      "item": "recipe_and_loss",
+      "detail": "Loss, power compression (current default 0.5), batch/accumulation, crop, epochs, initialization, seeds, AMP and exact optimizer details are not all disclosed. Original training logic is preserved; this audit only compares declared defaults, not a training run or command-line overrides."
+    },
+    {
+      "category": "training",
+      "item": "preserved_training_implementation_issues",
+      "detail": "Original run_epoch attenuates incomplete final accumulation windows; Python random crops are not seeded by main; batched waveform padding changes short-utterance STFT boundaries. These remain unchanged under the user's training-preservation constraint. A strict xfail test reproduces the accumulation issue."
+    },
+    {
+      "category": "training",
+      "item": "end_to_end_causality",
+      "detail": "Global temporal pooling and symmetric SA use future context. A causal convolution/DFSMN flag does not certify streaming causality, and the target paper does not specify a fully causal proposed model."
+    },
+    {
+      "category": "data",
+      "item": "dataset_and_targets",
+      "detail": "No dataset is read. Exact utterance selection, split, RIR/SNR draws, array geometry, clean/early target construction and author evaluation subset are unverified."
+    },
+    {
+      "category": "metrics",
+      "item": "paper_benchmark",
+      "detail": "No trained checkpoint or benchmark evaluation is run. PESQ mode, alignment/length/level handling and exact Si-SNR conventions need author confirmation; unchanged evaluate_light.py is not a certificate of the paper's protocol."
+    },
+    {
+      "category": "metrics",
+      "item": "macs",
+      "detail": "The paper's 6.42 G MAC/s was not profiled; a parameter count or forward pass does not establish this compute figure."
+    }
+  ],
+  "paper_reference": {
+    "title": "A Lightweight Fourier Convolutional Attention Encoder for Multi-Channel Speech Enhancement",
+    "doi": "10.1109/ICASSP49357.2023.10095716",
+    "evaluation_set": "ConferencingSpeech2021 development test set",
+    "table_1_proposed": {
+      "PESQ": 2.359,
+      "STOI": 0.926,
+      "E_STOI": 0.847,
+      "Si_SNR": 11.1,
+      "parameters_millions": 0.74,
+      "MACs_G_per_second": 6.42
+    },
+    "results_are": "paper reference values, not measurements from this audit"
+  }
+}

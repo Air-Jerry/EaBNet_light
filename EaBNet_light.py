@@ -1,9 +1,15 @@
 """Lightweight EaBNet with Fourier Convolutional Attention Encoder.
 
-This module implements the method described in
+This module implements the disclosed architecture in
 "A Lightweight Fourier Convolutional Attention Encoder for Multi-Channel
 Speech Enhancement".  The public interface follows the original EaBNet.py:
 input STFT shape is (B, T, F, M, 2), output shape is (B, 2, T, F).
+
+See LIGHT_REPRODUCTION.md for the equation mapping and unresolved paper
+details. DFSMN follows the cited reference [16]; its memory order and tensor
+mapping, attention kernels and skip fusion are not an author-verified recipe.
+The ``is_causal`` option controls DFSMN memory only: global attention pools
+over time, so this network must not be described as a streaming causal model.
 """
 
 from typing import List, Sequence, Tuple
@@ -16,13 +22,12 @@ from torch.autograd import Variable
 
 
 def _match_tf(x: Tensor, ref: Tensor) -> Tensor:
-    """Crop/pad time-frequency axes of x to match ref."""
-    target_t, target_f = ref.shape[-2], ref.shape[-1]
-    x = x[..., :target_t, :target_f]
-    pad_t = target_t - x.shape[-2]
-    pad_f = target_f - x.shape[-1]
-    if pad_t > 0 or pad_f > 0:
-        x = nn.functional.pad(x, (0, max(0, pad_f), 0, max(0, pad_t)))
+    """Verify exact encoder/decoder geometry instead of hiding shape errors."""
+    if x.shape[-2:] != ref.shape[-2:]:
+        raise ValueError(
+            f"encoder/decoder TF mismatch: {tuple(x.shape[-2:])} vs "
+            f"{tuple(ref.shape[-2:])}; the paper uses a 512-point STFT (257 bins)"
+        )
     return x
 
 
@@ -177,6 +182,7 @@ class NormSwitch(nn.Module):
 
 
 class SpatialAttention(nn.Module):
+    """Equation (5); a 7x7 kernel is an inherited, undisclosed choice."""
     def __init__(self, kernel_size: int = 7):
         super().__init__()
         pad = kernel_size // 2
@@ -191,6 +197,7 @@ class SpatialAttention(nn.Module):
 
 
 class ChannelAttention(nn.Module):
+    """Equation (11), with TF pooling and channel concatenation."""
     def __init__(self, channels: int):
         super().__init__()
         self.conv = nn.Conv2d(channels * 2, channels, kernel_size=1, bias=True)
@@ -229,12 +236,19 @@ class FourierAttentionBlock(nn.Module):
 
     def forward(self, q: Tensor) -> Tensor:
         freq_len = q.shape[-1]
-        h = torch.fft.rfft(self.sa_q(q).float(), n=freq_len, dim=-1)
+        attended = self.sa_q(q)
+        # Half precision FFT does not support these odd frequency lengths.
+        # Preserve float64 for numerical reference/gradient checks.
+        fft_input = attended.float() if attended.dtype in (torch.float16, torch.bfloat16) else attended
+        h = torch.fft.rfft(fft_input, n=freq_len, dim=-1)
         h_ri = torch.cat([h.real, h.imag], dim=1).to(dtype=q.dtype)
         p = self.fft_conv(h_ri)
         z = self.sa_p(p)
         zr, zi = z.chunk(2, dim=1)
-        k = torch.fft.irfft(torch.complex(zr.float(), zi.float()), n=freq_len, dim=-1).to(dtype=q.dtype)
+        if zr.dtype in (torch.float16, torch.bfloat16):
+            zr, zi = zr.float(), zi.float()
+        # Explicit n is required: all five paper encoder resolutions are odd.
+        k = torch.fft.irfft(torch.complex(zr, zi), n=freq_len, dim=-1).to(dtype=q.dtype)
         return self.out_conv(k + self.ca(q))
 
 
@@ -271,7 +285,15 @@ class FCAD(nn.Module):
 
 
 class SharedDFSMN(nn.Module):
-    """Shared-weight DFSMN block with explicit temporal memory taps."""
+    """Reference [16], equations (1)-(5), reused across stack depth.
+
+    Section 4.2 specifies three weight-sharing layers with 64 hidden units,
+    but not their internals. We use the cited DFSMN definition: a linear
+    projection, tapped memory including a learned current-frame coefficient,
+    a skip between MEMORY outputs, then an affine transform and ReLU.
+    Memory order 20, stride 1 and independent per-frequency sequences with
+    shared parameters remain explicit choices not specified by the paper.
+    """
 
     def __init__(
         self,
@@ -286,16 +308,19 @@ class SharedDFSMN(nn.Module):
         self.is_causal = is_causal
         self.memory_size = int(memory_size)
         self.right_memory_size = 0 if is_causal else int(right_memory_size)
-        self.in_conv = nn.Conv1d(channels, hidden_units, kernel_size=1, bias=False)
-        self.norm1 = NormSwitch(norm_type, "1D", hidden_units)
-        self.prelu = nn.PReLU(hidden_units)
-        self.left_memory = nn.Parameter(torch.empty(hidden_units, self.memory_size))
+        if self.memory_size < 1 or self.right_memory_size < 0:
+            raise ValueError("DFSMN requires positive left memory and nonnegative right memory")
+        self.in_conv = nn.Conv1d(channels, hidden_units, kernel_size=1, bias=True)
+        # Index 0 is a_0; the identity p_t term is separate (reference Eq. 2).
+        self.left_memory = nn.Parameter(torch.empty(hidden_units, self.memory_size + 1))
         if self.right_memory_size > 0:
             self.right_memory = nn.Parameter(torch.empty(hidden_units, self.right_memory_size))
         else:
             self.register_parameter("right_memory", None)
-        self.norm2 = NormSwitch(norm_type, "1D", hidden_units)
-        self.out_conv = nn.Conv1d(hidden_units, channels, kernel_size=1, bias=False)
+        # norm_type is retained in the constructor for API compatibility.
+        # The cited DFSMN equations do not insert batch normalization here.
+        self.out_conv = nn.Conv1d(hidden_units, channels, kernel_size=1, bias=True)
+        self.activation = nn.ReLU()
         self.reset_parameters()
 
     def reset_parameters(self) -> None:
@@ -312,9 +337,9 @@ class SharedDFSMN(nn.Module):
         return nn.functional.pad(x, (0, steps))[..., steps:]
 
     def _memory_filter(self, x: Tensor) -> Tensor:
-        memory = x
-        for idx in range(self.memory_size):
-            delayed = self._shift_left(x, idx + 1)
+        memory = x * (1 + self.left_memory[:, 0].view(1, -1, 1))
+        for idx in range(1, self.memory_size + 1):
+            delayed = self._shift_left(x, idx)
             memory = memory + delayed * self.left_memory[:, idx].view(1, -1, 1)
         if self.right_memory is not None:
             for idx in range(self.right_memory_size):
@@ -322,15 +347,19 @@ class SharedDFSMN(nn.Module):
                 memory = memory + future * self.right_memory[:, idx].view(1, -1, 1)
         return memory
 
-    def forward(self, x: Tensor) -> Tensor:
+    def forward(
+        self, x: Tensor, previous_memory: Tensor = None, *, return_memory: bool = False
+    ):
         b_size, channels, seq_len, freq_len = x.shape
         y = x.permute(0, 3, 1, 2).reshape(b_size * freq_len, channels, seq_len)
-        residual = y
-        y = self.prelu(self.norm1(self.in_conv(y)))
-        y = self._memory_filter(y)
-        y = self.norm2(y)
-        y = self.out_conv(y) + residual
-        return y.reshape(b_size, freq_len, channels, seq_len).permute(0, 2, 3, 1).contiguous()
+        memory = self._memory_filter(self.in_conv(y))
+        if previous_memory is not None:
+            if previous_memory.shape != memory.shape:
+                raise ValueError("DFSMN consecutive memory shapes must match")
+            memory = memory + previous_memory
+        y = self.activation(self.out_conv(memory))
+        y = y.reshape(b_size, freq_len, channels, seq_len).permute(0, 2, 3, 1).contiguous()
+        return (y, memory) if return_memory else y
 
 
 class CRED(nn.Module):
@@ -360,15 +389,18 @@ class CRED(nn.Module):
             is_causal=is_causal,
         )
         self.dfsmn_layers = int(dfsmn_layers)
+        if self.dfsmn_layers < 1:
+            raise ValueError("dfsmn_layers must be positive")
         self.skip_attention = nn.ModuleList([SkipAttention(channels) for _ in range(5)])
 
         self.decoder = nn.ModuleList()
         for idx, kernel in enumerate(reversed(enc_kernels)):
             self.decoder.append(FCAD(channels * 2, channels, kernel, (1, 2), norm_type))
-        self.out_conv = nn.Sequential(
-            nn.Conv2d(channels, embed_dim, kernel_size=1, bias=False),
-            NormSwitch(norm_type, "2D", embed_dim),
-            nn.PReLU(embed_dim),
+        # Fig. 2 ends at the final FCAD. Do not append another Conv-BN-PReLU
+        # for the paper's 64-channel embedding. Retain a projection only for
+        # callers requesting a different, non-paper embedding dimension.
+        self.out_conv = nn.Identity() if channels == embed_dim else nn.Conv2d(
+            channels, embed_dim, kernel_size=1, bias=False
         )
 
     def forward(self, x: Tensor) -> Tensor:
@@ -378,8 +410,9 @@ class CRED(nn.Module):
             x = enc(x)
             skips.append(x)
 
+        memory = None
         for _ in range(self.dfsmn_layers):
-            x = self.dfsmn(x)
+            x, memory = self.dfsmn(x, memory, return_memory=True)
 
         for idx, dec in enumerate(self.decoder):
             skip = self.skip_attention[-(idx + 1)](skips[-(idx + 1)])
@@ -398,11 +431,8 @@ class LSTM_BF(nn.Module):
         self.hid_node = hid_node
         self.rnn1 = nn.LSTM(input_size=embed_dim, hidden_size=hid_node, batch_first=True, bidirectional=False)
         self.rnn2 = nn.LSTM(input_size=hid_node, hidden_size=hid_node, batch_first=True, bidirectional=False)
-        self.w_dnn = nn.Sequential(
-            nn.Linear(hid_node, hid_node),
-            nn.ReLU(True),
-            nn.Linear(hid_node, 2 * M),
-        )
+        # Fig. 1 / Section 3.1: two LSTMs followed by ONE linear layer.
+        self.w_dnn = nn.Linear(hid_node, 2 * M)
         self.norm = nn.LayerNorm([embed_dim])
 
     def forward(self, embed_x: Tensor) -> Tensor:
@@ -469,6 +499,12 @@ class EaBNet(nn.Module):
     def forward(self, inpt: Tensor) -> Tensor:
         if inpt.ndim == 4:
             inpt = inpt.unsqueeze(dim=-2)
+        if inpt.ndim != 5 or inpt.shape[-1] != 2:
+            raise ValueError("expected STFT shape (B, T, F, M, 2), with real/imaginary components")
+        if inpt.shape[2] != 257:
+            raise ValueError("the paper model requires a 512-point STFT (257 frequency bins)")
+        if not inpt.is_floating_point() or inpt.shape[0] < 1 or inpt.shape[1] < 1:
+            raise ValueError("expected a nonempty floating-point STFT tensor")
         b_size, seq_len, freq_len, mic_num, _ = inpt.shape
         if mic_num != self.M:
             raise ValueError(f"expected {self.M} microphones, got {mic_num}")
@@ -476,7 +512,8 @@ class EaBNet(nn.Module):
         x = inpt.transpose(-2, -1).contiguous()
         x = x.view(b_size, seq_len, freq_len, -1).permute(0, 3, 1, 2)
         x = self.cred(x)
-        x = _match_tf(x, torch.empty(b_size, 1, seq_len, freq_len, device=x.device, dtype=x.dtype))
+        if x.shape[-2:] != (seq_len, freq_len):
+            raise RuntimeError("CRED did not preserve the input STFT dimensions")
 
         if self.topo_type == "mimo":
             if self.bf_type == "lstm":
@@ -485,8 +522,9 @@ class EaBNet(nn.Module):
                 bf_w = self.bf_map(x)
                 bf_w = bf_w.view(b_size, self.M, 2, seq_len, freq_len).permute(0, 3, 4, 1, 2)
             bf_w_r, bf_w_i = bf_w[..., 0], bf_w[..., 1]
-            esti_x_r = (bf_w_r * inpt[..., 0] - bf_w_i * inpt[..., 1]).sum(dim=-1)
-            esti_x_i = (bf_w_r * inpt[..., 1] + bf_w_i * inpt[..., 0]).sum(dim=-1)
+            # Equation (2): sum_m conj(W_m) * X_m.
+            esti_x_r = (bf_w_r * inpt[..., 0] + bf_w_i * inpt[..., 1]).sum(dim=-1)
+            esti_x_i = (bf_w_r * inpt[..., 1] - bf_w_i * inpt[..., 0]).sum(dim=-1)
             return torch.stack((esti_x_r, esti_x_i), dim=1)
 
         bf_w = self.bf_map(x).permute(0, 2, 3, 1)

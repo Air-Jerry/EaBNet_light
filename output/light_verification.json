@@ -1,0 +1,52 @@
+{
+  "generated_at_utc": "2026-09-16T02:26:56.711896+00:00",
+  "scope": "synthetic implementation verification, not paper benchmark reproduction",
+  "pytest": {
+    "total": 38,
+    "passed": 36,
+    "skipped": 1,
+    "xfailed": 1,
+    "failed": 0,
+    "nonpassing": [
+      {
+        "name": "test_autocast_odd_frequency_fft_and_backward_are_finite[cuda-dtype1]",
+        "reason": "CUDA unavailable: GPU AMP has not been verified"
+      },
+      {
+        "name": "test_existing_final_accumulation_window_should_use_actual_batch_count",
+        "reason": "Existing run_epoch divides an incomplete final accumulation window by grad_accum_steps"
+      }
+    ]
+  },
+  "preserved_original_scripts": true,
+  "file_sha256": {
+    "EaBNet_light.py": "f338167a808ca3d297a4de741e7f942bdf377c87b40bbd2978d05f709bf029af",
+    "evaluate_light_paper.py": "fc031c72717098eae2e33b010a99bb4d73e1f1c69e1c6fd180d86a00a72e0f02",
+    "tests\\test_light_model.py": "8bfe50138129653db2456484392a97e1d18c7e75f2ff18dea2e7bcf4b66880d8",
+    "tests\\test_light_pipeline.py": "3cd9eed2df5d7bbfd57a60047c37ec69f4864a0592fb30286d8e0e1ebfa1781a",
+    "tests\\test_light_paper_evaluation.py": "c87b9c3e8cc515845e0e307493bc9d11b1b23270d8433c751fd34aec6bb13ff5"
+  },
+  "train_cli_smoke": {
+    "checkpoint_epoch": 2,
+    "default_model_parameters": 800674,
+    "resume_from_epoch": 1,
+    "train_and_val_same_synthetic_file": true,
+    "segment_seconds": 0.1,
+    "grad_accum_steps": 1
+  },
+  "evaluation_cli_smoke": {
+    "status": "complete",
+    "completed_samples": 1,
+    "target_gain_matching": false,
+    "metric_values_are_not_benchmark_evidence": true
+  },
+  "require_exact_exit_code": 2,
+  "exact_reproduction_verified": false,
+  "not_executed": [
+    "full_training",
+    "paper_benchmark",
+    "CUDA AMP",
+    "multi_GPU_DDP",
+    "paper_MACs_profile"
+  ]
+}
