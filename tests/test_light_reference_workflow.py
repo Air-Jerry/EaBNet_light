@@ -115,15 +115,20 @@ def test_separate_process_train_and_resume_preserve_optimizer_and_candidate_iden
     assert (run["directory"] / "best" / "best_model.pt").exists()
 
 
-def test_checkpoint_candidate_is_inferred_for_four_real_metrics(completed_candidate_training):
+@pytest.mark.parametrize("input_mode", ["metadata", "files"])
+def test_checkpoint_candidate_is_inferred_for_four_real_metrics(completed_candidate_training, input_mode):
     run = completed_candidate_training
-    output = run["directory"] / "metrics.json"
-    csv_output = run["directory"] / "metrics.csv"
-    run_cli("evaluate_light_candidate.py", ["--val-dir", run["dataset"],
+    output = run["directory"] / f"metrics_{input_mode}.json"
+    csv_output = run["directory"] / f"metrics_{input_mode}.csv"
+    input_arguments = (["--val-dir", run["dataset"]] if input_mode == "metadata" else
+                       ["--mixture-path", run["dataset"] / "mixture.wav",
+                        "--target-path", run["dataset"] / "target.wav"])
+    run_cli("evaluate_light_candidate.py", [*input_arguments,
             "--checkpoint", run["checkpoint_path"], "--device", "cpu",
             "--save-json", output, "--save-csv", csv_output])
     report = json.loads(output.read_text(encoding="utf-8"))
     assert report["status"] == "complete"
+    assert report["input_source"]["mode"] == input_mode
     assert report["structure_candidate"] == "cbam_flat_projection64"
     assert report["model_parameters"] == 735070
     assert report["expected_samples"] == report["completed_samples"] == 1

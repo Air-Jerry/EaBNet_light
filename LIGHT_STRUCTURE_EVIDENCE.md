@@ -56,6 +56,35 @@
 
 checkpoint 记录候选名、结构来源、公式差异、实现源码哈希与原训练 args。错误候选、源码变动、缺失必要配置会拒绝加载；续训前还核对前处理和模型配置。权重始终严格加载，支持原来的 `module.` 前缀。不同结构不会因为参数形状恰好相同而被当成同一模型。
 
+### 分别指定带噪输入和干净目标的位置
+
+评估时可以用 `--mixture-path` 和 `--target-path` 替代 `--val-dir`，无需创建或修改 metadata.csv。前者是带噪多通道语音，后者是与它对应的干净参考语音。两个参数可以都是单个 WAV/FLAC 文件，也可以都是目录；目录递归按相同相对路径和文件名主体配对，忽略扩展名。例如 `noisy/speaker1/001.wav` 对应 `clean/speaker1/001.flac`。缺少配对、重复键、大小写冲突会在加载模型前报错，不会按目录枚举顺序强行配对。
+
+Linux 服务器示例（替换前两个路径）：
+
+```bash
+MIXTURE_PATH="/实际路径/noisy"
+TARGET_PATH="/实际路径/clean"
+mkdir -p ./logs_cbam_flat_projection64
+CUDA_VISIBLE_DEVICES=0 nohup "$HOME/miniconda3/envs/EaBNet/bin/python" -u \
+  evaluate_light_candidate.py \
+  --candidate cbam_flat_projection64 \
+  --mixture-path "$MIXTURE_PATH" \
+  --target-path "$TARGET_PATH" \
+  --checkpoint ./bestmodels_cbam_flat_projection64/best_model.pt \
+  --device cuda \
+  --max-samples 0 \
+  --save-csv ./logs_cbam_flat_projection64/custom_metrics.csv \
+  --save-json ./logs_cbam_flat_projection64/custom_metrics.json \
+  > ./logs_cbam_flat_projection64/custom_eval.log 2>&1 &
+```
+
+`--mixture-dir` / `--target-dir` 是这两个路径参数的别名。目录内若是 `001_mix.wav` 与 `001_clean.wav`，再加 `--mixture-suffix _mix --target-suffix _clean`；后缀不包括扩展名，指定后要求各目录内每个音频文件都符合该后缀。单文件模式直接指定两个文件，允许文件名不同，不使用后缀参数。不规则配对仍可用原 `--val-dir` / metadata.csv 明确指定。
+
+当前候选要求输入至少8通道，取前8通道；输入和参考均为16 kHz，多通道参考沿用 checkpoint 的 `target_ref_mic`。参考必须与输入来自同一句且时间对齐；评估沿用共同长度截断，不会自动校正延时，也不使用参考做增益匹配。评估逐条处理完整语音，保留原四指标与带噪基线。CSV 写出每对实际路径；JSON 的 `input_source` 记录模式、配对规则和路径清单摘要，`selected_pairs_sha256` 记录实际选中清单的摘要（两者均不是音频内容哈希）。输出路径不可覆盖输入音频、checkpoint 或当前 metadata。
+
+这些选项仅扩展评估输入；原训练脚本、模型实现与 checkpoint 身份校验不变，已有训练权重可直接评估。
+
 这五个名称固定对应8麦、64通道/embedding、3层共享记忆、memory设置20、BN和MIMO LSTM头；新入口会拒绝改变这些结构维度，避免记录的来源说明与真实模型不一致。自定义结构继续使用原入口。
 
 候选间比较需要使用相同数据划分和预算，只用验证集作选择；不能选出测试分数最接近论文的结构，再反推它就是作者配置。

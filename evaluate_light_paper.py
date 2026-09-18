@@ -1,7 +1,7 @@
 """Strict, paired evaluation using the paper's four named metrics.
 
 The old evaluator and training pipeline are unchanged. This script uses their
-metadata.csv interface and model/STFT helpers, but never uses target-dependent
+metadata.csv interface (or explicit audio paths) and model/STFT helpers, but never uses target-dependent
 gain matching. STOI/E-STOI are fractions; SI-SNR is zero-mean, in dB. The paper
 does not identify its metric implementations, so exact score equivalence is not
 claimed. A failed item fails the run; partial results are never averaged.
@@ -27,9 +27,9 @@ from evaluate_light import (
     build_stft_batch,
     get_device,
     load_model,
-    load_records,
     reconstruct_waveform,
 )
+from light_eval_inputs import pairs_sha256, resolve_evaluation_inputs
 
 
 FRONTEND_FIELDS = ("sample_rate", "n_fft", "hop_length", "win_length", "power", "target_ref_mic")
@@ -129,31 +129,36 @@ def package_versions():
 
 
 def evaluate(args):
-    device = get_device(args.device)
     checkpoint = Path(args.checkpoint).resolve()
-    dataset = Path(args.val_dir).resolve()
     csv_path, json_path = Path(args.save_csv).resolve(), Path(args.save_json).resolve()
-    protected_inputs = {checkpoint, dataset / "metadata.csv"}
+    records, input_info, protected_inputs = resolve_evaluation_inputs(args)
+    protected_inputs = {checkpoint, *(path.resolve() for path in protected_inputs)}
     if csv_path == json_path or csv_path in protected_inputs or json_path in protected_inputs:
         raise ValueError("Output paths must be distinct and must not overwrite checkpoint or metadata.csv")
-    model, checkpoint_args = load_model(checkpoint, device)
-    config = resolve_frontend(args, checkpoint_args)
-    num_mics = int(model.M)
-    if not 0 <= args.mixture_ref_mic < num_mics:
-        raise ValueError(f"mixture_ref_mic must be in [0, {num_mics})")
-    records = load_records(dataset)
     audio_inputs = {path.resolve() for record in records
                     for path in (record.mixture_path, record.target_path)}
     if csv_path in audio_inputs or json_path in audio_inputs:
         raise ValueError("Output paths must not overwrite input audio")
     if len({record.sample_id for record in records}) != len(records):
         raise ValueError("metadata.csv contains duplicate sample_id values")
+    if args.max_samples < 0:
+        raise ValueError("max_samples must be nonnegative; use 0 for all pairs")
     if args.max_samples > 0:
         records = records[:args.max_samples]
+    device = get_device(args.device)
+    model, checkpoint_args = load_model(checkpoint, device)
+    config = resolve_frontend(args, checkpoint_args)
+    num_mics = int(model.M)
+    if not 0 <= args.mixture_ref_mic < num_mics:
+        raise ValueError(f"mixture_ref_mic must be in [0, {num_mics})")
     report = {
         "status": "running", "checkpoint": str(checkpoint),
-        "checkpoint_sha256": sha256_file(checkpoint), "dataset": str(dataset),
-        "metadata_sha256": sha256_file(dataset / "metadata.csv"),
+        "checkpoint_sha256": sha256_file(checkpoint),
+        "dataset": input_info.get("dataset", input_info.get("mixture_path")),
+        "metadata_sha256": input_info["metadata_sha256"],
+        "input_source": input_info,
+        "selected_pairs_sha256": pairs_sha256(records),
+        "selected_pairs_sha256_scope": "ordered sample IDs and resolved paths; not audio contents",
         "frontend": config, "num_mics": num_mics,
         "model_parameters": sum(parameter.numel() for parameter in model.parameters()),
         "checkpoint_model_config": {
@@ -254,7 +259,16 @@ def evaluate(args):
 
 def parse_args(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--val-dir", required=True, help="Directory containing the existing metadata.csv interface")
+    inputs = parser.add_mutually_exclusive_group(required=True)
+    inputs.add_argument("--val-dir", help="Directory containing the existing metadata.csv interface")
+    inputs.add_argument("--mixture-path", "--mixture-dir", dest="mixture_path",
+                        help="Multichannel noisy WAV/FLAC file or directory tree; requires --target-path")
+    parser.add_argument("--target-path", "--target-dir", dest="target_path",
+                        help="Clean reference file or directory tree paired with --mixture-path")
+    parser.add_argument("--mixture-suffix", default="",
+                        help="Directory mode: remove this suffix from noisy filename stems for pairing")
+    parser.add_argument("--target-suffix", default="",
+                        help="Directory mode: remove this suffix from clean filename stems for pairing")
     parser.add_argument("--checkpoint", required=True)
     parser.add_argument("--device", choices=("auto", "cpu", "cuda"), default="auto")
     parser.add_argument("--max-samples", type=int, default=0)
@@ -264,7 +278,14 @@ def parse_args(argv=None):
     for name in FRONTEND_FIELDS:
         parser.add_argument(f"--{name.replace('_', '-')}", type=float if name == "power" else int,
                             default=None, help="Must match checkpoint; required if missing from checkpoint")
-    return parser.parse_args(argv)
+    args = parser.parse_args(argv)
+    if args.mixture_path and not args.target_path:
+        parser.error("--mixture-path requires --target-path")
+    if args.val_dir and (args.target_path or args.mixture_suffix or args.target_suffix):
+        parser.error("--val-dir cannot be combined with direct audio paths or pairing suffixes")
+    if args.max_samples < 0:
+        parser.error("--max-samples must be nonnegative; use 0 for all pairs")
+    return args
 
 
 if __name__ == "__main__":
