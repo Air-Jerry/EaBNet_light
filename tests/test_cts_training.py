@@ -131,6 +131,18 @@ def test_finite_loss_with_nonfinite_gradient_cannot_silently_step():
     assert model.weight.item() == 0.25
 
 
+def test_legacy_dfsmn_memory_checkpoint_loads():
+    model = train_light.EaBNet(c=8, M=2, embed_dim=8, kd1=2, cd1=8, d_feat=16, p=2, q=1,
+                              dfsmn_layers=1, dfsmn_memory_size=4)
+    state = model.state_dict()
+    legacy_state = {key: value.clone() for key, value in state.items()}
+    left = legacy_state.pop('cred.dfsmn.left_memory')
+    legacy_state['cred.dfsmn.memory_conv.weight'] = left[:, :3].unsqueeze(1).contiguous()
+    train_light.load_model_state_flexible(model, legacy_state)
+    assert torch.equal(model.cred.dfsmn.left_memory[:, :3], left[:, :3])
+    assert torch.all(model.cred.dfsmn.left_memory[:, 3:] == 0)
+
+
 def _make_audio_dataset(root):
     for split in ('train', 'val'):
         directory = root / split

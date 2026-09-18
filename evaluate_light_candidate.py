@@ -1,5 +1,18 @@
 """Evaluate a candidate checkpoint with the existing strict four-metric path."""
 
+'''
+CUDA_VISIBLE_DEVICES=0 nohup "$HOME/miniconda3/envs/EaBNet/bin/python" -u \
+  evaluate_light_candidate.py \
+  --candidate cbam_flat_projection64 \
+  --val-dir /data/ssd1/jinrui.yang/validation_set \
+  --checkpoint ./bestmodels_cbam_flat_projection64/best_model.pt \
+  --device cuda \
+  --max-samples 0 \
+  --save-csv ./logs_cbam_flat_projection64/val_best_epoch30.csv \
+  --save-json ./logs_cbam_flat_projection64/val_best_epoch30.json \
+  > ./logs_cbam_flat_projection64/eval_best_epoch30.log 2>&1 &
+'''
+
 import argparse
 
 import evaluate_light as legacy

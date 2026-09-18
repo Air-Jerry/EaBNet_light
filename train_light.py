@@ -1,5 +1,5 @@
 """
-~/miniconda3/envs/EaBNet/bin/python -m torch.distributed.run --standalone --nproc_per_node=1 train_light.py \
+~/miniconda3/envs/EaBNet/bin/python -m torch.distributed.run --standalone --nproc_per_node=2 train_light.py \
   --parallel-mode auto \
   --resume yes \
   --resume-reset-lr yes \
@@ -11,14 +11,14 @@
   --use-amp yes \
   --model-amp yes \
   --grad-clip 3.0 \
-  --batch-size 1 \
-  --grad-accum-steps 4 \
+  --batch-size 4 \
+  --grad-accum-steps 1 \
   --num-workers 0 \
   --pin-memory no \
   --prefetch-factor 1 \
   --persistent-workers no \
   --strict-memory yes \
-  --segment-seconds 4 \
+  --segment-seconds 6 \
   --empty-cache-every-batches 0 \
   --allow-tf32 yes \
   --cudnn-benchmark yes \
@@ -26,7 +26,7 @@
   --val-dir /data/ssd1/jinrui.yang/validation_set
 """
 """
-tensorboard --logdir /data/ssd1/jinrui.yang/logs --port 6006 --host 0.0.0.0
+tensorboard --logdir ./logs --port 6006 --host 0.0.0.0
 """
 
 import argparse
@@ -463,7 +463,50 @@ def _strip_module_prefix(state_dict: Dict[str, torch.Tensor]) -> Dict[str, torch
 
 def load_model_state_flexible(model: torch.nn.Module, state_dict: Dict[str, torch.Tensor]) -> None:
     target = model.module if isinstance(model, (torch.nn.DataParallel, DDP)) else model
-    target.load_state_dict(_strip_module_prefix(state_dict), strict=True)
+    state_dict = _strip_module_prefix(state_dict)
+
+    legacy_memory_key = 'cred.dfsmn.memory_conv.weight'
+    current_memory_key = 'cred.dfsmn.left_memory'
+    if legacy_memory_key in state_dict and current_memory_key not in state_dict:
+        legacy_weight = state_dict.pop(legacy_memory_key)
+        target_state = target.state_dict()
+        if current_memory_key in target_state:
+            expected_shape = tuple(target_state[current_memory_key].shape)
+            candidate = legacy_weight
+            while candidate.ndim > 0 and candidate.shape and 1 in candidate.shape:
+                squeeze_dims = [idx for idx, size in enumerate(candidate.shape) if size == 1]
+                if not squeeze_dims:
+                    break
+                candidate = candidate.squeeze(dim=squeeze_dims[0])
+            if candidate.ndim == 3:
+                candidate = candidate.reshape(candidate.shape[0], -1)
+            if candidate.ndim == 1:
+                candidate = candidate.reshape(1, -1)
+            if candidate.ndim == 2 and candidate.shape != expected_shape:
+                if candidate.shape[0] == expected_shape[0] and candidate.shape[1] <= expected_shape[1]:
+                    padded = torch.zeros(expected_shape, device=candidate.device, dtype=candidate.dtype)
+                    padded[:, :candidate.shape[1]] = candidate
+                    candidate = padded
+                elif candidate.shape[1] == expected_shape[0] and candidate.shape[0] <= expected_shape[1]:
+                    transposed = candidate.T
+                    padded = torch.zeros(expected_shape, device=candidate.device, dtype=candidate.dtype)
+                    padded[:, :transposed.shape[1]] = transposed
+                    candidate = padded
+                elif candidate.numel() == expected_shape[0] * expected_shape[1]:
+                    candidate = candidate.reshape(expected_shape)
+                else:
+                    candidate = candidate[:expected_shape[0], :expected_shape[1]]
+                    if candidate.shape != expected_shape:
+                        padded = torch.zeros(expected_shape, device=candidate.device, dtype=candidate.dtype)
+                        padded[:candidate.shape[0], :candidate.shape[1]] = candidate
+                        candidate = padded
+            if candidate.shape != expected_shape:
+                candidate = candidate.to(target_state[current_memory_key].dtype)
+                if candidate.numel() == expected_shape[0] * expected_shape[1]:
+                    candidate = candidate.reshape(expected_shape)
+            state_dict[current_memory_key] = candidate.to(target_state[current_memory_key].dtype)
+
+    target.load_state_dict(state_dict, strict=True)
 
 
 def save_checkpoint(path: Path, state: Dict[str, object]) -> None:
