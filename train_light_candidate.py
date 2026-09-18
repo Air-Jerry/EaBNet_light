@@ -1,5 +1,52 @@
 """Train an explicitly named hypothesis through unchanged train_light.main."""
 
+'''
+查看日志
+tail -f ./logs_cbam_flat_projection64/full_train_2gpu.log
+'''
+
+''''
+TRAIN_PY="$HOME/miniconda3/envs/EaBNet/bin/python"
+TRAIN_DIR="/data/ssd1/jinrui.yang/training_set"
+VAL_DIR="/data/ssd1/jinrui.yang/validation_set"
+
+mkdir -p ./logs_cbam_flat_projection64
+
+CUDA_VISIBLE_DEVICES=0,1 nohup "$HOME/miniconda3/envs/EaBNet/bin/python" -u \
+  -m torch.distributed.run \
+  --standalone \
+  --nproc_per_node=2 \
+  train_light_candidate.py \
+  --candidate cbam_flat_projection64 \
+  --train-dir /data/ssd1/jinrui.yang/training_set \
+  --val-dir /data/ssd1/jinrui.yang/validation_set \
+  --checkpoint-dir ./checkpoints_cbam_flat_projection64 \
+  --best-dir ./bestmodels_cbam_flat_projection64 \
+  --log-dir ./logs_cbam_flat_projection64 \
+  --num-epochs 30 \
+  --resume yes \
+  --resume-reset-lr no \
+  --parallel-mode ddp \
+  --batch-size 4 \
+  --grad-accum-steps 1 \
+  --num-workers 4 \
+  --segment-seconds 6 \
+  --learning-rate 0.001 \
+  --lr-reduce-metric val \
+  --train-lr-patience 2 \
+  --train-lr-factor 0.5 \
+  --train-lr-min-delta 0 \
+  --use-amp yes \
+  --model-amp yes \
+  --allow-tf32 yes \
+  --stop-on-non-finite yes \
+  --save-every 5 \
+  --strict-memory no \
+  > ./logs_cbam_flat_projection64/full_train_2gpu.log 2>&1 &
+
+'''
+
+
 import argparse
 from pathlib import Path
 
