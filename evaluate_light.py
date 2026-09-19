@@ -566,6 +566,160 @@ def evaluate(args):
 
 
 
+def _discover_checkpoints(checkpoint_dir):
+    directory = Path(checkpoint_dir).expanduser().resolve()
+    if not directory.is_dir():
+        raise ValueError(f"Checkpoint directory does not exist: {directory}")
+    candidates = sorted(
+        (path for path in directory.iterdir()
+         if path.is_file() and (path.match("model_epoch_*.pt")
+                                or path.name in ("checkpoint_latest.pt", "best_model.pt"))),
+        key=lambda path: (path.name.casefold(), path.name),
+    )
+    checkpoints = list(dict.fromkeys(path.resolve() for path in candidates))
+    if not checkpoints:
+        raise ValueError(f"No model_epoch_*.pt, checkpoint_latest.pt or best_model.pt files found: {directory}")
+    return checkpoints
+
+
+def _checkpoint_sweep_plan(args):
+    if not getattr(args, "checkpoint_dir", None) or getattr(args, "checkpoint", None):
+        raise ValueError("Checkpoint selection requires --checkpoint-dir without --checkpoint")
+    if not args.val_dir or args.mixture_path:
+        raise ValueError("Checkpoint selection requires --val-dir with independent validation metadata.csv")
+    if args.save_samples != "no" or args.match_estimate_level != "no":
+        raise ValueError("Checkpoint selection requires --save-samples no and --match-estimate-level no")
+    checkpoints = _discover_checkpoints(args.checkpoint_dir)
+    records, input_info, protected_inputs = resolve_evaluation_inputs(args)
+    root = Path(args.estimate_dir).expanduser().resolve()
+    ranking_csv = (Path(args.save_csv).expanduser() if args.save_csv else root / "checkpoint_ranking.csv").resolve()
+    ranking_json = (Path(args.save_json).expanduser() if args.save_json else root / "checkpoint_ranking.json").resolve()
+    protected = {path.resolve() for path in protected_inputs} | set(checkpoints)
+    protected.update(path.resolve() for record in records for path in (record.mixture_path, record.target_path))
+    outputs = [ranking_csv, ranking_json]
+    runs = []
+    for checkpoint in checkpoints:
+        run_args = argparse.Namespace(**vars(args))
+        safe_stem = "".join(character if character.isalnum() or character in "_-" else "_"
+                            for character in checkpoint.stem)
+        run_args.checkpoint = str(checkpoint)
+        run_args.checkpoint_dir = None
+        run_args.estimate_dir = str(root / "checkpoints" / safe_stem)
+        run_args.save_csv = ""
+        run_args.save_json = ""
+        selected, _, metadata_path, _, summary_path = _output_plan(run_args, records, protected, input_info)
+        outputs.extend((metadata_path, summary_path))
+        runs.append((run_args, summary_path))
+    if len(set(outputs)) != len(outputs):
+        raise ValueError("Checkpoint selection output paths must be distinct")
+    output_set = set(outputs)
+    for path in outputs:
+        if path in protected or any(path in source.parents for source in protected):
+            raise ValueError(f"Output paths must not overwrite input audio, checkpoint or metadata.csv: {path}")
+        if path.is_dir():
+            raise ValueError(f"Output file path is an existing directory: {path}")
+        if any(parent in output_set or parent in protected or parent.is_file() for parent in path.parents):
+            raise ValueError(f"Output file/directory path collision: {path}")
+    return runs, selected, input_info, ranking_csv, ranking_json
+
+
+def _validate_checkpoint_result(report, selected, input_info, baseline):
+    if report.get("status") != "complete":
+        raise ValueError("Checkpoint evaluation did not complete")
+    if report.get("expected_samples") != len(selected) or report.get("completed_samples") != len(selected):
+        raise ValueError("Checkpoint evaluation sample count differs from the selected validation manifest")
+    if report.get("selected_pairs_sha256") != pairs_sha256(selected):
+        raise ValueError("Checkpoint evaluation selected_pairs_sha256 differs from the validation manifest")
+    if report.get("metadata_sha256") != input_info["metadata_sha256"] or report.get("input_source") != input_info:
+        raise ValueError("Validation metadata or resolved input paths changed during checkpoint selection")
+    means = report.get("mean")
+    for kind in ("enhanced", "noisy"):
+        if not isinstance(means, dict) or not isinstance(means.get(kind), dict):
+            raise ValueError("Checkpoint evaluation is missing metric means")
+        for metric in METRICS:
+            value = means[kind].get(metric)
+            if isinstance(value, bool) or not isinstance(value, (float, int)) or not math.isfinite(value):
+                raise ValueError(f"Checkpoint evaluation has an invalid {kind} {metric} mean")
+    identity_fields = ("dataset", "frontend", "frontend_protocol", "num_mics", "checkpoint_model_config",
+                       "model_parameters", "structure_candidate", "candidate_implementation_sha256",
+                       "candidate_evidence", "mixture_ref_mic", "device", "versions", "metric_protocol")
+    for field in identity_fields:
+        if field not in report:
+            raise ValueError(f"Checkpoint evaluation lacks comparison identity field: {field}")
+        if baseline is not None and report[field] != baseline[field]:
+            raise ValueError(f"Checkpoints are not comparable: {field} differs")
+    if baseline is not None:
+        for metric in METRICS:
+            if not math.isclose(means["noisy"][metric], baseline["mean"]["noisy"][metric],
+                                rel_tol=1e-9, abs_tol=1e-9):
+                raise ValueError(f"Checkpoints are not comparable: noisy {metric} baseline differs")
+
+
+def _write_checkpoint_ranking(report, csv_path, json_path):
+    metric_fields = [f"{kind}_{metric}" for kind in ("enhanced", "noisy") for metric in METRICS]
+    fields = ["rank", "checkpoint", "checkpoint_sha256", "status", "expected_samples", "completed_samples",
+              "selected_pairs_sha256", "summary_json", "error", *metric_fields]
+    csv_path.parent.mkdir(parents=True, exist_ok=True)
+    with csv_path.open("w", newline="", encoding="utf-8") as handle:
+        writer = csv.DictWriter(handle, fieldnames=fields)
+        writer.writeheader()
+        for index, result in enumerate(report["results"], 1):
+            row = {field: result.get(field, "") for field in fields if field not in metric_fields}
+            row["rank"] = index if report["status"] == "complete" else ""
+            if result.get("mean") is not None:
+                row.update({f"{kind}_{metric}": result["mean"][kind][metric]
+                            for kind in ("enhanced", "noisy") for metric in METRICS})
+            writer.writerow(row)
+    json_path.parent.mkdir(parents=True, exist_ok=True)
+    json_path.write_text(json.dumps(report, indent=2, ensure_ascii=False, allow_nan=False) + "\n", encoding="utf-8")
+
+
+def evaluate_checkpoints(args):
+    runs, selected, input_info, ranking_csv, ranking_json = _checkpoint_sweep_plan(args)
+    report = {
+        "status": "running", "best_checkpoint": None, "selection_metric": "mean enhanced PESQ",
+        "selection_scope": "validation checkpoint selection; evaluate the selected checkpoint on the held-out test set once",
+        "checkpoint_dir": str(Path(args.checkpoint_dir).expanduser().resolve()),
+        "dataset": input_info["dataset"], "input_source": input_info,
+        "metadata_sha256": input_info["metadata_sha256"], "selected_pairs_sha256": pairs_sha256(selected),
+        "selected_pairs_sha256_scope": "ordered sample IDs and resolved paths; not audio contents",
+        "expected_samples": len(selected), "expected_checkpoints": len(runs), "completed_checkpoints": 0,
+        "results": [], "outputs": {"ranking_csv": str(ranking_csv), "ranking_json": str(ranking_json)},
+    }
+    baseline = None
+    try:
+        for index, (run_args, summary_path) in enumerate(runs, 1):
+            result = {"checkpoint": run_args.checkpoint, "status": "running", "mean": None,
+                      "summary_json": str(summary_path), "expected_samples": len(selected), "completed_samples": 0,
+                      "selected_pairs_sha256": pairs_sha256(selected)}
+            report["results"].append(result)
+            print(f"Validation checkpoint {index}/{len(runs)}: {run_args.checkpoint}", flush=True)
+            try:
+                evaluated = evaluate(run_args)
+                _validate_checkpoint_result(evaluated, selected, input_info, baseline)
+                if Path(evaluated.get("checkpoint", "")).resolve() != Path(run_args.checkpoint):
+                    raise ValueError("Evaluation report checkpoint differs from the requested checkpoint")
+                result.update({key: evaluated[key] for key in ("checkpoint_sha256", "status", "mean",
+                              "expected_samples", "completed_samples", "selected_pairs_sha256")})
+                if baseline is None:
+                    baseline = evaluated
+                report["completed_checkpoints"] += 1
+            except Exception as exc:
+                result.update(status="failed", error=f"{type(exc).__name__}: {exc}")
+                raise
+        report["results"].sort(key=lambda item: (-item["mean"]["enhanced"]["pesq"], item["checkpoint"]))
+        report["best_checkpoint"] = report["results"][0]["checkpoint"]
+        report["status"] = "complete"
+    except Exception as exc:
+        report.update(status="failed", best_checkpoint=None, error=f"{type(exc).__name__}: {exc}")
+        raise
+    finally:
+        _write_checkpoint_ranking(report, ranking_csv, ranking_json)
+    print(f"Best validation PESQ checkpoint: {report['best_checkpoint']}", flush=True)
+    print(f"Checkpoint ranking: {ranking_csv}\nSummary: {ranking_json}", flush=True)
+    return report
+
+
 def parse_args(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     inputs = parser.add_mutually_exclusive_group()
@@ -574,13 +728,15 @@ def parse_args(argv=None):
     parser.add_argument("--target-path", "--target-dir", dest="target_path", help="Paired clean reference file or directory")
     parser.add_argument("--mixture-suffix", default="")
     parser.add_argument("--target-suffix", default="")
-    parser.add_argument("--checkpoint", default="./bestmodels_cbam_flat_projection64/best_model.pt")
+    checkpoints = parser.add_mutually_exclusive_group()
+    checkpoints.add_argument("--checkpoint", help="Single checkpoint; defaults to the existing best model")
+    checkpoints.add_argument("--checkpoint-dir", help="Select saved checkpoints by PESQ on independent validation metadata")
     parser.add_argument("--candidate", choices=all_reference_candidates(), help="Optional expected candidate; auto-detected from checkpoint")
     parser.add_argument("--device", choices=("auto", "cpu", "cuda"), default="auto")
     parser.add_argument("--max-samples", type=int, default=0, help="First N records; 0 means all")
     parser.add_argument("--mixture-ref-mic", type=int, default=0, help="Channel used for noisy metrics and saved mono mixture")
     parser.add_argument("--estimate-dir", default="./estimate_set_cbam_flat_projection64")
-    parser.add_argument("--save-samples", choices=("yes", "no"), default="yes")
+    parser.add_argument("--save-samples", choices=("yes", "no"), default=None)
     parser.add_argument("--save-csv", default="", help="Optional additional per-sample CSV")
     parser.add_argument("--save-json", default="", help="Summary JSON; default estimate-dir/summary.json")
     parser.add_argument("--match-estimate-level", choices=("yes", "no"), default="no",
@@ -590,6 +746,19 @@ def parse_args(argv=None):
         parser.add_argument(f"--{name.replace('_', '-')}", type=float if name == "power" else int,
                             default=None, help="Read from checkpoint; explicit value must agree")
     args = parser.parse_args(argv)
+    if args.checkpoint_dir:
+        if not args.val_dir or args.mixture_path:
+            parser.error("--checkpoint-dir requires explicit --val-dir for independent validation metadata.csv")
+        if args.save_samples == "yes":
+            parser.error("--checkpoint-dir requires --save-samples no")
+        if args.match_estimate_level != "no":
+            parser.error("--checkpoint-dir requires --match-estimate-level no")
+        args.save_samples = "no"
+    else:
+        if args.checkpoint is None:
+            args.checkpoint = "./bestmodels_cbam_flat_projection64/best_model.pt"
+        if args.save_samples is None:
+            args.save_samples = "yes"
     if args.mixture_path and not args.target_path:
         parser.error("--mixture-path requires --target-path")
     if not args.mixture_path and (args.target_path or args.mixture_suffix or args.target_suffix):
@@ -604,7 +773,8 @@ def parse_args(argv=None):
 
 
 def main(argv=None):
-    return evaluate(parse_args(argv))
+    args = parse_args(argv)
+    return evaluate_checkpoints(args) if args.checkpoint_dir else evaluate(args)
 
 
 if __name__ == "__main__":

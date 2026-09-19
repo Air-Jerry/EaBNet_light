@@ -117,3 +117,39 @@ CUDA_VISIBLE_DEVICES=0 nohup "$HOME/miniconda3/envs/EaBNet/bin/python" -u \
 当前本地环境仅 CPU，未提供论文训练与测试数据，不能在此核验 GPU AMP/DDP 或论文性能基准。用户提供的服务器日志显示 `cbam_flat_projection64` 双卡训练已完成到第30轮，最后一轮验证 loss 为0.023551；这是训练日志记录，尚不能代替真实测试集的增强指标或论文复现认证。原训练尾窗梯度累积等已知保留问题仍见 `LIGHT_REPRODUCTION.md`，它们不会因为新增候选自动消失。
 
 [IEEE 官方报告页](https://resourcecenter.ieee.org/conferences/icassp-2023/spsicassp23vid0845)和[UWA 论文记录](https://research-repository.uwa.edu.au/en/publications/a-lightweight-fourier-convolutional-attention-encoder-for-multi-c/)都确认0.74M；本轮未找到可确认的目标作者源码或补充配置。先前检索片段的0.72M没有核实为真实版本，未用于改动约束。没有联系作者、购买或绕过受限材料。
+
+## 同一数据集 PESQ 超过3.4的性能目标
+
+用户提供的600条评估截图中，当前候选的 PESQ 为2.689355，原始 mixture 为1.088096；用户确认对照使用相同训练集，3.4来自同一批测试数据、同一参考和评估方式下的成绩。差距约0.711，不能由论文表1的2.359是否达到来替代判断，也不能保证增加轮数或修改一项损失就能消除差距。按用户要求，不以取得对照模型名称作为继续工作的前提。
+
+当前 `best_model.pt` 按验证集的压缩复数/幅度 MSE 保存，最低频谱损失不保证最高 PESQ。统一评估入口新增 `--checkpoint-dir`，可在**独立验证集**上比较同一实验目录中的 `model_epoch_*.pt`、`checkpoint_latest.pt` 和 `best_model.pt`，按平均 PESQ 排序，不改训练循环、不改权重，也不复制或覆盖训练目录里的最佳模型。600条最终测试音频用于确认最终结果，不参与 checkpoint 或损失超参数选择。
+
+```bash
+mkdir -p ./logs_cbam_flat_projection64
+CUDA_VISIBLE_DEVICES=0 nohup "$HOME/miniconda3/envs/EaBNet/bin/python" -u \
+  evaluate_light.py \
+  --checkpoint-dir ./checkpoints_cbam_flat_projection64 \
+  --candidate cbam_flat_projection64 \
+  --val-dir /data/ssd1/jinrui.yang/validation_set \
+  --device cuda \
+  --max-samples 0 \
+  --save-samples no \
+  --match-estimate-level no \
+  --estimate-dir ./estimate_set_cbam_flat_projection64_selection \
+  --save-csv ./logs_cbam_flat_projection64/checkpoint_ranking.csv \
+  --save-json ./logs_cbam_flat_projection64/checkpoint_ranking.json \
+  > ./logs_cbam_flat_projection64/checkpoint_selection.log 2>&1 &
+```
+
+每个 checkpoint 的逐样本结果与汇总分开放在 `--estimate-dir` 下，顶层 JSON 的 `best_checkpoint` 给出验证集 PESQ 最高的权重路径。参与比较的音频清单、前处理和指标协议必须一致；任何 checkpoint 评估失败时，不给出最佳模型结论。该比较需分别推理每个 checkpoint，耗时会随 checkpoint 数量增加。初步排错可用 `--max-samples`，最终选择应使用完整验证集，避免前 N 条的排列偏差。
+
+后续按证据推进：
+
+1. 先保留当前第30轮权重，完成验证集 PESQ 比较，确认当前所谓“最佳”是否实际最优。
+2. 服务器日志显示第30轮仍更新最低验证 loss，尚不能断言已经收敛。可沿用上次实际双卡配置，将 `--num-epochs` 改为60、`--save-every` 改为1，并保持 `--resume yes --resume-reset-lr no`。这表示从第31轮继续到第60轮，恢复优化器及学习率；不是从头训练，也不把学习率重置到1e-3。是否保留续训结果由独立验证集 PESQ 决定。
+3. 如果验证集 PESQ 平台持续存在，再检查训练集与目标条件的噪声、SNR、混响、目标定义和阵列几何；训练/验证都偏低与仅验证偏低需要不同处理。新增样本须使用独立语音和噪声片段，避免测试数据泄漏。
+4. 确认数据与训练预算后，再把重建波形损失或感知指标代理训练作为独立实验，与原始 MSE 配方对照。此类改动属于性能改进，不自动等同于论文复现；损失权重、结构容量与能否达到3.4都必须通过实测确定。
+
+全部比较保持 `--match-estimate-level no` 和同一 PESQ 模式；参考增益匹配只改变评估协议，不能作为模型本身达到目标的依据。
+
+该选模扩展与原单模型评估的定向回归共109项通过；另有2项真实符号链接保护测试因本地 Windows 不允许创建符号链接而跳过。检查了 checkpoint 排序、协议/样本清单一致性、失败中止、输入覆盖保护、真实候选权重的独立进程五指标评估。原评估文件的12条注释及6段文档字符串逐项保持，训练和模型源码未改。
