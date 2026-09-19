@@ -7,15 +7,82 @@ trees with matching relative stems.  Resolution never modifies audio files.
 
 from __future__ import annotations
 
+import csv
 import hashlib
 import json
+from dataclasses import dataclass
 from pathlib import Path
-from typing import Any
-
-from evaluate_light import SampleRecord, load_records
+from typing import Any, List
 
 
 _AUDIO_EXTENSIONS = frozenset({".wav", ".flac"})
+
+
+@dataclass
+class SampleRecord:
+    sample_id: int
+    mixture_path: Path
+    target_path: Path
+
+
+def resolve_record_path(root_dir: Path, relative_path: str) -> Path:
+    normalized = relative_path.replace("\\", "/").strip()
+    path_obj = Path(normalized)
+
+    if path_obj.is_absolute() and path_obj.exists():
+        return path_obj.resolve()
+
+    # Case 1: path relative to val_dir (preferred layout).
+    candidate = (root_dir / path_obj).resolve()
+    if candidate.exists():
+        return candidate
+
+    # Case 2: path relative to current working directory / workspace root.
+    cwd_candidate = Path(normalized).resolve()
+    if cwd_candidate.exists():
+        return cwd_candidate
+
+    # Case 3: metadata path contains out-root + split dir prefix,
+    # e.g. newset_xxx/training_set/mixture/a.wav while root_dir already points to training_set.
+    parts = path_obj.parts
+    for split_name in ("training_set", "validation_set"):
+        if split_name in parts:
+            idx = parts.index(split_name)
+            tail = parts[idx + 1 :]
+            if tail:
+                split_candidate = (root_dir / Path(*tail)).resolve()
+                if split_candidate.exists():
+                    return split_candidate
+
+    # Last-resort fallback by basename.
+    fallback = (root_dir / path_obj.name).resolve()
+    if fallback.exists():
+        return fallback
+    raise FileNotFoundError(f"Cannot resolve path from metadata: {relative_path}")
+
+
+def load_records(val_dir: Path) -> List[SampleRecord]:
+    metadata_path = val_dir / "metadata.csv"
+    if not metadata_path.exists():
+        raise FileNotFoundError(f"metadata.csv not found under {val_dir}")
+
+    records: List[SampleRecord] = []
+    with metadata_path.open("r", newline="", encoding="utf-8") as handle:
+        reader = csv.DictReader(handle)
+        for row in reader:
+            mixture_path = resolve_record_path(metadata_path.parent, row["mixture_path"])
+            target_path = resolve_record_path(metadata_path.parent, row["target_path"])
+            records.append(
+                SampleRecord(
+                    sample_id=int(row["sample_id"]),
+                    mixture_path=mixture_path,
+                    target_path=target_path,
+                )
+            )
+
+    if not records:
+        raise RuntimeError(f"No validation records found in {metadata_path}")
+    return records
 
 
 def _examples(values: list[str] | set[str]) -> str:

@@ -59,7 +59,7 @@ def check(name, observed, expected, source):
 
 def file_fingerprints():
     result = {}
-    for name in ("EaBNet_light.py", "train_light.py", "evaluate_light.py", "evaluate_light_paper.py", "audit_light.py"):
+    for name in ("EaBNet_light.py", "train_light.py", "evaluate_light.py", "light_eval_inputs.py", "audit_light.py"):
         digest = hashlib.sha256((ROOT / name).read_bytes()).hexdigest().upper()
         result[name] = {"path": str(ROOT / name), "sha256": digest}
         if name in PRESERVED_HASHES:

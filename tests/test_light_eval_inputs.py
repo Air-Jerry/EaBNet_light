@@ -10,8 +10,7 @@ import pytest
 import soundfile as sf
 import torch
 
-import evaluate_light_candidate as candidate
-import evaluate_light_paper as paper
+import evaluate_light as paper
 from evaluate_light import load_records
 from light_eval_inputs import resolve_evaluation_inputs
 
@@ -138,7 +137,6 @@ def test_invalid_explicit_locations_fail_before_evaluation(tmp_path, mode):
 
 
 @pytest.mark.parametrize("options", [
-    [],
     ["--mixture-path", "mixture"],
     ["--target-path", "target"],
     ["--val-dir", "data", "--mixture-path", "mixture", "--target-path", "target"],
@@ -157,6 +155,11 @@ def test_directory_cli_aliases_use_same_destinations():
     assert args.mixture_path == "mixture"
     assert args.target_path == "target"
     assert args.val_dir is None
+
+
+def test_no_input_options_keep_original_validation_directory_default():
+    args = paper.parse_args(["--checkpoint", "model.pt"])
+    assert args.val_dir == "./validation_set"
 
 
 class ReferencePassThrough(torch.nn.Module):
@@ -186,13 +189,14 @@ def real_audio_case(tmp_path, monkeypatch):
     metadata(tmp_path, [(1, "mixture/one.wav", "target/one.wav")])
     checkpoint = tmp_path / "checkpoint.pt"
     checkpoint.write_bytes(b"deterministic checkpoint hash fixture")
-    monkeypatch.setattr(paper, "load_model", lambda *_: (ReferencePassThrough().eval(), saved_frontend()))
+    monkeypatch.setattr(paper, "load_model", lambda *_, **__: (ReferencePassThrough().eval(), saved_frontend()))
     return tmp_path, mix, target, checkpoint
 
 
 def evaluation_cli(case, name, inputs):
     root, _, _, checkpoint = case
     return ["--checkpoint", str(checkpoint), "--device", "cpu", *inputs,
+            "--estimate-dir", str(root / (name + "_estimates")),
             "--save-csv", str(root / (name + ".csv")),
             "--save-json", str(root / (name + ".json"))]
 
@@ -231,19 +235,17 @@ def test_real_metrics_are_identical_for_metadata_files_and_directories(real_audi
                     reports["metadata"]["mean"][prefix][metric], abs=1e-8)
 
 
-def test_candidate_wrapper_accepts_explicit_files(real_audio_case, monkeypatch):
+def test_unified_entrypoint_accepts_explicit_candidate_and_files(real_audio_case, monkeypatch):
     root, mix, target, _ = real_audio_case
     seen = []
     def candidate_loader(path, device, expected_candidate):
         seen.append(expected_candidate)
         return ReferencePassThrough().eval(), saved_frontend()
-    monkeypatch.setattr(candidate, "load_candidate_model", candidate_loader)
-    original_loader = paper.load_model
-    report = candidate.main(["--candidate", "cbam_flat_projection64", *evaluation_cli(
+    monkeypatch.setattr(paper, "load_model", candidate_loader)
+    report = paper.main(["--candidate", "cbam_flat_projection64", *evaluation_cli(
         real_audio_case, "candidate", ["--mixture-path", str(mix), "--target-path", str(target)])])
     assert report["status"] == "complete"
     assert seen == ["cbam_flat_projection64"]
-    assert paper.load_model is original_loader
 
 
 @pytest.mark.parametrize("destination", ["mixture", "target", "checkpoint", "unselected_mixture", "unselected_target"])
@@ -265,3 +267,53 @@ def test_output_paths_cannot_overwrite_any_input_even_after_sample_limit(
     assert protected.read_bytes() == before
     assert not (root / "protected.csv").exists()
     assert not (root / "protected.json").exists()
+
+
+def test_estimate_metadata_cannot_overwrite_input_manifest(real_audio_case):
+    root, _, _, _ = real_audio_case
+    before = (root / "metadata.csv").read_bytes()
+    options = evaluation_cli(real_audio_case, "collision", ["--val-dir", str(root)])
+    options[options.index("--estimate-dir") + 1] = str(root)
+    with pytest.raises(ValueError, match="overwrite|distinct"):
+        paper.evaluate(paper.parse_args(options))
+    assert (root / "metadata.csv").read_bytes() == before
+    assert not (root / "collision.json").exists()
+
+
+@pytest.mark.parametrize("saved_role", ["mixture", "estimate", "target"])
+def test_export_cannot_overwrite_an_unselected_input_audio(real_audio_case, saved_role):
+    root, mix, target, _ = real_audio_case
+    output_dir = root / "dangerous_output"
+    protected = touch(output_dir / saved_role / f"sample_00000001_{saved_role}.wav")
+    metadata(root, [(1, str(mix), str(target)), (2, str(protected), str(target))])
+    original = protected.read_bytes()
+    options = evaluation_cli(real_audio_case, "collision", ["--val-dir", str(root), "--max-samples", "1"])
+    options[options.index("--estimate-dir") + 1] = str(output_dir)
+    with pytest.raises(ValueError, match="overwrite|distinct"):
+        paper.evaluate(paper.parse_args(options))
+    assert protected.read_bytes() == original
+    assert not (root / "collision.json").exists()
+
+
+@pytest.mark.parametrize("option", ["--save-csv", "--save-json"])
+def test_report_cannot_be_written_below_an_input_file(real_audio_case, option):
+    root, mix, target, _ = real_audio_case
+    original = mix.read_bytes()
+    options = evaluation_cli(real_audio_case, "nested", [
+        "--mixture-path", str(mix), "--target-path", str(target)])
+    options[options.index(option) + 1] = str(mix / "result.txt")
+    with pytest.raises(ValueError, match="overwrite|distinct|input|ancestor|file"):
+        paper.evaluate(paper.parse_args(options))
+    assert mix.read_bytes() == original
+    assert not (root / "nested_estimates" / "metadata.csv").exists()
+
+
+def test_max_samples_does_not_decode_unselected_audio(real_audio_case):
+    root, mix, target, _ = real_audio_case
+    second_mix = touch(mix.parent / "two.wav")
+    second_target = touch(target.parent / "two.wav")
+    report = paper.evaluate(paper.parse_args(evaluation_cli(real_audio_case, "first", [
+        "--mixture-path", str(mix.parent), "--target-path", str(target.parent), "--max-samples", "1"])))
+    assert report["status"] == "complete"
+    assert report["expected_samples"] == report["completed_samples"] == 1
+    assert second_mix.read_bytes() == second_target.read_bytes() == b"path-only fixture; resolver must not decode audio"

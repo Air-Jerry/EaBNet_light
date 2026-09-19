@@ -1,4 +1,4 @@
-# Runtime for the existing light trainer and both evaluation entrypoints.
+# Runtime for the light trainer and the unified evaluate_light.py entrypoint.
 # No dependency versions were specified by the paper. Tested versions are
 # recorded in LIGHT_REPRODUCTION.md / output/light_audit.json.
 torch>=2.3

@@ -116,15 +116,16 @@ def test_separate_process_train_and_resume_preserve_optimizer_and_candidate_iden
 
 
 @pytest.mark.parametrize("input_mode", ["metadata", "files"])
-def test_checkpoint_candidate_is_inferred_for_four_real_metrics(completed_candidate_training, input_mode):
+def test_checkpoint_candidate_is_inferred_for_five_real_metrics(completed_candidate_training, input_mode):
     run = completed_candidate_training
     output = run["directory"] / f"metrics_{input_mode}.json"
     csv_output = run["directory"] / f"metrics_{input_mode}.csv"
     input_arguments = (["--val-dir", run["dataset"]] if input_mode == "metadata" else
                        ["--mixture-path", run["dataset"] / "mixture.wav",
                         "--target-path", run["dataset"] / "target.wav"])
-    run_cli("evaluate_light_candidate.py", [*input_arguments,
+    run_cli("evaluate_light.py", [*input_arguments,
             "--checkpoint", run["checkpoint_path"], "--device", "cpu",
+            "--estimate-dir", run["directory"] / f"estimates_{input_mode}",
             "--save-json", output, "--save-csv", csv_output])
     report = json.loads(output.read_text(encoding="utf-8"))
     assert report["status"] == "complete"
@@ -137,7 +138,7 @@ def test_checkpoint_candidate_is_inferred_for_four_real_metrics(completed_candid
     assert report["frontend"]["power"] == 0.5
     for signal in ("enhanced", "noisy"):
         metrics = report["mean"][signal]
-        assert set(metrics) == {"pesq", "stoi", "estoi", "si_snr_db"}
+        assert set(metrics) == {"pesq", "stoi", "estoi", "si_snr_db", "sdr_db"}
         assert all(math.isfinite(value) for value in metrics.values())
         assert 0 <= metrics["stoi"] <= 1 and 0 <= metrics["estoi"] <= 1
     with csv_output.open(newline="", encoding="utf-8") as handle:
@@ -165,8 +166,9 @@ def test_resume_rejects_wrong_architecture_or_frontend_before_writing(completed_
 
 def test_explicit_evaluation_candidate_cannot_override_checkpoint_identity(completed_candidate_training, tmp_path):
     run = completed_candidate_training
-    result = run_cli("evaluate_light_candidate.py", ["--candidate", "literal_per_frequency",
+    result = run_cli("evaluate_light.py", ["--candidate", "literal_per_frequency",
                      "--val-dir", run["dataset"], "--checkpoint", run["checkpoint_path"],
+                     "--estimate-dir", tmp_path / "estimates",
                      "--device", "cpu", "--save-json", tmp_path / "metrics.json",
                      "--save-csv", tmp_path / "metrics.csv"], expected_success=False)
     assert "Candidate mismatch" in result.stdout + result.stderr
@@ -219,7 +221,7 @@ def test_compatibility_checkpoint_alone_cannot_be_overwritten_by_another_candida
 @pytest.mark.parametrize("missing_field", ["dfsmn_layers", "dfsmn_memory_size", "power", "num_mics"])
 def test_evaluation_requires_saved_identity_even_when_tensor_shapes_still_load(completed_candidate_training,
                                                                             tmp_path, missing_field):
-    from evaluate_light_candidate import load_candidate_model
+    from evaluate_light import load_model
 
     checkpoint = deepcopy(completed_candidate_training["first"])
     checkpoint["args"].pop(missing_field)
@@ -228,13 +230,13 @@ def test_evaluation_requires_saved_identity_even_when_tensor_shapes_still_load(c
     # No requested identity is supplied here: inference must not silently use
     # old-loader defaults, notably for a shared cell's unencoded repeat depth.
     with pytest.raises(ValueError, match=missing_field):
-        load_candidate_model(path, torch.device("cpu"))
+        load_model(path, torch.device("cpu"))
 
 
 def test_candidate_loading_is_strict_and_restores_default_constructor_on_failure(completed_candidate_training,
                                                                                tmp_path):
     import evaluate_light
-    from evaluate_light_candidate import load_candidate_model
+    from evaluate_light import load_model
 
     checkpoint = deepcopy(completed_candidate_training["first"])
     checkpoint["model_state_dict"].pop(next(iter(checkpoint["model_state_dict"])))
@@ -242,12 +244,12 @@ def test_candidate_loading_is_strict_and_restores_default_constructor_on_failure
     torch.save(checkpoint, path)
     original_constructor = evaluate_light.EaBNet
     with pytest.raises(RuntimeError, match="Missing key"):
-        load_candidate_model(path, torch.device("cpu"))
+        load_model(path, torch.device("cpu"))
     assert evaluate_light.EaBNet is original_constructor
 
 
 def test_module_prefix_state_loads_identically_for_candidate(completed_candidate_training, tmp_path):
-    from evaluate_light_candidate import load_candidate_model
+    from evaluate_light import load_model
 
     run = completed_candidate_training
     checkpoint = deepcopy(run["second"])
@@ -255,8 +257,8 @@ def test_module_prefix_state_loads_identically_for_candidate(completed_candidate
                                       for name, value in checkpoint["model_state_dict"].items()}
     path = tmp_path / "ddp_prefix.pt"
     torch.save(checkpoint, path)
-    prefixed, _ = load_candidate_model(path, torch.device("cpu"))
-    plain, _ = load_candidate_model(run["checkpoint_path"], torch.device("cpu"))
+    prefixed, _ = load_model(path, torch.device("cpu"))
+    plain, _ = load_model(run["checkpoint_path"], torch.device("cpu"))
     sample = torch.randn(1, 3, 257, 8, 2, generator=torch.Generator().manual_seed(5))
     previous_threads = torch.get_num_threads()
     try:

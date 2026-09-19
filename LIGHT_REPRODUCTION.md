@@ -8,18 +8,22 @@
 
 默认模型实测 **800,674** 个可训练参数，论文表 1 为 **约 0.74M**，仍未匹配。论文还省略了损失函数、若干结构参数及精确数据生成配置。因此，无法同时保证“训练逻辑原样保留”与“整个实验唯一还原”。本记录明确区分论文直接披露、引用方法补充、实现选择和未验证事项。
 
-## 修改范围和接口
+## 当前接口与历史修改范围
+
+当前评估统一使用 `evaluate_light.py`，支持原 `metadata.csv` 和分别指定 mixture/target 路径。它从 checkpoint 恢复候选结构及训练前处理，计算 PESQ、ESTOI、SDR，并保留 STOI/SI-SNR 和带噪基线；可导出音频及逐样本 CSV。此前的独立评估入口已合并并删除，具体命令见本文“运行和验证”及 [LIGHT_STRUCTURE_EVIDENCE.md](LIGHT_STRUCTURE_EVIDENCE.md)。本次整合只修改评估，不修改当前训练逻辑或模型实现，已有训练权重无需重训。
+
+以下是最初公式修正阶段的范围记录：
 
 - 修改 `EaBNet_light.py`，保留 `EaBNet` 构造调用及 `forward(inpt)` 接口：输入 `(B,T,257,M,2)`，输出 `(B,2,T,257)`。
-- `train_light.py` 和 `evaluate_light.py` **逐字节保持原样**，包括数据加载、裁剪、STFT、压缩、优化器、AMP/DDP、梯度累积、学习率、日志、断点流程和旧评估行为。
+- 当时的 `train_light.py` 和 `evaluate_light.py` 逐字节保持原样，包括数据加载、裁剪、STFT、压缩、优化器、AMP/DDP、梯度累积、学习率、日志、断点流程和旧评估行为；此描述不是当前评估文件的状态。
 - `com_mag_mse_loss` 原函数保持原样；没有将 RI 项从均值改成求和，也没有增加训练损失。
-- 新增独立四指标评估 `evaluate_light_paper.py`，仍读取原 `metadata.csv` 接口。
+- 当时新增独立四指标评估，仍读取原 `metadata.csv` 接口；现已并入 `evaluate_light.py`。
 - 新增针对 light 模型的测试及 `audit_light.py`，不修改、恢复或移除已有 CTS 文件状态。
 - 不符合 512 点 FFT 的输入现在明确报错；解码尺寸错误不再用裁剪/补零悄悄掩盖。
 
-原文件 SHA256：
+历史基线文件 SHA256，仅用于追溯最初交付，不是当前文件应满足的哈希：
 
-| 文件 | 修改前和交付时均应为 |
+| 文件 | 最初公式修正阶段的 SHA256 |
 |---|---|
 | `train_light.py` | `608a8d7ac3dd6e615c502613e525f764fc67e9e9c4c9c3d0e167ab2a0211f391` |
 | `evaluate_light.py` | `1f86987e39c011293ca774866712e12e37368db31352af030d1f2ff920d4f002` |
@@ -112,9 +116,13 @@
 | Noisy | 1.514 | 0.825 | 0.694 | 4.567 |
 | Proposed | 2.359 | 0.926 | 0.847 | 11.10 |
 
-本次没有该训练/测试集，也没有进行完整训练；没有产生可以与表 1 比较的增强指标。随机权重和合成 WAV 只用于检查代码闭环。MACs 6.42 G/s 尚未用相同计数口径核验。
+最初本地核对阶段没有该训练/测试集，也没有进行完整训练；随机权重和合成 WAV 只用于检查代码闭环。用户后来提供的服务器日志显示候选已完成到第30轮训练，但日志中的验证 loss 不能代替上述增强指标，也不能据此认定使用了论文同一测试集。MACs 6.42 G/s 尚未用相同计数口径核验。
 
-旧 `evaluate_light.py` 默认根据 target 调整估计增益，输出的是 PESQ、E-STOI 百分比和 BSS-eval SDR；这些数值不能直接替代论文四项指标。独立 `evaluate_light_paper.py` 对原始估计计算 PESQ、STOI、E-STOI（均非百分比）和去均值 SI-SNR，并同时计算 noisy baseline；不使用 target 调整输出幅度。
+历史旧评估默认根据 target 调整估计增益，输出 PESQ、E-STOI 百分比和 BSS-eval SDR；这些数值不能直接替代论文四项指标。当前统一的 `evaluate_light.py` 同时计算 PESQ、STOI、ESTOI、去均值 SI-SNR 和 BSS-eval SDR，以及相同指标的 noisy baseline。SDR 使用 `mir_eval` 的 BSS-eval 定义（512抽头失真滤波器），不等于 SI-SNR。
+
+当前 CSV 的 `estoi_pct` / `estoi_mix_pct` 为百分数；`enhanced_estoi` / `noisy_estoi`、STOI 字段及 JSON 的 `mean.enhanced` / `mean.noisy` 中 `estoi` / `stoi` 保持原始小数值。与论文表格比较时使用同一单位，并分别识别 `si_snr_db` 和 `sdr_db`。
+
+当前默认 `--match-estimate-level no`，评估原始模型输出。显式设置 `yes` 才会在推理后使用干净参考计算一个受 `--max-level-gain-db` 限制的缩放系数；这属于依赖参考的后处理，报告会标注，不能与未启用时的结果混为同一评估协议。任何模式都不会在模型输入前对波形做峰值、RMS 或标准差归一化。
 
 ## 运行和验证
 
@@ -138,17 +146,21 @@ Windows 当前环境没有 PATH 中的 `python`，使用工作区虚拟环境：
 
 这条命令不是作者未公布训练配方的替代证明；其余值继续使用原脚本默认配置。旧 checkpoint 包含不同的 head、DFSMN 和 projection，不能直接续训；保持 `strict=True` 加载，不用 `strict=False` 掩盖未加载权重。
 
-独立评估入口：
+统一评估入口（下面使用当前已训练候选的 checkpoint）：
 
 ```powershell
-& .\.venv\Scripts\python.exe evaluate_light_paper.py --val-dir "你的development_test目录" --checkpoint ./bestmodels_fcae/best_model.pt --save-csv ./logs_fcae/paper_metrics.csv --save-json ./logs_fcae/paper_metrics.json
+& .\.venv\Scripts\python.exe evaluate_light.py --val-dir "你的development_test目录" --checkpoint ./bestmodels_cbam_flat_projection64/best_model.pt --estimate-dir ./estimate_set_cbam_flat_projection64 --max-samples 0 --save-samples yes --match-estimate-level no --save-csv ./logs_cbam_flat_projection64/metrics.csv --save-json ./logs_cbam_flat_projection64/metrics.json
 ```
 
-前处理从 checkpoint 的 `args` 读取，CLI 覆盖值必须与其相同；若旧格式缺字段，脚本要求显式给出。单条指标失败会中止并写入失败 JSON，绝不把失败样本悄悄从均值中去掉。JSON 中保留 checkpoint/metadata 哈希、工具版本和指标定义。
+前处理从 checkpoint 的 `args` 读取，CLI 前处理参数默认不覆盖；显式值必须与已保存值相同。候选 checkpoint 缺失必需身份/配置时拒绝加载；普通旧格式缺少前处理字段时要求显式给出。当前已训练候选使用16 kHz、512点 FFT、320点 periodic Hann 窗、160点帧移、centered reflect padding、`normalized=False`。压缩指数沿用 checkpoint（当前 `power=0.5`），公式与训练一致为 `Z * abs(Z).clamp_min(1e-8) ** (power - 1)`，零谱保持零；逆变换对应处理接近零的分支。取 checkpoint 指定的前 `num_mics` 个输入通道；当前候选为8通道。多通道干净参考取 checkpoint 的 `target_ref_mic`。
+
+评估逐条处理完整语音，不沿用训练阶段随机裁剪或 batch 补零；`--max-samples 0` 表示全部，正整数表示前 N 条。默认保存单通道参考麦克风 mixture、estimate、target 为 FLOAT WAV，保持幅度且不做写盘削波；输入原始多通道文件不会改写。始终生成输出目录下的 `metadata.csv`，默认汇总为该目录的 `summary.json`，额外结果副本可用 `--save-csv` / `--save-json` 指定。`--save-samples no` 可只计算指标。
+
+单条指标失败会中止并写入失败 JSON，绝不把失败样本悄悄从均值中去掉。JSON 中保留 checkpoint/metadata 哈希、工具版本、指标定义和增益匹配标志；元数据与路径清单摘要不能证明音频内容与论文数据相同。
 
 验证覆盖和实际执行结果见本文件后续的验证记录，以及 `output/light_audit.json`。
 
-## 本次实际验证结果
+## 最初公式修正阶段的验证结果（历史记录）
 
 合并运行：**36 passed，1 skipped，1 xfailed**，共 38 个测试用例。
 
@@ -163,13 +175,13 @@ Windows 当前环境没有 PATH 中的 `python`，使用工作区虚拟环境：
 - 原训练/评估文件 SHA256 与任务开始时一致；原 loss 函数源码逐字一致；`git diff --check` 通过。
 - 普通审计写出报告；`--require-exact` 实测返回 2；所有已披露默认配置检查匹配，但参数总量和消融参数差异仍未匹配。
 
-完整基准训练、真实测试集分数、GPU 数值稳定性、多卡训练和论文 MACs 均未完成。测试只缩小已检查实现发生错误的可能性，不能证明不存在其他复现错误。
+在该阶段，完整基准训练、真实测试集分数、GPU 数值稳定性、多卡训练和论文 MACs 均未完成。测试只缩小已检查实现发生错误的可能性，不能证明不存在其他复现错误。
 
 测试环境：Python/平台见 `output/light_audit.json`；PyTorch 2.14.0+cpu，NumPy 2.5.3，SciPy 1.18.1，SoundFile 0.14.0，PESQ 0.0.4，pystoi 0.4.1，mir_eval 0.8.2，pytest 9.1.1。`requirements-light.txt` 列出依赖而未声称它们是作者版本。
 
 ## 后续结构排查：24 个候选已实际执行
 
-新增 `light_structure_variants.py` 和 `analyze_light_structure.py`。当前默认模型文件、训练文件及旧评估文件保持原 SHA256；默认候选同种子下的全部权重、state_dict 键和输出与原模型逐位相同。
+当时新增 `light_structure_variants.py` 和 `analyze_light_structure.py`。在该阶段，默认模型文件、训练文件及旧评估文件保持原 SHA256；默认候选同种子下的全部权重、state_dict 键和输出与原模型逐位相同。
 
 限定的假设空间为：CA groups=1/2/4，skip fusion=cat/add，五层 skip attention 独立/共享，DFSMN 按频率独立/按 C×F 展平，共 24 种。每个候选均实例化完整模型和真正移除 skip attention 的消融模型，共执行 48 次 100 帧前向。统计唯一参数、各层形状、共享调用及两种范围明确的矩阵 MAC 估算。
 
@@ -207,4 +219,4 @@ Windows 当前环境没有 PATH 中的 `python`，使用工作区虚拟环境：
 
 后续已核查 CBAM、原 EaBNet TCN 和 FRCRN 公开实现，新增五个有明确来源标签的候选。`cbam_flat_projection64` 的完整/去skip参数为 **735,070 / 731,680**，按原 TCN 结构替换推算为 **2,455,710**，三项都可舍入为论文的0.74M/0.73M/2.46M。它已完成10步合成优化，并通过原训练主函数的保存、独立进程续训和四指标评估。
 
-这是计数匹配候选：其 CBAM 算子仍偏离目标式(11)，且64指投影宽度、不能证明符合原文隐藏维度。没有替换默认模型，也没有宣称作者等价或真实基准达标。新增 `train_light_candidate.py` 和 `evaluate_light_candidate.py` 保留原训练与数据接口，以候选身份和源码哈希管理断点。具体证据、结果及可直接运行的命令见 [LIGHT_STRUCTURE_EVIDENCE.md](LIGHT_STRUCTURE_EVIDENCE.md)。
+这是计数匹配候选：其 CBAM 算子仍偏离目标式(11)，且64指投影宽度、不能证明符合原文隐藏维度。没有替换默认模型，也没有宣称作者等价或真实基准达标。训练使用 `train_light_candidate.py`，评估现统一使用 `evaluate_light.py`；保留原训练与数据接口，以候选身份和模型实现源码哈希管理断点。具体证据、结果及可直接运行的命令见 [LIGHT_STRUCTURE_EVIDENCE.md](LIGHT_STRUCTURE_EVIDENCE.md)。

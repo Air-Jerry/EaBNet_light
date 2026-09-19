@@ -68,11 +68,25 @@ def test_train_eval_stft_agree_and_reference_channel_roundtrips(power):
     kwargs = dict(n_fft=512, hop_length=160, win_length=320, power=power, device=torch.device("cpu"))
     features, target_stft = train_light.build_stft_batch(mixture, target, **kwargs)
     evaluation_features = evaluate_light.build_stft_batch(mixture, **kwargs)
-    torch.testing.assert_close(features, evaluation_features, atol=2e-6, rtol=2e-5)
+    torch.testing.assert_close(features, evaluation_features, atol=0, rtol=0)
     torch.testing.assert_close(features[:, :, :, 3, :].permute(0, 3, 1, 2), target_stft)
     recovered = evaluate_light.reconstruct_waveform(target_stft, length=target.shape[1], **kwargs)
     torch.testing.assert_close(recovered, target, atol=2e-6, rtol=2e-5)
     assert train_light.waveform_lengths_to_frames(torch.tensor([1923]), 160) == [features.shape[1]]
+
+
+@pytest.mark.parametrize("power", [0.5, 1.0])
+def test_evaluation_matches_training_compression_below_epsilon(power):
+    mixture = torch.randn(1, 1600, 8, generator=torch.Generator().manual_seed(53)) * 1e-11
+    target = mixture[:, :, 0]
+    kwargs = dict(n_fft=512, hop_length=160, win_length=320, power=power, device=torch.device("cpu"))
+    training_features, _ = train_light.build_stft_batch(mixture, target, **kwargs)
+    evaluation_features = evaluate_light.build_stft_batch(mixture, **kwargs)
+    assert training_features.count_nonzero() > 0
+    torch.testing.assert_close(evaluation_features, training_features, rtol=0, atol=0)
+    recovered = evaluate_light.reconstruct_waveform(
+        evaluation_features[:, :, :, 0, :].permute(0, 3, 1, 2), length=target.shape[1], **kwargs)
+    torch.testing.assert_close(recovered, target, rtol=2e-5, atol=1e-17)
 
 
 def test_zero_waveform_has_finite_zero_stft():

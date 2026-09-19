@@ -1,6 +1,6 @@
 # 结构差异的进一步定位与可运行候选
 
-已找到一个同时符合论文三组参数量的候选，并跑通原训练主函数、保存、独立进程续训和四指标评估。不过，它仍有两项与目标文字不一致的解释，不能将它标为作者结构。原 `EaBNet_light.py`、`train_light.py`、`evaluate_light.py` 保持本轮开始时的内容。
+已找到一个同时符合论文三组参数量的候选，并跑通原训练主函数、保存、独立进程续训和指标评估。不过，它仍有两项与目标文字不一致的解释，不能将它标为作者结构。当前评估入口统一为 `evaluate_light.py`，保留此前的输入路径功能并补齐 SDR、音频导出和可选幅度匹配；这次整合不修改当前模型实现或训练逻辑。
 
 ## 新证据如何缩小范围
 
@@ -48,13 +48,27 @@
 
 默认自动使用 `checkpoints_cbam_flat_projection64`、`bestmodels_cbam_flat_projection64` 和 `logs_cbam_flat_projection64`，也可以继续使用原来的目录参数指定独立目录。续训使用相同命令与配置、改为 `--resume yes`。适配入口只临时替换模型构造函数，调用原 `train_light.main()`；没有复制或修改训练循环、优化器步骤、loss、STFT、Dataset、collate 和 metadata 接口。
 
-独立四指标评估会从 checkpoint 自动恢复候选身份，不需要人工重新选择结构：
+统一评估入口会从 checkpoint 自动恢复候选身份，不需要人工重新选择结构；现有已训练权重无需重训。默认数据目录为 `./validation_set`，默认 checkpoint 为 `./bestmodels_cbam_flat_projection64/best_model.pt`；可显式覆盖路径：
 
 ```powershell
-& .\.venv\Scripts\python.exe evaluate_light_candidate.py --val-dir "你的development_test目录" --checkpoint ./bestmodels_cbam_flat_projection64/best_model.pt --save-csv ./logs_cbam_flat_projection64/paper_metrics.csv --save-json ./logs_cbam_flat_projection64/paper_metrics.json
+& .\.venv\Scripts\python.exe evaluate_light.py --val-dir "你的development_test目录" --checkpoint ./bestmodels_cbam_flat_projection64/best_model.pt --estimate-dir ./estimate_set_cbam_flat_projection64 --max-samples 0 --save-samples yes --match-estimate-level no --save-csv ./logs_cbam_flat_projection64/metrics.csv --save-json ./logs_cbam_flat_projection64/metrics.json
 ```
 
 checkpoint 记录候选名、结构来源、公式差异、实现源码哈希与原训练 args。错误候选、源码变动、缺失必要配置会拒绝加载；续训前还核对前处理和模型配置。权重始终严格加载，支持原来的 `module.` 前缀。不同结构不会因为参数形状恰好相同而被当成同一模型。
+
+### 与当前训练一致的前处理及评估输出
+
+STFT 参数与幅度压缩从 checkpoint 的 `args` 读取，命令行默认不覆盖；显式指定冲突参数会报错。当前候选配置为16 kHz、`n_fft=512`、`win_length=320`、`hop_length=160`、periodic Hann 窗、`center=True`、reflect padding、`normalized=False`、`power=0.5`。压缩公式与训练一致为 `Z * abs(Z).clamp_min(1e-8) ** (power - 1)`；逆变换解开同一压缩（包括接近零的分支）并使用相同窗口/STFT 参数。波形直接使用读取得到的幅度，不增加峰值、RMS 或标准差归一化。
+
+输入按 checkpoint 的麦克风数取前 `num_mics` 个通道（当前为8），干净目标若为多通道则取 checkpoint 的 `target_ref_mic`。`--mixture-ref-mic` 只选择 noisy 对照与导出的 mixture 通道，不改变送入模型的多通道输入。完整语音逐条推理，不使用训练时的随机裁剪；`--max-samples 0` 评估全部，正整数评估前 N 条。
+
+逐样本计算增强语音和 noisy 的 PESQ（16 kHz wideband）、ESTOI、BSS-eval SDR；同时保留 STOI 与去均值 SI-SNR 供论文对照。SDR 使用 `mir_eval` BSS-eval 的512抽头失真滤波器定义，不能把它作为论文 SI-SNR。
+
+CSV 的 `estoi_pct` / `estoi_mix_pct` 为百分数；`enhanced_estoi` / `noisy_estoi`、STOI 字段与 JSON 均值中的 `estoi` / `stoi` 保持原始小数值，比较时不要混淆单位。JSON 的 `mean.enhanced` 与 `mean.noisy` 分别含 `pesq`、`stoi`、`estoi`、`si_snr_db`、`sdr_db`；后两者单位为 dB。
+
+`--match-estimate-level no` 为默认值。设置 `yes` 时，在模型推理后利用干净参考估计单个缩放系数，再计算增强指标并写出增强音频；`--max-level-gain-db 20` 为默认幅度调整上限。该处理依赖参考，报告会标记，比较不同实验时必须使用同一设置。
+
+`--estimate-dir` 默认 `./estimate_set_cbam_flat_projection64`。默认 `--save-samples yes` 保存每条单通道参考麦克风 mixture、estimate、target 为 FLOAT WAV，保留幅度、不按整数 WAV 范围削波；不保存全部8个 mixture 通道。`--save-samples no` 只关闭 WAV 导出。输出目录始终包含逐样本 `metadata.csv`，汇总默认写到 `summary.json`；`--save-csv` 可另外写一份逐样本 CSV，`--save-json` 可指定汇总位置。CSV 的 `mixture_path` / `target_path` 保留原始文件位置，导出位置另记为 `mixture_saved_path` / `estimate_saved_path` / `target_saved_path`。输入 metadata 和原始音频不会被覆盖；目录配对模式下，输出目录也不能置于任一输入音频目录之内。
 
 ### 分别指定带噪输入和干净目标的位置
 
@@ -67,13 +81,16 @@ MIXTURE_PATH="/实际路径/noisy"
 TARGET_PATH="/实际路径/clean"
 mkdir -p ./logs_cbam_flat_projection64
 CUDA_VISIBLE_DEVICES=0 nohup "$HOME/miniconda3/envs/EaBNet/bin/python" -u \
-  evaluate_light_candidate.py \
+  evaluate_light.py \
   --candidate cbam_flat_projection64 \
   --mixture-path "$MIXTURE_PATH" \
   --target-path "$TARGET_PATH" \
   --checkpoint ./bestmodels_cbam_flat_projection64/best_model.pt \
   --device cuda \
   --max-samples 0 \
+  --estimate-dir ./estimate_set_cbam_flat_projection64 \
+  --save-samples yes \
+  --match-estimate-level no \
   --save-csv ./logs_cbam_flat_projection64/custom_metrics.csv \
   --save-json ./logs_cbam_flat_projection64/custom_metrics.json \
   > ./logs_cbam_flat_projection64/custom_eval.log 2>&1 &
@@ -81,9 +98,11 @@ CUDA_VISIBLE_DEVICES=0 nohup "$HOME/miniconda3/envs/EaBNet/bin/python" -u \
 
 `--mixture-dir` / `--target-dir` 是这两个路径参数的别名。目录内若是 `001_mix.wav` 与 `001_clean.wav`，再加 `--mixture-suffix _mix --target-suffix _clean`；后缀不包括扩展名，指定后要求各目录内每个音频文件都符合该后缀。单文件模式直接指定两个文件，允许文件名不同，不使用后缀参数。不规则配对仍可用原 `--val-dir` / metadata.csv 明确指定。
 
-当前候选要求输入至少8通道，取前8通道；输入和参考均为16 kHz，多通道参考沿用 checkpoint 的 `target_ref_mic`。参考必须与输入来自同一句且时间对齐；评估沿用共同长度截断，不会自动校正延时，也不使用参考做增益匹配。评估逐条处理完整语音，保留原四指标与带噪基线。CSV 写出每对实际路径；JSON 的 `input_source` 记录模式、配对规则和路径清单摘要，`selected_pairs_sha256` 记录实际选中清单的摘要（两者均不是音频内容哈希）。输出路径不可覆盖输入音频、checkpoint 或当前 metadata。
+当前候选要求输入至少8通道，取前8通道；输入和参考均为16 kHz，多通道参考沿用 checkpoint 的 `target_ref_mic`。参考必须与输入来自同一句且时间对齐；评估沿用共同长度截断，不会自动校正延时。默认不使用参考做增益匹配。CSV 写出每对实际路径；JSON 的 `input_source` 记录模式、配对规则和路径清单摘要，`selected_pairs_sha256` 记录实际选中清单的摘要（两者均不是音频内容哈希）。输出路径不可覆盖输入音频、checkpoint 或当前 metadata。
 
-这些选项仅扩展评估输入；原训练脚本、模型实现与 checkpoint 身份校验不变，已有训练权重可直接评估。
+当前只保留 `evaluate_light.py` 作为评估启动脚本，冗余的两个独立评估入口与旧备份已移除；`light_eval_inputs.py` 是统一入口调用的路径解析模块，不是额外验证脚本。原训练脚本、模型实现与 checkpoint 身份校验不因这次评估整合而改变，已有训练权重可直接评估。
+
+本次统一评估入口的 CPU 定向回归共88项通过、1项已有预期失败（原训练脚本尾窗梯度累积）。检查包括真实候选模型的独立进程训练、续训与五指标评估；正常及极小幅度 STFT 与训练逐元素相等；WAV 幅度保持、目标/麦克风通道选择、参考增益开关、输出保护与前 N 条限制。这些检查不替代服务器真实测试集的效果评估。
 
 这五个名称固定对应8麦、64通道/embedding、3层共享记忆、memory设置20、BN和MIMO LSTM头；新入口会拒绝改变这些结构维度，避免记录的来源说明与真实模型不一致。自定义结构继续使用原入口。
 
@@ -93,8 +112,8 @@ CUDA_VISIBLE_DEVICES=0 nohup "$HOME/miniconda3/envs/EaBNet/bin/python" -u \
 
 已完成源码核查、五候选前向/反向、独立数值公式、三组参数约束、10步合成优化，以及合成音频上的原训练→保存→进程重启续训→四指标评估。完整实验产物为 `output/reference_candidates.json`、CSV 和 `reference_screen_summary.md`；验证记录在 `output/reference_verification.json`。
 
-合并七个 light 测试文件的最终结果为 **155 passed、1 skipped、1 xfailed**。其中跳过项是 CUDA 不可用；xfail 是原脚本尾窗累积问题，不能计入通过项。新增测试还核对错误结构断点拒绝、源码和证据元数据一致性、配置字段不可省略及兼容 best checkpoint 的覆盖保护。
+候选结构阶段合并七个 light 测试文件的历史结果为 **155 passed、1 skipped、1 xfailed**，不代表本次评估整合后的测试数量。其中跳过项是 CUDA 不可用；xfail 是原脚本尾窗累积问题，不能计入通过项。该阶段新增测试还核对错误结构断点拒绝、源码和证据元数据一致性、配置字段不可省略及兼容 best checkpoint 的覆盖保护。
 
-当前环境仅 CPU，未提供论文训练与测试数据，尚未执行真实完整训练、GPU AMP/DDP 或论文性能基准。原训练尾窗梯度累积等已知保留问题仍见 `LIGHT_REPRODUCTION.md`。它们不会因为新增候选自动消失。
+当前本地环境仅 CPU，未提供论文训练与测试数据，不能在此核验 GPU AMP/DDP 或论文性能基准。用户提供的服务器日志显示 `cbam_flat_projection64` 双卡训练已完成到第30轮，最后一轮验证 loss 为0.023551；这是训练日志记录，尚不能代替真实测试集的增强指标或论文复现认证。原训练尾窗梯度累积等已知保留问题仍见 `LIGHT_REPRODUCTION.md`，它们不会因为新增候选自动消失。
 
 [IEEE 官方报告页](https://resourcecenter.ieee.org/conferences/icassp-2023/spsicassp23vid0845)和[UWA 论文记录](https://research-repository.uwa.edu.au/en/publications/a-lightweight-fourier-convolutional-attention-encoder-for-multi-c/)都确认0.74M；本轮未找到可确认的目标作者源码或补充配置。先前检索片段的0.72M没有核实为真实版本，未用于改动约束。没有联系作者、购买或绕过受限材料。
