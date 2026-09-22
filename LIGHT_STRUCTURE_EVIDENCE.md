@@ -153,3 +153,37 @@ CUDA_VISIBLE_DEVICES=0 nohup "$HOME/miniconda3/envs/EaBNet/bin/python" -u \
 全部比较保持 `--match-estimate-level no` 和同一 PESQ 模式；参考增益匹配只改变评估协议，不能作为模型本身达到目标的依据。
 
 该选模扩展与原单模型评估的定向回归共109项通过；另有2项真实符号链接保护测试因本地 Windows 不允许创建符号链接而跳过。检查了 checkpoint 排序、协议/样本清单一致性、失败中止、输入覆盖保护、真实候选权重的独立进程五指标评估。原评估文件的12条注释及6段文档字符串逐项保持，训练和模型源码未改。
+
+## 第31至40轮结果与固定训练小集诊断
+
+2026-09-22收到的 `continue_31_40.log` 显示从第30轮成功续训至第40轮，仍为53600条训练、2680条验证、双卡DDP、每卡batch 4，非有限loss跳过次数为0。学习率在第32轮结束时由0.00025降到0.000125，第37轮结束时降到0.0000625。第40轮train loss为0.023099、val loss为0.023354；最低val loss为第39轮的0.023336。
+
+同批600条babble对照音频的21个已保存checkpoint全部完成评估，输入路径清单摘要和noisy指标一致。第30轮PESQ为2.689355，第40轮为2.721410，十轮增加0.032054，距离3.4仍差0.678590。按训练val loss保存的 `best_model.pt` 对应第39轮，PESQ为2.714079；第40轮在这批音频上略高。因此选模差异只解释约0.007331，不能解释与3.4的完整差距。第40轮仍有改善，不能断言绝对收敛，也不能推断继续增加轮次必然达标。
+
+这600条音频已经参与多轮比较，是当前诊断对照集；JSON中通用的 `selection_scope` 字样不会使它自动成为独立验证集。最终泛化报告仍需要未参与调整的评估数据。
+
+新增 `diagnose_light_overfit.py` 负责在独立目录完成固定训练小集的拟合实验：从原训练metadata确定性抽取8条有效语音，各截取固定6秒；保持原幅度、麦克风顺序、目标通道、采样率和训练前端，保存FLOAT WAV及来源记录。短音频或静音片段的排除会记入清单，不通过补零凑足长度。拟合前后都在这同一批固定片段上，以eval模式计算原频谱损失，并复用 `evaluate_light.py` 计算五项增强/带噪指标。
+
+诊断复制第40轮完整模型状态，包括BN运行统计，建立独立的epoch 0起点与全新Adam状态。原始checkpoint不改。原 `train_light_candidate.py` 执行全部训练：单卡、FP32、batch 2、梯度累积1、固定学习率0.0001、禁用plateau、禁用再次裁剪，200轮对应800次更新。同一小集同时传入train-dir和val-dir，只用于检查已见样本的拟合能力。BN统计仍按原模型更新，训练后同时报告最新和最低小集val loss权重的结果。
+
+服务器命令如下，输出目录必须尚不存在；日志放在其外部：
+
+```bash
+mkdir -p ./logs_cbam_flat_projection64
+CUDA_VISIBLE_DEVICES=0 nohup "$HOME/miniconda3/envs/EaBNet/bin/python" -u \
+  diagnose_light_overfit.py \
+  --checkpoint ./checkpoints_cbam_flat_projection64/model_epoch_40.pt \
+  --train-dir /data/ssd1/jinrui.yang/training_set \
+  --output-dir ./logs_cbam_flat_projection64/overfit8_epoch40 \
+  --num-samples 8 \
+  --segment-seconds 6 \
+  --epochs 200 \
+  --batch-size 2 \
+  --learning-rate 0.0001 \
+  --device cuda \
+  > ./logs_cbam_flat_projection64/overfit8_epoch40.log 2>&1 &
+```
+
+完成后读取输出目录中的 `diagnostic_summary.json`，比较同一固定小集的初始/最终eval loss与PESQ。这8条裁剪音频的PESQ不能直接与原600条的2.721410比较。若小集损失和PESQ明显改善，表明当前实现能在该小集继续拟合，后续检查完整训练的优化、损失与泛化；若损失改善但PESQ不改善，再检查输出失真和损失目标；若小集也难拟合，继续检查梯度、BN统计、学习率和结构。一次成功或失败都不能单独证明完全复现正确或论文本身有问题。该工具没有改动原训练循环、模型、评估协议或已有注释，也没有在此阶段引入新的正式训练损失。
+
+本次诊断工具的15项定向测试全部通过，包含真实CPU候选模型的固定片段基线评估、调用原训练入口、最新/最佳模型复评；逐张量确认初始模型与BN状态保持、Adam历史清空及实际更新次数；验证FLOAT幅度大于1时不削波、前8麦克风顺序与多通道目标选择、固定偏移及输入文件保护。子进程返回成功但未完成更新会被判失败。测试使用合成音频，不替代服务器上这8条真实训练语音的诊断，也没有在本地验证GPU表现。
