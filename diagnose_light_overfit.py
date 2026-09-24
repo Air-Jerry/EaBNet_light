@@ -7,6 +7,7 @@ a guarantee of PESQ > 3.4, or proof of an exact paper reproduction.
 from __future__ import annotations
 
 import argparse
+from collections import deque
 import csv
 import gc
 import json
@@ -32,6 +33,12 @@ SCOPE = "Training-subset fitting only; not generalization, a PESQ > 3.4 guarante
 
 def write_json(path, data):
     Path(path).write_text(json.dumps(data, ensure_ascii=False, indent=2, allow_nan=False) + "\n", encoding="utf-8")
+
+
+def read_log_tail(path, max_lines=100, max_chars=12000):
+    """Keep the child's actual error available without embedding its entire log."""
+    with Path(path).open("r", encoding="utf-8", errors="replace") as handle:
+        return "".join(deque(handle, maxlen=max_lines))[-max_chars:]
 
 
 def is_within(path, directory):
@@ -222,6 +229,7 @@ def run(args):
     output.mkdir(parents=True, exist_ok=False)
     summary = {"status": "running", "scope": SCOPE, "output_dir": str(output),
                "source_checkpoint": str(Path(args.checkpoint).expanduser().resolve()),
+               "training_log": str(output / "training.log"),
                "before": None, "after_latest": None, "after_best": None}
     try:
         if torch.distributed.is_initialized():
@@ -282,6 +290,7 @@ def run(args):
                         process.wait()
                     raise
                 returncode = process.wait()
+                summary["training_returncode"] = returncode
                 if returncode:
                     raise subprocess.CalledProcessError(returncode, command)
         final_checkpoint, _ = read_candidate_checkpoint(latest, candidate_id, training_args)
@@ -300,6 +309,11 @@ def run(args):
         return summary
     except BaseException as exc:
         summary.update(status="failed", error=f"{type(exc).__name__}: {exc}")
+        try:
+            if (output / "training.log").is_file():
+                summary["training_log_tail"] = read_log_tail(output / "training.log")
+        except OSError as log_error:
+            summary["training_log_read_error"] = f"{type(log_error).__name__}: {log_error}"
         raise
     finally:
         write_json(output / "diagnostic_summary.json", summary)

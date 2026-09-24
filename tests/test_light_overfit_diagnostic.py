@@ -352,6 +352,55 @@ def test_zero_exit_status_without_optimizer_updates_is_reported_as_failed(source
     assert "actual_optimizer_steps" not in summary
 
 
+def test_failed_training_preserves_child_traceback_and_baseline(source_checkpoint, tmp_path, monkeypatch):
+    import diagnose_light_overfit as diagnostic
+
+    error_line = "torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 378.00 MiB.\n"
+
+    class FailedTrainingProcess:
+        def __init__(self, *args, **kwargs):
+            self.stdout = iter(["Epoch 1/200\n", "Traceback (most recent call last):\n", error_line])
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *args):
+            return False
+
+        def wait(self, **kwargs):
+            return 1
+
+    monkeypatch.setattr(diagnostic, "evaluate_checkpoint", lambda *args, **kwargs: {"epoch": 0})
+    monkeypatch.setattr(diagnostic.subprocess, "Popen", FailedTrainingProcess)
+    output = tmp_path / "experiment"
+    source_hash = digest(source_checkpoint["path"])
+    with pytest.raises(subprocess.CalledProcessError) as failure:
+        diagnostic.run(arguments(source_checkpoint, output))
+    summary = json.loads((output / "diagnostic_summary.json").read_text(encoding="utf-8"))
+    assert failure.value.returncode == summary["training_returncode"] == 1
+    assert summary["status"] == "failed" and summary["before"] == {"epoch": 0}
+    assert summary["after_latest"] is summary["after_best"] is None
+    assert "actual_optimizer_steps" not in summary
+    assert Path(summary["training_log"]) == output / "training.log"
+    assert "Traceback (most recent call last)" in summary["training_log_tail"]
+    assert error_line in summary["training_log_tail"]
+    assert digest(source_checkpoint["path"]) == source_hash
+
+
+def test_child_error_excerpt_is_bounded_and_keeps_the_last_error(tmp_path):
+    import diagnose_light_overfit as diagnostic
+
+    log = tmp_path / "training.log"
+    log.write_text("".join(f"line {index}\n" for index in range(200)), encoding="utf-8")
+    assert diagnostic.read_log_tail(log, max_lines=2) == "line 198\nline 199\n"
+    ending = "\ntorch.OutOfMemoryError: CUDA out of memory.\n"
+    log.write_text("progress\n" * 200 + "x" * 20000 + ending, encoding="utf-8")
+    excerpt = diagnostic.read_log_tail(log)
+    assert len(excerpt) <= 12000
+    assert excerpt.endswith(ending)
+    assert "progress" not in excerpt
+
+
 def test_real_cpu_pipeline_evaluates_trains_and_reports_actual_fresh_optimizer_steps(source_checkpoint, tmp_path):
     output = tmp_path / "experiment"
     source_hashes = {path: digest(path) for path in source_checkpoint["dataset"].iterdir()}
