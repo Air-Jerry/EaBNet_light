@@ -4,6 +4,9 @@ __pycache__/
 tmp/
 checkpoints*/
 bestmodels*/
-logs*/
+logs*/**
+!logs*/**/
+!logs*/**/*.log
+!logs*/**/*.json
 estimate_set*/
 *.pyc
