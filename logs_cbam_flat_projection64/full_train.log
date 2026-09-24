@@ -1,0 +1,48 @@
+nohup: ignoring input
+Structure hypothesis: cbam_flat_projection64; author equivalence is unverified.
+Device: cuda:0
+GPU IDs: [0]
+CPU threads (intra/inter-op): 8/1
+TF32/cudnn_benchmark: yes/yes
+MALLOC_ARENA_MAX env: <unset> | mallopt target: 2
+Train dir: /data/ssd1/jinrui.yang/training_set
+Val dir: /data/ssd1/jinrui.yang/validation_set
+Checkpoint dir: checkpoints_cbam_flat_projection64
+Best model dir: bestmodels_cbam_flat_projection64
+TensorBoard log dir: logs_cbam_flat_projection64
+DataLoader config: workers=0, pin_memory=False, persistent_workers=False, prefetch_factor=N/A, strict_memory=yes, segment_samples=96000, parallel_mode=ddp
+/home/nis/jinrui.yang/EaBNet_light/train_light.py:777: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  checkpoint = torch.load(checkpoint_path, map_location=device)
+Resumed from checkpoints_cbam_flat_projection64/checkpoint_latest.pt at epoch 3, best_val_loss=0.045595
+Training samples: 53600
+Validation samples: 2680
+
+Epoch 4/30
+train:   0%|          | 0/6700 [00:00<?, ?it/s]                                               Traceback (most recent call last):
+  File "/home/nis/jinrui.yang/EaBNet_light/train_light_candidate.py", line 42, in <module>
+    raise SystemExit(main())
+  File "/home/nis/jinrui.yang/EaBNet_light/train_light_candidate.py", line 35, in main
+    trainer.main()
+  File "/home/nis/jinrui.yang/EaBNet_light/train_light.py", line 1069, in main
+    train_loss = run_epoch(model, train_loader, optimizer, scaler, device, gpu_ids, args, training=True)
+  File "/home/nis/jinrui.yang/EaBNet_light/train_light.py", line 595, in run_epoch
+    estimate = model(mixture_stft)
+  File "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1736, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1747, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/nis/jinrui.yang/EaBNet_light/EaBNet_light.py", line 520, in forward
+    bf_w = self.bf_map(x)
+  File "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1736, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1747, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/nis/jinrui.yang/EaBNet_light/EaBNet_light.py", line 443, in forward
+    x, _ = self.rnn2(x)
+  File "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1736, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1747, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/nn/modules/rnn.py", line 1123, in forward
+    result = _VF.lstm(
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 756.00 MiB. GPU 0 has a total capacity of 11.60 GiB of which 671.06 MiB is free. Including non-PyTorch memory, this process has 10.90 GiB memory in use. Of the allocated memory 10.49 GiB is allocated by PyTorch, and 210.09 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)

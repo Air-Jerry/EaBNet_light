@@ -1,0 +1,11 @@
+nohup: ignoring input
+Traceback (most recent call last):
+  File "/home/nis/jinrui.yang/EaBNet_light/evaluate_light_candidate.py", line 44, in <module>
+    main()
+  File "/home/nis/jinrui.yang/EaBNet_light/evaluate_light_candidate.py", line 38, in main
+    return paper.evaluate(args)
+  File "/home/nis/jinrui.yang/EaBNet_light/evaluate_light_paper.py", line 134, in evaluate
+    records, input_info, protected_inputs = resolve_evaluation_inputs(args)
+  File "/home/nis/jinrui.yang/EaBNet_light/light_eval_inputs.py", line 174, in resolve_evaluation_inputs
+    raise ValueError("Unmatched audio pairs; " + "; ".join(diagnostics))
+ValueError: Unmatched audio pairs; missing targets for: 'mixture/sample_00000000_9ch', 'mixture/sample_00000001_9ch', 'mixture/sample_00000002_9ch', 'mixture/sample_00000003_9ch', 'mixture/sample_00000004_9ch', ... (1162 total); missing mixtures for: 'estimate/sample_00000000_estimate', 'estimate/sample_00000001_estimate', 'estimate/sample_00000002_estimate', 'estimate/sample_00000003_estimate', 'estimate/sample_00000004_estimate', ... (76 total)

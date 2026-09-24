@@ -1,0 +1,9 @@
+nohup: ignoring input
+Traceback (most recent call last):
+  File "/home/nis/jinrui.yang/EaBNet_light/diagnose_light_overfit.py", line 354, in <module>
+    raise SystemExit(main())
+  File "/home/nis/jinrui.yang/EaBNet_light/diagnose_light_overfit.py", line 348, in main
+    result = run(parse_args(argv))
+  File "/home/nis/jinrui.yang/EaBNet_light/diagnose_light_overfit.py", line 225, in run
+    raise FileExistsError(f"Use a new --output-dir; refusing to overwrite {output}")
+FileExistsError: Use a new --output-dir; refusing to overwrite /home/nis/jinrui.yang/EaBNet_light/logs_cbam_flat_projection64/overfit8_epoch40_v2

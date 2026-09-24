@@ -1,0 +1,83 @@
+nohup: ignoring input
+val:   0%|          | 0/4 [00:00<?, ?it/s]val:   0%|          | 0/4 [00:00<?, ?it/s, loss=0.0208]val:  25%|██▌       | 1/4 [00:00<00:01,  1.82it/s, loss=0.0208]val:  25%|██▌       | 1/4 [00:00<00:01,  1.82it/s, loss=0.0224]val:  25%|██▌       | 1/4 [00:00<00:01,  1.82it/s, loss=0.0246]val:  75%|███████▌  | 3/4 [00:00<00:00,  4.63it/s, loss=0.0246]val:  75%|███████▌  | 3/4 [00:00<00:00,  4.63it/s, loss=0.0332]                                                               [PERF][val] samples(local/global)=8/8, batches(local/global)=4/4, samples/s(local/global)=9.4/9.4, ms/batch(local)=211.8, data_wait=2.6%, compute=97.4%, non_finite_skips(local)=0
+Device: cuda; candidate: cbam_flat_projection64; samples: 8
+Training frontend: {"sample_rate": 16000, "n_fft": 512, "hop_length": 160, "win_length": 320, "power": 0.5, "target_ref_mic": 0}; microphones=8; normalization=none
+Reference-dependent estimate gain matching: False
+Evaluating:   0%|          | 0/8 [00:00<?, ?it/s]Evaluating:  12%|█▎        | 1/8 [00:00<00:03,  2.20it/s]Evaluating:  25%|██▌       | 2/8 [00:00<00:02,  2.85it/s]Evaluating:  38%|███▊      | 3/8 [00:01<00:01,  3.18it/s]Evaluating:  50%|█████     | 4/8 [00:01<00:01,  3.17it/s]Evaluating:  62%|██████▎   | 5/8 [00:01<00:00,  3.07it/s]Evaluating:  75%|███████▌  | 6/8 [00:01<00:00,  3.20it/s]Evaluating:  88%|████████▊ | 7/8 [00:02<00:00,  3.17it/s]Evaluating: 100%|██████████| 8/8 [00:02<00:00,  3.02it/s]Evaluating: 100%|██████████| 8/8 [00:02<00:00,  3.03it/s]
+{
+  "enhanced": {
+    "pesq": 2.2871906757354736,
+    "stoi": 0.8994646244101061,
+    "estoi": 0.7835722005719491,
+    "si_snr_db": 12.158382657813206,
+    "sdr_db": 13.036213731335511
+  },
+  "noisy": {
+    "pesq": 1.1155323386192322,
+    "stoi": 0.6907424347173695,
+    "estoi": 0.48033544492031555,
+    "si_snr_db": -1.2522045605865997,
+    "sdr_db": -1.1920623289599863
+  }
+}
+Per-sample metadata: /home/nis/jinrui.yang/EaBNet_light/logs_cbam_flat_projection64/overfit8_epoch40/before/metadata.csv
+Summary: /home/nis/jinrui.yang/EaBNet_light/logs_cbam_flat_projection64/overfit8_epoch40/before/summary.json
+Training fixed subset: 200 epochs, 800 optimizer steps; log: /home/nis/jinrui.yang/EaBNet_light/logs_cbam_flat_projection64/overfit8_epoch40/training.log
+Structure hypothesis: cbam_flat_projection64; author equivalence is unverified.
+Device: cuda:0
+GPU IDs: [0]
+CPU threads (intra/inter-op): 2/1
+TF32/cudnn_benchmark: no/no
+MALLOC_ARENA_MAX env: <unset> | mallopt target: 2
+Train dir: /home/nis/jinrui.yang/EaBNet_light/logs_cbam_flat_projection64/overfit8_epoch40/dataset
+Val dir: /home/nis/jinrui.yang/EaBNet_light/logs_cbam_flat_projection64/overfit8_epoch40/dataset
+Checkpoint dir: /home/nis/jinrui.yang/EaBNet_light/logs_cbam_flat_projection64/overfit8_epoch40/checkpoints
+Best model dir: /home/nis/jinrui.yang/EaBNet_light/logs_cbam_flat_projection64/overfit8_epoch40/best
+TensorBoard log dir: /home/nis/jinrui.yang/EaBNet_light/logs_cbam_flat_projection64/overfit8_epoch40/logs
+DataLoader config: workers=0, pin_memory=False, persistent_workers=False, prefetch_factor=N/A, strict_memory=yes, segment_samples=0, parallel_mode=none
+/home/nis/jinrui.yang/EaBNet_light/train_light.py:777: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  checkpoint = torch.load(checkpoint_path, map_location=device)
+Resumed from /home/nis/jinrui.yang/EaBNet_light/logs_cbam_flat_projection64/overfit8_epoch40/checkpoints/checkpoint_latest.pt at epoch 0, best_val_loss=inf
+Training samples: 8
+Validation samples: 8
+
+Epoch 1/200
+
+train:   0%|          | 0/4 [00:00<?, ?it/s]
+                                            
+Traceback (most recent call last):
+  File "/home/nis/jinrui.yang/EaBNet_light/train_light_candidate.py", line 89, in <module>
+    raise SystemExit(main())
+  File "/home/nis/jinrui.yang/EaBNet_light/train_light_candidate.py", line 82, in main
+    trainer.main()
+  File "/home/nis/jinrui.yang/EaBNet_light/train_light.py", line 1069, in main
+    train_loss = run_epoch(model, train_loader, optimizer, scaler, device, gpu_ids, args, training=True)
+  File "/home/nis/jinrui.yang/EaBNet_light/train_light.py", line 595, in run_epoch
+    estimate = model(mixture_stft)
+  File "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1736, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1747, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/nis/jinrui.yang/EaBNet_light/EaBNet_light.py", line 520, in forward
+    bf_w = self.bf_map(x)
+  File "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1736, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1747, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/nis/jinrui.yang/EaBNet_light/EaBNet_light.py", line 443, in forward
+    x, _ = self.rnn2(x)
+  File "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1736, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1747, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/nn/modules/rnn.py", line 1123, in forward
+    result = _VF.lstm(
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 378.00 MiB. GPU 0 has a total capacity of 11.60 GiB of which 232.75 MiB is free. Process 2329835 has 6.07 GiB memory in use. Process 2341849 has 226.00 MiB memory in use. Including non-PyTorch memory, this process has 5.03 GiB memory in use. Of the allocated memory 4.73 GiB is allocated by PyTorch, and 101.93 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+Traceback (most recent call last):
+  File "/home/nis/jinrui.yang/EaBNet_light/diagnose_light_overfit.py", line 340, in <module>
+    raise SystemExit(main())
+  File "/home/nis/jinrui.yang/EaBNet_light/diagnose_light_overfit.py", line 334, in main
+    result = run(parse_args(argv))
+  File "/home/nis/jinrui.yang/EaBNet_light/diagnose_light_overfit.py", line 286, in run
+    raise subprocess.CalledProcessError(returncode, command)
+subprocess.CalledProcessError: Command '['/home/nis/jinrui.yang/miniconda3/envs/EaBNet/bin/python', '-u', '/home/nis/jinrui.yang/EaBNet_light/train_light_candidate.py', '--candidate', 'cbam_flat_projection64', '--train-dir', '/home/nis/jinrui.yang/EaBNet_light/logs_cbam_flat_projection64/overfit8_epoch40/dataset', '--val-dir', '/home/nis/jinrui.yang/EaBNet_light/logs_cbam_flat_projection64/overfit8_epoch40/dataset', '--checkpoint-dir', '/home/nis/jinrui.yang/EaBNet_light/logs_cbam_flat_projection64/overfit8_epoch40/checkpoints', '--best-dir', '/home/nis/jinrui.yang/EaBNet_light/logs_cbam_flat_projection64/overfit8_epoch40/best', '--log-dir', '/home/nis/jinrui.yang/EaBNet_light/logs_cbam_flat_projection64/overfit8_epoch40/logs', '--num-epochs', '200', '--batch-size', '2', '--num-workers', '0', '--learning-rate', '0.0001', '--weight-decay', '0.0', '--grad-clip', '5.0', '--grad-accum-steps', '1', '--seed', '1234', '--sample-rate', '16000', '--win-length', '320', '--hop-length', '160', '--n-fft', '512', '--power', '0.5', '--save-every', '200', '--resume', 'yes', '--use-amp', 'no', '--model-amp', 'no', '--target-ref-mic', '0', '--num-mics', '8', '--channels', '64', '--embed-dim', '64', '--kd1', '5', '--cd1', '64', '--d-feat', '256', '--p', '6', '--q', '3', '--bf-type', 'lstm', '--topo-type', 'mimo', '--intra-connect', 'cat', '--norm-type', 'BN', '--dfsmn-layers', '3', '--dfsmn-memory-size', '20', '--is-causal', 'yes', '--is-u2', 'yes', '--gpu-ids', '0', '--cpu-threads', '2', '--interop-threads', '1', '--cpu-thread-scale', '1.0', '--pin-memory', 'no', '--persistent-workers', 'no', '--prefetch-factor', '2', '--strict-memory', 'yes', '--log-ram-tree', 'yes', '--empty-cache-each-epoch', 'yes', '--empty-cache-every-batches', '0', '--mem-log-every-batches', '0', '--malloc-trim-every-batches', '0', '--gc-every-batches', '0', '--malloc-arena-max', '2', '--segment-seconds', '0', '--train-random-crop', 'no', '--parallel-mode', 'none', '--log-perf', 'yes', '--allow-tf32', 'no', '--cudnn-benchmark', 'no', '--train-lr-reduce-on-plateau', 'no', '--lr-reduce-metric', 'val', '--train-lr-patience', '2', '--train-lr-factor', '0.5', '--train-lr-min-delta', '0.0', '--min-learning-rate', '1e-06', '--resume-reset-lr', 'no', '--skip-non-finite-batches', 'no', '--max-non-finite-batches-per-epoch', '20', '--stop-on-non-finite', 'yes', '--non-finite-log-max-ids', '8']' returned non-zero exit status 1.

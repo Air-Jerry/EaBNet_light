@@ -1,0 +1,51 @@
+{
+  "status": "failed",
+  "scope": "Training-subset fitting only; not generalization, a PESQ > 3.4 guarantee, or proof of paper equivalence.",
+  "output_dir": "/home/nis/jinrui.yang/EaBNet_light/logs_cbam_flat_projection64/overfit8_epoch40",
+  "source_checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_cbam_flat_projection64/model_epoch_40.pt",
+  "before": {
+    "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/logs_cbam_flat_projection64/overfit8_epoch40/initial_checkpoint.pt",
+    "epoch": 0,
+    "eval_loss": 0.025256304536014795,
+    "metrics": {
+      "enhanced": {
+        "pesq": 2.2871906757354736,
+        "stoi": 0.8994646244101061,
+        "estoi": 0.7835722005719491,
+        "si_snr_db": 12.158382657813206,
+        "sdr_db": 13.036213731335511
+      },
+      "noisy": {
+        "pesq": 1.1155323386192322,
+        "stoi": 0.6907424347173695,
+        "estoi": 0.48033544492031555,
+        "si_snr_db": -1.2522045605865997,
+        "sdr_db": -1.1920623289599863
+      }
+    },
+    "summary_json": "/home/nis/jinrui.yang/EaBNet_light/logs_cbam_flat_projection64/overfit8_epoch40/before/summary.json"
+  },
+  "after_latest": null,
+  "after_best": null,
+  "source_epoch": 40,
+  "source_checkpoint_sha256": "aa778ce97bad0db0a4b2b4b094857d1b784bf1090fe18ff141068dcf7f602c7b",
+  "candidate": "cbam_flat_projection64",
+  "device": "cuda",
+  "num_samples": 8,
+  "epochs": 200,
+  "batch_size": 2,
+  "learning_rate": 0.0001,
+  "segment_seconds": 6.0,
+  "frontend": {
+    "sample_rate": 16000,
+    "n_fft": 512,
+    "hop_length": 160,
+    "win_length": 320,
+    "power": 0.5,
+    "target_ref_mic": 0
+  },
+  "subset_manifest": "/home/nis/jinrui.yang/EaBNet_light/logs_cbam_flat_projection64/overfit8_epoch40/subset_manifest.json",
+  "training_config": "/home/nis/jinrui.yang/EaBNet_light/logs_cbam_flat_projection64/overfit8_epoch40/training_command.json",
+  "steps": 800,
+  "error": "CalledProcessError: Command '['/home/nis/jinrui.yang/miniconda3/envs/EaBNet/bin/python', '-u', '/home/nis/jinrui.yang/EaBNet_light/train_light_candidate.py', '--candidate', 'cbam_flat_projection64', '--train-dir', '/home/nis/jinrui.yang/EaBNet_light/logs_cbam_flat_projection64/overfit8_epoch40/dataset', '--val-dir', '/home/nis/jinrui.yang/EaBNet_light/logs_cbam_flat_projection64/overfit8_epoch40/dataset', '--checkpoint-dir', '/home/nis/jinrui.yang/EaBNet_light/logs_cbam_flat_projection64/overfit8_epoch40/checkpoints', '--best-dir', '/home/nis/jinrui.yang/EaBNet_light/logs_cbam_flat_projection64/overfit8_epoch40/best', '--log-dir', '/home/nis/jinrui.yang/EaBNet_light/logs_cbam_flat_projection64/overfit8_epoch40/logs', '--num-epochs', '200', '--batch-size', '2', '--num-workers', '0', '--learning-rate', '0.0001', '--weight-decay', '0.0', '--grad-clip', '5.0', '--grad-accum-steps', '1', '--seed', '1234', '--sample-rate', '16000', '--win-length', '320', '--hop-length', '160', '--n-fft', '512', '--power', '0.5', '--save-every', '200', '--resume', 'yes', '--use-amp', 'no', '--model-amp', 'no', '--target-ref-mic', '0', '--num-mics', '8', '--channels', '64', '--embed-dim', '64', '--kd1', '5', '--cd1', '64', '--d-feat', '256', '--p', '6', '--q', '3', '--bf-type', 'lstm', '--topo-type', 'mimo', '--intra-connect', 'cat', '--norm-type', 'BN', '--dfsmn-layers', '3', '--dfsmn-memory-size', '20', '--is-causal', 'yes', '--is-u2', 'yes', '--gpu-ids', '0', '--cpu-threads', '2', '--interop-threads', '1', '--cpu-thread-scale', '1.0', '--pin-memory', 'no', '--persistent-workers', 'no', '--prefetch-factor', '2', '--strict-memory', 'yes', '--log-ram-tree', 'yes', '--empty-cache-each-epoch', 'yes', '--empty-cache-every-batches', '0', '--mem-log-every-batches', '0', '--malloc-trim-every-batches', '0', '--gc-every-batches', '0', '--malloc-arena-max', '2', '--segment-seconds', '0', '--train-random-crop', 'no', '--parallel-mode', 'none', '--log-perf', 'yes', '--allow-tf32', 'no', '--cudnn-benchmark', 'no', '--train-lr-reduce-on-plateau', 'no', '--lr-reduce-metric', 'val', '--train-lr-patience', '2', '--train-lr-factor', '0.5', '--train-lr-min-delta', '0.0', '--min-learning-rate', '1e-06', '--resume-reset-lr', 'no', '--skip-non-finite-batches', 'no', '--max-non-finite-batches-per-epoch', '20', '--stop-on-non-finite', 'yes', '--non-finite-log-max-ids', '8']' returned non-zero exit status 1."
+}

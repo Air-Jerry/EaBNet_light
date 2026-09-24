@@ -1,0 +1,105 @@
+{
+  "status": "complete",
+  "scope": "Training-subset fitting only; not generalization, a PESQ > 3.4 guarantee, or proof of paper equivalence.",
+  "output_dir": "/home/nis/jinrui.yang/EaBNet_light/logs_cbam_flat_projection64/overfit8_epoch40_v2",
+  "source_checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_cbam_flat_projection64/model_epoch_40.pt",
+  "training_log": "/home/nis/jinrui.yang/EaBNet_light/logs_cbam_flat_projection64/overfit8_epoch40_v2/training.log",
+  "before": {
+    "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/logs_cbam_flat_projection64/overfit8_epoch40_v2/initial_checkpoint.pt",
+    "epoch": 0,
+    "eval_loss": 0.025256304536014795,
+    "metrics": {
+      "enhanced": {
+        "pesq": 2.287191942334175,
+        "stoi": 0.8994646212243382,
+        "estoi": 0.7835721959903683,
+        "si_snr_db": 12.15838257827789,
+        "sdr_db": 13.036213676401307
+      },
+      "noisy": {
+        "pesq": 1.1155323386192322,
+        "stoi": 0.6907424347173695,
+        "estoi": 0.48033544492031555,
+        "si_snr_db": -1.2522045605865997,
+        "sdr_db": -1.1920623289599863
+      }
+    },
+    "summary_json": "/home/nis/jinrui.yang/EaBNet_light/logs_cbam_flat_projection64/overfit8_epoch40_v2/before/summary.json"
+  },
+  "after_latest": {
+    "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/logs_cbam_flat_projection64/overfit8_epoch40_v2/checkpoints/checkpoint_latest.pt",
+    "epoch": 200,
+    "eval_loss": 0.02044204669073224,
+    "metrics": {
+      "enhanced": {
+        "pesq": 2.869246184825897,
+        "stoi": 0.9369720990871098,
+        "estoi": 0.8594782808981221,
+        "si_snr_db": 13.965105157559876,
+        "sdr_db": 14.580069864030632
+      },
+      "noisy": {
+        "pesq": 1.1155323386192322,
+        "stoi": 0.6907424347173695,
+        "estoi": 0.4803354449203156,
+        "si_snr_db": -1.2522045605865997,
+        "sdr_db": -1.1920623289599863
+      }
+    },
+    "summary_json": "/home/nis/jinrui.yang/EaBNet_light/logs_cbam_flat_projection64/overfit8_epoch40_v2/after_latest/summary.json"
+  },
+  "after_best": {
+    "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/logs_cbam_flat_projection64/overfit8_epoch40_v2/best/best_model.pt",
+    "epoch": 200,
+    "eval_loss": 0.02044204669073224,
+    "metrics": {
+      "enhanced": {
+        "pesq": 2.8692378103733063,
+        "stoi": 0.9369721011387667,
+        "estoi": 0.8594782827614373,
+        "si_snr_db": 13.96510504453697,
+        "sdr_db": 14.580069751506514
+      },
+      "noisy": {
+        "pesq": 1.1155323386192322,
+        "stoi": 0.6907424347173695,
+        "estoi": 0.48033544492031555,
+        "si_snr_db": -1.2522045605865997,
+        "sdr_db": -1.1920623289599863
+      }
+    },
+    "summary_json": "/home/nis/jinrui.yang/EaBNet_light/logs_cbam_flat_projection64/overfit8_epoch40_v2/after_best/summary.json"
+  },
+  "source_epoch": 40,
+  "source_checkpoint_sha256": "aa778ce97bad0db0a4b2b4b094857d1b784bf1090fe18ff141068dcf7f602c7b",
+  "candidate": "cbam_flat_projection64",
+  "device": "cuda",
+  "num_samples": 8,
+  "epochs": 200,
+  "batch_size": 2,
+  "learning_rate": 0.0001,
+  "segment_seconds": 6.0,
+  "frontend": {
+    "sample_rate": 16000,
+    "n_fft": 512,
+    "hop_length": 160,
+    "win_length": 320,
+    "power": 0.5,
+    "target_ref_mic": 0
+  },
+  "subset_manifest": "/home/nis/jinrui.yang/EaBNet_light/logs_cbam_flat_projection64/overfit8_epoch40_v2/subset_manifest.json",
+  "training_config": "/home/nis/jinrui.yang/EaBNet_light/logs_cbam_flat_projection64/overfit8_epoch40_v2/training_command.json",
+  "steps": 800,
+  "resume_history": [
+    {
+      "time_utc": "2026-09-24T03:49:28.664012+00:00",
+      "epoch": 25,
+      "optimizer_steps": 100,
+      "previous_status": "running",
+      "previous_error": null,
+      "rng_note": "Original trainer reseeds on restart; not a bitwise continuation of batch order."
+    }
+  ],
+  "training_returncode": 0,
+  "actual_optimizer_steps": 800
+}

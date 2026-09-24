@@ -1,0 +1,157 @@
+{
+  "status": "complete",
+  "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_cbam_flat_projection64/model_epoch_36.pt",
+  "checkpoint_sha256": "ffd293fa299aa23d2271db356ec0b8bccb33f63b7bf2b633ca588a572c26dad8",
+  "dataset": "/data/ssd1/jinrui.yang/newset_rt60_005-015_on_NOISEX92/babble/training_set",
+  "metadata_sha256": "8d0b4d229ebc42cd9892e6d0e0d36416007ded01fbc0b753df4bf7e6b734eb02",
+  "input_source": {
+    "mode": "metadata",
+    "dataset": "/data/ssd1/jinrui.yang/newset_rt60_005-015_on_NOISEX92/babble/training_set",
+    "metadata_path": "/data/ssd1/jinrui.yang/newset_rt60_005-015_on_NOISEX92/babble/training_set/metadata.csv",
+    "metadata_sha256": "8d0b4d229ebc42cd9892e6d0e0d36416007ded01fbc0b753df4bf7e6b734eb02",
+    "pairing": "metadata.csv mixture_path/target_path rows in original order",
+    "resolved_pairs_sha256": "18233928bdcb499f4e65e3b66a1f8c39387675d09f1621ae6ac94881d7444cfb",
+    "resolved_pairs_sha256_scope": "ordered sample IDs and resolved paths; not audio contents"
+  },
+  "selected_pairs_sha256": "18233928bdcb499f4e65e3b66a1f8c39387675d09f1621ae6ac94881d7444cfb",
+  "selected_pairs_sha256_scope": "ordered sample IDs and resolved paths; not audio contents",
+  "frontend": {
+    "sample_rate": 16000,
+    "n_fft": 512,
+    "hop_length": 160,
+    "win_length": 320,
+    "power": 0.5,
+    "target_ref_mic": 0
+  },
+  "num_mics": 8,
+  "frontend_protocol": {
+    "window": "periodic Hann",
+    "center": true,
+    "pad_mode": "reflect",
+    "normalized": false,
+    "onesided": true,
+    "waveform_normalization": "none",
+    "compression": "Z * abs(Z).clamp_min(1e-8) ** (power - 1)",
+    "inverse_compression": "piecewise exact inverse including the epsilon region",
+    "mixture_channels": "first 8 channels, original order",
+    "evaluation_extent": "full common-length utterance; no training crop or batch padding",
+    "inference_precision": "float32"
+  },
+  "checkpoint_model_config": {
+    "channels": 64,
+    "num_mics": 8,
+    "embed_dim": 64,
+    "kd1": 5,
+    "cd1": 64,
+    "d_feat": 256,
+    "p": 6,
+    "q": 3,
+    "bf_type": "lstm",
+    "topo_type": "mimo",
+    "intra_connect": "cat",
+    "norm_type": "BN",
+    "dfsmn_layers": 3,
+    "dfsmn_memory_size": 20,
+    "is_causal": "yes",
+    "is_u2": "yes"
+  },
+  "model_parameters": 735070,
+  "structure_candidate": "cbam_flat_projection64",
+  "candidate_implementation_sha256": {
+    "EaBNet_light.py": "24dcfed15c1db84bb55ed0b3a548e8ed6ee670fbbf76de1453a98bf10b0df89f",
+    "light_structure_variants.py": "caa0fce96993655552844cac4e05c73022d7493a56ff68750373aafabc455e7e",
+    "light_reference_variants.py": "bf0a24e09a3d0840a2c95e231f9c69696ff98af9907d0a7d2057c6aee394a4ea"
+  },
+  "candidate_evidence": {
+    "candidate_id": "cbam_flat_projection64",
+    "author_confirmed": false,
+    "exact_reproduction_verified": false,
+    "target_equation_11_matches": false,
+    "equation_deviations": [
+      "Target Eq.11 concatenates pooled descriptors before one convolution; CBAM sends them separately through a shared two-layer nonlinear MLP and sums."
+    ],
+    "channel_attention": "reference_13_cbam_r16_bias_true",
+    "dfsmn_layout": "flattened",
+    "dfsmn_rule": "reference_16_memory_carry",
+    "dfsmn_hidden_units": 448,
+    "dfsmn_projection_units": 64,
+    "dfsmn_memory_taps_including_present": 21,
+    "dfsmn_past_frames": 20,
+    "sources": [
+      {
+        "url": "https://github.com/Jongchan/attention-module/blob/459efad0e05ee7dde50c41ca10a3d0800bc3792a/MODELS/cbam.py",
+        "commit": "459efad0e05ee7dde50c41ca10a3d0800bc3792a",
+        "sha256": "6a2115f71541c77ab09c666e4cf32ab9928520f9c2bba9c1ceab8edc8fdd8ac5",
+        "class": "ChannelGate",
+        "lines": [
+          26,
+          60
+        ]
+      }
+    ],
+    "unresolved": [
+      "Target authors do not specify channel-attention reduction, sharing or biases.",
+      "Target authors do not specify DFSMN tensor layout, projection width or memory order.",
+      "Rounded parameter/MAC agreement cannot establish structural equivalence.",
+      "Combining cited modules with this target is not evidence of the authors' implementation.",
+      "448-wide output activations and a 64-wide projection do not establish the target's meaning of 64 hidden units."
+    ]
+  },
+  "exact_reproduction_verified": false,
+  "mixture_ref_mic": 0,
+  "device": "cuda",
+  "expected_samples": 600,
+  "completed_samples": 600,
+  "versions": {
+    "torch": "2.5.1+cu121",
+    "numpy": "2.2.5",
+    "soundfile": "0.13.1",
+    "pesq": "0.0.4",
+    "pystoi": "0.4.1",
+    "mir_eval": "0.8.2"
+  },
+  "mean": {
+    "enhanced": {
+      "pesq": 2.7080539455016455,
+      "stoi": 0.9457095753667765,
+      "estoi": 0.8844327756100825,
+      "si_snr_db": 13.790694038620131,
+      "sdr_db": 14.795828009000958
+    },
+    "noisy": {
+      "pesq": 1.0880955342451732,
+      "stoi": 0.6510592990906214,
+      "estoi": 0.3667556529781415,
+      "si_snr_db": -1.2095493301340097,
+      "sdr_db": -1.1495106109218791
+    }
+  },
+  "outputs": {
+    "metadata_csv": "/home/nis/jinrui.yang/EaBNet_light/logs_cbam_flat_projection64/pesq_selection_40/checkpoints/model_epoch_36/metadata.csv",
+    "extra_csv": null,
+    "summary_json": "/home/nis/jinrui.yang/EaBNet_light/logs_cbam_flat_projection64/pesq_selection_40/checkpoints/model_epoch_36/summary.json",
+    "estimate_dir": "/home/nis/jinrui.yang/EaBNet_light/logs_cbam_flat_projection64/pesq_selection_40/checkpoints/model_epoch_36",
+    "save_samples": false,
+    "wav_subtype": "FLOAT",
+    "mixture_wav": "selected mixture_ref_mic (mono)",
+    "estimate_wav": "raw model estimate"
+  },
+  "metric_protocol": {
+    "pesq": "pesq wideband",
+    "estoi": "pystoi extended=True; JSON estoi=fraction, CSV estoi_pct=100*estoi",
+    "stoi": "pystoi extended=False, fraction",
+    "si_snr_db": "zero-mean projection SI-SNR",
+    "si_snr_epsilon": 1e-08,
+    "sdr_db": "mir_eval.separation.bss_eval_sources, single source, 512-tap distortion filter; not SI-SNR",
+    "target_gain_matching": false,
+    "max_level_gain_db": 20.0,
+    "gain_rule": "none",
+    "external_normalization_clipping_or_alignment": false,
+    "length_policy": "truncate mixture and target to common length as in training Dataset; no delay correction",
+    "aggregation": "paired arithmetic mean over every selected utterance; failures abort with no mean"
+  },
+  "limitations": [
+    "Dataset and target convention must match the intended benchmark.",
+    "Gain matching, when enabled, uses the clean reference after inference and changes the evaluation protocol."
+  ]
+}

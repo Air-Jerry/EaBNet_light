@@ -1,0 +1,304 @@
+{
+  "status": "complete",
+  "best_checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_cbam_flat_projection64/best_model.pt",
+  "selection_metric": "mean enhanced PESQ",
+  "selection_scope": "validation checkpoint selection; evaluate the selected checkpoint on the held-out test set once",
+  "checkpoint_dir": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_cbam_flat_projection64",
+  "dataset": "/data/ssd1/jinrui.yang/newset_rt60_005-015_on_NOISEX92/babble/training_set",
+  "input_source": {
+    "mode": "metadata",
+    "dataset": "/data/ssd1/jinrui.yang/newset_rt60_005-015_on_NOISEX92/babble/training_set",
+    "metadata_path": "/data/ssd1/jinrui.yang/newset_rt60_005-015_on_NOISEX92/babble/training_set/metadata.csv",
+    "metadata_sha256": "8d0b4d229ebc42cd9892e6d0e0d36416007ded01fbc0b753df4bf7e6b734eb02",
+    "pairing": "metadata.csv mixture_path/target_path rows in original order",
+    "resolved_pairs_sha256": "18233928bdcb499f4e65e3b66a1f8c39387675d09f1621ae6ac94881d7444cfb",
+    "resolved_pairs_sha256_scope": "ordered sample IDs and resolved paths; not audio contents"
+  },
+  "metadata_sha256": "8d0b4d229ebc42cd9892e6d0e0d36416007ded01fbc0b753df4bf7e6b734eb02",
+  "selected_pairs_sha256": "18233928bdcb499f4e65e3b66a1f8c39387675d09f1621ae6ac94881d7444cfb",
+  "selected_pairs_sha256_scope": "ordered sample IDs and resolved paths; not audio contents",
+  "expected_samples": 600,
+  "expected_checkpoints": 11,
+  "completed_checkpoints": 11,
+  "results": [
+    {
+      "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_cbam_flat_projection64/best_model.pt",
+      "status": "complete",
+      "mean": {
+        "enhanced": {
+          "pesq": 2.689355406562487,
+          "stoi": 0.9448913733722459,
+          "estoi": 0.8824060005076156,
+          "si_snr_db": 13.763297024834465,
+          "sdr_db": 14.803145962674911
+        },
+        "noisy": {
+          "pesq": 1.0880955342451732,
+          "stoi": 0.6510592990906214,
+          "estoi": 0.3667556529781415,
+          "si_snr_db": -1.2095493301340097,
+          "sdr_db": -1.1495106109218791
+        }
+      },
+      "summary_json": "/home/nis/jinrui.yang/EaBNet_light/logs_cbam_flat_projection64/pesq_selection/checkpoints/best_model/summary.json",
+      "expected_samples": 600,
+      "completed_samples": 600,
+      "selected_pairs_sha256": "18233928bdcb499f4e65e3b66a1f8c39387675d09f1621ae6ac94881d7444cfb",
+      "checkpoint_sha256": "6075e15a666e1afd3dc0df47db1f3b7aec136b58fe1fd81b04b7ef0f7f12cf12"
+    },
+    {
+      "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_cbam_flat_projection64/checkpoint_latest.pt",
+      "status": "complete",
+      "mean": {
+        "enhanced": {
+          "pesq": 2.689355406562487,
+          "stoi": 0.9448913733722459,
+          "estoi": 0.8824060005076156,
+          "si_snr_db": 13.763297024834465,
+          "sdr_db": 14.803145962674911
+        },
+        "noisy": {
+          "pesq": 1.0880955342451732,
+          "stoi": 0.6510592990906214,
+          "estoi": 0.3667556529781415,
+          "si_snr_db": -1.2095493301340097,
+          "sdr_db": -1.1495106109218791
+        }
+      },
+      "summary_json": "/home/nis/jinrui.yang/EaBNet_light/logs_cbam_flat_projection64/pesq_selection/checkpoints/checkpoint_latest/summary.json",
+      "expected_samples": 600,
+      "completed_samples": 600,
+      "selected_pairs_sha256": "18233928bdcb499f4e65e3b66a1f8c39387675d09f1621ae6ac94881d7444cfb",
+      "checkpoint_sha256": "232ce6f62a84f8c572ee226859ce7a16b7d9b4cadadb1d1ac727b56a4803996f"
+    },
+    {
+      "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_cbam_flat_projection64/model_epoch_30.pt",
+      "status": "complete",
+      "mean": {
+        "enhanced": {
+          "pesq": 2.689355406562487,
+          "stoi": 0.9448913733722459,
+          "estoi": 0.8824060005076156,
+          "si_snr_db": 13.763297024834465,
+          "sdr_db": 14.803145962674911
+        },
+        "noisy": {
+          "pesq": 1.0880955342451732,
+          "stoi": 0.6510592990906214,
+          "estoi": 0.3667556529781415,
+          "si_snr_db": -1.2095493301340097,
+          "sdr_db": -1.1495106109218791
+        }
+      },
+      "summary_json": "/home/nis/jinrui.yang/EaBNet_light/logs_cbam_flat_projection64/pesq_selection/checkpoints/model_epoch_30/summary.json",
+      "expected_samples": 600,
+      "completed_samples": 600,
+      "selected_pairs_sha256": "18233928bdcb499f4e65e3b66a1f8c39387675d09f1621ae6ac94881d7444cfb",
+      "checkpoint_sha256": "1cda6f0ebaaabdba749a395a8474212c327d6af5f697ad3c327bf4dfb920817b"
+    },
+    {
+      "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_cbam_flat_projection64/model_epoch_25.pt",
+      "status": "complete",
+      "mean": {
+        "enhanced": {
+          "pesq": 2.6658866087595623,
+          "stoi": 0.9444003977565242,
+          "estoi": 0.8809201257830019,
+          "si_snr_db": 13.540278493723996,
+          "sdr_db": 14.559450086947557
+        },
+        "noisy": {
+          "pesq": 1.0880955342451732,
+          "stoi": 0.6510592990906214,
+          "estoi": 0.3667556529781415,
+          "si_snr_db": -1.2095493301340097,
+          "sdr_db": -1.1495106109218791
+        }
+      },
+      "summary_json": "/home/nis/jinrui.yang/EaBNet_light/logs_cbam_flat_projection64/pesq_selection/checkpoints/model_epoch_25/summary.json",
+      "expected_samples": 600,
+      "completed_samples": 600,
+      "selected_pairs_sha256": "18233928bdcb499f4e65e3b66a1f8c39387675d09f1621ae6ac94881d7444cfb",
+      "checkpoint_sha256": "d84b342111c98e2fc296ab18237eb955ada8c7dcf5bffdccc911b02a07f3bc16"
+    },
+    {
+      "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_cbam_flat_projection64/model_epoch_20.pt",
+      "status": "complete",
+      "mean": {
+        "enhanced": {
+          "pesq": 2.6085324376821517,
+          "stoi": 0.9399721539842566,
+          "estoi": 0.8738520565487227,
+          "si_snr_db": 13.160840513580878,
+          "sdr_db": 14.10404360617113
+        },
+        "noisy": {
+          "pesq": 1.0880955342451732,
+          "stoi": 0.6510592990906214,
+          "estoi": 0.3667556529781415,
+          "si_snr_db": -1.2095493301340097,
+          "sdr_db": -1.1495106109218791
+        }
+      },
+      "summary_json": "/home/nis/jinrui.yang/EaBNet_light/logs_cbam_flat_projection64/pesq_selection/checkpoints/model_epoch_20/summary.json",
+      "expected_samples": 600,
+      "completed_samples": 600,
+      "selected_pairs_sha256": "18233928bdcb499f4e65e3b66a1f8c39387675d09f1621ae6ac94881d7444cfb",
+      "checkpoint_sha256": "b55d4acaca1961584818a238730aed26cfda95a763f811204081cdfa1fa1c2d9"
+    },
+    {
+      "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_cbam_flat_projection64/model_epoch_15.pt",
+      "status": "complete",
+      "mean": {
+        "enhanced": {
+          "pesq": 2.4514621754487353,
+          "stoi": 0.9326707959604782,
+          "estoi": 0.8577544424191126,
+          "si_snr_db": 12.210279456981887,
+          "sdr_db": 13.120020888622884
+        },
+        "noisy": {
+          "pesq": 1.0880955342451732,
+          "stoi": 0.6510592990906214,
+          "estoi": 0.3667556529781415,
+          "si_snr_db": -1.2095493301340097,
+          "sdr_db": -1.1495106109218791
+        }
+      },
+      "summary_json": "/home/nis/jinrui.yang/EaBNet_light/logs_cbam_flat_projection64/pesq_selection/checkpoints/model_epoch_15/summary.json",
+      "expected_samples": 600,
+      "completed_samples": 600,
+      "selected_pairs_sha256": "18233928bdcb499f4e65e3b66a1f8c39387675d09f1621ae6ac94881d7444cfb",
+      "checkpoint_sha256": "2dc75b25abecc479e5d7d286d0722d6f7f63d2f8fd15821a55dfb2bcd33d7363"
+    },
+    {
+      "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_cbam_flat_projection64/model_epoch_10.pt",
+      "status": "complete",
+      "mean": {
+        "enhanced": {
+          "pesq": 2.449935554464658,
+          "stoi": 0.9311591135445141,
+          "estoi": 0.8541852023249119,
+          "si_snr_db": 12.057117617597592,
+          "sdr_db": 13.096108945399774
+        },
+        "noisy": {
+          "pesq": 1.0880955342451732,
+          "stoi": 0.6510592990906214,
+          "estoi": 0.3667556529781415,
+          "si_snr_db": -1.2095493301340097,
+          "sdr_db": -1.1495106109218791
+        }
+      },
+      "summary_json": "/home/nis/jinrui.yang/EaBNet_light/logs_cbam_flat_projection64/pesq_selection/checkpoints/model_epoch_10/summary.json",
+      "expected_samples": 600,
+      "completed_samples": 600,
+      "selected_pairs_sha256": "18233928bdcb499f4e65e3b66a1f8c39387675d09f1621ae6ac94881d7444cfb",
+      "checkpoint_sha256": "fe092871af1e73a7169cffcc461ec47607fde82653151fffa6bf5ec5c322011f"
+    },
+    {
+      "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_cbam_flat_projection64/model_epoch_5.pt",
+      "status": "complete",
+      "mean": {
+        "enhanced": {
+          "pesq": 2.1973599167664846,
+          "stoi": 0.9132522528747101,
+          "estoi": 0.8231510092357613,
+          "si_snr_db": 10.75804863746525,
+          "sdr_db": 11.66409767364079
+        },
+        "noisy": {
+          "pesq": 1.0880955342451732,
+          "stoi": 0.6510592990906214,
+          "estoi": 0.3667556529781415,
+          "si_snr_db": -1.2095493301340097,
+          "sdr_db": -1.1495106109218791
+        }
+      },
+      "summary_json": "/home/nis/jinrui.yang/EaBNet_light/logs_cbam_flat_projection64/pesq_selection/checkpoints/model_epoch_5/summary.json",
+      "expected_samples": 600,
+      "completed_samples": 600,
+      "selected_pairs_sha256": "18233928bdcb499f4e65e3b66a1f8c39387675d09f1621ae6ac94881d7444cfb",
+      "checkpoint_sha256": "4176cfb4038c6c78a1b3eec5434c418f73d01fc8f1c87d3fa909a1471188383c"
+    },
+    {
+      "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_cbam_flat_projection64/model_epoch_2.pt",
+      "status": "complete",
+      "mean": {
+        "enhanced": {
+          "pesq": 1.3144551487763723,
+          "stoi": 0.7737601201169363,
+          "estoi": 0.5929789835317638,
+          "si_snr_db": 3.0822770441566734,
+          "sdr_db": 4.456673336139691
+        },
+        "noisy": {
+          "pesq": 1.0880955342451732,
+          "stoi": 0.6510592990906214,
+          "estoi": 0.3667556529781415,
+          "si_snr_db": -1.2095493301340097,
+          "sdr_db": -1.1495106109218791
+        }
+      },
+      "summary_json": "/home/nis/jinrui.yang/EaBNet_light/logs_cbam_flat_projection64/pesq_selection/checkpoints/model_epoch_2/summary.json",
+      "expected_samples": 600,
+      "completed_samples": 600,
+      "selected_pairs_sha256": "18233928bdcb499f4e65e3b66a1f8c39387675d09f1621ae6ac94881d7444cfb",
+      "checkpoint_sha256": "edeed7bc80d9e49c4b59172b76d15c38dc7b939303a71b6c1c60ad0d2c0dcccc"
+    },
+    {
+      "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_cbam_flat_projection64/model_epoch_3.pt",
+      "status": "complete",
+      "mean": {
+        "enhanced": {
+          "pesq": 1.3058798601229986,
+          "stoi": 0.722420329616392,
+          "estoi": 0.5256414353243783,
+          "si_snr_db": -0.833356607265886,
+          "sdr_db": 3.9421120495438178
+        },
+        "noisy": {
+          "pesq": 1.0880955342451732,
+          "stoi": 0.6510592990906214,
+          "estoi": 0.3667556529781415,
+          "si_snr_db": -1.2095493301340097,
+          "sdr_db": -1.1495106109218791
+        }
+      },
+      "summary_json": "/home/nis/jinrui.yang/EaBNet_light/logs_cbam_flat_projection64/pesq_selection/checkpoints/model_epoch_3/summary.json",
+      "expected_samples": 600,
+      "completed_samples": 600,
+      "selected_pairs_sha256": "18233928bdcb499f4e65e3b66a1f8c39387675d09f1621ae6ac94881d7444cfb",
+      "checkpoint_sha256": "59c39295bb775d250e82ffd1be69836f1492bb7d8768029d4940a7df4a196cd6"
+    },
+    {
+      "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_cbam_flat_projection64/model_epoch_1.pt",
+      "status": "complete",
+      "mean": {
+        "enhanced": {
+          "pesq": 1.2267401697238287,
+          "stoi": 0.7173741206622879,
+          "estoi": 0.5043410231973026,
+          "si_snr_db": 0.8445016831805127,
+          "sdr_db": 2.508595256808432
+        },
+        "noisy": {
+          "pesq": 1.0880955342451732,
+          "stoi": 0.6510592990906214,
+          "estoi": 0.3667556529781415,
+          "si_snr_db": -1.2095493301340097,
+          "sdr_db": -1.1495106109218791
+        }
+      },
+      "summary_json": "/home/nis/jinrui.yang/EaBNet_light/logs_cbam_flat_projection64/pesq_selection/checkpoints/model_epoch_1/summary.json",
+      "expected_samples": 600,
+      "completed_samples": 600,
+      "selected_pairs_sha256": "18233928bdcb499f4e65e3b66a1f8c39387675d09f1621ae6ac94881d7444cfb",
+      "checkpoint_sha256": "56f4c6bd21cb5a879e64f0baa9523a7a8c488d0b33908f8d0fcee014c5befe06"
+    }
+  ],
+  "outputs": {
+    "ranking_csv": "/home/nis/jinrui.yang/EaBNet_light/logs_cbam_flat_projection64/pesq_selection/checkpoint_ranking.csv",
+    "ranking_json": "/home/nis/jinrui.yang/EaBNet_light/logs_cbam_flat_projection64/pesq_selection/checkpoint_ranking.json"
+  }
+}
