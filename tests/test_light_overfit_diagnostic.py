@@ -401,6 +401,23 @@ def test_child_error_excerpt_is_bounded_and_keeps_the_last_error(tmp_path):
     assert "progress" not in excerpt
 
 
+def test_failed_summary_replacement_preserves_last_complete_json(tmp_path, monkeypatch):
+    import diagnose_light_overfit as diagnostic
+
+    summary = tmp_path / "diagnostic_summary.json"
+    diagnostic.write_json(summary, {"status": "running", "before": {"epoch": 0}})
+    original = summary.read_bytes()
+
+    def failed_replace(*args):
+        raise OSError("injected atomic replacement failure")
+
+    monkeypatch.setattr(diagnostic.os, "replace", failed_replace)
+    with pytest.raises(OSError, match="replacement failure"):
+        diagnostic.write_json(summary, {"status": "complete"})
+    assert summary.read_bytes() == original
+    assert not list(tmp_path.glob("*.tmp"))
+
+
 def test_real_cpu_pipeline_evaluates_trains_and_reports_actual_fresh_optimizer_steps(source_checkpoint, tmp_path):
     output = tmp_path / "experiment"
     source_hashes = {path: digest(path) for path in source_checkpoint["dataset"].iterdir()}

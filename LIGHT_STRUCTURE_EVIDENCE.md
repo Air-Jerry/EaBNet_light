@@ -191,3 +191,19 @@ CUDA_VISIBLE_DEVICES=0 nohup "$HOME/miniconda3/envs/EaBNet/bin/python" -u \
 2026-09-24收到的首份真实小集报告为 `status=failed`：只完成初始eval loss 0.0252563、PESQ 2.287191，`after_latest` 和 `after_best` 均为空，`steps=800`只是计划次数。补充训练日志确认第1轮第1批在第二层LSTM前向中CUDA显存不足，尚未完成第一次参数更新。报错时GPU 0总容量11.60 GiB、空闲232.75 MiB，本训练进程约5.03 GiB，另一个进程约6.07 GiB；不能仅凭显存量判断另一进程的身份。该报告不能用于推断拟合能力或与600条对照集的2.721410比较。恢复时先确认有足够空闲显存的GPU，使用新输出目录并保留原8条固定选择及训练配置。
 
 诊断汇总现包含 `training_log` 路径、已取得的 `training_returncode`，以及失败时日志末尾最多100行/12000字符的 `training_log_tail`，保留真实子进程异常，避免只有包装层退出码。该错误记录修复不改变训练参数或原训练/模型文件。更新后的17项定向测试通过，包括模拟首批OOM的完整异常保留和日志摘录长度限制；实际GPU显存峰值仍需服务器确认。
+
+后续 `overfit8_epoch40_v2` 的日志完成了第25轮（train loss 0.023397、val loss 0.023349），停在第26轮首批；用户的进程查询为空，说明当时已没有诊断或训练进程。日志末尾无Traceback，不能据此认定退出原因。JSON中的 `running` 只是最后写入的阶段，不代表当前进程仍存活。
+
+同一入口新增 `--resume-run`，用于已停止的诊断：验证固定音频与metadata哈希、原始checkpoint、初始基线、最新权重/Adam步数及原训练配置，随后从最后完整保存轮次继续到原定轮数，保留原 `before` 结果和已训练的优化器状态。恢复命令只允许另外指定设备，不能借此改变样本数、batch、学习率或总轮数。日志追加，已完成的诊断不会重复训练；训练已完成而评估未完成时，可只补复评。损坏或不一致的checkpoint会明确拒绝，不会静默退回初始模型。报告写入改用同目录临时文件后原子替换，并用操作系统文件锁阻止同一新版诊断同时运行；Linux子进程继承该锁，父进程退出但子进程还在时仍会保持互斥。
+
+```bash
+CUDA_VISIBLE_DEVICES=0 nohup "$HOME/miniconda3/envs/EaBNet/bin/python" -u \
+  diagnose_light_overfit.py \
+  --resume-run ./logs_cbam_flat_projection64/overfit8_epoch40_v2 \
+  --device cuda \
+  > ./logs_cbam_flat_projection64/overfit8_epoch40_v2_resume.log 2>&1 &
+```
+
+本次若最新checkpoint保存于第25轮，则恢复100次已完成的Adam更新，从第26轮继续至第200轮，总计800次更新。第26轮未保存的更新会重做。原trainer未保存RNG状态，重启会重新设种子并排列batch，因此这里只承诺恢复保存的模型、BN、优化器和轮次，不声称与不中断训练逐位等价。新测试使用真实CPU子进程在第1轮后中断再恢复，检查Adam累计步数、基线/数据不变、日志追加、完成后不重复运行、配置篡改拒绝和运行锁。
+
+恢复功能与原诊断流程的组合测试为27项全部通过，包含报告原子替换失败时保留上次完整JSON。原训练、模型和评估文件保持不变；服务器上从第25轮继续至第200轮的真实GPU诊断仍需执行。

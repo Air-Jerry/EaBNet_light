@@ -9,6 +9,7 @@ from __future__ import annotations
 import argparse
 from collections import deque
 import csv
+from datetime import datetime, timezone
 import gc
 import json
 import math
@@ -17,6 +18,7 @@ from pathlib import Path
 import random
 import subprocess
 import sys
+import tempfile
 
 import numpy as np
 import soundfile as sf
@@ -32,7 +34,18 @@ SCOPE = "Training-subset fitting only; not generalization, a PESQ > 3.4 guarante
 
 
 def write_json(path, data):
-    Path(path).write_text(json.dumps(data, ensure_ascii=False, indent=2, allow_nan=False) + "\n", encoding="utf-8")
+    path = Path(path)
+    payload = json.dumps(data, ensure_ascii=False, indent=2, allow_nan=False) + "\n"
+    temporary = None
+    try:
+        with tempfile.NamedTemporaryFile(mode="w", encoding="utf-8", dir=path.parent,
+                                         prefix=path.name + ".", suffix=".tmp", delete=False) as handle:
+            temporary = Path(handle.name)
+            handle.write(payload)
+        os.replace(temporary, path)
+    finally:
+        if temporary is not None:
+            temporary.unlink(missing_ok=True)
 
 
 def read_log_tail(path, max_lines=100, max_chars=12000):
@@ -219,7 +232,225 @@ def training_environment(device, cpu_threads):
     return environment
 
 
+def acquire_run_lock(output):
+    path = output / ".diagnostic.lock"
+    if path.is_symlink():
+        raise ValueError("Diagnostic lock must not be a symbolic link")
+    handle = path.open("a+b")
+    try:
+        if os.name == "nt":
+            import msvcrt
+            if handle.tell() == 0:
+                handle.write(b"0")
+                handle.flush()
+            handle.seek(0)
+            msvcrt.locking(handle.fileno(), msvcrt.LK_NBLCK, 1)
+        else:
+            import fcntl
+            fcntl.flock(handle, fcntl.LOCK_EX | fcntl.LOCK_NB)
+    except OSError as exc:
+        handle.close()
+        raise RuntimeError("Cannot lock this diagnostic; another run may still be active") from exc
+    return handle
+
+
+def execute_training(command, training_args, device, output, summary, lock, append=False):
+    with (output / "training.log").open("a" if append else "w", encoding="utf-8") as log:
+        if append:
+            log.write(f"\nResuming diagnostic from epoch {summary['resume_history'][-1]['epoch']}\n")
+            log.flush()
+        inherited = {"pass_fds": (lock.fileno(),)} if os.name != "nt" else {}
+        with subprocess.Popen(command, cwd=ROOT, env=training_environment(device, training_args.cpu_threads),
+                              stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+                              text=True, encoding="utf-8", errors="replace", **inherited) as process:
+            try:
+                for line in process.stdout:
+                    log.write(line)
+                    log.flush()
+                    print(line, end="", flush=True)
+            except BaseException:
+                process.terminate()
+                try:
+                    process.wait(timeout=10)
+                except subprocess.TimeoutExpired:
+                    process.kill()
+                    process.wait()
+                raise
+            returncode = process.wait()
+            summary["training_returncode"] = returncode
+            if returncode:
+                raise subprocess.CalledProcessError(returncode, command)
+
+
+def optimizer_steps(checkpoint):
+    steps = {int(state["step"].item() if torch.is_tensor(state["step"]) else state["step"])
+             for state in checkpoint["optimizer_state_dict"]["state"].values() if "step" in state}
+    if not steps and checkpoint["epoch"] == 0:
+        return 0
+    if len(steps) != 1:
+        raise ValueError(f"Inconsistent saved optimizer steps: {steps}")
+    return next(iter(steps))
+
+
+def finish_run(summary, args, training_args, output, dataset):
+    latest = Path(training_args.checkpoint_dir) / "checkpoint_latest.pt"
+    checkpoint, _ = read_candidate_checkpoint(latest, summary["candidate"], training_args)
+    steps = optimizer_steps(checkpoint)
+    if checkpoint["epoch"] != args.epochs or steps != summary["steps"]:
+        raise RuntimeError(f"Incomplete training: epoch={checkpoint['epoch']}, optimizer steps={steps}")
+    summary["actual_optimizer_steps"] = steps
+    del checkpoint
+    summary["after_latest"] = evaluate_checkpoint(latest, dataset, output / "after_latest", args)
+    summary["after_best"] = evaluate_checkpoint(Path(training_args.best_dir) / "best_model.pt", dataset,
+                                                 output / "after_best", args)
+    if evaluator.sha256_file(args.checkpoint) != summary["source_checkpoint_sha256"]:
+        raise RuntimeError("Original checkpoint changed during diagnostic")
+    summary["status"] = "complete"
+    return summary
+
+
+def record_failure(summary, output, exc):
+    summary.update(status="failed", error=f"{type(exc).__name__}: {exc}")
+    try:
+        if (output / "training.log").is_file():
+            summary["training_log_tail"] = read_log_tail(output / "training.log")
+    except OSError as log_error:
+        summary["training_log_read_error"] = f"{type(log_error).__name__}: {log_error}"
+
+
+def load_resume_run(output, device_arg="auto"):
+    output = Path(output).expanduser().resolve()
+
+    def local(name):
+        path = (output / name).resolve()
+        if not is_within(path, output) or path == output:
+            raise ValueError(f"Diagnostic path escapes run directory: {name}")
+        return path
+
+    def read(name):
+        return json.loads(local(name).read_text(encoding="utf-8"))
+
+    summary, manifest, configuration = (read(name) for name in
+                                       ("diagnostic_summary.json", "subset_manifest.json", "training_command.json"))
+    if summary.get("scope") != SCOPE or Path(summary["output_dir"]).resolve() != output:
+        raise ValueError("Summary does not describe this diagnostic run")
+    source_path = Path(summary["source_checkpoint"]).resolve()
+    if evaluator.sha256_file(source_path) != summary["source_checkpoint_sha256"]:
+        raise ValueError("Source checkpoint changed")
+    if manifest["checkpoint_sha256"] != summary["source_checkpoint_sha256"]:
+        raise ValueError("Manifest source checkpoint differs from summary")
+    source, candidate = read_candidate_checkpoint(source_path, summary["candidate"])
+    if int(source["epoch"]) != summary["source_epoch"]:
+        raise ValueError("Source epoch differs from summary")
+    dataset = local("dataset")
+    if Path(manifest["dataset_dir"]).resolve() != dataset:
+        raise ValueError("Manifest dataset directory differs")
+    if evaluator.sha256_file(dataset / "metadata.csv") != manifest["exported_metadata_sha256"]:
+        raise ValueError("Fixed dataset metadata changed")
+    records = evaluator.load_records(dataset)
+    if len(records) != len(manifest["selected"]) or len(records) != summary["num_samples"]:
+        raise ValueError("Fixed dataset sample count changed")
+    for record, selected in zip(records, manifest["selected"]):
+        if record.sample_id != selected["sample_id"]:
+            raise ValueError("Fixed dataset sample IDs changed")
+        for kind in ("mixture", "target"):
+            path = getattr(record, kind + "_path").resolve()
+            if not is_within(path, dataset) or path != Path(selected[f"exported_{kind}_path"]).resolve():
+                raise ValueError("Fixed audio path differs from manifest")
+            if evaluator.sha256_file(path) != selected[f"exported_{kind}_sha256"]:
+                raise ValueError("Fixed audio changed")
+    training_args = argparse.Namespace(**configuration["args"])
+    args = argparse.Namespace(checkpoint=str(source_path), train_dir=str(Path(manifest["metadata_path"]).parent),
+                              output_dir=str(output), num_samples=summary["num_samples"], epochs=summary["epochs"],
+                              batch_size=summary["batch_size"], learning_rate=summary["learning_rate"],
+                              segment_seconds=summary["segment_seconds"], seed=manifest["seed"],
+                              cpu_threads=training_args.cpu_threads, device=device_arg)
+    validate_output(args)
+    expected = make_training_args(source["args"], args, dataset, output)
+    if vars(training_args) != vars(expected):
+        raise ValueError("Saved training configuration differs from the original diagnostic")
+    if args.num_samples % args.batch_size or summary["steps"] != args.epochs * (args.num_samples // args.batch_size):
+        raise ValueError("Diagnostic update budget is inconsistent")
+    if manifest["segment_samples"] != round(args.segment_seconds * training_args.sample_rate):
+        raise ValueError("Fixed segment length differs from training configuration")
+    for name in ("checkpoints", "best", "logs", "after_latest", "after_best", "training.log"):
+        local(name)
+    before_metrics = read("before/summary.json")
+    initial_path = local("initial_checkpoint.pt")
+    initial, _ = read_candidate_checkpoint(initial_path, candidate, training_args)
+    if initial["epoch"] != 0 or optimizer_steps(initial) != 0:
+        raise ValueError("Initial checkpoint is no longer the unfitted baseline")
+    if (before_metrics["status"] != "complete" or before_metrics["checkpoint_sha256"] != evaluator.sha256_file(initial_path)
+            or before_metrics["selected_pairs_sha256"] != evaluator.pairs_sha256(records)
+            or before_metrics["mean"] != summary["before"]["metrics"]
+            or summary["before"]["epoch"] != 0 or not math.isfinite(summary["before"]["eval_loss"])):
+        raise ValueError("Baseline does not match the original fixed data and initial checkpoint")
+    latest, _ = read_candidate_checkpoint(local("checkpoints/checkpoint_latest.pt"), candidate, training_args)
+    epoch, steps = latest["epoch"], optimizer_steps(latest)
+    if not isinstance(epoch, int) or not 0 <= epoch <= args.epochs or steps != epoch * (args.num_samples // args.batch_size):
+        raise ValueError("Latest checkpoint epoch/optimizer progress is inconsistent")
+    for checkpoint in (initial, latest):
+        for name, value in vars(training_args).items():
+            if name != "cpu_threads" and checkpoint["args"].get(name) != value:
+                raise ValueError(f"Checkpoint training configuration differs: {name}")
+        if any(group["lr"] != args.learning_rate for group in checkpoint["optimizer_state_dict"]["param_groups"]):
+            raise ValueError("Saved optimizer learning rate changed")
+    model, _ = evaluator.load_model(local("checkpoints/checkpoint_latest.pt"), torch.device("cpu"), candidate)
+    if any(not torch.isfinite(value).all() for value in model.state_dict().values() if value.is_floating_point()):
+        raise ValueError("Latest model contains non-finite state")
+    for state in latest["optimizer_state_dict"]["state"].values():
+        if any(torch.is_tensor(value) and not torch.isfinite(value).all() for value in state.values()):
+            raise ValueError("Latest optimizer contains non-finite state")
+    if epoch:
+        best, _ = read_candidate_checkpoint(local("best/best_model.pt"), candidate, training_args)
+        if not 1 <= best["epoch"] <= epoch or best["val_loss"] != latest["best_val_loss"]:
+            raise ValueError("Best and latest checkpoints are inconsistent; refusing to guess a replacement")
+    if summary["status"] == "complete" and (epoch != args.epochs or summary.get("actual_optimizer_steps") != summary["steps"]):
+        raise ValueError("Completed report disagrees with saved training progress")
+    return dict(output=output, summary=summary, args=args, training_args=training_args,
+                epoch=epoch, steps=steps, dataset=dataset)
+
+
+def resume_run(directory, device_arg="auto"):
+    output = Path(directory).expanduser().resolve()
+    if not output.is_dir():
+        raise FileNotFoundError(f"Diagnostic run directory not found: {output}")
+    with acquire_run_lock(output) as lock:
+        state = load_resume_run(output, device_arg)
+        summary, args, training_args = state["summary"], state["args"], state["training_args"]
+        if summary["status"] == "complete":
+            return summary
+        device = evaluator.get_device(device_arg)
+        args.device = device.type
+        torch.set_num_threads(args.cpu_threads)
+        torch.backends.cuda.matmul.allow_tf32 = False
+        torch.backends.cudnn.allow_tf32 = False
+        torch.backends.cudnn.benchmark = False
+        if hasattr(torch, "set_float32_matmul_precision"):
+            torch.set_float32_matmul_precision("highest")
+        summary.setdefault("resume_history", []).append(dict(
+            time_utc=datetime.now(timezone.utc).isoformat(), epoch=state["epoch"], optimizer_steps=state["steps"],
+            previous_status=summary["status"], previous_error=summary.get("error"),
+            rng_note="Original trainer reseeds on restart; not a bitwise continuation of batch order."))
+        for name in ("error", "training_log_tail", "training_log_read_error", "training_returncode", "actual_optimizer_steps"):
+            summary.pop(name, None)
+        summary.update(status="running", device=args.device, training_log=str(output / "training.log"))
+        write_json(output / "diagnostic_summary.json", summary)
+        try:
+            if state["epoch"] < args.epochs:
+                print(f"Resuming saved epoch {state['epoch']} ({state['steps']} updates) to {args.epochs}; reusing fixed data and baseline.", flush=True)
+                execute_training(training_command(training_args), training_args, device, output, summary, lock, append=True)
+            return finish_run(summary, args, training_args, output, state["dataset"])
+        except BaseException as exc:
+            record_failure(summary, output, exc)
+            raise
+        finally:
+            write_json(output / "diagnostic_summary.json", summary)
+
+
 def run(args):
+    if getattr(args, "resume_run", None):
+        return resume_run(args.resume_run, args.device)
     output = validate_output(args)
     if output.exists():
         raise FileExistsError(f"Use a new --output-dir; refusing to overwrite {output}")
@@ -227,6 +458,7 @@ def run(args):
     source = trainer.EnhancementDataset(Path(args.train_dir).expanduser(), sample_rate=16000)
     validate_output(args, source.records)
     output.mkdir(parents=True, exist_ok=False)
+    lock = acquire_run_lock(output)
     summary = {"status": "running", "scope": SCOPE, "output_dir": str(output),
                "source_checkpoint": str(Path(args.checkpoint).expanduser().resolve()),
                "training_log": str(output / "training.log"),
@@ -272,58 +504,24 @@ def run(args):
         summary["before"] = evaluate_checkpoint(initial, dataset, output / "before", args)
         write_json(output / "diagnostic_summary.json", summary)
         print(f"Training fixed subset: {args.epochs} epochs, {summary['steps']} optimizer steps; log: {output / 'training.log'}", flush=True)
-        with (output / "training.log").open("w", encoding="utf-8") as log:
-            with subprocess.Popen(command, cwd=ROOT, env=training_environment(device, args.cpu_threads),
-                                  stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
-                                  text=True, encoding="utf-8", errors="replace") as process:
-                try:
-                    for line in process.stdout:
-                        log.write(line)
-                        log.flush()
-                        print(line, end="", flush=True)
-                except BaseException:
-                    process.terminate()
-                    try:
-                        process.wait(timeout=10)
-                    except subprocess.TimeoutExpired:
-                        process.kill()
-                        process.wait()
-                    raise
-                returncode = process.wait()
-                summary["training_returncode"] = returncode
-                if returncode:
-                    raise subprocess.CalledProcessError(returncode, command)
-        final_checkpoint, _ = read_candidate_checkpoint(latest, candidate_id, training_args)
-        steps = {int(state["step"].item() if torch.is_tensor(state["step"]) else state["step"])
-                 for state in final_checkpoint["optimizer_state_dict"]["state"].values() if "step" in state}
-        if final_checkpoint["epoch"] != args.epochs or steps != {summary["steps"]}:
-            raise RuntimeError(f"Incomplete training: epoch={final_checkpoint['epoch']}, optimizer steps={steps}")
-        summary["actual_optimizer_steps"] = next(iter(steps))
-        del final_checkpoint
-        summary["after_latest"] = evaluate_checkpoint(latest, dataset, output / "after_latest", args)
-        summary["after_best"] = evaluate_checkpoint(Path(training_args.best_dir) / "best_model.pt", dataset,
-                                                     output / "after_best", args)
-        if evaluator.sha256_file(args.checkpoint) != summary["source_checkpoint_sha256"]:
-            raise RuntimeError("Original checkpoint changed during diagnostic")
-        summary["status"] = "complete"
-        return summary
+        execute_training(command, training_args, device, output, summary, lock)
+        return finish_run(summary, args, training_args, output, dataset)
     except BaseException as exc:
-        summary.update(status="failed", error=f"{type(exc).__name__}: {exc}")
-        try:
-            if (output / "training.log").is_file():
-                summary["training_log_tail"] = read_log_tail(output / "training.log")
-        except OSError as log_error:
-            summary["training_log_read_error"] = f"{type(log_error).__name__}: {log_error}"
+        record_failure(summary, output, exc)
         raise
     finally:
-        write_json(output / "diagnostic_summary.json", summary)
+        try:
+            write_json(output / "diagnostic_summary.json", summary)
+        finally:
+            lock.close()
 
 
 def parse_args(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--checkpoint", required=True)
-    parser.add_argument("--train-dir", required=True)
-    parser.add_argument("--output-dir", required=True, help="New directory outside input and original checkpoint directories")
+    parser.add_argument("--resume-run", help="Resume an interrupted diagnostic directory using its saved data/configuration")
+    parser.add_argument("--checkpoint")
+    parser.add_argument("--train-dir")
+    parser.add_argument("--output-dir", help="New directory outside input and original checkpoint directories")
     parser.add_argument("--num-samples", type=int, default=8)
     parser.add_argument("--segment-seconds", type=float, default=6.0)
     parser.add_argument("--epochs", type=int, default=200)
@@ -333,6 +531,13 @@ def parse_args(argv=None):
     parser.add_argument("--device", choices=("auto", "cpu", "cuda"), default="auto")
     parser.add_argument("--cpu-threads", type=int, default=2)
     args = parser.parse_args(argv)
+    if args.resume_run:
+        supplied = {value.split("=", 1)[0] for value in (sys.argv[1:] if argv is None else argv) if value.startswith("--")}
+        if supplied - {"--resume-run", "--device"}:
+            parser.error("--resume-run reuses the saved configuration; only --device may also be supplied")
+        return args
+    if not all((args.checkpoint, args.train_dir, args.output_dir)):
+        parser.error("A new run requires --checkpoint, --train-dir and --output-dir")
     if min(args.num_samples, args.epochs, args.batch_size, args.cpu_threads) < 1:
         parser.error("num-samples, epochs, batch-size and cpu-threads must be positive")
     if args.num_samples % args.batch_size:
