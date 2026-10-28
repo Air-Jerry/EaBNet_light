@@ -190,6 +190,15 @@ def resolve_record_path(root_dir: Path, relative_path: str) -> Path:
         candidate = (base_dir / normalized).resolve()
         if candidate.exists():
             return candidate
+    # Moved datasets may retain an old prefix before their split directory.
+    parts = Path(normalized).parts
+    split_name = root_dir.name
+    if split_name in ('training_set', 'validation_set') and split_name in parts:
+        tail = parts[parts.index(split_name) + 1:]
+        if tail:
+            candidate = (root_dir / Path(*tail)).resolve()
+            if candidate.is_file():
+                return candidate
     fallback = (root_dir / Path(normalized).name).resolve()
     if fallback.exists():
         return fallback
