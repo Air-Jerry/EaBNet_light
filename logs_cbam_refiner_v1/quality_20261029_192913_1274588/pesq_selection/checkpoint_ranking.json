@@ -38,7 +38,9 @@
     7,
     8,
     9,
-    10
+    10,
+    11,
+    12
   ],
   "best_completed_epoch": 10,
   "best_completed_pesq": 2.8211450682083767,
@@ -56,6 +58,29 @@
           "estoi": 0.8945601401143407,
           "si_snr_db": 13.970189064859312,
           "sdr_db": 14.924940657935544
+        },
+        "noisy": {
+          "pesq": 1.0880955342451732,
+          "stoi": 0.6510592990906214,
+          "estoi": 0.3667556529781415,
+          "si_snr_db": -1.2095493301340097,
+          "sdr_db": -1.1495106109218791
+        }
+      }
+    },
+    {
+      "epoch": 12,
+      "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_cbam_refiner_v1_quality_20261029_192913_1274588/model_epoch_12.pt",
+      "checkpoint_sha256": "48a357cd17e4f1c81bdef1e8bd5eaa31b7a69a6a74d41335db024afd54e6354d",
+      "summary_json": "/home/nis/jinrui.yang/EaBNet_light/logs_cbam_refiner_v1/quality_20261029_192913_1274588/pesq_selection/model_epoch_12/summary.json",
+      "completed_samples": 600,
+      "mean": {
+        "enhanced": {
+          "pesq": 2.816628743012746,
+          "stoi": 0.9507235773223105,
+          "estoi": 0.8955651052451087,
+          "si_snr_db": 13.995527126848895,
+          "sdr_db": 14.939628699909639
         },
         "noisy": {
           "pesq": 1.0880955342451732,
@@ -102,6 +127,29 @@
           "estoi": 0.8940982863916107,
           "si_snr_db": 13.94996653689068,
           "sdr_db": 14.890053798176607
+        },
+        "noisy": {
+          "pesq": 1.0880955342451732,
+          "stoi": 0.6510592990906214,
+          "estoi": 0.3667556529781415,
+          "si_snr_db": -1.2095493301340097,
+          "sdr_db": -1.1495106109218791
+        }
+      }
+    },
+    {
+      "epoch": 11,
+      "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_cbam_refiner_v1_quality_20261029_192913_1274588/model_epoch_11.pt",
+      "checkpoint_sha256": "0074e19e317b33297d79224c92af8c70e5142e251e029645636b664303d5483b",
+      "summary_json": "/home/nis/jinrui.yang/EaBNet_light/logs_cbam_refiner_v1/quality_20261029_192913_1274588/pesq_selection/model_epoch_11/summary.json",
+      "completed_samples": 600,
+      "mean": {
+        "enhanced": {
+          "pesq": 2.7871001863479616,
+          "stoi": 0.9503029972345589,
+          "estoi": 0.8947451839005051,
+          "si_snr_db": 13.952897986741373,
+          "sdr_db": 14.88963653237069
         },
         "noisy": {
           "pesq": 1.0880955342451732,
@@ -410,7 +458,7 @@
     "all_saved_model_tensors_finite": true,
     "source": "Direct CPU tensor comparison of the server epoch-1 checkpoint against the original epoch-40 checkpoint."
   },
-  "decision": "The initial 10-epoch run completed with a new best at epoch 10, PESQ 2.8211451. Full-state two-GPU continuation through epoch 20 has started and confirmed resumption from epoch 10. Preserve the same 600-sample protocol and stop remaining epochs on reaching 3.4; the objective remains unachieved.",
+  "decision": "Epochs 11 and 12 do not exceed epoch 10. Epoch 10 remains PESQ-best at 2.8211451. The same full-state two-GPU continuation is running epoch 13; continue the existing controlled run through epoch 20 and evaluate complete 600-sample PESQ each epoch. Target 3.4 remains unachieved.",
   "training_dataset_length_audit": {
     "records": 53600,
     "sample_rate": 16000,
@@ -518,5 +566,19 @@
     "startup_epoch11_confirmed": true,
     "full_state_resume_from_epoch10_confirmed": true,
     "stop_remaining_epochs_if_full_600_pesq_reaches": 3.4
+  },
+  "epoch11_paired_pesq": {
+    "mean_delta": 0.06569054206212362,
+    "median_delta": 0.056366682052612305,
+    "sample_std": 0.1122764340340813,
+    "improved": 432,
+    "decreased": 168
+  },
+  "epoch12_paired_pesq": {
+    "mean_delta": 0.09521909872690837,
+    "median_delta": 0.08221960067749023,
+    "sample_std": 0.10772956029571229,
+    "improved": 491,
+    "decreased": 109
   }
 }
