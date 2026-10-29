@@ -15,10 +15,11 @@
   ],
   "completed_epochs": [
     0,
-    1
+    1,
+    2
   ],
-  "best_completed_epoch": 0,
-  "best_completed_pesq": 2.8568443592389423,
+  "best_completed_epoch": 2,
+  "best_completed_pesq": 2.8652436349789303,
   "comparison_identity": {
     "frontend": {
       "sample_rate": 16000,
@@ -118,6 +119,29 @@
   },
   "results": [
     {
+      "epoch": 2,
+      "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_cbam_metric_v1_metric_20261030_052113_1573812/model_epoch_2.pt",
+      "checkpoint_sha256": "b5324f704b6950d97971e037092fd137522bae934af24bb887eaf72d90d17499",
+      "summary_json": "/home/nis/jinrui.yang/EaBNet_light/logs_cbam_metric_v1/metric_20261030_052113_1573812/pesq_selection/model_epoch_2/summary.json",
+      "completed_samples": 600,
+      "mean": {
+        "enhanced": {
+          "pesq": 2.8652436349789303,
+          "stoi": 0.9517770032323324,
+          "estoi": 0.8978220999976808,
+          "si_snr_db": 14.02746288177266,
+          "sdr_db": 14.968489190437237
+        },
+        "noisy": {
+          "pesq": 1.0880955342451732,
+          "stoi": 0.6510592990906214,
+          "estoi": 0.3667556529781415,
+          "si_snr_db": -1.2095493301340097,
+          "sdr_db": -1.1495106109218791
+        }
+      }
+    },
+    {
       "epoch": 0,
       "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_cbam_metric_v1_metric_20261030_052113_1573812/model_epoch_0.pt",
       "checkpoint_sha256": "b8170a901c84fb1b0c1eb892f9eb81931f2ad7f6e2bd0ef6ea89b6cbae7bc1c2",
@@ -189,13 +213,13 @@
     "pid": 1573812,
     "pgid": 1573809,
     "launch_log": "logs_cbam_metric_v1/launch_20261030_052112_1573809.log",
-    "current_epoch_last_observed": 2
+    "current_epoch_last_observed": 3
   },
   "monitoring_policy": {
     "interval_seconds": 3900,
     "basis": "About 8 microbatches/s per rank; estimated full epoch plus 600-sample evaluation about 60 minutes."
   },
-  "decision": "Completed metric-stage evaluations through epoch 1. Best same-600 PESQ is 2.8568444 at metric epoch 0 (epoch 0 is the original quality-stage epoch-17 source). Target 3.4 reached: False. Continue the existing controlled run unless the target or terminal state is verified.",
+  "decision": "Completed metric-stage evaluations through epoch 2. Best same-600 PESQ is 2.8652436 at metric epoch 2 (epoch 0 is the original quality-stage epoch-17 source). Target 3.4 reached: False. Continue the existing controlled run unless the target or terminal state is verified.",
   "epoch1_paired_pesq_vs_metric_baseline": {
     "mean_delta": -0.015869617263476053,
     "median_delta": -0.009312748908996582,
@@ -217,5 +241,28 @@
       "valid_pesq_labels": 53599
     },
     "source": "Direct server CPU checkpoint inspection plus the completed first-epoch training log. The single invalid PESQ label was excluded from D supervision, not replaced by a score."
+  },
+  "epoch2_paired_pesq_vs_metric_baseline": {
+    "mean_delta": 0.008399275739987692,
+    "median_delta": 0.009439468383789062,
+    "sample_std": 0.0384684802936859,
+    "improved": 376,
+    "decreased": 224
+  },
+  "epoch2_training_checks": {
+    "generator_optimizer_steps": 13400,
+    "discriminator_optimizer_steps": 53600,
+    "full_state_resume_counters_passed": true,
+    "frozen_base_unchanged": true,
+    "all_saved_model_and_optimizer_tensors_finite": true,
+    "training_label_stats": {
+      "discriminator_calibration_rmse": 0.05989762828465657,
+      "discriminator_updates_per_rank": 53600,
+      "generator_metric_term": 0.29401449980889893,
+      "invalid_pesq_labels": 1,
+      "mean_training_pesq": 2.7677293856038663,
+      "valid_pesq_labels": 53599
+    },
+    "source": "Direct server CPU checkpoint inspection and the completed epoch-2 training log."
   }
 }
