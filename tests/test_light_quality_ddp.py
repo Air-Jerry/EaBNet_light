@@ -22,7 +22,7 @@ import train_light
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def run_two_windows_gloo_ranks(tmp_path, training_arguments, environment):
+def run_two_windows_gloo_ranks(tmp_path, training_arguments, environment, entry_module="train_light_quality"):
     """Bypass the Windows elastic wrapper's hardcoded libuv TCPStore default."""
     wrapper = tmp_path / "quality_gloo_rank.py"
     wrapper.write_text(
@@ -34,8 +34,8 @@ def run_two_windows_gloo_ranks(tmp_path, training_arguments, environment):
         "dist.init_process_group(backend='gloo', rank=int(os.environ['RANK']), "
         "world_size=2, timeout=timedelta(seconds=30), "
         "init_method='tcp://127.0.0.1:' + os.environ['MASTER_PORT'] + '?use_libuv=0')\n"
-        "import train_light_quality\n"
-        "raise SystemExit(train_light_quality.main())\n",
+        f"import {entry_module}\n"
+        f"raise SystemExit({entry_module}.main())\n",
         encoding="utf-8",
     )
     with socket.socket() as listener:

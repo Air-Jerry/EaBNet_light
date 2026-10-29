@@ -47,6 +47,25 @@ CUDA_VISIBLE_DEVICES=0,1 nohup bash continue_light_quality.sh \
 
 原实验进程应已结束。续训保留保存的批量、梯度累积和训练设置，追加原训练日志，每轮评估全部 600 条。脚本校验起始轮次的评估与权重 SHA、验证 CSV 和评分协议，并用文件锁防止同一续训入口重复启动；达到 PESQ 3.4 时停止后续轮次，等待复核。
 
+## 后续 PESQ 监督实验
+
+`run_light_metric.sh` 从已有质量模型开始，保持生成模型、冻结基线、8 通道与原 STFT 不变。训练时新增 [MP-SENet 的 metric discriminator](https://github.com/yxlu-0102/MP-SENet/blob/main/models/discriminator.py)，用训练集的 clean 与当前 estimate 计算真实 16 kHz WB-PESQ，标签为 `(PESQ - 1) / 3.5`。生成器损失在现有损失上增加 `0.05 * (D(clean_mag, estimate_mag) - 1)^2`。判别器输入为最终波形重建后重新 STFT 的压缩幅度；对生成器保留梯度，对真实 PESQ 标签和判别器更新所用的 estimate 断开梯度。推理只加载原生成模型。
+
+这是作者方法的适配。生成器继续每卡 batch 1、累积 4 次，等效全局 batch 8；判别器每个微批次更新一次，跨两卡平均梯度，等效 batch 2。与作者每次生成器更新对应一次判别器更新的安排不同，当前完整累积窗口内为 4:1。新阶段从选定权重开始，G/D 均使用新的 Adam，学习率均为 0.0001；阶段内的断点恢复保留双方模型、优化器和更新计数。验证损失使用原物理重建损失，最终模型按完整 600 条真实 PESQ 选择。
+
+真实 PESQ 标签只在训练集计算。无法计算的静音或短片段不伪造分数，日志记录有效与无效数量；整轮无有效标签则停止。CPU 每卡顺序计算标签，避免每个 rank 再创建 15 个并行进程。额外 CPU 同步与判别器计算的实际耗时、以及能否提高当前数据的 PESQ，须由服务器确认。
+
+待现有实验结束，使用其 PESQ 最佳权重及对应完整报告启动：
+
+```bash
+CUDA_VISIBLE_DEVICES=0,1 nohup bash run_light_metric.sh \
+  ./checkpoints_cbam_refiner_v1_quality_实际运行名/model_epoch_最佳轮次.pt \
+  ./logs_cbam_refiner_v1/实际运行名/pesq_selection/model_epoch_最佳轮次/summary.json \
+  > ./logs_cbam_metric_v1_launch.log 2>&1 &
+```
+
+启动器拒绝与本仓库现有训练任务重叠，先对完整 600 条验证新阶段第 0 轮与源模型指标一致，再双卡训练最多 6 轮，逐轮完整评估；达到 3.4 时停止后续轮次，等待复核。当前单元检查及 CPU/Gloo 训练检查不代表服务器性能已经改善。
+
 若训练已经完成但评估被中断，只补跑评估（替换实际目录名）：
 
 ```bash
