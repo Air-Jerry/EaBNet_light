@@ -1,0 +1,87 @@
+WARNING:__main__:
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+Structure hypothesis: cbam_flat_projection64; author equivalence is unverified.Structure hypothesis: cbam_flat_projection64; author equivalence is unverified.
+
+[W1028 23:19:35.658190172 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
+[W1028 23:19:35.666925260 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
+Device: cuda:0
+DDP world_size/rank/local_rank: 2/0/0
+GPU IDs: [0]
+CPU threads (intra/inter-op): 8/1
+TF32/cudnn_benchmark: yes/yes
+MALLOC_ARENA_MAX env: <unset> | mallopt target: 2
+Train dir: /data/ssd1/jinrui.yang/training_set
+Val dir: /data/ssd1/jinrui.yang/newset_rt60_005-015_on_NOISEX92/babble/training_set
+Checkpoint dir: checkpoints_cbam_flat_projection64_restart_lr1e3_20261028_231933_648051
+Best model dir: bestmodels_cbam_flat_projection64_restart_lr1e3_20261028_231933_648051
+TensorBoard log dir: logs_cbam_flat_projection64/restart_lr1e3_20261028_231933_648051
+[rank0]: Traceback (most recent call last):
+[rank0]:   File "/home/nis/jinrui.yang/EaBNet_light/train_light_candidate.py", line 89, in <module>
+[rank0]:     raise SystemExit(main())
+[rank0]:   File "/home/nis/jinrui.yang/EaBNet_light/train_light_candidate.py", line 82, in main
+[rank0]:     trainer.main()
+[rank0]:   File "/home/nis/jinrui.yang/EaBNet_light/train_light.py", line 956, in main
+[rank0]:     val_dataset = EnhancementDataset(
+[rank0]:   File "/home/nis/jinrui.yang/EaBNet_light/train_light.py", line 224, in __init__
+[rank0]:     self.records = self._load_records()
+[rank0]:   File "/home/nis/jinrui.yang/EaBNet_light/train_light.py", line 237, in _load_records
+[rank0]:     mixture_path = resolve_record_path(metadata_dir, row['mixture_path'])
+[rank0]:   File "/home/nis/jinrui.yang/EaBNet_light/train_light.py", line 196, in resolve_record_path
+[rank0]:     raise FileNotFoundError(f'cannot resolve path from metadata: {relative_path}')
+[rank0]: FileNotFoundError: cannot resolve path from metadata: estimate_set_new_rt60_005-015_on_NOISEX92/babble/training_set/mixture/sample_00000000_9ch.wav
+[rank1]: Traceback (most recent call last):
+[rank1]:   File "/home/nis/jinrui.yang/EaBNet_light/train_light_candidate.py", line 89, in <module>
+[rank1]:     raise SystemExit(main())
+[rank1]:   File "/home/nis/jinrui.yang/EaBNet_light/train_light_candidate.py", line 82, in main
+[rank1]:     trainer.main()
+[rank1]:   File "/home/nis/jinrui.yang/EaBNet_light/train_light.py", line 956, in main
+[rank1]:     val_dataset = EnhancementDataset(
+[rank1]:   File "/home/nis/jinrui.yang/EaBNet_light/train_light.py", line 224, in __init__
+[rank1]:     self.records = self._load_records()
+[rank1]:   File "/home/nis/jinrui.yang/EaBNet_light/train_light.py", line 237, in _load_records
+[rank1]:     mixture_path = resolve_record_path(metadata_dir, row['mixture_path'])
+[rank1]:   File "/home/nis/jinrui.yang/EaBNet_light/train_light.py", line 196, in resolve_record_path
+[rank1]:     raise FileNotFoundError(f'cannot resolve path from metadata: {relative_path}')
+[rank1]: FileNotFoundError: cannot resolve path from metadata: estimate_set_new_rt60_005-015_on_NOISEX92/babble/training_set/mixture/sample_00000000_9ch.wav
+E1028 23:19:40.411000 648087 site-packages/torch/distributed/elastic/multiprocessing/api.py:869] failed (exitcode: 1) local_rank: 0 (pid: 648107) of binary: /home/nis/jinrui.yang/miniconda3/envs/EaBNet/bin/python
+Traceback (most recent call last):
+  File "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/distributed/run.py", line 923, in <module>
+    main()
+  File "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 355, in wrapper
+    return f(*args, **kwargs)
+  File "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/distributed/run.py", line 919, in main
+    run(args)
+  File "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/distributed/run.py", line 910, in run
+    elastic_launch(
+  File "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 138, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 269, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+train_light_candidate.py FAILED
+------------------------------------------------------------
+Failures:
+[1]:
+  time      : 2026-10-28_23:19:40
+  host      : nca.g11
+  rank      : 1 (local_rank: 1)
+  exitcode  : 1 (pid: 648109)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2026-10-28_23:19:40
+  host      : nca.g11
+  rank      : 0 (local_rank: 0)
+  exitcode  : 1 (pid: 648107)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
