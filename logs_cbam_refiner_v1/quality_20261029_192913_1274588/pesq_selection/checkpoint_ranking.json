@@ -20,7 +20,9 @@
   "completed_epochs": [
     0,
     1,
-    2
+    2,
+    3,
+    4
   ],
   "best_completed_epoch": 2,
   "best_completed_pesq": 2.7596454091866813,
@@ -38,6 +40,52 @@
           "estoi": 0.8888830232193115,
           "si_snr_db": 13.875194199820584,
           "sdr_db": 14.835151158117842
+        },
+        "noisy": {
+          "pesq": 1.0880955342451732,
+          "stoi": 0.6510592990906214,
+          "estoi": 0.3667556529781415,
+          "si_snr_db": -1.2095493301340097,
+          "sdr_db": -1.1495106109218791
+        }
+      }
+    },
+    {
+      "epoch": 4,
+      "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_cbam_refiner_v1_quality_20261029_192913_1274588/model_epoch_4.pt",
+      "checkpoint_sha256": "b1230e57334f9608c6aea068c81c43dd167fd6ab0c128af7406be99226ca21f5",
+      "summary_json": "/home/nis/jinrui.yang/EaBNet_light/logs_cbam_refiner_v1/quality_20261029_192913_1274588/pesq_selection/model_epoch_4/summary.json",
+      "completed_samples": 600,
+      "mean": {
+        "enhanced": {
+          "pesq": 2.744164098103841,
+          "stoi": 0.9485557009285174,
+          "estoi": 0.8908646871442394,
+          "si_snr_db": 13.847589267004128,
+          "sdr_db": 14.783142916532075
+        },
+        "noisy": {
+          "pesq": 1.0880955342451732,
+          "stoi": 0.6510592990906214,
+          "estoi": 0.3667556529781415,
+          "si_snr_db": -1.2095493301340097,
+          "sdr_db": -1.1495106109218791
+        }
+      }
+    },
+    {
+      "epoch": 3,
+      "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_cbam_refiner_v1_quality_20261029_192913_1274588/model_epoch_3.pt",
+      "checkpoint_sha256": "355eb1878c126355377cee97cacac3fd04e82b453dad0dccdf87ad908dbbe4c5",
+      "summary_json": "/home/nis/jinrui.yang/EaBNet_light/logs_cbam_refiner_v1/quality_20261029_192913_1274588/pesq_selection/model_epoch_3/summary.json",
+      "completed_samples": 600,
+      "mean": {
+        "enhanced": {
+          "pesq": 2.7217018117507297,
+          "stoi": 0.948371875479894,
+          "estoi": 0.8899055959458125,
+          "si_snr_db": 13.827480816576674,
+          "sdr_db": 14.752307683361451
         },
         "noisy": {
           "pesq": 1.0880955342451732,
@@ -208,7 +256,7 @@
     "all_saved_model_tensors_finite": true,
     "source": "Direct CPU tensor comparison of the server epoch-1 checkpoint against the original epoch-40 checkpoint."
   },
-  "decision": "Epoch 2 improves mean PESQ by 0.03824 over the original baseline, but remains below 3.4. Continue the existing batch1/accum4 training. Do not use the overlapping timing benchmark to change batch configuration.",
+  "decision": "Epochs 3 and 4 do not exceed epoch 2 despite falling validation loss. Keep epoch 2 as the PESQ-best checkpoint and continue the existing run. The 3.4 target is not reached; use complete 600-sample PESQ, not loss, for model selection.",
   "training_dataset_length_audit": {
     "records": 53600,
     "sample_rate": 16000,
@@ -228,5 +276,29 @@
     "optimizer_update_steps": 13400,
     "all_saved_model_tensors_finite": true,
     "source": "Direct CPU tensor comparison of the server epoch-2 checkpoint and saved Adam step counters."
+  },
+  "epoch3_paired_pesq": {
+    "mean_delta": 0.0002921674648920695,
+    "median_delta": 0.000551760196685791,
+    "sample_std": 0.09178416220882565,
+    "improved": 303,
+    "decreased": 297
+  },
+  "epoch4_paired_pesq": {
+    "mean_delta": 0.022754453818003336,
+    "median_delta": 0.016032099723815918,
+    "sample_std": 0.08487005464086825,
+    "improved": 353,
+    "decreased": 247
+  },
+  "monitoring_policy": {
+    "minimum_interval_seconds": 1800,
+    "measured_epoch_plus_evaluation_minutes": 27,
+    "notify_on": [
+      "new complete PESQ result",
+      "completion",
+      "failure",
+      "required user action"
+    ]
   }
 }
