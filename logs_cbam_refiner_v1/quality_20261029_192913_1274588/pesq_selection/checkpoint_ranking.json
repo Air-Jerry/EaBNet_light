@@ -19,11 +19,35 @@
   ],
   "completed_epochs": [
     0,
-    1
+    1,
+    2
   ],
-  "best_completed_epoch": 0,
-  "best_completed_pesq": 2.721409644285838,
+  "best_completed_epoch": 2,
+  "best_completed_pesq": 2.7596454091866813,
   "results": [
+    {
+      "epoch": 2,
+      "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_cbam_refiner_v1_quality_20261029_192913_1274588/model_epoch_2.pt",
+      "checkpoint_sha256": "860d1915347b8b247b7061b6bece28d631605fe74df8d76fca28a6dd581a8449",
+      "summary_json": "/home/nis/jinrui.yang/EaBNet_light/logs_cbam_refiner_v1/quality_20261029_192913_1274588/pesq_selection/model_epoch_2/summary.json",
+      "completed_samples": 600,
+      "mean": {
+        "enhanced": {
+          "pesq": 2.7596454091866813,
+          "stoi": 0.9479541297100854,
+          "estoi": 0.8888830232193115,
+          "si_snr_db": 13.875194199820584,
+          "sdr_db": 14.835151158117842
+        },
+        "noisy": {
+          "pesq": 1.0880955342451732,
+          "stoi": 0.6510592990906214,
+          "estoi": 0.3667556529781415,
+          "si_snr_db": -1.2095493301340097,
+          "sdr_db": -1.1495106109218791
+        }
+      }
+    },
     {
       "epoch": 0,
       "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_cbam_refiner_v1_quality_20261029_192913_1274588/model_epoch_0.pt",
@@ -184,12 +208,25 @@
     "all_saved_model_tensors_finite": true,
     "source": "Direct CPU tensor comparison of the server epoch-1 checkpoint against the original epoch-40 checkpoint."
   },
-  "decision": "Epoch 1 did not improve PESQ. Retain epoch 0 as the best evaluated checkpoint and continue observing early training convergence without changing the current objective.",
+  "decision": "Epoch 2 improves mean PESQ by 0.03824 over the original baseline, but remains below 3.4. Continue the existing batch1/accum4 training. Do not use the overlapping timing benchmark to change batch configuration.",
   "training_dataset_length_audit": {
     "records": 53600,
     "sample_rate": 16000,
     "original_common_samples": 96000,
     "effective_segment_samples": 96000,
     "source": "All mixture/target headers read with soundfile.info on the server"
+  },
+  "epoch2_paired_pesq": {
+    "mean_delta": 0.0382357649008433,
+    "median_delta": 0.027625083923339844,
+    "sample_std": 0.06184587014538042,
+    "improved": 444,
+    "decreased": 156
+  },
+  "epoch2_training_checks": {
+    "base_tensors_unchanged": 277,
+    "optimizer_update_steps": 13400,
+    "all_saved_model_tensors_finite": true,
+    "source": "Direct CPU tensor comparison of the server epoch-2 checkpoint and saved Adam step counters."
   }
 }

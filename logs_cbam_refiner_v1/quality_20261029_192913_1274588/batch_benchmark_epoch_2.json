@@ -1,0 +1,108 @@
+{
+  "scope": "Single-GPU cached-waveform model-side benchmark; not DDP end-to-end throughput",
+  "includes": "STFT frontend, quality loss, forward/backward, Adam, and original run_epoch host work",
+  "excludes": "Disk reads, DataLoader workers/collation, waveform host-to-device copies, and DDP communication",
+  "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_cbam_refiner_v1_quality_20261029_192913_1274588/model_epoch_2.pt",
+  "checkpoint_sha256": "860d1915347b8b247b7061b6bece28d631605fe74df8d76fca28a6dd581a8449",
+  "checkpoint_epoch": 2,
+  "train_dir": "/data/ssd1/jinrui.yang/training_set",
+  "sample_ids": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "sample_lengths": [
+    96000,
+    96000,
+    96000,
+    96000
+  ],
+  "local_samples_per_update": 4,
+  "ddp_equivalent_global_batch": null,
+  "device": "cuda:0",
+  "device_name": "NVIDIA GeForce RTX 4070",
+  "cuda_visible_devices": "1",
+  "torch_version": "2.5.1+cu121",
+  "precision": "FP32",
+  "tf32": false,
+  "base_frozen": true,
+  "warmup_updates": 3,
+  "grad_clip": 5.0,
+  "gradient_comparison": "One update, same checkpoint, normalized gradients before clipping; no optimizer step",
+  "gradient_checks": {
+    "batch1_acc4": {
+      "relative_l2_error": 0.0,
+      "max_abs_error": 0.0,
+      "gradient_l2_norm": 0.3457775945855747
+    },
+    "batch2_acc2": {
+      "relative_l2_error": 0.00024965883109469007,
+      "max_abs_error": 1.1377036571502686e-05,
+      "gradient_l2_norm": 0.345786319001179
+    },
+    "batch4_acc1": {
+      "relative_l2_error": 0.00038583282587067774,
+      "max_abs_error": 2.510426566004753e-05,
+      "gradient_l2_norm": 0.34578305628600714
+    }
+  },
+  "results": [
+    {
+      "label": "baseline",
+      "batch_size": 1,
+      "grad_accum_steps": 4,
+      "timed_updates": 20,
+      "seconds": 7.382531991926953,
+      "seconds_per_update": 0.36912659959634764,
+      "samples_per_second": 10.836390561867214,
+      "mean_loss": 0.38077327236533165,
+      "peak_allocated_bytes": 1112672256,
+      "peak_reserved_bytes": 1444937728,
+      "speedup_vs_initial_baseline": 1.0
+    },
+    {
+      "label": "batch2",
+      "batch_size": 2,
+      "grad_accum_steps": 2,
+      "timed_updates": 20,
+      "seconds": 7.580229534069076,
+      "seconds_per_update": 0.3790114767034538,
+      "samples_per_second": 10.553770125356072,
+      "mean_loss": 0.38075990080833433,
+      "peak_allocated_bytes": 2152649216,
+      "peak_reserved_bytes": 2818572288,
+      "speedup_vs_initial_baseline": 0.9739193198235517
+    },
+    {
+      "label": "batch4",
+      "batch_size": 4,
+      "grad_accum_steps": 1,
+      "timed_updates": 20,
+      "seconds": 7.477769781136885,
+      "seconds_per_update": 0.37388848905684424,
+      "samples_per_second": 10.698376968197753,
+      "mean_loss": 0.38077196329832075,
+      "peak_allocated_bytes": 4225036800,
+      "peak_reserved_bytes": 5563744256,
+      "speedup_vs_initial_baseline": 0.98726387786768
+    },
+    {
+      "label": "baseline_repeat",
+      "batch_size": 1,
+      "grad_accum_steps": 4,
+      "timed_updates": 20,
+      "seconds": 7.486372807994485,
+      "seconds_per_update": 0.37431864039972423,
+      "samples_per_second": 10.686082840353645,
+      "mean_loss": 0.3807744890451431,
+      "peak_allocated_bytes": 1112672256,
+      "peak_reserved_bytes": 1463812096,
+      "speedup_vs_initial_baseline": 0.9861293554661554
+    }
+  ],
+  "baseline_repeat_speed_ratio": 0.9861293554661554,
+  "timing_valid_for_batch_switch": false,
+  "invalidity_reason": "Automatic epoch-3 DDP training began before the isolated benchmark finished; GPU1 was shared. Do not use these timings to choose a batch configuration.",
+  "decision": "Keep batch1 and grad_accum_steps4. No formal training configuration was changed."
+}
