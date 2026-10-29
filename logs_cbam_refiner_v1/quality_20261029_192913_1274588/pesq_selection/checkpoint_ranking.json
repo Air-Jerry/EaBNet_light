@@ -22,11 +22,59 @@
     1,
     2,
     3,
-    4
+    4,
+    5,
+    6
   ],
-  "best_completed_epoch": 2,
-  "best_completed_pesq": 2.7596454091866813,
+  "best_completed_epoch": 6,
+  "best_completed_pesq": 2.785550001859665,
   "results": [
+    {
+      "epoch": 6,
+      "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_cbam_refiner_v1_quality_20261029_192913_1274588/model_epoch_6.pt",
+      "checkpoint_sha256": "efa158b60cbfb5d2ed436a9dd11f785649f22a2dcbafcbed5d67cadc69dd14a0",
+      "summary_json": "/home/nis/jinrui.yang/EaBNet_light/logs_cbam_refiner_v1/quality_20261029_192913_1274588/pesq_selection/model_epoch_6/summary.json",
+      "completed_samples": 600,
+      "mean": {
+        "enhanced": {
+          "pesq": 2.785550001859665,
+          "stoi": 0.9487722277567193,
+          "estoi": 0.8917091069775298,
+          "si_snr_db": 13.931248476966411,
+          "sdr_db": 14.88462613737201
+        },
+        "noisy": {
+          "pesq": 1.0880955342451732,
+          "stoi": 0.6510592990906214,
+          "estoi": 0.3667556529781415,
+          "si_snr_db": -1.2095493301340097,
+          "sdr_db": -1.1495106109218791
+        }
+      }
+    },
+    {
+      "epoch": 5,
+      "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_cbam_refiner_v1_quality_20261029_192913_1274588/model_epoch_5.pt",
+      "checkpoint_sha256": "c8016d5348b27451ef4d1ca4d536741ab9b15ff7d5316b014cb52f3743e56986",
+      "summary_json": "/home/nis/jinrui.yang/EaBNet_light/logs_cbam_refiner_v1/quality_20261029_192913_1274588/pesq_selection/model_epoch_5/summary.json",
+      "completed_samples": 600,
+      "mean": {
+        "enhanced": {
+          "pesq": 2.781829571723938,
+          "stoi": 0.9488601649437459,
+          "estoi": 0.8915292152842795,
+          "si_snr_db": 13.889768606500335,
+          "sdr_db": 14.827011170058901
+        },
+        "noisy": {
+          "pesq": 1.0880955342451732,
+          "stoi": 0.6510592990906214,
+          "estoi": 0.3667556529781415,
+          "si_snr_db": -1.2095493301340097,
+          "sdr_db": -1.1495106109218791
+        }
+      }
+    },
     {
       "epoch": 2,
       "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_cbam_refiner_v1_quality_20261029_192913_1274588/model_epoch_2.pt",
@@ -256,7 +304,7 @@
     "all_saved_model_tensors_finite": true,
     "source": "Direct CPU tensor comparison of the server epoch-1 checkpoint against the original epoch-40 checkpoint."
   },
-  "decision": "Epochs 3 and 4 do not exceed epoch 2 despite falling validation loss. Keep epoch 2 as the PESQ-best checkpoint and continue the existing run. The 3.4 target is not reached; use complete 600-sample PESQ, not loss, for model selection.",
+  "decision": "Epoch 6 reaches a new PESQ best of 2.7855500 on all 600 samples, only 0.00372 above epoch 5. Continue the existing 10-epoch run, preserve the PESQ-best checkpoint, and assess the full curve before changing the objective. Target 3.4 remains unachieved.",
   "training_dataset_length_audit": {
     "records": 53600,
     "sample_rate": 16000,
@@ -300,5 +348,19 @@
       "failure",
       "required user action"
     ]
+  },
+  "epoch5_paired_pesq": {
+    "mean_delta": 0.06041992743810018,
+    "median_delta": 0.04880702495574951,
+    "sample_std": 0.08503793391471971,
+    "improved": 462,
+    "decreased": 138
+  },
+  "epoch6_paired_pesq": {
+    "mean_delta": 0.0641403575738271,
+    "median_delta": 0.05828857421875,
+    "sample_std": 0.08288436015095893,
+    "improved": 464,
+    "decreased": 136
   }
 }
