@@ -1,5 +1,5 @@
 {
-  "status": "partial",
+  "status": "complete",
   "selection_metric": "mean enhanced PESQ",
   "selection_scope": "Same 600 validation/comparison samples; not an independent final test.",
   "target_pesq": 3.4,
@@ -24,11 +24,107 @@
     3,
     4,
     5,
-    6
+    6,
+    7,
+    8,
+    9,
+    10
   ],
-  "best_completed_epoch": 6,
-  "best_completed_pesq": 2.785550001859665,
+  "best_completed_epoch": 10,
+  "best_completed_pesq": 2.8211450682083767,
   "results": [
+    {
+      "epoch": 10,
+      "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_cbam_refiner_v1_quality_20261029_192913_1274588/model_epoch_10.pt",
+      "checkpoint_sha256": "98f94e6eb9fd433f2b1b9315f935dace01f0c630c0c4448f0952c313eddd97a5",
+      "summary_json": "/home/nis/jinrui.yang/EaBNet_light/logs_cbam_refiner_v1/quality_20261029_192913_1274588/pesq_selection/model_epoch_10/summary.json",
+      "completed_samples": 600,
+      "mean": {
+        "enhanced": {
+          "pesq": 2.8211450682083767,
+          "stoi": 0.9502442072823328,
+          "estoi": 0.8945601401143407,
+          "si_snr_db": 13.970189064859312,
+          "sdr_db": 14.924940657935544
+        },
+        "noisy": {
+          "pesq": 1.0880955342451732,
+          "stoi": 0.6510592990906214,
+          "estoi": 0.3667556529781415,
+          "si_snr_db": -1.2095493301340097,
+          "sdr_db": -1.1495106109218791
+        }
+      }
+    },
+    {
+      "epoch": 8,
+      "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_cbam_refiner_v1_quality_20261029_192913_1274588/model_epoch_8.pt",
+      "checkpoint_sha256": "5190c571f38be13cf3a9b11ef4fcf92eed2af2c3f7a67149820483a2572aa4a6",
+      "summary_json": "/home/nis/jinrui.yang/EaBNet_light/logs_cbam_refiner_v1/quality_20261029_192913_1274588/pesq_selection/model_epoch_8/summary.json",
+      "completed_samples": 600,
+      "mean": {
+        "enhanced": {
+          "pesq": 2.804193751215935,
+          "stoi": 0.9497100473389307,
+          "estoi": 0.8935799071148635,
+          "si_snr_db": 13.911424044023782,
+          "sdr_db": 14.845532606550876
+        },
+        "noisy": {
+          "pesq": 1.0880955342451732,
+          "stoi": 0.6510592990906214,
+          "estoi": 0.3667556529781415,
+          "si_snr_db": -1.2095493301340097,
+          "sdr_db": -1.1495106109218791
+        }
+      }
+    },
+    {
+      "epoch": 9,
+      "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_cbam_refiner_v1_quality_20261029_192913_1274588/model_epoch_9.pt",
+      "checkpoint_sha256": "e46d0c3be51256da2d5ccbef0244ad77b845378463108903581bd78435102ecb",
+      "summary_json": "/home/nis/jinrui.yang/EaBNet_light/logs_cbam_refiner_v1/quality_20261029_192913_1274588/pesq_selection/model_epoch_9/summary.json",
+      "completed_samples": 600,
+      "mean": {
+        "enhanced": {
+          "pesq": 2.7966939848661423,
+          "stoi": 0.9500438167558127,
+          "estoi": 0.8940982863916107,
+          "si_snr_db": 13.94996653689068,
+          "sdr_db": 14.890053798176607
+        },
+        "noisy": {
+          "pesq": 1.0880955342451732,
+          "stoi": 0.6510592990906214,
+          "estoi": 0.3667556529781415,
+          "si_snr_db": -1.2095493301340097,
+          "sdr_db": -1.1495106109218791
+        }
+      }
+    },
+    {
+      "epoch": 7,
+      "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_cbam_refiner_v1_quality_20261029_192913_1274588/model_epoch_7.pt",
+      "checkpoint_sha256": "cee204695e7b48b5cd53d4ad901a4274f27c04f81ed38c3fe2778213037c7907",
+      "summary_json": "/home/nis/jinrui.yang/EaBNet_light/logs_cbam_refiner_v1/quality_20261029_192913_1274588/pesq_selection/model_epoch_7/summary.json",
+      "completed_samples": 600,
+      "mean": {
+        "enhanced": {
+          "pesq": 2.785803802808126,
+          "stoi": 0.9492298717854923,
+          "estoi": 0.8927865327160661,
+          "si_snr_db": 13.93884015777654,
+          "sdr_db": 14.892026454190855
+        },
+        "noisy": {
+          "pesq": 1.0880955342451732,
+          "stoi": 0.6510592990906214,
+          "estoi": 0.3667556529781415,
+          "si_snr_db": -1.2095493301340097,
+          "sdr_db": -1.1495106109218791
+        }
+      }
+    },
     {
       "epoch": 6,
       "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_cbam_refiner_v1_quality_20261029_192913_1274588/model_epoch_6.pt",
@@ -304,7 +400,7 @@
     "all_saved_model_tensors_finite": true,
     "source": "Direct CPU tensor comparison of the server epoch-1 checkpoint against the original epoch-40 checkpoint."
   },
-  "decision": "Epoch 6 reaches a new PESQ best of 2.7855500 on all 600 samples, only 0.00372 above epoch 5. Continue the existing 10-epoch run, preserve the PESQ-best checkpoint, and assess the full curve before changing the objective. Target 3.4 remains unachieved.",
+  "decision": "The initial 10-epoch run completed. Epoch 10 is best at PESQ 2.8211451, improving 0.09974 over the original model but still below 3.4. Late epochs continue improving; prepare full-state continuation through epoch 20 with the same 600-sample evaluation and stop further training if a complete score reaches 3.4.",
   "training_dataset_length_audit": {
     "records": 53600,
     "sample_rate": 16000,
@@ -362,5 +458,41 @@
     "sample_std": 0.08288436015095893,
     "improved": 464,
     "decreased": 136
+  },
+  "epoch7_paired_pesq": {
+    "mean_delta": 0.06439415852228801,
+    "median_delta": 0.05574381351470947,
+    "sample_std": 0.10212161299682843,
+    "improved": 439,
+    "decreased": 161
+  },
+  "epoch8_paired_pesq": {
+    "mean_delta": 0.08278410693009694,
+    "median_delta": 0.06871664524078369,
+    "sample_std": 0.10120807747885496,
+    "improved": 478,
+    "decreased": 122
+  },
+  "epoch9_paired_pesq": {
+    "mean_delta": 0.07528434058030446,
+    "median_delta": 0.06397771835327148,
+    "sample_std": 0.10272863089819098,
+    "improved": 464,
+    "decreased": 136
+  },
+  "epoch10_paired_pesq": {
+    "mean_delta": 0.09973542392253876,
+    "median_delta": 0.08739221096038818,
+    "sample_std": 0.1069039928338992,
+    "improved": 499,
+    "decreased": 101
+  },
+  "epoch10_training_checks": {
+    "base_tensors_unchanged": 277,
+    "optimizer_update_steps": 67000,
+    "all_saved_model_tensors_finite": true,
+    "stable_model_equals_latest": true,
+    "optimizer_learning_rate": 0.0003,
+    "source": "Direct server CPU inspection of the stable epoch-10 and latest checkpoints before continuation."
   }
 }
