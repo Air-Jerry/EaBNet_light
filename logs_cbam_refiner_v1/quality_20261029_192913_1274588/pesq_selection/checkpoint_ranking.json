@@ -42,11 +42,36 @@
     11,
     12,
     13,
-    14
+    14,
+    15,
+    16
   ],
-  "best_completed_epoch": 13,
-  "best_completed_pesq": 2.8387712377309797,
+  "best_completed_epoch": 16,
+  "best_completed_pesq": 2.8442862200737,
   "results": [
+    {
+      "epoch": 16,
+      "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_cbam_refiner_v1_quality_20261029_192913_1274588/model_epoch_16.pt",
+      "checkpoint_sha256": "a661abe76a54d96de20506d978e9b637fa3f96a7ad4b342882d81d74bb8e0f90",
+      "summary_json": "/home/nis/jinrui.yang/EaBNet_light/logs_cbam_refiner_v1/quality_20261029_192913_1274588/pesq_selection/model_epoch_16/summary.json",
+      "completed_samples": 600,
+      "mean": {
+        "enhanced": {
+          "pesq": 2.8442862200737,
+          "stoi": 0.951149260413979,
+          "estoi": 0.8961338064781139,
+          "si_snr_db": 13.981963868198802,
+          "sdr_db": 14.900654439357858
+        },
+        "noisy": {
+          "pesq": 1.0880955342451732,
+          "stoi": 0.6510592990906214,
+          "estoi": 0.3667556529781415,
+          "si_snr_db": -1.2095493301340097,
+          "sdr_db": -1.1495106109218791
+        }
+      }
+    },
     {
       "epoch": 13,
       "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_cbam_refiner_v1_quality_20261029_192913_1274588/model_epoch_13.pt",
@@ -106,6 +131,29 @@
           "estoi": 0.8945601401143407,
           "si_snr_db": 13.970189064859312,
           "sdr_db": 14.924940657935544
+        },
+        "noisy": {
+          "pesq": 1.0880955342451732,
+          "stoi": 0.6510592990906214,
+          "estoi": 0.3667556529781415,
+          "si_snr_db": -1.2095493301340097,
+          "sdr_db": -1.1495106109218791
+        }
+      }
+    },
+    {
+      "epoch": 15,
+      "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_cbam_refiner_v1_quality_20261029_192913_1274588/model_epoch_15.pt",
+      "checkpoint_sha256": "f92d77c18d1445b800b413f67fd3baebe7a2064cffcc40a278105a1e4f7989e6",
+      "summary_json": "/home/nis/jinrui.yang/EaBNet_light/logs_cbam_refiner_v1/quality_20261029_192913_1274588/pesq_selection/model_epoch_15/summary.json",
+      "completed_samples": 600,
+      "mean": {
+        "enhanced": {
+          "pesq": 2.820739706158638,
+          "stoi": 0.951134180382132,
+          "estoi": 0.895967948283897,
+          "si_snr_db": 14.02883439300109,
+          "sdr_db": 14.987031927814563
         },
         "noisy": {
           "pesq": 1.0880955342451732,
@@ -506,7 +554,7 @@
     "all_saved_model_tensors_finite": true,
     "source": "Direct CPU tensor comparison of the server epoch-1 checkpoint against the original epoch-40 checkpoint."
   },
-  "decision": "Completed evaluations through epoch 14. Best PESQ is 2.8387712 at epoch 13 on the same complete 600 samples, without gain matching. Target 3.4 reached: False. Planned final epoch: 20.",
+  "decision": "Completed evaluations through epoch 16. Best PESQ is 2.8442862 at epoch 16 on the same complete 600 samples, without gain matching. Target 3.4 reached: False. Planned final epoch: 20.",
   "training_dataset_length_audit": {
     "records": 53600,
     "sample_rate": 16000,
@@ -642,5 +690,19 @@
     "sample_std": 0.10938014236577567,
     "improved": 503,
     "decreased": 97
+  },
+  "epoch15_paired_pesq": {
+    "mean_delta": 0.09933006187280019,
+    "median_delta": 0.08412432670593262,
+    "sample_std": 0.11470348957535853,
+    "improved": 496,
+    "decreased": 104
+  },
+  "epoch16_paired_pesq": {
+    "mean_delta": 0.12287657578786214,
+    "median_delta": 0.11172246932983398,
+    "sample_std": 0.10862484567282359,
+    "improved": 549,
+    "decreased": 51
   }
 }
