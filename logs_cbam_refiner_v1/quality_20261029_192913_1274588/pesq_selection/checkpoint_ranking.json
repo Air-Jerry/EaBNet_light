@@ -1,0 +1,195 @@
+{
+  "status": "partial",
+  "selection_metric": "mean enhanced PESQ",
+  "selection_scope": "Same 600 validation/comparison samples; not an independent final test.",
+  "target_pesq": 3.4,
+  "target_reached": false,
+  "expected_epochs": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+  ],
+  "completed_epochs": [
+    0,
+    1
+  ],
+  "best_completed_epoch": 0,
+  "best_completed_pesq": 2.721409644285838,
+  "results": [
+    {
+      "epoch": 0,
+      "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_cbam_refiner_v1_quality_20261029_192913_1274588/model_epoch_0.pt",
+      "checkpoint_sha256": "64bc29e27b180f86554ad6e03237050704ca68b9f5ce17282f33ba7ea644601d",
+      "summary_json": "/home/nis/jinrui.yang/EaBNet_light/logs_cbam_refiner_v1/quality_20261029_192913_1274588/pesq_selection/model_epoch_0/summary.json",
+      "completed_samples": 600,
+      "mean": {
+        "enhanced": {
+          "pesq": 2.721409644285838,
+          "stoi": 0.9467470715533506,
+          "estoi": 0.8858874527760088,
+          "si_snr_db": 13.874696444992399,
+          "sdr_db": 14.880406496909396
+        },
+        "noisy": {
+          "pesq": 1.0880955342451732,
+          "stoi": 0.6510592990906214,
+          "estoi": 0.3667556529781415,
+          "si_snr_db": -1.2095493301340097,
+          "sdr_db": -1.1495106109218791
+        }
+      }
+    },
+    {
+      "epoch": 1,
+      "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_cbam_refiner_v1_quality_20261029_192913_1274588/model_epoch_1.pt",
+      "checkpoint_sha256": "3daf3700c1a36f34611041670a178e11d37726cb7c2194ce535aaf9d7de9c482",
+      "summary_json": "/home/nis/jinrui.yang/EaBNet_light/logs_cbam_refiner_v1/quality_20261029_192913_1274588/pesq_selection/model_epoch_1/summary.json",
+      "completed_samples": 600,
+      "mean": {
+        "enhanced": {
+          "pesq": 2.7136011147499084,
+          "stoi": 0.9474298880028437,
+          "estoi": 0.8873510202208663,
+          "si_snr_db": 13.792627883504977,
+          "sdr_db": 14.721085488987264
+        },
+        "noisy": {
+          "pesq": 1.0880955342451732,
+          "stoi": 0.6510592990906214,
+          "estoi": 0.3667556529781415,
+          "si_snr_db": -1.2095493301340097,
+          "sdr_db": -1.1495106109218791
+        }
+      }
+    }
+  ],
+  "comparison_identity": {
+    "frontend": {
+      "sample_rate": 16000,
+      "n_fft": 512,
+      "hop_length": 160,
+      "win_length": 320,
+      "power": 0.5,
+      "target_ref_mic": 0
+    },
+    "frontend_protocol": {
+      "window": "periodic Hann",
+      "center": true,
+      "pad_mode": "reflect",
+      "normalized": false,
+      "onesided": true,
+      "waveform_normalization": "none",
+      "compression": "Z * abs(Z).clamp_min(1e-8) ** (power - 1)",
+      "inverse_compression": "piecewise exact inverse including the epsilon region",
+      "mixture_channels": "first 8 channels, original order",
+      "evaluation_extent": "full common-length utterance; no training crop or batch padding",
+      "inference_precision": "float32"
+    },
+    "num_mics": 8,
+    "selected_pairs_sha256": "18233928bdcb499f4e65e3b66a1f8c39387675d09f1621ae6ac94881d7444cfb",
+    "metadata_sha256": "8d0b4d229ebc42cd9892e6d0e0d36416007ded01fbc0b753df4bf7e6b734eb02",
+    "metric_protocol": {
+      "pesq": "pesq wideband",
+      "estoi": "pystoi extended=True; JSON estoi=fraction, CSV estoi_pct=100*estoi",
+      "stoi": "pystoi extended=False, fraction",
+      "si_snr_db": "zero-mean projection SI-SNR",
+      "si_snr_epsilon": 1e-08,
+      "sdr_db": "mir_eval.separation.bss_eval_sources, single source, 512-tap distortion filter; not SI-SNR",
+      "target_gain_matching": false,
+      "max_level_gain_db": 20.0,
+      "gain_rule": "none",
+      "external_normalization_clipping_or_alignment": false,
+      "length_policy": "truncate mixture and target to common length as in training Dataset; no delay correction",
+      "aggregation": "paired arithmetic mean over every selected utterance; failures abort with no mean"
+    },
+    "checkpoint_model_config": {
+      "channels": 64,
+      "num_mics": 8,
+      "embed_dim": 64,
+      "kd1": 5,
+      "cd1": 64,
+      "d_feat": 256,
+      "p": 6,
+      "q": 3,
+      "bf_type": "lstm",
+      "topo_type": "mimo",
+      "intra_connect": "cat",
+      "norm_type": "BN",
+      "dfsmn_layers": 3,
+      "dfsmn_memory_size": 20,
+      "is_causal": "yes",
+      "is_u2": "yes"
+    },
+    "model_parameters": 2625088,
+    "structure_candidate": "cbam_refiner_v1",
+    "candidate_implementation_sha256": {
+      "EaBNet_light.py": "24dcfed15c1db84bb55ed0b3a548e8ed6ee670fbbf76de1453a98bf10b0df89f",
+      "light_structure_variants.py": "caa0fce96993655552844cac4e05c73022d7493a56ff68750373aafabc455e7e",
+      "light_reference_variants.py": "bf0a24e09a3d0840a2c95e231f9c69696ff98af9907d0a7d2057c6aee394a4ea",
+      "light_quality_model.py": "ea2e9cf1df001ec65c0f039bc9208f914f3b36b7ea4898e2a63eace6e8dfe097"
+    },
+    "quality_training": {
+      "quality_source_checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_cbam_flat_projection64/model_epoch_40.pt",
+      "quality_source_sha256": "aa778ce97bad0db0a4b2b4b094857d1b784bf1090fe18ff141068dcf7f602c7b",
+      "quality_source_epoch": 40,
+      "quality_base_config": {
+        "sample_rate": 16000,
+        "n_fft": 512,
+        "hop_length": 160,
+        "win_length": 320,
+        "power": 0.5,
+        "target_ref_mic": 0,
+        "channels": 64,
+        "num_mics": 8,
+        "embed_dim": 64,
+        "kd1": 5,
+        "cd1": 64,
+        "d_feat": 256,
+        "p": 6,
+        "q": 3,
+        "bf_type": "lstm",
+        "topo_type": "mimo",
+        "intra_connect": "cat",
+        "norm_type": "BN",
+        "dfsmn_layers": 3,
+        "dfsmn_memory_size": 20,
+        "is_causal": "yes",
+        "is_u2": "yes"
+      },
+      "quality_objective": "spectral_mrstft_waveform_v1",
+      "quality_loss_implementation_sha256": "d39581a21efd17823049385f09399e07bf63660d688192467bdd4c5c99ab88db",
+      "quality_refiner_causal": false
+    }
+  },
+  "epoch1_paired_pesq": {
+    "mean_delta": -0.007808529535929362,
+    "median_delta": -0.00685042142868042,
+    "sample_std": 0.0523801884354369,
+    "improved": 245,
+    "decreased": 355,
+    "unchanged": 0
+  },
+  "epoch1_training_checks": {
+    "base_tensors_unchanged": 277,
+    "optimizer_update_steps": 6700,
+    "trainable_optimizer_states": 62,
+    "all_saved_model_tensors_finite": true,
+    "source": "Direct CPU tensor comparison of the server epoch-1 checkpoint against the original epoch-40 checkpoint."
+  },
+  "decision": "Epoch 1 did not improve PESQ. Retain epoch 0 as the best evaluated checkpoint and continue observing early training convergence without changing the current objective.",
+  "training_dataset_length_audit": {
+    "records": 53600,
+    "sample_rate": 16000,
+    "original_common_samples": 96000,
+    "effective_segment_samples": 96000,
+    "source": "All mixture/target headers read with soundfile.info on the server"
+  }
+}
