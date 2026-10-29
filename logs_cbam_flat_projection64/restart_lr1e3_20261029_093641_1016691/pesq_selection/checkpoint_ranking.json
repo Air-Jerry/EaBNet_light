@@ -1,0 +1,254 @@
+{
+  "status": "complete",
+  "selection_metric": "mean enhanced PESQ",
+  "selection_scope": "Comparison on the same 600 records previously used for checkpoint selection; not an independent final test.",
+  "provenance": "Derived from the six committed summary.json reports; no model or audio inference was rerun locally.",
+  "expected_checkpoints": 6,
+  "completed_checkpoints": 6,
+  "expected_samples": 600,
+  "best_epoch": 40,
+  "best_checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_cbam_flat_projection64_restart_lr1e3_20261029_093641_1016691/model_epoch_40.pt",
+  "best_checkpoint_sha256": "aa778ce97bad0db0a4b2b4b094857d1b784bf1090fe18ff141068dcf7f602c7b",
+  "baseline_epoch": 40,
+  "baseline_pesq": 2.721409644285838,
+  "best_new_epoch": 43,
+  "best_new_pesq_delta_vs_baseline": -0.10398612976074251,
+  "decision": "Retain the original epoch-40 checkpoint. Every epoch from this five-epoch LR=0.001 restart reduced mean PESQ.",
+  "protocol": {
+    "dataset": "/data/ssd1/jinrui.yang/newset_rt60_005-015_on_NOISEX92/babble/training_set",
+    "metadata_sha256": "8d0b4d229ebc42cd9892e6d0e0d36416007ded01fbc0b753df4bf7e6b734eb02",
+    "selected_pairs_sha256": "18233928bdcb499f4e65e3b66a1f8c39387675d09f1621ae6ac94881d7444cfb",
+    "frontend": {
+      "sample_rate": 16000,
+      "n_fft": 512,
+      "hop_length": 160,
+      "win_length": 320,
+      "power": 0.5,
+      "target_ref_mic": 0
+    },
+    "frontend_protocol": {
+      "window": "periodic Hann",
+      "center": true,
+      "pad_mode": "reflect",
+      "normalized": false,
+      "onesided": true,
+      "waveform_normalization": "none",
+      "compression": "Z * abs(Z).clamp_min(1e-8) ** (power - 1)",
+      "inverse_compression": "piecewise exact inverse including the epsilon region",
+      "mixture_channels": "first 8 channels, original order",
+      "evaluation_extent": "full common-length utterance; no training crop or batch padding",
+      "inference_precision": "float32"
+    },
+    "num_mics": 8,
+    "checkpoint_model_config": {
+      "channels": 64,
+      "num_mics": 8,
+      "embed_dim": 64,
+      "kd1": 5,
+      "cd1": 64,
+      "d_feat": 256,
+      "p": 6,
+      "q": 3,
+      "bf_type": "lstm",
+      "topo_type": "mimo",
+      "intra_connect": "cat",
+      "norm_type": "BN",
+      "dfsmn_layers": 3,
+      "dfsmn_memory_size": 20,
+      "is_causal": "yes",
+      "is_u2": "yes"
+    },
+    "structure_candidate": "cbam_flat_projection64",
+    "candidate_implementation_sha256": {
+      "EaBNet_light.py": "24dcfed15c1db84bb55ed0b3a548e8ed6ee670fbbf76de1453a98bf10b0df89f",
+      "light_structure_variants.py": "caa0fce96993655552844cac4e05c73022d7493a56ff68750373aafabc455e7e",
+      "light_reference_variants.py": "bf0a24e09a3d0840a2c95e231f9c69696ff98af9907d0a7d2057c6aee394a4ea"
+    },
+    "versions": {
+      "torch": "2.5.1+cu121",
+      "numpy": "2.2.5",
+      "soundfile": "0.13.1",
+      "pesq": "0.0.4",
+      "pystoi": "0.4.1",
+      "mir_eval": "0.8.2"
+    },
+    "metric_protocol": {
+      "pesq": "pesq wideband",
+      "estoi": "pystoi extended=True; JSON estoi=fraction, CSV estoi_pct=100*estoi",
+      "stoi": "pystoi extended=False, fraction",
+      "si_snr_db": "zero-mean projection SI-SNR",
+      "si_snr_epsilon": 1e-08,
+      "sdr_db": "mir_eval.separation.bss_eval_sources, single source, 512-tap distortion filter; not SI-SNR",
+      "target_gain_matching": false,
+      "max_level_gain_db": 20.0,
+      "gain_rule": "none",
+      "external_normalization_clipping_or_alignment": false,
+      "length_policy": "truncate mixture and target to common length as in training Dataset; no delay correction",
+      "aggregation": "paired arithmetic mean over every selected utterance; failures abort with no mean"
+    }
+  },
+  "results": [
+    {
+      "epoch": 40,
+      "status": "complete",
+      "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_cbam_flat_projection64_restart_lr1e3_20261029_093641_1016691/model_epoch_40.pt",
+      "checkpoint_sha256": "aa778ce97bad0db0a4b2b4b094857d1b784bf1090fe18ff141068dcf7f602c7b",
+      "summary_json": "model_epoch_40/summary.json",
+      "expected_samples": 600,
+      "completed_samples": 600,
+      "mean": {
+        "enhanced": {
+          "pesq": 2.721409644285838,
+          "stoi": 0.9467470715533506,
+          "estoi": 0.8858874527760086,
+          "si_snr_db": 13.874696444992399,
+          "sdr_db": 14.880406496909396
+        },
+        "noisy": {
+          "pesq": 1.0880955342451732,
+          "stoi": 0.6510592990906214,
+          "estoi": 0.3667556529781415,
+          "si_snr_db": -1.2095493301340097,
+          "sdr_db": -1.1495106109218791
+        }
+      },
+      "pesq_delta_vs_epoch40": 0.0,
+      "rank": 1
+    },
+    {
+      "epoch": 43,
+      "status": "complete",
+      "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_cbam_flat_projection64_restart_lr1e3_20261029_093641_1016691/model_epoch_43.pt",
+      "checkpoint_sha256": "4e38fc25b10a986436b0c05aca07300f789b522de383f26a0d4262f1369668bc",
+      "summary_json": "model_epoch_43/summary.json",
+      "expected_samples": 600,
+      "completed_samples": 600,
+      "mean": {
+        "enhanced": {
+          "pesq": 2.6174235145250955,
+          "stoi": 0.9410133699314315,
+          "estoi": 0.8743541073207676,
+          "si_snr_db": 13.185954134937894,
+          "sdr_db": 14.177436905630014
+        },
+        "noisy": {
+          "pesq": 1.0880955342451732,
+          "stoi": 0.6510592990906214,
+          "estoi": 0.3667556529781415,
+          "si_snr_db": -1.2095493301340097,
+          "sdr_db": -1.1495106109218791
+        }
+      },
+      "pesq_delta_vs_epoch40": -0.10398612976074251,
+      "rank": 2
+    },
+    {
+      "epoch": 42,
+      "status": "complete",
+      "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_cbam_flat_projection64_restart_lr1e3_20261029_093641_1016691/model_epoch_42.pt",
+      "checkpoint_sha256": "3c21652a6ad50fd43704693c90c085fa91959ea747b5bf6503fbdc1af1a49cc5",
+      "summary_json": "model_epoch_42/summary.json",
+      "expected_samples": 600,
+      "completed_samples": 600,
+      "mean": {
+        "enhanced": {
+          "pesq": 2.6160346885522205,
+          "stoi": 0.9421782777016591,
+          "estoi": 0.8757015394783995,
+          "si_snr_db": 12.890349405765468,
+          "sdr_db": 14.040288324805648
+        },
+        "noisy": {
+          "pesq": 1.0880955342451732,
+          "stoi": 0.6510592990906214,
+          "estoi": 0.3667556529781415,
+          "si_snr_db": -1.2095493301340097,
+          "sdr_db": -1.1495106109218791
+        }
+      },
+      "pesq_delta_vs_epoch40": -0.10537495573361744,
+      "rank": 3
+    },
+    {
+      "epoch": 41,
+      "status": "complete",
+      "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_cbam_flat_projection64_restart_lr1e3_20261029_093641_1016691/model_epoch_41.pt",
+      "checkpoint_sha256": "7b3bd045193af36a5997d54476caa49f7b3632cd376ca2213dfad35ca5f6dacb",
+      "summary_json": "model_epoch_41/summary.json",
+      "expected_samples": 600,
+      "completed_samples": 600,
+      "mean": {
+        "enhanced": {
+          "pesq": 2.606863484978676,
+          "stoi": 0.9409809147647904,
+          "estoi": 0.8750398128065267,
+          "si_snr_db": 12.979244639205486,
+          "sdr_db": 13.942935887771995
+        },
+        "noisy": {
+          "pesq": 1.0880955342451732,
+          "stoi": 0.6510592990906214,
+          "estoi": 0.3667556529781415,
+          "si_snr_db": -1.2095493301340097,
+          "sdr_db": -1.1495106109218791
+        }
+      },
+      "pesq_delta_vs_epoch40": -0.11454615930716194,
+      "rank": 4
+    },
+    {
+      "epoch": 44,
+      "status": "complete",
+      "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_cbam_flat_projection64_restart_lr1e3_20261029_093641_1016691/model_epoch_44.pt",
+      "checkpoint_sha256": "8816449fc18cb66816b1d939baf382e589342da8a87714669a33dd4adeee629b",
+      "summary_json": "model_epoch_44/summary.json",
+      "expected_samples": 600,
+      "completed_samples": 600,
+      "mean": {
+        "enhanced": {
+          "pesq": 2.58781586766243,
+          "stoi": 0.9380046635732666,
+          "estoi": 0.87017406312001,
+          "si_snr_db": 12.889381996739154,
+          "sdr_db": 14.174136067755734
+        },
+        "noisy": {
+          "pesq": 1.0880955342451732,
+          "stoi": 0.6510592990906214,
+          "estoi": 0.3667556529781415,
+          "si_snr_db": -1.2095493301340097,
+          "sdr_db": -1.1495106109218791
+        }
+      },
+      "pesq_delta_vs_epoch40": -0.1335937766234081,
+      "rank": 5
+    },
+    {
+      "epoch": 45,
+      "status": "complete",
+      "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_cbam_flat_projection64_restart_lr1e3_20261029_093641_1016691/model_epoch_45.pt",
+      "checkpoint_sha256": "ec55cdcf13e5dcde773b12e1a93dc58b7fb8daa6f131f40655ca5f4827aafa51",
+      "summary_json": "model_epoch_45/summary.json",
+      "expected_samples": 600,
+      "completed_samples": 600,
+      "mean": {
+        "enhanced": {
+          "pesq": 2.5372243148088454,
+          "stoi": 0.9398421591192972,
+          "estoi": 0.8707698663907415,
+          "si_snr_db": 12.616401902703934,
+          "sdr_db": 13.415327282819112
+        },
+        "noisy": {
+          "pesq": 1.0880955342451732,
+          "stoi": 0.6510592990906214,
+          "estoi": 0.3667556529781415,
+          "si_snr_db": -1.2095493301340097,
+          "sdr_db": -1.1495106109218791
+        }
+      },
+      "pesq_delta_vs_epoch40": -0.18418532947699262,
+      "rank": 6
+    }
+  ]
+}
