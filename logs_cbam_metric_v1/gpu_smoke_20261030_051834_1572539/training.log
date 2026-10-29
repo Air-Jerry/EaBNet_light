@@ -1,0 +1,47 @@
+WARNING:__main__:
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+[W1030 05:18:40.171930637 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
+[W1030 05:18:40.240335672 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
+Metric warm-start: /home/nis/jinrui.yang/EaBNet_light/checkpoints_cbam_refiner_v1_quality_20261029_192913_1274588/model_epoch_17.pt; fresh G/D Adam; frozen backbone
+Device: cuda:0
+DDP world_size/rank/local_rank: 2/0/0
+GPU IDs: [0]
+CPU threads (intra/inter-op): 2/1
+TF32/cudnn_benchmark: no/yes
+MALLOC_ARENA_MAX env: <unset> | mallopt target: 2
+Train dir: /home/nis/jinrui.yang/EaBNet_light/logs_cbam_metric_v1/gpu_smoke_20261030_051834_1572539/dataset
+Val dir: /home/nis/jinrui.yang/EaBNet_light/logs_cbam_metric_v1/gpu_smoke_20261030_051834_1572539/dataset
+Checkpoint dir: /home/nis/jinrui.yang/EaBNet_light/logs_cbam_metric_v1/gpu_smoke_20261030_051834_1572539/checkpoints
+Best model dir: /home/nis/jinrui.yang/EaBNet_light/logs_cbam_metric_v1/gpu_smoke_20261030_051834_1572539/best
+TensorBoard log dir: /home/nis/jinrui.yang/EaBNet_light/logs_cbam_metric_v1/gpu_smoke_20261030_051834_1572539/tensorboard
+DataLoader config: workers=0, pin_memory=True, persistent_workers=False, prefetch_factor=N/A, strict_memory=no, segment_samples=96000, parallel_mode=ddp
+Enabled DistributedDataParallel
+/home/nis/jinrui.yang/EaBNet_light/train_light.py:786: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  checkpoint = torch.load(checkpoint_path, map_location=device)
+Resumed from /home/nis/jinrui.yang/EaBNet_light/logs_cbam_metric_v1/gpu_smoke_20261030_051834_1572539/checkpoints/checkpoint_latest.pt at epoch 0, best_val_loss=inf
+Training samples: 8
+Validation samples: 8
+
+Epoch 1/1
+train:   0%|          | 0/4 [00:00<?, ?it/s]/home/nis/jinrui.yang/EaBNet_light/train_light.py:786: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  checkpoint = torch.load(checkpoint_path, map_location=device)
+Resumed from /home/nis/jinrui.yang/EaBNet_light/logs_cbam_metric_v1/gpu_smoke_20261030_051834_1572539/checkpoints/checkpoint_latest.pt at epoch 0, best_val_loss=inf
+/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/autograd/graph.py:825: UserWarning: Grad strides do not match bucket view strides. This may indicate grad was not created according to the gradient layout contract, or that the param's strides changed since DDP was constructed.  This is not an error, but may impair performance.
+grad.sizes() = [2, 32, 1, 1], strides() = [32, 1, 32, 32]
+bucket_view.sizes() = [2, 32, 1, 1], strides() = [32, 1, 1, 1] (Triggered internally at ../torch/csrc/distributed/c10d/reducer.cpp:327.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/autograd/graph.py:825: UserWarning: Grad strides do not match bucket view strides. This may indicate grad was not created according to the gradient layout contract, or that the param's strides changed since DDP was constructed.  This is not an error, but may impair performance.
+grad.sizes() = [2, 32, 1, 1], strides() = [32, 1, 32, 32]
+bucket_view.sizes() = [2, 32, 1, 1], strides() = [32, 1, 1, 1] (Triggered internally at ../torch/csrc/distributed/c10d/reducer.cpp:327.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+train:   0%|          | 0/4 [00:06<?, ?it/s, loss=0.9263]train:  25%|██▌       | 1/4 [00:06<00:18,  6.32s/it, loss=0.9263]train:  25%|██▌       | 1/4 [00:06<00:18,  6.32s/it, loss=0.5783]train:  50%|█████     | 2/4 [00:06<00:05,  2.68s/it, loss=0.5783]train:  50%|█████     | 2/4 [00:06<00:05,  2.68s/it, loss=0.3821]train:  75%|███████▌  | 3/4 [00:06<00:01,  1.52s/it, loss=0.3821]train:  75%|███████▌  | 3/4 [00:06<00:01,  1.52s/it, loss=0.2881]train: 100%|██████████| 4/4 [00:06<00:00,  1.02it/s, loss=0.2881]                                                                 [PERF][train] samples(local/global)=4/8, batches(local/global)=4/8, samples/s(local/global)=0.6/1.2, ms/batch(local)=1687.5, data_wait=0.8%, compute=99.2%, non_finite_skips(local)=0
+[METRIC][train] {"discriminator_calibration_rmse": 0.6087867431329494, "discriminator_updates_per_rank": 4, "generator_metric_term": 0.7275391817092896, "invalid_pesq_labels": 0, "mean_training_pesq": 3.160898357629776, "valid_pesq_labels": 8}
+val:   0%|          | 0/4 [00:00<?, ?it/s]val:   0%|          | 0/4 [00:00<?, ?it/s, loss=0.5067]val:   0%|          | 0/4 [00:00<?, ?it/s, loss=0.5463]val:   0%|          | 0/4 [00:00<?, ?it/s, loss=0.3157]val:  75%|███████▌  | 3/4 [00:00<00:00, 28.92it/s, loss=0.3157]val:  75%|███████▌  | 3/4 [00:00<00:00, 28.92it/s, loss=0.3634]                                                               [PERF][val] samples(local/global)=4/8, batches(local/global)=4/8, samples/s(local/global)=29.2/58.4, ms/batch(local)=34.2, data_wait=7.1%, compute=92.8%, non_finite_skips(local)=0
+[METRIC][val] {"discriminator_calibration_rmse": 0.0, "discriminator_updates_per_rank": 4, "generator_metric_term": 0.0, "invalid_pesq_labels": 0, "mean_training_pesq": 0.0, "valid_pesq_labels": 0}
+[MEM] epoch=1 RAM(before/after)=884.6/1868.8MB | GPU mem: gpu0 alloc=51.9MB resv=1382.0MB peak=1051.8MB
+Epoch 1: train_loss=0.463699, val_loss=0.423896, lr=0.00010000
+Updated best model: /home/nis/jinrui.yang/EaBNet_light/logs_cbam_metric_v1/gpu_smoke_20261030_051834_1572539/best/best_model.pt (val_loss=0.423896)
+
+Training finished.

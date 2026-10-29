@@ -1,5 +1,5 @@
 {
-  "status": "partial",
+  "status": "complete",
   "selection_metric": "mean enhanced PESQ",
   "selection_scope": "Same 600 validation/comparison samples; not an independent final test.",
   "target_pesq": 3.4,
@@ -44,11 +44,84 @@
     13,
     14,
     15,
-    16
+    16,
+    17,
+    18,
+    19,
+    20
   ],
-  "best_completed_epoch": 16,
-  "best_completed_pesq": 2.8442862200737,
+  "best_completed_epoch": 17,
+  "best_completed_pesq": 2.8568443592389423,
   "results": [
+    {
+      "epoch": 17,
+      "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_cbam_refiner_v1_quality_20261029_192913_1274588/model_epoch_17.pt",
+      "checkpoint_sha256": "3b7299db6ece1c170d55d644523f6fb802734a2d81663a57bf9aa7d142997abd",
+      "summary_json": "/home/nis/jinrui.yang/EaBNet_light/logs_cbam_refiner_v1/quality_20261029_192913_1274588/pesq_selection/model_epoch_17/summary.json",
+      "completed_samples": 600,
+      "mean": {
+        "enhanced": {
+          "pesq": 2.8568443592389423,
+          "stoi": 0.951242504864551,
+          "estoi": 0.896610831073347,
+          "si_snr_db": 14.006222713718628,
+          "sdr_db": 14.943236167469243
+        },
+        "noisy": {
+          "pesq": 1.0880955342451732,
+          "stoi": 0.6510592990906214,
+          "estoi": 0.3667556529781415,
+          "si_snr_db": -1.2095493301340097,
+          "sdr_db": -1.1495106109218791
+        }
+      }
+    },
+    {
+      "epoch": 20,
+      "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_cbam_refiner_v1_quality_20261029_192913_1274588/model_epoch_20.pt",
+      "checkpoint_sha256": "bde3649050c81193fb4c5b1b1366af7ac25c43bd33c8ad1f91f843ccd9fc0bcf",
+      "summary_json": "/home/nis/jinrui.yang/EaBNet_light/logs_cbam_refiner_v1/quality_20261029_192913_1274588/pesq_selection/model_epoch_20/summary.json",
+      "completed_samples": 600,
+      "mean": {
+        "enhanced": {
+          "pesq": 2.848146365682284,
+          "stoi": 0.9511665094221419,
+          "estoi": 0.8965256731718246,
+          "si_snr_db": 14.043696421148816,
+          "sdr_db": 14.989040593121217
+        },
+        "noisy": {
+          "pesq": 1.0880955342451732,
+          "stoi": 0.6510592990906214,
+          "estoi": 0.3667556529781415,
+          "si_snr_db": -1.2095493301340097,
+          "sdr_db": -1.1495106109218791
+        }
+      }
+    },
+    {
+      "epoch": 18,
+      "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_cbam_refiner_v1_quality_20261029_192913_1274588/model_epoch_18.pt",
+      "checkpoint_sha256": "61e5f0f830fa663b7d7a93eadd0eda36b536baca27fd8c07ccc4cb0c631bffd8",
+      "summary_json": "/home/nis/jinrui.yang/EaBNet_light/logs_cbam_refiner_v1/quality_20261029_192913_1274588/pesq_selection/model_epoch_18/summary.json",
+      "completed_samples": 600,
+      "mean": {
+        "enhanced": {
+          "pesq": 2.8471791217724483,
+          "stoi": 0.9510978962683233,
+          "estoi": 0.896419344539197,
+          "si_snr_db": 14.008767161554703,
+          "sdr_db": 14.944691363446806
+        },
+        "noisy": {
+          "pesq": 1.0880955342451732,
+          "stoi": 0.6510592990906214,
+          "estoi": 0.3667556529781415,
+          "si_snr_db": -1.2095493301340097,
+          "sdr_db": -1.1495106109218791
+        }
+      }
+    },
     {
       "epoch": 16,
       "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_cbam_refiner_v1_quality_20261029_192913_1274588/model_epoch_16.pt",
@@ -85,6 +158,29 @@
           "estoi": 0.8948524763466659,
           "si_snr_db": 14.025191857983433,
           "sdr_db": 14.996289074860233
+        },
+        "noisy": {
+          "pesq": 1.0880955342451732,
+          "stoi": 0.6510592990906214,
+          "estoi": 0.3667556529781415,
+          "si_snr_db": -1.2095493301340097,
+          "sdr_db": -1.1495106109218791
+        }
+      }
+    },
+    {
+      "epoch": 19,
+      "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_cbam_refiner_v1_quality_20261029_192913_1274588/model_epoch_19.pt",
+      "checkpoint_sha256": "af7e69de425bb9f310b4ac941e2c6f640643f90513ad0a5896dd78ee46b3d88a",
+      "summary_json": "/home/nis/jinrui.yang/EaBNet_light/logs_cbam_refiner_v1/quality_20261029_192913_1274588/pesq_selection/model_epoch_19/summary.json",
+      "completed_samples": 600,
+      "mean": {
+        "enhanced": {
+          "pesq": 2.8369019343455633,
+          "stoi": 0.951432304356617,
+          "estoi": 0.8969208104634866,
+          "si_snr_db": 14.052055377124914,
+          "sdr_db": 15.000822118126695
         },
         "noisy": {
           "pesq": 1.0880955342451732,
@@ -554,7 +650,7 @@
     "all_saved_model_tensors_finite": true,
     "source": "Direct CPU tensor comparison of the server epoch-1 checkpoint against the original epoch-40 checkpoint."
   },
-  "decision": "Completed evaluations through epoch 16. Best PESQ is 2.8442862 at epoch 16 on the same complete 600 samples, without gain matching. Target 3.4 reached: False. Planned final epoch: 20.",
+  "decision": "Completed evaluations through epoch 20. Best PESQ is 2.8568444 at epoch 17 on the same complete 600 samples, without gain matching. Target 3.4 reached: False. Planned final epoch: 20.",
   "training_dataset_length_audit": {
     "records": 53600,
     "sample_rate": 16000,
@@ -651,7 +747,7 @@
   },
   "initial_ten_epochs_complete": true,
   "continuation": {
-    "status": "running",
+    "status": "complete",
     "runner_pid": 1448729,
     "runner_pgid": 1448724,
     "first_epoch": 11,
@@ -704,5 +800,52 @@
     "sample_std": 0.10862484567282359,
     "improved": 549,
     "decreased": 51
+  },
+  "epoch17_paired_pesq": {
+    "mean_delta": 0.13543471495310466,
+    "median_delta": 0.12838387489318848,
+    "sample_std": 0.10780846677879241,
+    "improved": 547,
+    "decreased": 53
+  },
+  "epoch18_paired_pesq": {
+    "mean_delta": 0.1257694774866104,
+    "median_delta": 0.11635744571685791,
+    "sample_std": 0.10830646606045496,
+    "improved": 541,
+    "decreased": 59
+  },
+  "epoch19_paired_pesq": {
+    "mean_delta": 0.11549229005972544,
+    "median_delta": 0.10293614864349365,
+    "sample_std": 0.12194461261987796,
+    "improved": 504,
+    "decreased": 96
+  },
+  "epoch20_paired_pesq": {
+    "mean_delta": 0.12673672139644623,
+    "median_delta": 0.11803478002548218,
+    "sample_std": 0.11861293228040057,
+    "improved": 518,
+    "decreased": 82
+  },
+  "selected_checkpoint_checks": {
+    "epoch": 17,
+    "checkpoint_sha256": "3b7299db6ece1c170d55d644523f6fb802734a2d81663a57bf9aa7d142997abd",
+    "all_selected_model_tensors_finite": true,
+    "frozen_base_unchanged_tensors": 277,
+    "latest_epoch": 20,
+    "latest_generator_optimizer_updates": 134000,
+    "source": "Direct CPU inspection on the server after all 20 epochs and complete evaluations ended."
+  },
+  "next_experiment": {
+    "objective": "spectral_mrstft_waveform_metricgan_v1",
+    "run_name": "metric_20261030_052113_1573812",
+    "status": "training",
+    "source_epoch": 17,
+    "gpu_smoke_report": "logs_cbam_metric_v1/gpu_smoke_20261030_051834_1572539/gpu_smoke_summary.json",
+    "launch_log": "logs_cbam_metric_v1/launch_20261030_052112_1573809.log",
+    "baseline_equivalence_complete_samples": 600,
+    "all_initial_metric_deltas_zero": true
   }
 }
