@@ -27,7 +27,8 @@ from pystoi import stoi
 from tqdm import tqdm
 
 from EaBNet_light import EaBNet
-from light_candidate_runtime import read_candidate_checkpoint
+from light_candidate_runtime import (all_model_candidates, build_model_candidate,
+                                     read_candidate_checkpoint)
 from light_reference_variants import all_reference_candidates, build_reference_candidate
 from light_eval_inputs import (SampleRecord, load_records, resolve_record_path,
                                pairs_sha256, resolve_evaluation_inputs)
@@ -169,7 +170,7 @@ def model_config_from_checkpoint(ckpt_args: Dict[str, object]) -> ModelConfig:
 
 
 def create_model(cfg: ModelConfig, device: torch.device, candidate_id=None) -> EaBNet:
-    constructor = EaBNet if candidate_id is None else partial(build_reference_candidate, candidate_id)
+    constructor = EaBNet if candidate_id is None else partial(build_model_candidate, candidate_id)
     model = constructor(
         k1=(2, 3),
         k2=(1, 3),
@@ -452,6 +453,7 @@ def evaluate(args):
         "structure_candidate": saved.get("structure_candidate"),
         "candidate_implementation_sha256": saved.get("candidate_implementation_sha256"),
         "candidate_evidence": saved.get("candidate_evidence"), "exact_reproduction_verified": False,
+        "quality_training": {name: value for name, value in saved.items() if name.startswith("quality_")},
         "mixture_ref_mic": args.mixture_ref_mic, "device": str(device),
         "expected_samples": len(records), "completed_samples": 0, "versions": package_versions(), "mean": None,
         "outputs": {"metadata_csv": str(metadata_path), "extra_csv": str(csv_path) if csv_path else None,
@@ -731,7 +733,7 @@ def parse_args(argv=None):
     checkpoints = parser.add_mutually_exclusive_group()
     checkpoints.add_argument("--checkpoint", help="Single checkpoint; defaults to the existing best model")
     checkpoints.add_argument("--checkpoint-dir", help="Select saved checkpoints by PESQ on independent validation metadata")
-    parser.add_argument("--candidate", choices=all_reference_candidates(), help="Optional expected candidate; auto-detected from checkpoint")
+    parser.add_argument("--candidate", choices=all_model_candidates(), help="Optional expected candidate; auto-detected from checkpoint")
     parser.add_argument("--device", choices=("auto", "cpu", "cuda"), default="auto")
     parser.add_argument("--max-samples", type=int, default=0, help="First N records; 0 means all")
     parser.add_argument("--mixture-ref-mic", type=int, default=0, help="Channel used for noisy metrics and saved mono mixture")

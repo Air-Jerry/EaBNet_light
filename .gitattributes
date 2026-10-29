@@ -1,1 +1,2 @@
 run_light_lr_restart.sh text eol=lf
+run_light_quality.sh text eol=lf

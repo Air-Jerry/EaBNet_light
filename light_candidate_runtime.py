@@ -12,12 +12,44 @@ from light_reference_variants import (all_reference_candidates, build_reference_
 
 
 IMPLEMENTATION_FILES = ("EaBNet_light.py", "light_structure_variants.py", "light_reference_variants.py")
+QUALITY_CANDIDATE = "cbam_refiner_v1"
+QUALITY_IMPLEMENTATION_FILES = (*IMPLEMENTATION_FILES, "light_quality_model.py")
 IDENTITY_FIELDS = ("sample_rate", "n_fft", "hop_length", "win_length", "power", "target_ref_mic",
                    "channels", "num_mics", "embed_dim", "cd1", "dfsmn_layers", "dfsmn_memory_size",
                    "norm_type", "bf_type", "topo_type", "is_causal")
 
 
+def all_model_candidates():
+    return (*all_reference_candidates(), QUALITY_CANDIDATE)
+
+
+def build_model_candidate(candidate_id, **model_kwargs):
+    if candidate_id == QUALITY_CANDIDATE:
+        from light_quality_model import EaBNetQuality
+        return EaBNetQuality(**model_kwargs)
+    return build_reference_candidate(candidate_id, **model_kwargs)
+
+
 def candidate_metadata(candidate_id):
+    if candidate_id == QUALITY_CANDIDATE:
+        return {
+            "structure_candidate": candidate_id,
+            "candidate_schema": 2,
+            "candidate_implementation_sha256": source_hashes(QUALITY_IMPLEMENTATION_FILES),
+            "candidate_evidence": {
+                "candidate_id": candidate_id,
+                "author_confirmed": False,
+                "exact_reproduction_verified": False,
+                "purpose": "Quality-oriented extension; not a reproduction of the paper architecture.",
+                "base_candidate": "cbam_flat_projection64",
+                "base_frozen": True,
+                "base_inference_precision": "float32",
+                "refiner": "Frequency U-Net with full-band bidirectional GRU and complex residual output",
+                "refiner_causal": False,
+                "initialization": "Zero residual output; the initial model equals the frozen baseline",
+                "reference_audio_used_at_inference": False,
+            },
+        }
     if candidate_id not in all_reference_candidates():
         raise ValueError(f"Unknown structure candidate: {candidate_id}")
     return {"structure_candidate": candidate_id, "candidate_schema": 1,
@@ -36,7 +68,7 @@ def read_candidate_checkpoint(path, expected_candidate=None, expected_args=None)
     if missing:
         raise ValueError(f"Candidate checkpoint lacks required configuration fields: {', '.join(missing)}")
     candidate_id = saved.get("structure_candidate")
-    if candidate_id not in all_reference_candidates():
+    if candidate_id not in all_model_candidates():
         raise ValueError("Checkpoint lacks a recognized structure_candidate; do not guess its architecture")
     if expected_candidate is not None and candidate_id != expected_candidate:
         raise ValueError(f"Candidate mismatch: checkpoint={candidate_id}, requested={expected_candidate}")
@@ -54,7 +86,7 @@ def read_candidate_checkpoint(path, expected_candidate=None, expected_args=None)
 def select_model_factory(module, candidate_id):
     """Substitute only the constructor in this process, restoring it on exit."""
     original = module.EaBNet
-    module.EaBNet = partial(build_reference_candidate, candidate_id)
+    module.EaBNet = partial(build_model_candidate, candidate_id)
     try:
         yield
     finally:
