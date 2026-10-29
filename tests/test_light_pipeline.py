@@ -60,6 +60,60 @@ def test_metadata_loading_channel_selection_crop_and_collation(tmp_path):
     torch.testing.assert_close(cropped[0]["target"], item["target"][:800])
 
 
+@pytest.mark.parametrize("split", ["training_set", "validation_set"])
+@pytest.mark.parametrize("separator", ["/", "\\"])
+def test_moved_metadata_prefix_agrees_with_evaluation(tmp_path, split, separator):
+    directory = make_dataset(tmp_path / "newset_rt60_005-015_on_NOISEX92" / "babble" / split,
+                             lengths=(1600,), num_mics=9)
+    mixture = directory / "mixture" / "sample_00000000_9ch.wav"
+    target = directory / "target" / "sample_00000000_target.wav"
+    mixture.parent.mkdir()
+    target.parent.mkdir()
+    (directory / "mixture_0.wav").replace(mixture)
+    (directory / "target_0.wav").replace(target)
+    prefix = f"estimate_set_new_rt60_005-015_on_NOISEX92/babble/{split}"
+    with (directory / "metadata.csv").open("w", newline="", encoding="utf-8") as handle:
+        writer = csv.writer(handle)
+        writer.writerow(("sample_id", "mixture_path", "target_path"))
+        writer.writerow((0, f"{prefix}/mixture/{mixture.name}".replace("/", separator),
+                         f"{prefix}/target/{target.name}".replace("/", separator)))
+    dataset = train_light.EnhancementDataset(directory, 16000, num_mics=8)
+    evaluated = evaluate_light.load_records(directory)
+    assert dataset.records[0].mixture_path == evaluated[0].mixture_path == mixture.resolve()
+    assert dataset.records[0].target_path == evaluated[0].target_path == target.resolve()
+    raw_mix, _ = sf.read(mixture, dtype="float32", always_2d=True)
+    raw_target, _ = sf.read(target, dtype="float32", always_2d=True)
+    torch.testing.assert_close(dataset[0]["mixture"], torch.from_numpy(raw_mix[:, :8]))
+    torch.testing.assert_close(dataset[0]["target"], torch.from_numpy(raw_target[:, 0]))
+
+
+def test_moved_metadata_keeps_exact_paths_ahead_of_rebased_and_basename(tmp_path):
+    directory = tmp_path / "newset" / "babble" / "training_set"
+    suffix = "mixture/speaker/sample.wav"
+    relative = f"oldset/babble/training_set/{suffix}"
+    exact, rebased = tmp_path / relative, directory / suffix
+    for path in (exact, rebased, directory / "sample.wav"):
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_bytes(b"path-only fixture")
+    assert train_light.resolve_record_path(directory, relative) == exact.resolve()
+    assert train_light.resolve_record_path(directory, str(rebased)) == rebased.resolve()
+    assert train_light.resolve_record_path(directory, suffix) == rebased.resolve()
+    exact.unlink()
+    assert train_light.resolve_record_path(directory, relative) == rebased.resolve()
+
+
+@pytest.mark.parametrize("entry", ["old/training_set/mixture/missing.wav",
+                                   "old/validation_set/mixture/sample.wav"])
+def test_moved_metadata_does_not_substitute_a_different_file(tmp_path, entry):
+    directory = tmp_path / "training_set"
+    for relative in ("target/missing.wav", "mixture/sample.wav"):
+        path = directory / relative
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_bytes(b"path-only fixture")
+    with pytest.raises(FileNotFoundError):
+        train_light.resolve_record_path(directory, entry)
+
+
 @pytest.mark.parametrize("power", [0.5, 1.0])
 def test_train_eval_stft_agree_and_reference_channel_roundtrips(power):
     generator = torch.Generator().manual_seed(33)
