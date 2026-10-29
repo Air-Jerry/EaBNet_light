@@ -1,5 +1,5 @@
 {
-  "status": "complete",
+  "status": "partial",
   "selection_metric": "mean enhanced PESQ",
   "selection_scope": "Same 600 validation/comparison samples; not an independent final test.",
   "target_pesq": 3.4,
@@ -15,7 +15,17 @@
     7,
     8,
     9,
-    10
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20
   ],
   "completed_epochs": [
     0,
@@ -400,7 +410,7 @@
     "all_saved_model_tensors_finite": true,
     "source": "Direct CPU tensor comparison of the server epoch-1 checkpoint against the original epoch-40 checkpoint."
   },
-  "decision": "The initial 10-epoch run completed. Epoch 10 is best at PESQ 2.8211451, improving 0.09974 over the original model but still below 3.4. Late epochs continue improving; prepare full-state continuation through epoch 20 with the same 600-sample evaluation and stop further training if a complete score reaches 3.4.",
+  "decision": "The initial 10-epoch run completed with a new best at epoch 10, PESQ 2.8211451. Full-state two-GPU continuation through epoch 20 has started and confirmed resumption from epoch 10. Preserve the same 600-sample protocol and stop remaining epochs on reaching 3.4; the objective remains unachieved.",
   "training_dataset_length_audit": {
     "records": 53600,
     "sample_rate": 16000,
@@ -494,5 +504,19 @@
     "stable_model_equals_latest": true,
     "optimizer_learning_rate": 0.0003,
     "source": "Direct server CPU inspection of the stable epoch-10 and latest checkpoints before continuation."
+  },
+  "initial_ten_epochs_complete": true,
+  "continuation": {
+    "status": "running",
+    "runner_pid": 1448729,
+    "runner_pgid": 1448724,
+    "first_epoch": 11,
+    "final_epoch": 20,
+    "launch_log": "logs_cbam_refiner_v1/quality_20261029_192913_1274588/continue_11_20_20261030_002630_1448724.log",
+    "launcher_commit": "32f63e3",
+    "launcher_sha256": "7ed95d139d650577715638cec0d9e0a93495a11e66a2b01ff1e65d41b1856244",
+    "startup_epoch11_confirmed": true,
+    "full_state_resume_from_epoch10_confirmed": true,
+    "stop_remaining_epochs_if_full_600_pesq_reaches": 3.4
   }
 }
