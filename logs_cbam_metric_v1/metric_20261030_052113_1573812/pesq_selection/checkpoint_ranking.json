@@ -14,7 +14,8 @@
     6
   ],
   "completed_epochs": [
-    0
+    0,
+    1
   ],
   "best_completed_epoch": 0,
   "best_completed_pesq": 2.8568443592389423,
@@ -138,6 +139,29 @@
           "sdr_db": -1.1495106109218791
         }
       }
+    },
+    {
+      "epoch": 1,
+      "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_cbam_metric_v1_metric_20261030_052113_1573812/model_epoch_1.pt",
+      "checkpoint_sha256": "36971e376f1bfbf3ce341af709a4ae932b1d771e4fc0d1b34cd83353288cbf8f",
+      "summary_json": "/home/nis/jinrui.yang/EaBNet_light/logs_cbam_metric_v1/metric_20261030_052113_1573812/pesq_selection/model_epoch_1/summary.json",
+      "completed_samples": 600,
+      "mean": {
+        "enhanced": {
+          "pesq": 2.8409747419754665,
+          "stoi": 0.9517261845572219,
+          "estoi": 0.8976505097897153,
+          "si_snr_db": 14.017664423161516,
+          "sdr_db": 14.951321223338221
+        },
+        "noisy": {
+          "pesq": 1.0880955342451732,
+          "stoi": 0.6510592990906214,
+          "estoi": 0.3667556529781415,
+          "si_snr_db": -1.2095493301340097,
+          "sdr_db": -1.1495106109218791
+        }
+      }
     }
   ],
   "warmstart": {
@@ -164,11 +188,34 @@
     "status": "training",
     "pid": 1573812,
     "pgid": 1573809,
-    "launch_log": "logs_cbam_metric_v1/launch_20261030_052112_1573809.log"
+    "launch_log": "logs_cbam_metric_v1/launch_20261030_052112_1573809.log",
+    "current_epoch_last_observed": 2
   },
   "monitoring_policy": {
     "interval_seconds": 3900,
     "basis": "About 8 microbatches/s per rank; estimated full epoch plus 600-sample evaluation about 60 minutes."
   },
-  "decision": "Baseline equivalence passed on all 600 samples with exactly identical means and per-sample PESQ. Metric epoch 1 is running. No post-training improvement has been measured; target 3.4 remains unachieved."
+  "decision": "Completed metric-stage evaluations through epoch 1. Best same-600 PESQ is 2.8568444 at metric epoch 0 (epoch 0 is the original quality-stage epoch-17 source). Target 3.4 reached: False. Continue the existing controlled run unless the target or terminal state is verified.",
+  "epoch1_paired_pesq_vs_metric_baseline": {
+    "mean_delta": -0.015869617263476053,
+    "median_delta": -0.009312748908996582,
+    "sample_std": 0.04930563603663244,
+    "improved": 246,
+    "decreased": 354
+  },
+  "epoch1_training_checks": {
+    "generator_optimizer_steps": 6700,
+    "discriminator_optimizer_steps": 26800,
+    "frozen_base_unchanged_tensors": 277,
+    "all_model_and_optimizer_tensors_finite": true,
+    "training_label_stats": {
+      "discriminator_calibration_rmse": 0.11447422166358272,
+      "discriminator_updates_per_rank": 26800,
+      "generator_metric_term": 0.28661769025043465,
+      "invalid_pesq_labels": 1,
+      "mean_training_pesq": 2.7538308865694985,
+      "valid_pesq_labels": 53599
+    },
+    "source": "Direct server CPU checkpoint inspection plus the completed first-epoch training log. The single invalid PESQ label was excluded from D supervision, not replaced by a score."
+  }
 }
