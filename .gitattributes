@@ -13,3 +13,5 @@ light_causal_global_model.py text eol=lf
 train_light_causal_global.py text eol=lf
 experiments/*.py text eol=lf
 evaluate_light_streaming.py text eol=lf
+light_causal_recurrent_model.py text eol=lf
+train_light_causal_recurrent.py text eol=lf

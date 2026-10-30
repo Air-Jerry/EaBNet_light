@@ -8,13 +8,19 @@ fi
 train_py="${TRAIN_PY:-$HOME/miniconda3/envs/EaBNet/bin/python}"
 export CUDA_VISIBLE_DEVICES="${CUDA_VISIBLE_DEVICES:-0,1}"
 preflight="$1"
+candidate="${CAUSAL_MODEL_CANDIDATE:-causal_unet_spatial_v1}"
+case "$candidate" in
+    causal_unet_spatial_v1) entry=train_light_causal_fast.py; run_prefix=causal_fast ;;
+    causal_recurrent_spatial_v1) entry=train_light_causal_recurrent.py; run_prefix=causal_recurrent ;;
+    *) printf 'Unsupported cold-start causal candidate: %s\n' "$candidate" >&2; exit 2 ;;
+esac
 train_dir="/data/ssd1/jinrui.yang/training_set"
 val_dir="/data/ssd1/jinrui.yang/newset_rt60_005-015_on_NOISEX92/babble/training_set"
-mkdir -p logs_causal_unet_spatial_v1
-exec 9>logs_causal_unet_spatial_v1/.launcher.lock
+mkdir -p "logs_${candidate}"
+exec 9>"logs_${candidate}/.launcher.lock"
 flock -n 9 || { printf 'Another causal launcher is running.\n' >&2; exit 1; }
-"$train_py" - "$preflight" "$val_dir" <<'PY_PREFLIGHT'
-import hashlib,json,os,sys
+"$train_py" - "$preflight" "$val_dir" "$candidate" <<'PY_PREFLIGHT'
+import hashlib,json,os,re,sys
 from pathlib import Path
 import torch
 from light_candidate_runtime import read_candidate_checkpoint
@@ -22,21 +28,30 @@ root=Path(sys.argv[1]);check=json.loads((root/'cuda_final/cuda_check.json').read
 bench=json.loads((root/'streaming_final/streaming_benchmark.json').read_text())
 assert check['status']=='passed' and check['generator_adam_step']==64
 assert check['all_weights_and_adam_finite'] and check['noncausal_frozen_backbones']==0
+assert check['effective_global_batch']==8 and check['batch_size_per_gpu']*check['grad_accum_steps']==4
 p=root/'cuda_final/checkpoints/model_epoch_2.pt'
 assert hashlib.sha256(p.read_bytes()).hexdigest()==check['checkpoint_sha256']==bench['checkpoint_sha256']
-state,_=read_candidate_checkpoint(p,'causal_unet_spatial_v1')
+state,_=read_candidate_checkpoint(p,sys.argv[3])
 for name,value in state['args']['causal_training_implementation_sha256'].items():
     assert hashlib.sha256(Path(name).read_bytes()).hexdigest()==value,name
 assert bench['status']=='measured' and bench['future_perturbation_max_error']<1e-6
 assert bench['warmup_state_discarded'] and bench['mean_rtf_below_one'] and bench['p99_below_10ms']
 assert bench['all_hops_below_10ms'],'Investigate startup/live deadlines before full training'
 assert bench['full_vs_stream_waveform_max_error']<1e-5
+speeds=re.findall(r'\[PERF\]\[train\].*?samples/s\(local/global\)=[\d.]+/([\d.]+)',(root/'cuda_final/training.log').read_text())
+assert speeds and float(speeds[-1])>=20,'Hot global throughput is insufficient for the one-hour budget'
 assert hashlib.sha256((Path(sys.argv[2])/'metadata.csv').read_bytes()).hexdigest()=='8d0b4d229ebc42cd9892e6d0e0d36416007ded01fbc0b753df4bf7e6b734eb02'
 names={'run_light_quality.sh','continue_light_quality.sh','run_light_metric.sh','run_light_spatial.sh',
        'run_light_causal.sh','train_light_quality.py','train_light_metric.py','train_light_spatial.py',
-       'train_light_causal.py','train_light_causal_fast.py','check_light_causal_cuda.py','benchmark_light_causal.py'}
+       'train_light_causal.py','train_light_causal_fast.py','check_light_causal_cuda.py','benchmark_light_causal.py',
+       'run_light_causal_global.sh','train_light_causal_global.py','train_light_causal_recurrent.py'}
+ancestors=set();cursor=os.getpid()
+while cursor>1:
+    ancestors.add(cursor)
+    try:cursor=int(Path(f'/proc/{cursor}/stat').read_text().rsplit(')',1)[1].split()[1])
+    except FileNotFoundError:break
 for process in Path('/proc').glob('[0-9]*'):
-    if int(process.name) in (os.getpid(),os.getppid()):continue
+    if int(process.name) in ancestors:continue
     try:
         if (process/'cwd').resolve()==Path.cwd() and any(Path(x.decode(errors='replace')).name in names
                 for x in (process/'cmdline').read_bytes().split(b'\0') if x):
@@ -46,10 +61,16 @@ assert torch.cuda.device_count()==2 and torch.cuda.is_bf16_supported()
 assert all(torch.cuda.mem_get_info(i)[0]>10*2**30 for i in range(2))
 print('Real causal streaming and dual-CUDA preflight passed.',flush=True)
 PY_PREFLIGHT
-run="causal_fast_$(date +%Y%m%d_%H%M%S)_$$"
-checkpoints="./checkpoints_causal_unet_spatial_v1_${run}"
-best="./bestmodels_causal_unet_spatial_v1_${run}"
-logs="./logs_causal_unet_spatial_v1/${run}"
+read -r batch_size grad_accum_steps < <("$train_py" - "$preflight/cuda_final/cuda_check.json" <<'PY_BATCH'
+import json,sys
+check=json.load(open(sys.argv[1]))
+print(check['batch_size_per_gpu'],check['grad_accum_steps'])
+PY_BATCH
+)
+run="${run_prefix}_$(date +%Y%m%d_%H%M%S)_$$"
+checkpoints="./checkpoints_${candidate}_${run}"
+best="./bestmodels_${candidate}_${run}"
+logs="./logs_${candidate}/${run}"
 mkdir -p "$logs"
 printf 'Run: %s\nCheckpoints: %s\nLogs: %s\n' "$run" "$checkpoints" "$logs"
 cp "$preflight/cuda_final/cuda_check.json" "$logs/cuda_preflight.json"
@@ -76,17 +97,18 @@ evaluate_epoch() {
     local epoch="$1"
     local result="$logs/pesq_selection/model_epoch_${epoch}"
     timeout --kill-after=15s "${2:-3600}s" "$train_py" -u evaluate_light.py --checkpoint "$checkpoints/model_epoch_${epoch}.pt" \
-        --candidate causal_unet_spatial_v1 --val-dir "$val_dir" --device cuda \
+        --candidate "$candidate" --val-dir "$val_dir" --device cuda \
         --max-samples 0 --save-samples no --match-estimate-level no \
         --estimate-dir "$result" --save-json "$result/summary.json" \
         2>&1 | tee "$logs/evaluation_epoch_${epoch}.log"
 }
 
 check_results() {
-    "$train_py" - "$logs" <<'PY_RESULTS'
+    "$train_py" - "$logs" "$candidate" <<'PY_RESULTS'
 import json,math,sys
 from pathlib import Path
 root=Path(sys.argv[1])/'pesq_selection';baseline=json.loads((root/'model_epoch_0/summary.json').read_text())
+candidate=sys.argv[2] if len(sys.argv)>2 else 'causal_unet_spatial_v1'
 old=json.loads(Path('logs_cbam_metric_v1/metric_20261030_052113_1573812/pesq_selection/model_epoch_0/summary.json').read_text())
 keys=('frontend','frontend_protocol','num_mics','selected_pairs_sha256','metadata_sha256','metric_protocol')
 for key in keys:assert baseline[key]==old[key],key
@@ -96,7 +118,7 @@ rows=[]
 for p in root.glob('model_epoch_*/summary.json'):
     r=json.loads(p.read_text());epoch=int(p.parent.name.rsplit('_',1)[1])
     assert r['status']=='complete' and r['completed_samples']==r['expected_samples']==600
-    assert r['structure_candidate']=='causal_unet_spatial_v1'
+    assert r['structure_candidate']==candidate
     assert r['candidate_evidence']['model_causal'] is True and r['candidate_evidence']['future_frames']==0
     assert r['candidate_implementation_sha256']==baseline['candidate_implementation_sha256']
     for key in keys:assert r[key]==baseline[key],key
@@ -115,7 +137,7 @@ print(int(result['target_reached']))
 PY_RESULTS
 }
 
-"$train_py" -u train_light_causal_fast.py --train-dir "$train_dir" --val-dir "$val_dir" \
+"$train_py" -u "$entry" --train-dir "$train_dir" --val-dir "$val_dir" \
     --checkpoint-dir "$checkpoints" --best-dir "$best" --log-dir "$logs" \
     --num-epochs 0 --parallel-mode none --num-workers 0 --cpu-threads 2 \
     2>&1 | tee "$logs/initialization.log"
@@ -131,9 +153,9 @@ for epoch in {1..30}; do
     train_budget=$(( 3600 - evaluation_reserve ))
     printf 'phase=train epoch=%s\n' "$epoch" >> "$logs/gpu_utilization.log"
     timeout --kill-after=15s "${train_budget}s" "$train_py" -u -m torch.distributed.run --standalone --nproc_per_node=2 \
-        train_light_causal_fast.py --train-dir "$train_dir" --val-dir "$val_dir" \
+        "$entry" --train-dir "$train_dir" --val-dir "$val_dir" \
         --checkpoint-dir "$checkpoints" --best-dir "$best" --log-dir "$logs" \
-        --num-epochs "$epoch" --parallel-mode ddp --batch-size 4 --grad-accum-steps 1 \
+        --num-epochs "$epoch" --parallel-mode ddp --batch-size "$batch_size" --grad-accum-steps "$grad_accum_steps" \
         --segment-seconds 6 --num-workers 4 --strict-memory no --cpu-threads 2 --cpu-thread-scale 1 \
         --learning-rate 0.001 --grad-clip 5 --use-amp no --model-amp no --allow-tf32 no \
         --resume yes --resume-reset-lr no --stop-on-non-finite yes --skip-non-finite-batches no \

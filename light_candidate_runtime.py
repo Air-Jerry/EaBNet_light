@@ -24,16 +24,20 @@ CAUSAL_IMPLEMENTATION_FILES = ("light_causal_spatial_model.py", "light_causal_st
     "third_party/spatialnet/non_linear.py", "third_party/spatialnet/linear_group.py")
 FAST_CANDIDATE = "causal_unet_spatial_v1"
 GLOBAL_CANDIDATE = "causal_unet_global_v1"
+RECURRENT_CANDIDATE = "causal_recurrent_spatial_v1"
 IDENTITY_FIELDS = ("sample_rate", "n_fft", "hop_length", "win_length", "power", "target_ref_mic",
                    "channels", "num_mics", "embed_dim", "cd1", "dfsmn_layers", "dfsmn_memory_size",
                    "norm_type", "bf_type", "topo_type", "is_causal")
 
 
 def all_model_candidates():
-    return (*all_reference_candidates(), QUALITY_CANDIDATE, SPATIAL_CANDIDATE, CAUSAL_CANDIDATE, FAST_CANDIDATE, GLOBAL_CANDIDATE)
+    return (*all_reference_candidates(), QUALITY_CANDIDATE, SPATIAL_CANDIDATE, CAUSAL_CANDIDATE, FAST_CANDIDATE, GLOBAL_CANDIDATE, RECURRENT_CANDIDATE)
 
 
 def build_model_candidate(candidate_id, **model_kwargs):
+    if candidate_id == RECURRENT_CANDIDATE:
+        from light_causal_recurrent_model import CausalRecurrentSpatial
+        return CausalRecurrentSpatial(**model_kwargs)
     if candidate_id == GLOBAL_CANDIDATE:
         from light_causal_global_model import CausalGlobalSpatial
         return CausalGlobalSpatial(**model_kwargs)
@@ -53,6 +57,20 @@ def build_model_candidate(candidate_id, **model_kwargs):
 
 
 def candidate_metadata(candidate_id):
+    if candidate_id == RECURRENT_CANDIDATE:
+        metadata=candidate_metadata(CAUSAL_CANDIDATE)
+        metadata.update(structure_candidate=candidate_id,candidate_schema=7,
+            candidate_implementation_sha256=source_hashes((*CAUSAL_IMPLEMENTATION_FILES,
+                'light_causal_fast_model.py','light_causal_recurrent_model.py')))
+        evidence=metadata['candidate_evidence']
+        evidence.update(candidate_id=candidate_id,
+            purpose='Full257-frequency causal spatial encoding with recurrent temporal modeling; all parameters trainable',
+            model_config=dict(hidden=96,ffn=192,layers=4,frequencies=257,temporal='One unidirectional GRU96 per block, FP32'),
+            attention='Replaced by per-frequency recurrent states; no attention matrix or future frames',
+            normalization='Current-frame channels only; reference-mixture scale from current-frame frequencies',
+            initialization='Zero physical complex residual; exact current reference mixture',
+            recurrent_state='Four fixed GRU96 hidden states per frequency, plus bounded convolution caches')
+        return metadata
     if candidate_id == GLOBAL_CANDIDATE:
         metadata=candidate_metadata(FAST_CANDIDATE)
         metadata.update(structure_candidate=candidate_id,candidate_schema=6,

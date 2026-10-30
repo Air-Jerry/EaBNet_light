@@ -35,7 +35,7 @@ def run(args):
             report["checkpoint_sha256"] = hashlib.sha256(Path(args.checkpoint).read_bytes()).hexdigest()
         else:
             model = build_model_candidate(args.candidate).to(device).eval()
-            head = model.decoder if args.candidate == CAUSAL_CANDIDATE else model.beamformer
+            head = model.decoder if args.candidate in (CAUSAL_CANDIDATE, 'causal_recurrent_spatial_v1') else model.beamformer
             with torch.no_grad():
                 head.weight.normal_(std=0.005)
                 head.bias.normal_(std=0.005)
@@ -108,7 +108,7 @@ def run(args):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--checkpoint")
-    parser.add_argument("--candidate", choices=(CAUSAL_CANDIDATE, "causal_unet_spatial_v1", "causal_unet_global_v1"), default=CAUSAL_CANDIDATE)
+    parser.add_argument("--candidate", choices=(CAUSAL_CANDIDATE, "causal_unet_spatial_v1", "causal_unet_global_v1", 'causal_recurrent_spatial_v1'), default=CAUSAL_CANDIDATE)
     parser.add_argument("--train-dir", default="/data/ssd1/jinrui.yang/training_set")
     parser.add_argument("--output-dir", required=True)
     run(parser.parse_args())

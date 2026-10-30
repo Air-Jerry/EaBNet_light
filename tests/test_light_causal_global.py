@@ -58,6 +58,29 @@ def test_launcher_excludes_command_substitution_ancestors_only():
     assert 999 not in namespace['ancestors']
 
 
+@pytest.mark.parametrize('fault', [None, 'unfinished_metrics', 'wrong_directory', 'target_reached'])
+def test_global_resume_preserves_completed_run_and_rejects_invalid_boundary(tmp_path, monkeypatch, fault):
+    root=tmp_path/'run';root.mkdir()
+    checkpoints=tmp_path/'checkpoints';best=tmp_path/'best';warm=tmp_path/'source.pt'
+    saved=dict(log_dir=str(root),checkpoint_dir=str(checkpoints),best_dir=str(best),global_warmstart_checkpoint=str(warm))
+    if fault=='wrong_directory':saved['log_dir']=str(tmp_path/'different_run')
+    state=dict(epoch=6,args=saved,model_state_dict={'weight':torch.ones(1)},optimizer_state_dict={'state':{0:{'step':torch.tensor(40200)}}})
+    monkeypatch.setattr('light_candidate_runtime.read_candidate_checkpoint',lambda *unused:(state,'causal_unet_global_v1'))
+    timing=dict(epoch=5 if fault=='unfinished_metrics' else 6,status='complete',evaluation_audit_seconds=202.3)
+    (root/'epoch_timing.jsonl').write_text(json.dumps(timing)+'\n')
+    (root/'pesq_selection').mkdir()
+    (root/'pesq_selection/checkpoint_ranking.json').write_text(json.dumps(dict(results=[{'epoch':6}],target_reached=fault=='target_reached')))
+    shell=(ROOT/'run_light_causal_global.sh').read_text()
+    code=shell.split("<<'PY_RESUME'\n",1)[1].split('\nPY_RESUME',1)[0]
+    monkeypatch.setattr(sys,'argv',['-',str(root),str(checkpoints),str(best),str(warm)])
+    if fault is None:
+        exec(compile(code,'resume completed global run','exec'),{})
+        assert json.loads((root/'run_status.json').read_text())==dict(status='running',resumed_from_completed_epoch=6)
+    else:
+        with pytest.raises(AssertionError):exec(compile(code,'resume completed global run','exec'),{})
+        assert not (root/'run_status.json').exists()
+
+
 @pytest.mark.parametrize('training',[False,True])
 def test_global_recurrence_never_uses_future_frames(model,training):
     model.train(training)

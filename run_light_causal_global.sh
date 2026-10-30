@@ -60,6 +60,10 @@ print(str(warm))
 PY_PREFLIGHT
 )
 run="global_$(date +%Y%m%d_%H%M%S)_$$"
+if [[ -n "${CAUSAL_GLOBAL_RESUME_RUN:-}" ]]; then
+    run="$(basename -- "$CAUSAL_GLOBAL_RESUME_RUN")"
+    [[ "$run" == global_* && -d "./logs_causal_unet_global_v1/$run" ]] || { printf 'Invalid existing global run.\n' >&2; exit 2; }
+fi
 checkpoints="./checkpoints_causal_unet_global_v1_${run}"
 best="./bestmodels_causal_unet_global_v1_${run}"
 logs="./logs_causal_unet_global_v1/${run}"
@@ -134,17 +138,46 @@ print(int(result['target_reached']))
 PY_RESULTS
 }
 
-"$train_py" -u train_light_causal_global.py --warmstart "$warm" --train-dir "$train_dir" --val-dir "$val_dir" \
+if [[ -n "${CAUSAL_GLOBAL_RESUME_RUN:-}" ]]; then
+    resume_settings=$("$train_py" - "$logs" "$checkpoints" "$best" "$warm" <<'PY_RESUME'
+import json,math,sys,torch
+from pathlib import Path
+from light_candidate_runtime import read_candidate_checkpoint
+root,checkpoints,best,warm=[Path(p).resolve() for p in sys.argv[1:]]
+state,_=read_candidate_checkpoint(checkpoints/'checkpoint_latest.pt','causal_unet_global_v1')
+epoch=int(state['epoch']);saved=state['args']
+assert {int(v['step']) for v in state['optimizer_state_dict']['state'].values()}=={epoch*6700}
+immutable,_=read_candidate_checkpoint(checkpoints/f'model_epoch_{epoch}.pt','causal_unet_global_v1')
+assert state['model_state_dict'].keys()==immutable['model_state_dict'].keys()
+assert all(torch.equal(value,immutable['model_state_dict'][key]) and torch.isfinite(value).all() for key,value in state['model_state_dict'].items())
+assert all(torch.isfinite(v).all() for values in state['optimizer_state_dict']['state'].values() for v in values.values() if torch.is_tensor(v))
+for key,value in (('log_dir',root),('checkpoint_dir',checkpoints),('best_dir',best),('global_warmstart_checkpoint',warm)):
+    assert Path(saved[key]).resolve()==value,key
+timings=[json.loads(line) for line in (root/'epoch_timing.jsonl').read_text().splitlines()]
+assert epoch>0 and timings[-1]['epoch']==epoch and timings[-1]['status']=='complete'
+ranking=json.loads((root/'pesq_selection/checkpoint_ranking.json').read_text())
+assert max(row['epoch'] for row in ranking['results'])==epoch and not ranking['target_reached']
+reserve=math.ceil(max(t['evaluation_audit_seconds'] for t in timings))+60
+assert 0<reserve<1200
+(root/'run_status.json').write_text(json.dumps(dict(status='running',resumed_from_completed_epoch=epoch),indent=2))
+print(epoch+1,reserve)
+PY_RESUME
+)
+    read -r start_epoch evaluation_reserve <<< "$resume_settings"
+else
+    "$train_py" -u train_light_causal_global.py --warmstart "$warm" --train-dir "$train_dir" --val-dir "$val_dir" \
     --checkpoint-dir "$checkpoints" --best-dir "$best" --log-dir "$logs" \
     --num-epochs 0 --parallel-mode none --num-workers 0 --cpu-threads 2 \
     2>&1 | tee "$logs/initialization.log"
-baseline_start=$(date +%s)
-phase=baseline_full600
-evaluate_epoch 0
-evaluation_reserve=$(( $(date +%s) - baseline_start + 60 ))
-(( evaluation_reserve < 1200 )) || { printf 'Full600 evaluation needs too much of the one-hour budget.\n' >&2; exit 1; }
+    baseline_start=$(date +%s)
+    phase=baseline_full600
+    evaluate_epoch 0
+    evaluation_reserve=$(( $(date +%s) - baseline_start + 60 ))
+    (( evaluation_reserve < 1200 )) || { printf 'Full600 evaluation needs too much of the one-hour budget.\n' >&2; exit 1; }
+    start_epoch=1
+fi
 check_results >/dev/null
-for epoch in {1..30}; do
+for ((epoch=start_epoch; epoch<=30; epoch++)); do
     phase="training_epoch_${epoch}"
     epoch_start=$(date +%s)
     train_budget=$(( 3600 - evaluation_reserve ))
