@@ -1,0 +1,23 @@
+{
+  "status": "partial",
+  "selection_scope": "Same full600 comparison samples; not an independent final test",
+  "model_is_causal": true,
+  "results": [
+    {
+      "epoch": 0,
+      "pesq": 1.088074848453204,
+      "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_causal_unet_spatial_v1_causal_fast_20261030_195249_1935855/model_epoch_0.pt",
+      "checkpoint_sha256": "d2a7c839a778ae96db0cdd1a04ee499a92bf2105c6b71e27e103229c5a74f619"
+    },
+    {
+      "epoch": 1,
+      "pesq": 1.3000290489196777,
+      "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_causal_unet_spatial_v1_causal_fast_20261030_195249_1935855/model_epoch_1.pt",
+      "checkpoint_sha256": "041565394e8fb5b07bac6bb44a7ad7820937a5b389f9069caa22388b30694aac"
+    }
+  ],
+  "best_completed_epoch": 1,
+  "best_completed_pesq": 1.3000290489196777,
+  "target_reached": false,
+  "final_full600_waveform_streaming_audit_required": true
+}
