@@ -8,10 +8,16 @@
       "pesq": 1.088074848453204,
       "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_causal_recurrent_unet65_v1_causal_recurrent65_20261031_065909_2104814/model_epoch_0.pt",
       "checkpoint_sha256": "601964279ee32632efaacf9b1526700533f08cb8bf0c4f32988ef8f2e43b3f66"
+    },
+    {
+      "epoch": 1,
+      "pesq": 1.3383618994553883,
+      "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_causal_recurrent_unet65_v1_causal_recurrent65_20261031_065909_2104814/model_epoch_1.pt",
+      "checkpoint_sha256": "1ef0de4b252a79fd82836cacbc31526442ec004ef3f79ce1387fd6a38d361810"
     }
   ],
-  "best_completed_epoch": 0,
-  "best_completed_pesq": 1.088074848453204,
+  "best_completed_epoch": 1,
+  "best_completed_pesq": 1.3383618994553883,
   "target_reached": false,
   "final_full600_waveform_streaming_audit_required": true
 }
