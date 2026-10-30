@@ -1,0 +1,15 @@
+{
+  "status": "rejected_for_epoch_speed",
+  "cuda_training_correctness": "passed",
+  "finite_adam_updates": 64,
+  "changed_state_tensors": 156,
+  "hot_global_samples_per_second": 6.1,
+  "complete_training_records": 53600,
+  "estimated_training_only_seconds": 8786.88524590164,
+  "required_preflight_hot_global_samples_per_second": 20,
+  "epoch_limit_seconds": 3600,
+  "full_training_started": false,
+  "old_global_restored_from_completed_epoch": 6,
+  "restored_global_launcher_pid": 2095049,
+  "old_weights_and_40200_step_adam_retained": true
+}

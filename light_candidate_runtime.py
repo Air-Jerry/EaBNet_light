@@ -25,16 +25,20 @@ CAUSAL_IMPLEMENTATION_FILES = ("light_causal_spatial_model.py", "light_causal_st
 FAST_CANDIDATE = "causal_unet_spatial_v1"
 GLOBAL_CANDIDATE = "causal_unet_global_v1"
 RECURRENT_CANDIDATE = "causal_recurrent_spatial_v1"
+RECURRENT65_CANDIDATE = "causal_recurrent_unet65_v1"
 IDENTITY_FIELDS = ("sample_rate", "n_fft", "hop_length", "win_length", "power", "target_ref_mic",
                    "channels", "num_mics", "embed_dim", "cd1", "dfsmn_layers", "dfsmn_memory_size",
                    "norm_type", "bf_type", "topo_type", "is_causal")
 
 
 def all_model_candidates():
-    return (*all_reference_candidates(), QUALITY_CANDIDATE, SPATIAL_CANDIDATE, CAUSAL_CANDIDATE, FAST_CANDIDATE, GLOBAL_CANDIDATE, RECURRENT_CANDIDATE)
+    return (*all_reference_candidates(), QUALITY_CANDIDATE, SPATIAL_CANDIDATE, CAUSAL_CANDIDATE, FAST_CANDIDATE, GLOBAL_CANDIDATE, RECURRENT_CANDIDATE, RECURRENT65_CANDIDATE)
 
 
 def build_model_candidate(candidate_id, **model_kwargs):
+    if candidate_id == RECURRENT65_CANDIDATE:
+        from light_causal_recurrent65_model import CausalRecurrentUNet65
+        return CausalRecurrentUNet65(**model_kwargs)
     if candidate_id == RECURRENT_CANDIDATE:
         from light_causal_recurrent_model import CausalRecurrentSpatial
         return CausalRecurrentSpatial(**model_kwargs)
@@ -57,6 +61,21 @@ def build_model_candidate(candidate_id, **model_kwargs):
 
 
 def candidate_metadata(candidate_id):
+    if candidate_id == RECURRENT65_CANDIDATE:
+        metadata=candidate_metadata(FAST_CANDIDATE)
+        metadata.update(structure_candidate=candidate_id,candidate_schema=8,
+            candidate_implementation_sha256=source_hashes((*CAUSAL_IMPLEMENTATION_FILES,
+                'light_causal_fast_model.py','light_causal_global_model.py','light_causal_recurrent_model.py',
+                'light_causal_recurrent65_model.py')))
+        evidence=metadata['candidate_evidence']
+        evidence.update(candidate_id=candidate_id,
+            purpose='65-frequency-group recurrent spatial modeling with full-resolution skips and global temporal recurrence',
+            model_config=dict(widths=[32,48,96],ffn=192,spatial_layers=4,bottleneck_frequencies=65,
+                global_temporal=dict(input=6240,hidden=128,layers=1)),
+            attention='Replaced by four unidirectional per-frequency GRU96 blocks plus one global GRU128, FP32',
+            initialization='Zero complex beamforming residual; exact current reference mixture',
+            recurrent_state='Fixed per-frequency and global hidden states plus left convolution histories')
+        return metadata
     if candidate_id == RECURRENT_CANDIDATE:
         metadata=candidate_metadata(CAUSAL_CANDIDATE)
         metadata.update(structure_candidate=candidate_id,candidate_schema=7,

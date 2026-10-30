@@ -12,6 +12,7 @@ candidate="${CAUSAL_MODEL_CANDIDATE:-causal_unet_spatial_v1}"
 case "$candidate" in
     causal_unet_spatial_v1) entry=train_light_causal_fast.py; run_prefix=causal_fast ;;
     causal_recurrent_spatial_v1) entry=train_light_causal_recurrent.py; run_prefix=causal_recurrent ;;
+    causal_recurrent_unet65_v1) entry=train_light_causal_recurrent65.py; run_prefix=causal_recurrent65 ;;
     *) printf 'Unsupported cold-start causal candidate: %s\n' "$candidate" >&2; exit 2 ;;
 esac
 train_dir="/data/ssd1/jinrui.yang/training_set"
@@ -44,7 +45,7 @@ assert hashlib.sha256((Path(sys.argv[2])/'metadata.csv').read_bytes()).hexdigest
 names={'run_light_quality.sh','continue_light_quality.sh','run_light_metric.sh','run_light_spatial.sh',
        'run_light_causal.sh','train_light_quality.py','train_light_metric.py','train_light_spatial.py',
        'train_light_causal.py','train_light_causal_fast.py','check_light_causal_cuda.py','benchmark_light_causal.py',
-       'run_light_causal_global.sh','train_light_causal_global.py','train_light_causal_recurrent.py'}
+       'run_light_causal_global.sh','train_light_causal_global.py','train_light_causal_recurrent.py','train_light_causal_recurrent65.py'}
 ancestors=set();cursor=os.getpid()
 while cursor>1:
     ancestors.add(cursor)

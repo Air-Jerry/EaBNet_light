@@ -1,0 +1,23 @@
+{
+  "status": "stopped_for_full_frequency_recurrent_preflight",
+  "source_launcher_pid": 2038779,
+  "source_session_id": 2038779,
+  "verified_own_session_members": [
+    2038779,
+    2038802,
+    2089194,
+    2089195,
+    2089196
+  ],
+  "remaining_live_session_members": [],
+  "latest_completed_epoch": 6,
+  "latest_weights_match_immutable_checkpoint": true,
+  "all_weights_and_adam_finite": true,
+  "retained_adam_updates": 40200,
+  "best_completed_epoch": 5,
+  "best_full600_pesq": 2.4343967906634014,
+  "best_checkpoint_sha256": "82f9d44b9e74cc9545ad72b0dd7862279647a1f9ecc0fd704d408d58765635ef",
+  "all_original_checkpoints_retained": true,
+  "incomplete_next_epoch_discarded": true,
+  "recovery_preserves_full_completed_checkpoint_and_adam": true
+}
