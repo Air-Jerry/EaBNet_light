@@ -1,0 +1,49 @@
+{
+  "status": "passed_initialization_training_running",
+  "verified_utc": "2026-10-30T02:21:44Z",
+  "source_commit": "76677df",
+  "run_name": "causal_20261030_101229_1700925",
+  "launcher_pid": 1700925,
+  "ddp_world_size": 2,
+  "training_samples": 53600,
+  "validation_samples": 600,
+  "baseline_samples": 600,
+  "baseline_enhanced_pesq": 1.088074848453204,
+  "baseline_noisy_pesq": 1.0880955342451732,
+  "model_is_causal": true,
+  "network_future_frames": 0,
+  "all_parameters_trainable": 1589106,
+  "frozen_noncausal_backbones": 0,
+  "frontend_buffer_budget_ms": 20,
+  "gpu_utilization_window": {
+    "scope": "last6 native10sec samples during startup; not a full-epoch average",
+    "gpu0_mean_pct": 99.66666666666667,
+    "gpu1_mean_pct": 99,
+    "gpu0_peak_sampled_memory_mib": 2469,
+    "gpu1_peak_sampled_memory_mib": 2451
+  },
+  "progress_snapshot": {
+    "epoch": 1,
+    "batches_completed": 192,
+    "batches_per_rank": 26800,
+    "tqdm_remaining": "6:41:35",
+    "batches_per_second_per_rank": 1.1
+  },
+  "monitoring_policy": {
+    "next_whole_epoch_check_not_before_utc": "2026-10-30T09:20:00Z",
+    "estimated_training_end_utc": "2026-10-30T09:04:00Z",
+    "reason": "192/26800 batches at02:21UTC; tqdm remaining6h41min plus validation/full600 evaluation. Native GPU sampler10sec; no agent polling until epoch ETA unless new user input or actionable external event.",
+    "last_successful_remote_check_utc": "2026-10-30T02:21:44Z"
+  },
+  "evaluate_light_sha256_unchanged": "0c3ada1425b33e16688e8424daba23681ac9ded4d8bee931ed24c69e59e5730b",
+  "runtime_sha256": {
+    "light_causal_spatial_model.py": "b911ac848c86ca6b4a95933ae90d33a200d44f00ccaa8b98dc4b2cb7cf907a14",
+    "light_causal_stream.py": "86c266e39fd89227b99b1b6f46b943cff8b32a17c2c29f01234c3fcd18ebd42d",
+    "train_light_causal.py": "16367b2aa9e20db600d42ead0485b92e056d8fca509bb86f552d060898e782bc",
+    "train_light.py": "dbe303d9bd66495c226afee90fbae9f5c0bc8cf87f9e61f35431ce90b8d15b81",
+    "light_quality_loss.py": "d39581a21efd17823049385f09399e07bf63660d688192467bdd4c5c99ab88db"
+  },
+  "target_pesq": 3.4,
+  "target_reached": false,
+  "next_required_evidence": "First complete training epoch and same full600 WB-PESQ. When >=3.4, independently re-evaluate every waveform through the actual causal stream and verify final trained latency."
+}
