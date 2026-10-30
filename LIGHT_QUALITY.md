@@ -66,6 +66,24 @@ bash run_light_metric.sh QUALITY_CHECKPOINT MATCHING_600_SAMPLE_SUMMARY \
 
 启动器每 10 秒采样两张卡，写入该运行目录的 `gpu_utilization.log`。独立短基准入口为 `benchmark_light_metric.py`，只读正式检查点，不保存训练权重；应在正式训练停止时运行。
 
+## SpatialNet 残差候选
+
+`cbam_spatial_refiner_v1` 为独立候选，不覆盖正在训练的 `cbam_refiner_v1`。它冻结选定质量模型，增加作者 SpatialNet-small 的 8 个空间处理块（C96、FFN192、4 头、squeeze8、共享全频带映射）。作者源码固定在 `Audio-WestlakeU/NBSS@cc42fc8ad2e6642c09b8f4169a85b4766dc22b7e`，MIT 许可证和文件哈希保存在 `third_party/spatialnet/`。这是适配实验，不能称为原论文复现。
+
+外部接口仍为第一批 8 个麦克风、16 kHz、512/160/320、power0.5 压缩 RI。网络内部还原原始复数谱，用第 0 个 mixture 通道在有效帧上的逐频平均幅度归一化，并在残差输出处恢复同一尺度；干净参考不参与推理。零输出层保证初始化与源模型逐位相同。新增可训练参数 1,590,066，总参数 4,215,154。
+
+训练时重算激活以节省显存，CUDA 上新网络激活使用 bfloat16；冻结源模型、STFT、损失、参数和推理保持 FP32。CPU 测试使用 FP32。启动前仍需真实 CUDA 显存、有限梯度和吞吐检查，CPU/Gloo 检查不能代替这些证据，也不能证明 PESQ 已提高。
+
+待现有完整实验结束并选出 PESQ 最佳源权重后：
+
+```bash
+CUDA_VISIBLE_DEVICES=0,1 nohup bash run_light_spatial.sh \
+  SOURCE_QUALITY_CHECKPOINT MATCHING_FULL_600_SUMMARY \
+  > ./logs_spatial_launch.log 2>&1 &
+```
+
+入口先对全部 600 条验证零初始化与源模型一致，再双卡训练并逐轮评估相同完整数据。全局 G batch 仍为 8；本阶段使用原物理重建损失和新的 Adam，不加载旧 metric discriminator。最终只按真实 WB-PESQ 是否达到 3.4 判断目标是否完成。
+
 待现有实验结束，使用其 PESQ 最佳权重及对应完整报告启动：
 
 ```bash

@@ -1,0 +1,46 @@
+{
+  "repository": "https://github.com/Audio-WestlakeU/NBSS",
+  "commit": "cc42fc8ad2e6642c09b8f4169a85b4766dc22b7e",
+  "license": "MIT",
+  "changes": "Only three local import paths and line endings; network operations and author comments are retained.",
+  "files": {
+    "SpatialNet.py": {
+      "upstream_sha256": "846c1b691357fddee45d854103863d15658ccbfb7e3d6ca6c45f5f6b4f347df3",
+      "vendored_sha256": "3baaa7136c893eba9aee9dfcdb40478a5f87f819682286abbec89a5d71d972f6"
+    },
+    "norm.py": {
+      "upstream_sha256": "4c42f48a6d34dc82f25462782ba57e84dddfbfebb56b940f73a28b5ec41055cc",
+      "vendored_sha256": "4c42f48a6d34dc82f25462782ba57e84dddfbfebb56b940f73a28b5ec41055cc"
+    },
+    "non_linear.py": {
+      "upstream_sha256": "a985a7f81c8ebfbbd408ea753d7e9b81324d523c01afa1faca4285049640e79d",
+      "vendored_sha256": "a985a7f81c8ebfbbd408ea753d7e9b81324d523c01afa1faca4285049640e79d"
+    },
+    "linear_group.py": {
+      "upstream_sha256": "e6e0403b5dbdd787d511f0de9cef4335aa25ae46feee211554346c0a00cf2a43",
+      "vendored_sha256": "e6e0403b5dbdd787d511f0de9cef4335aa25ae46feee211554346c0a00cf2a43"
+    },
+    "LICENSE": {
+      "upstream_sha256": "645f351f0b7855a4e71b0d2644ef924bd8944163fd1f3b4315e3172ef433ce16",
+      "vendored_sha256": "645f351f0b7855a4e71b0d2644ef924bd8944163fd1f3b4315e3172ef433ce16"
+    }
+  },
+  "configuration_source": "configs/SpatialNet.yaml",
+  "configuration": {
+    "num_layers": 8,
+    "dim_hidden": 96,
+    "dim_ffn": 192,
+    "num_heads": 4,
+    "dim_squeeze": 8,
+    "kernel_size": [
+      5,
+      3
+    ],
+    "conv_groups": [
+      8,
+      8
+    ],
+    "full_share": 0
+  },
+  "adaptation": "The wrapper retains the existing 16kHz, n_fft512, hop160, win320, power0.5 interface; uses 257 frequency bins, 8 microphones plus a frozen estimate, input-only frequency normalization, and a residual output. It is not a paper reproduction."
+}

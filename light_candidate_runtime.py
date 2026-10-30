@@ -14,16 +14,23 @@ from light_reference_variants import (all_reference_candidates, build_reference_
 IMPLEMENTATION_FILES = ("EaBNet_light.py", "light_structure_variants.py", "light_reference_variants.py")
 QUALITY_CANDIDATE = "cbam_refiner_v1"
 QUALITY_IMPLEMENTATION_FILES = (*IMPLEMENTATION_FILES, "light_quality_model.py")
+SPATIAL_CANDIDATE = "cbam_spatial_refiner_v1"
+SPATIAL_IMPLEMENTATION_FILES = (*QUALITY_IMPLEMENTATION_FILES, "light_spatial_model.py",
+    "third_party/spatialnet/SpatialNet.py", "third_party/spatialnet/norm.py",
+    "third_party/spatialnet/non_linear.py", "third_party/spatialnet/linear_group.py")
 IDENTITY_FIELDS = ("sample_rate", "n_fft", "hop_length", "win_length", "power", "target_ref_mic",
                    "channels", "num_mics", "embed_dim", "cd1", "dfsmn_layers", "dfsmn_memory_size",
                    "norm_type", "bf_type", "topo_type", "is_causal")
 
 
 def all_model_candidates():
-    return (*all_reference_candidates(), QUALITY_CANDIDATE)
+    return (*all_reference_candidates(), QUALITY_CANDIDATE, SPATIAL_CANDIDATE)
 
 
 def build_model_candidate(candidate_id, **model_kwargs):
+    if candidate_id == SPATIAL_CANDIDATE:
+        from light_spatial_model import EaBNetSpatialQuality
+        return EaBNetSpatialQuality(**model_kwargs)
     if candidate_id == QUALITY_CANDIDATE:
         from light_quality_model import EaBNetQuality
         return EaBNetQuality(**model_kwargs)
@@ -31,6 +38,26 @@ def build_model_candidate(candidate_id, **model_kwargs):
 
 
 def candidate_metadata(candidate_id):
+    if candidate_id == SPATIAL_CANDIDATE:
+        return {
+            "structure_candidate": candidate_id,
+            "candidate_schema": 3,
+            "candidate_implementation_sha256": source_hashes(SPATIAL_IMPLEMENTATION_FILES),
+            "candidate_evidence": {
+                "candidate_id": candidate_id, "author_confirmed": False,
+                "exact_reproduction_verified": False,
+                "purpose": "SpatialNet residual adaptation; not a paper reproduction.",
+                "base_candidate": QUALITY_CANDIDATE, "base_frozen": True,
+                "base_inference_precision": "float32", "refiner_causal": False,
+                "refiner": "Eight author SpatialNet-small blocks, C96/FFN192/heads4/squeeze8/F257",
+                "source_revision": "Audio-WestlakeU/NBSS@cc42fc8ad2e6642c09b8f4169a85b4766dc22b7e",
+                "features": "Raw RI for first 8 microphones plus frozen estimate RI",
+                "internal_normalization": "Reference-mixture mean magnitude over valid frames per frequency, canceled at output",
+                "external_waveform_normalization": "none",
+                "initialization": "Zero residual decoder; exactly the frozen quality model",
+                "reference_audio_used_at_inference": False,
+            },
+        }
     if candidate_id == QUALITY_CANDIDATE:
         return {
             "structure_candidate": candidate_id,
