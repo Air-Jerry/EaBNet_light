@@ -1,0 +1,14 @@
+{
+  "status": "passed",
+  "scope": "Real server PyTorch2.5 CPU warm-start only, not CUDA throughput or quality proof",
+  "source_checkpoint_sha256": "61f41e45c173a5b0698fdc070be7afebe996d5259da1f5c66e31dabc40c48cce",
+  "source_epoch": 9,
+  "model_parameters": 3264848,
+  "all_parameters_trainable": true,
+  "initial_real_audio_stft_max_error": 0.0,
+  "optimizer": "fresh Adam",
+  "source_sample_epoch_offset": 9,
+  "training_records": 53600,
+  "validation_records": 600,
+  "evaluator_sha256": "0c3ada1425b33e16688e8424daba23681ac9ded4d8bee931ed24c69e59e5730b"
+}

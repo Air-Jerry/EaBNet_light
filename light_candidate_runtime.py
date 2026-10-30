@@ -23,16 +23,20 @@ CAUSAL_IMPLEMENTATION_FILES = ("light_causal_spatial_model.py", "light_causal_st
     "third_party/spatialnet/SpatialNet.py", "third_party/spatialnet/norm.py",
     "third_party/spatialnet/non_linear.py", "third_party/spatialnet/linear_group.py")
 FAST_CANDIDATE = "causal_unet_spatial_v1"
+GLOBAL_CANDIDATE = "causal_unet_global_v1"
 IDENTITY_FIELDS = ("sample_rate", "n_fft", "hop_length", "win_length", "power", "target_ref_mic",
                    "channels", "num_mics", "embed_dim", "cd1", "dfsmn_layers", "dfsmn_memory_size",
                    "norm_type", "bf_type", "topo_type", "is_causal")
 
 
 def all_model_candidates():
-    return (*all_reference_candidates(), QUALITY_CANDIDATE, SPATIAL_CANDIDATE, CAUSAL_CANDIDATE, FAST_CANDIDATE)
+    return (*all_reference_candidates(), QUALITY_CANDIDATE, SPATIAL_CANDIDATE, CAUSAL_CANDIDATE, FAST_CANDIDATE, GLOBAL_CANDIDATE)
 
 
 def build_model_candidate(candidate_id, **model_kwargs):
+    if candidate_id == GLOBAL_CANDIDATE:
+        from light_causal_global_model import CausalGlobalSpatial
+        return CausalGlobalSpatial(**model_kwargs)
     if candidate_id == FAST_CANDIDATE:
         from light_causal_fast_model import CausalUNetSpatial
         return CausalUNetSpatial(**model_kwargs)
@@ -49,6 +53,19 @@ def build_model_candidate(candidate_id, **model_kwargs):
 
 
 def candidate_metadata(candidate_id):
+    if candidate_id == GLOBAL_CANDIDATE:
+        metadata=candidate_metadata(FAST_CANDIDATE)
+        metadata.update(structure_candidate=candidate_id,candidate_schema=6,
+            candidate_implementation_sha256=source_hashes((*CAUSAL_IMPLEMENTATION_FILES,
+                'light_causal_fast_model.py','light_causal_global_model.py')))
+        evidence=metadata['candidate_evidence']
+        evidence.update(candidate_id=candidate_id,
+            purpose='Causal spatial encoding plus global-frequency temporal modeling; all parameters trainable',
+            initialization='Validated causal fast checkpoint, zero global residual, fresh Adam')
+        evidence['model_config'].update(global_temporal=dict(input=2176,hidden=128,layers=1,
+            recurrent='Unidirectional GRU, FP32',normalization='Current-frame LayerNorm over17x128 features',
+            streaming_state='One128-dimensional hidden vector per utterance'))
+        return metadata
     if candidate_id == FAST_CANDIDATE:
         return {
             "structure_candidate": candidate_id, "candidate_schema": 5,

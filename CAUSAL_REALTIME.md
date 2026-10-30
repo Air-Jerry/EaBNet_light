@@ -41,6 +41,20 @@ CUDA_VISIBLE_DEVICES=0,1 nohup bash run_light_causal.sh \
 
 当前完整模型从第5轮权重做8条固定样本、800次CPU FP32更新，PESQ从1.740215升至2.942963；400次时为2.730084。最终loss0.399835，约66.9%更新触发clip5（梯度平均范数6.919、最大16.015），仍不能证明3.4或泛化达标。源码快照与哈希保存在该诊断的source_snapshot.log及probe.json中，生产训练不受这些诊断影响。
 
-另有原cbam_flat_projection64权重的因果化原型：FFT本来只沿频率轴，不需改变；将15个通道注意力改为前缀均值/最大值、25个空间注意力改为左侧时间卷积，BN使用固定已学习统计量（仿射参数仍可训练）。原型通过训练/评估模式下的未来梯度和非零输出检查，并对全部权重张量逐个验证未改值。完整600条CPU评估位于logs_causal_cbam_prefix_v1/，结果及CUDA流式时延尚待验证。它是新因果计算图，不能将原非因果成绩直接标为该原型成绩。
+另有原cbam_flat_projection64权重的因果化原型：FFT本来只沿频率轴，不需改变；将15个通道注意力改为前缀均值/最大值、25个空间注意力改为左侧时间卷积，BN使用固定已学习统计量（仿射参数仍可训练）。原型通过训练/评估模式下的未来梯度和非零输出检查，并对全部权重张量逐个验证未改值。完整600条CPU结果为1.668441，未选用，CUDA流式时延未验证。证据位于logs_causal_cbam_prefix_v1/epoch40_cpu_full600_v2/；不能将原非因果成绩直接标为该原型成绩。
+
+主模型第9轮完整600条PESQ为2.243129；前9轮总耗时1936.721至2216.347秒（约32至37分钟），均含全部训练、验证及指标评估。第9轮60,300次Adam更新、权重及Adam状态有限、两路完整评估输入及口径一致，见epoch9_conversion_comparison_audit.json。目标3.4尚未达到。
+
+下一项主结构为causal_unet_global_v1：在8层空间模块后加入一个跨17×128维频率特征的单向GRU128时序模块，零残差初始化，3,264,848个参数全部可训练，不使用非因果模块或冻结骨干。原模型文件与训练主循环不改。新阶段从已完成的因果检查点载入全部原权重、使用fresh Adam及LR1e-4；新增参数构造不消耗后续数据随机数，DDP采样epoch加上源epoch偏移，保留后续采样顺序。全局GRU训练使用FP32，其余精度、外部前端、数据记录及物理重建损失保持不变。
+
+该结构已通过训练/评估模式未来扰动及梯度、固定缓存、任意分块、波形前端一致性、初始化权重保留、真实训练与恢复、双进程Gloo及完整600条门槛测试。服务器PyTorch2.5 CPU检查使用第9轮权重和真实6秒音频，初始STFT最大差0，见logs_causal_unet_global_v1/cpu_preflight_20261031/initialization_audit.json。目前尚未证明其CUDA速度或训练后PESQ增益，不能据此替换模型或宣称达标。
+
+通过新的双CUDA及流式预检后，使用以下入口，完整一轮仍限3600秒，且初始化完整600条必须复现源检查点成绩：
+
+```bash
+CUDA_VISIBLE_DEVICES=0,1 nohup bash run_light_causal_global.sh \
+  ./logs_causal_unet_global_v1/preflight_20261031 \
+  > ./logs_causal_unet_global_v1/full_train_launch.log 2>&1 &
+```
 
 推送命令：git push origin codex/9.16。

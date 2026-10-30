@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/home/nis/jinrui.yang/EaBNet_light/experiments/probe_causal_cbam_conversion.py", line 113, in <module>
+    if __name__=='__main__':main()
+  File "/home/nis/jinrui.yang/EaBNet_light/experiments/probe_causal_cbam_conversion.py", line 84, in main
+    if args.checkpoint_dir or args.max_samples!=0 or args.match_estimate_level!='no':
+AttributeError: 'Namespace' object has no attribute 'checkpoint_dir'. Did you mean: 'checkpoint'?

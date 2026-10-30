@@ -108,7 +108,7 @@ def run(args):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--checkpoint")
-    parser.add_argument("--candidate", choices=(CAUSAL_CANDIDATE, "causal_unet_spatial_v1"), default=CAUSAL_CANDIDATE)
+    parser.add_argument("--candidate", choices=(CAUSAL_CANDIDATE, "causal_unet_spatial_v1", "causal_unet_global_v1"), default=CAUSAL_CANDIDATE)
     parser.add_argument("--train-dir", default="/data/ssd1/jinrui.yang/training_set")
     parser.add_argument("--output-dir", required=True)
     run(parser.parse_args())

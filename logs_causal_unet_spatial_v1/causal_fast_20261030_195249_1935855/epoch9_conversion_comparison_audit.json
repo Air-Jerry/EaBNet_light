@@ -1,0 +1,26 @@
+{
+  "status": "verified",
+  "conversion_full600_pesq": 1.6684406979878743,
+  "conversion_same_pairs_frontend_metrics": true,
+  "conversion_noisy_max_difference": 4.440892098500626e-16,
+  "conversion_streaming_and_latency_not_verified": true,
+  "conversion_not_selected": true,
+  "fast_best_completed_epoch": 9,
+  "fast_full600_pesq": 2.2431287368138633,
+  "fast_checkpoint_sha256": "61f41e45c173a5b0698fdc070be7afebe996d5259da1f5c66e31dabc40c48cce",
+  "fast_adam_updates": 60300,
+  "fast_all_weights_and_adam_finite": true,
+  "completed_epoch_seconds": [
+    2007.3212358951569,
+    1936.720740556717,
+    2089.672686100006,
+    2180.531191587448,
+    2216.3466198444366,
+    1984.672712802887,
+    2093.7587094306946,
+    2198.509686231613,
+    1957.8452363014221
+  ],
+  "target_reached": false,
+  "evaluator_sha256": "0c3ada1425b33e16688e8424daba23681ac9ded4d8bee931ed24c69e59e5730b"
+}

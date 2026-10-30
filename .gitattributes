@@ -1,6 +1,7 @@
 run_light_lr_restart.sh text eol=lf
 run_light_quality.sh text eol=lf
 run_light_causal.sh text eol=lf
+run_light_causal_global.sh text eol=lf
 light_causal_spatial_model.py text eol=lf
 light_causal_stream.py text eol=lf
 train_light_causal.py text eol=lf
@@ -8,4 +9,6 @@ check_light_causal_cuda.py text eol=lf
 benchmark_light_causal.py text eol=lf
 light_causal_fast_model.py text eol=lf
 train_light_causal_fast.py text eol=lf
+light_causal_global_model.py text eol=lf
+train_light_causal_global.py text eol=lf
 experiments/*.py text eol=lf
