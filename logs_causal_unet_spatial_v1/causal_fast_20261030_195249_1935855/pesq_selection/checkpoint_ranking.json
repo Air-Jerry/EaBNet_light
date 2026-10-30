@@ -1,5 +1,5 @@
 {
-  "status": "partial",
+  "status": "stopped_for_global_structure_trial",
   "selection_scope": "Same full600 comparison samples; not an independent final test",
   "model_is_causal": true,
   "results": [
@@ -62,10 +62,22 @@
       "pesq": 2.2431287368138633,
       "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_causal_unet_spatial_v1_causal_fast_20261030_195249_1935855/model_epoch_9.pt",
       "checkpoint_sha256": "61f41e45c173a5b0698fdc070be7afebe996d5259da1f5c66e31dabc40c48cce"
+    },
+    {
+      "epoch": 10,
+      "pesq": 2.270413818160693,
+      "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_causal_unet_spatial_v1_causal_fast_20261030_195249_1935855/model_epoch_10.pt",
+      "checkpoint_sha256": "e63ff602b56c3a0ad20d2ab3e69750b1cab11ab6d0f5ed9ccbbc06513ae6c2d4"
+    },
+    {
+      "epoch": 11,
+      "pesq": 2.2526230092843376,
+      "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_causal_unet_spatial_v1_causal_fast_20261030_195249_1935855/model_epoch_11.pt",
+      "checkpoint_sha256": "52164be84abe3f36847245df896f37805570409fa55e0345b807393cdf0e99ba"
     }
   ],
-  "best_completed_epoch": 9,
-  "best_completed_pesq": 2.2431287368138633,
+  "best_completed_epoch": 10,
+  "best_completed_pesq": 2.270413818160693,
   "target_reached": false,
   "final_full600_waveform_streaming_audit_required": true
 }

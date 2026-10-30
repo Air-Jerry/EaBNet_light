@@ -41,8 +41,13 @@ names={'run_light_quality.sh','continue_light_quality.sh','run_light_metric.sh',
        'run_light_causal.sh','train_light_quality.py','train_light_metric.py','train_light_spatial.py',
        'train_light_causal.py','train_light_causal_global.py','check_light_causal_cuda.py','benchmark_light_causal.py'}
 names.update({'run_light_causal_global.sh','train_light_causal_fast.py'})
+ancestors=set();cursor=os.getpid()
+while cursor>1:
+    ancestors.add(cursor)
+    try:cursor=int(Path(f'/proc/{cursor}/stat').read_text().rsplit(')',1)[1].split()[1])
+    except FileNotFoundError:break
 for process in Path('/proc').glob('[0-9]*'):
-    if int(process.name) in (os.getpid(),os.getppid()):continue
+    if int(process.name) in ancestors:continue
     try:
         if (process/'cwd').resolve()==Path.cwd() and any(Path(x.decode(errors='replace')).name in names
                 for x in (process/'cmdline').read_bytes().split(b'\0') if x):

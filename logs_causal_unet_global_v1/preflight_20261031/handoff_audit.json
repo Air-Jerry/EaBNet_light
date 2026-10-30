@@ -1,0 +1,20 @@
+{
+  "status": "stopped_at_complete_checkpoint_for_global_trial",
+  "old_launcher_pid": 1935855,
+  "old_sid": 1935855,
+  "completed_epoch": 11,
+  "warmstart_checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_causal_unet_spatial_v1_causal_fast_20261030_195249_1935855/model_epoch_10.pt",
+  "warmstart_sha256": "e63ff602b56c3a0ad20d2ab3e69750b1cab11ab6d0f5ed9ccbbc06513ae6c2d4",
+  "warmstart_epoch": 10,
+  "source_full600_pesq": 2.270413818160693,
+  "frozen_session_pids": [
+    1935855,
+    1935890,
+    2034510,
+    2034511,
+    2034512
+  ],
+  "all_checkpoint_files_retained": true,
+  "uncheckpointed_next_epoch_not_counted": true,
+  "remaining_live_session_pids": []
+}

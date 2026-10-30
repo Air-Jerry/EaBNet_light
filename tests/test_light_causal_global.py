@@ -7,6 +7,7 @@ import json
 from pathlib import Path
 import subprocess
 import sys
+from types import SimpleNamespace
 
 import pytest
 import torch
@@ -41,6 +42,20 @@ def test_global_constructor_and_sampler_preserve_source_data_randomness():
     changed=aligned_sampler_type(sampler,9)(list(range(23)),num_replicas=2,rank=0,shuffle=True)
     baseline.set_epoch(10);changed.set_epoch(1)
     assert list(baseline)==list(changed)
+
+
+def test_launcher_excludes_command_substitution_ancestors_only():
+    shell=(ROOT/'run_light_causal_global.sh').read_text()
+    marker='ancestors=set();cursor=os.getpid()'
+    block=marker+shell.split(marker,1)[1].split('\nfor process in Path',1)[0]
+    parents={300:200,200:100,100:1}
+    def stat_path(value):
+        pid=int(value.split('/')[-2])
+        return SimpleNamespace(read_text=lambda:f'{pid} (bash (command substitution)) S {parents[pid]} 1 1')
+    namespace={'os':SimpleNamespace(getpid=lambda:300),'Path':stat_path}
+    exec(compile(block,'launcher process ancestry','exec'),namespace)
+    assert namespace['ancestors']=={300,200,100}
+    assert 999 not in namespace['ancestors']
 
 
 @pytest.mark.parametrize('training',[False,True])
