@@ -1,0 +1,29 @@
+{
+  "status": "passed",
+  "epoch": 3,
+  "generator_adam_step": 20100,
+  "discriminator_adam_step": 80400,
+  "checkpoint_sha256": "93aafe0819f7b440fa2a3bec887fbe3c1aa335295b3dc9bf3b9fc524ab6f22da",
+  "frozen_state_tensors_unchanged": 277,
+  "batch_size_per_gpu": 4,
+  "grad_accum_steps": 1,
+  "effective_global_batch": 8,
+  "upgrade": {
+    "epoch": 3,
+    "implementation": {
+      "light_quality_loss.py": "d39581a21efd17823049385f09399e07bf63660d688192467bdd4c5c99ab88db",
+      "light_metric_loss.py": "3ade5cbefd5cd5dfae0737dc2907ea331a583b9b6519ab81b9d3eccebc08d7cd",
+      "train_light_metric.py": "66ac737342cf7947c734ce7e3aeaf6070869fa3311b31ccb52bac4289bea3d6e"
+    },
+    "generator_adam_preserved": true,
+    "discriminator_adam_preserved": true,
+    "examples_per_rank_per_generator_update": 4,
+    "discriminator_updates_per_generator_update": 4
+  },
+  "metric_implementation_sha256": {
+    "light_quality_loss.py": "d39581a21efd17823049385f09399e07bf63660d688192467bdd4c5c99ab88db",
+    "light_metric_loss.py": "c35f60706bd46d277b056201134ff827fd38485f56f9c43d42d4dbad9cf75154",
+    "train_light_metric.py": "8ca7e539d8f206adb64bcddfb7ba9457bb78626fab9c659fbedb1c3ec9153316",
+    "train_light.py": "dbe303d9bd66495c226afee90fbae9f5c0bc8cf87f9e61f35431ce90b8d15b81"
+  }
+}

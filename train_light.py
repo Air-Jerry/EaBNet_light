@@ -38,6 +38,7 @@ import os
 import random
 import shutil
 import time
+from contextlib import nullcontext
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Dict, List, Tuple
@@ -544,6 +545,7 @@ def run_epoch(
     loss_weighting: str = 'batches',
     fail_nonfinite_grad: bool = False,
     forward_with_lengths: bool = False,
+    defer_ddp_sync: bool = False,
 ) -> float:
     # Unified train/val loop.
     # - train mode: backward + optimizer step
@@ -577,7 +579,9 @@ def run_epoch(
         frame_list = waveform_lengths_to_frames(lengths, args.hop_length)
         batch_loss_weight = float(sum(frame_list)) if loss_weighting == 'frames' else 1.0
 
-        with torch.set_grad_enabled(training):
+        sync_context = (model.no_sync() if defer_ddp_sync and training and isinstance(model, DDP)
+                        and batch_idx % accum_steps != 0 and batch_idx != len(loader) else nullcontext())
+        with sync_context, torch.set_grad_enabled(training):
             with autocast(device_type=device.type, enabled=amp_enabled):
                 # Build STFT-domain inputs/labels on the fly from waveform batches.
                 feature_kwargs = {}
@@ -668,10 +672,9 @@ def run_epoch(
                             if parameter.grad is not None:
                                 parameter.grad.div_(denominator)
                     if fail_nonfinite_grad:
-                        finite_grad = all(
-                            bool(torch.isfinite(parameter.grad).all().item())
-                            for parameter in model.parameters() if parameter.grad is not None
-                        )
+                        grad_flags = [torch.isfinite(parameter.grad).all()
+                                      for parameter in model.parameters() if parameter.grad is not None]
+                        finite_grad = bool(torch.stack(grad_flags).all().item()) if grad_flags else True
                         if is_distributed():
                             finite_t = torch.tensor([int(finite_grad)], dtype=torch.int32, device=device)
                             dist.all_reduce(finite_t, op=dist.ReduceOp.MIN)

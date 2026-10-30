@@ -51,9 +51,20 @@ CUDA_VISIBLE_DEVICES=0,1 nohup bash continue_light_quality.sh \
 
 `run_light_metric.sh` 从已有质量模型开始，保持生成模型、冻结基线、8 通道与原 STFT 不变。训练时新增 [MP-SENet 的 metric discriminator](https://github.com/yxlu-0102/MP-SENet/blob/main/models/discriminator.py)，用训练集的 clean 与当前 estimate 计算真实 16 kHz WB-PESQ，标签为 `(PESQ - 1) / 3.5`。生成器损失在现有损失上增加 `0.05 * (D(clean_mag, estimate_mag) - 1)^2`。判别器输入为最终波形重建后重新 STFT 的压缩幅度；对生成器保留梯度，对真实 PESQ 标签和判别器更新所用的 estimate 断开梯度。推理只加载原生成模型。
 
-这是作者方法的适配。生成器继续每卡 batch 1、累积 4 次，等效全局 batch 8；包含有效标签时，判别器每个微批次更新一次，跨两卡平均梯度，等效 batch 2。与作者每次生成器更新对应一次判别器更新的安排不同，有效标签覆盖完整累积窗口时为 4:1。新阶段从选定权重开始，G/D 均使用新的 Adam，学习率均为 0.0001；阶段内的断点恢复保留双方模型、优化器和更新计数。验证损失使用原物理重建损失，最终模型按完整 600 条真实 PESQ 选择。
+这是作者方法的适配。生成器等效全局 batch 8；包含有效标签时，判别器按每卡各一条更新一次，跨两卡平均梯度，等效 batch 2。与作者每次生成器更新对应一次判别器更新的安排不同，有效标签覆盖完整累积窗口时为 4:1。新阶段从选定权重开始，G/D 均使用新的 Adam，学习率均为 0.0001；阶段内的断点恢复保留双方模型、优化器和更新计数。验证损失使用原物理重建损失，最终模型按完整 600 条真实 PESQ 选择。
 
-真实 PESQ 标签只在训练集计算。无法计算的静音或短片段不伪造分数，日志记录有效与无效数量；整轮无有效标签则停止。CPU 每卡顺序计算标签，避免每个 rank 再创建 15 个并行进程。额外 CPU 同步与判别器计算的实际耗时、以及能否提高当前数据的 PESQ，须由服务器确认。
+真实 PESQ 标签只在训练集计算。无法计算的静音或短片段不伪造分数，日志记录有效与无效数量；整轮无有效标签则停止。
+
+性能优化版每卡 batch 4、累积 1 次，保持上述 G/D 样本数和更新频率。每卡最多 4 个 CPU 子进程并行计算真实 PESQ；同长波形批量重建，合并 D 梯度通信。D 仍逐条更新；在下一次 D 更新前捕获当前样本对估计谱的梯度，再合并到一次 G 反传。合并后的浮点运算顺序不同，不能保证逐位相同；单元检查比较损失、输入梯度及 D 的 Adam 状态。合并训练要求批内真实长度相同，当前数据均为 6 秒。
+
+旧版运行可在完整轮次保存后续训，脚本保留 G/D Adam、计数、检查点目录和日志目录；只允许显式升级已知源码哈希的旧版检查点。未知源码变化仍拒绝恢复。
+
+```bash
+bash run_light_metric.sh QUALITY_CHECKPOINT MATCHING_600_SAMPLE_SUMMARY \
+  --resume-checkpoint EXISTING_CHECKPOINT_DIR/checkpoint_latest.pt
+```
+
+启动器每 10 秒采样两张卡，写入该运行目录的 `gpu_utilization.log`。独立短基准入口为 `benchmark_light_metric.py`，只读正式检查点，不保存训练权重；应在正式训练停止时运行。
 
 待现有实验结束，使用其 PESQ 最佳权重及对应完整报告启动：
 
@@ -80,7 +91,7 @@ CUDA_VISIBLE_DEVICES=0 nohup bash run_light_quality.sh \
 cd ~/EaBNet_light
 git add logs_cbam_refiner_v1/
 git commit -m "Add quality refiner training and evaluation results"
-git push
+git push origin codex/9.16
 ```
 
 主要结果位于 `logs_cbam_refiner_v1/quality_*/pesq_selection/model_epoch_*/summary.json`。训练未结束时上传日志仅用于检查当前状态，不能据此认定整个实验已完成。

@@ -2,8 +2,8 @@
 set -euo pipefail
 
 cd -- "$(dirname -- "${BASH_SOURCE[0]}")"
-if [[ $# -ne 2 ]]; then
-    printf 'Usage: bash run_light_metric.sh QUALITY_CHECKPOINT MATCHING_600_SAMPLE_SUMMARY\n' >&2
+if [[ $# -ne 2 && ! ( $# -eq 4 && "$3" == --resume-checkpoint ) ]]; then
+    printf 'Usage: bash run_light_metric.sh QUALITY_CHECKPOINT MATCHING_600_SAMPLE_SUMMARY [--resume-checkpoint LATEST_CHECKPOINT]\n' >&2
     exit 2
 fi
 train_py="${TRAIN_PY:-$HOME/miniconda3/envs/EaBNet/bin/python}"
@@ -55,9 +55,39 @@ run_name="metric_$(date +%Y%m%d_%H%M%S)_$$"
 checkpoint_dir="./checkpoints_cbam_metric_v1_${run_name}"
 best_dir="./bestmodels_cbam_metric_v1_${run_name}"
 log_dir="./logs_cbam_metric_v1/${run_name}"
+first_epoch=1
+upgrade_args=()
+if [[ $# -eq 4 ]]; then
+    resume_state="$("$train_py" - "$4" "$source_checkpoint" <<'PY_RESUME'
+from pathlib import Path
+import sys
+import torch
+state = torch.load(sys.argv[1], map_location='cpu', weights_only=False)
+args = state['args']
+assert 'metric_state' in state
+assert Path(args['metric_warmstart_checkpoint']).resolve() == Path(sys.argv[2]).resolve()
+assert Path(sys.argv[1]).resolve() == (Path(args['checkpoint_dir']) / 'checkpoint_latest.pt').resolve()
+for name in ('checkpoint_dir', 'best_dir', 'log_dir'):
+    print(args[name])
+print(state['epoch'])
+print(int('metric_performance' not in args))
+PY_RESUME
+)"
+    mapfile -t resume_fields <<< "$resume_state"
+    checkpoint_dir="${resume_fields[0]}"
+    best_dir="${resume_fields[1]}"
+    log_dir="${resume_fields[2]}"
+    first_epoch=$((resume_fields[3] + 1))
+    if [[ "${resume_fields[4]}" == 1 ]]; then upgrade_args=(--upgrade-runtime); fi
+    run_name="$(basename -- "$log_dir")"
+fi
 mkdir -p "$log_dir"
 printf 'Run: %s\nSource: %s\nCheckpoint directory: %s\nLog directory: %s\n' \
     "$run_name" "$source_checkpoint" "$checkpoint_dir" "$log_dir"
+nvidia-smi --query-gpu=timestamp,index,utilization.gpu,memory.used,memory.total,power.draw \
+    --format=csv,noheader,nounits -l 10 >> "$log_dir/gpu_utilization.log" &
+gpu_sampler=$!
+trap 'kill "$gpu_sampler" 2>/dev/null || true' EXIT
 
 evaluate_epoch() {
     local epoch="$1"
@@ -69,7 +99,25 @@ evaluate_epoch() {
         2>&1 | tee "$log_dir/evaluation_epoch_${epoch}.log"
 }
 
-"$train_py" -u train_light_metric.py --warmstart "$source_checkpoint" \
+target_reached() {
+    "$train_py" - "$log_dir/pesq_selection/model_epoch_${1}/summary.json" "$source_summary" <<'PY_TARGET'
+import json
+import math
+from pathlib import Path
+import sys
+report, source = [json.loads(Path(path).read_text()) for path in sys.argv[1:]]
+assert report['status'] == 'complete' and report['completed_samples'] == report['expected_samples'] == 600
+for key in ('frontend', 'frontend_protocol', 'num_mics', 'selected_pairs_sha256', 'metadata_sha256', 'metric_protocol'):
+    assert report[key] == source[key], key
+assert report['metric_protocol']['target_gain_matching'] is False
+score = report['mean']['enhanced']['pesq']
+assert math.isfinite(score)
+print(int(score >= 3.4))
+PY_TARGET
+}
+
+if [[ $# -eq 2 ]]; then
+    "$train_py" -u train_light_metric.py --warmstart "$source_checkpoint" \
     --train-dir "$train_dir" --val-dir "$val_dir" \
     --checkpoint-dir "$checkpoint_dir" --best-dir "$best_dir" --log-dir "$log_dir" \
     --num-epochs 0 --parallel-mode none --num-workers 0 --cpu-threads 2 --cpu-thread-scale 1 \
@@ -90,34 +138,31 @@ for kind in ('enhanced', 'noisy'):
         assert abs(new['mean'][kind][metric] - value) <= 0.001, (kind, metric)
 print('Initialized generator matches its source on all 600 samples.', flush=True)
 PY_BASELINE
+else
+    evaluate_epoch "$((first_epoch - 1))"
+    if [[ "$(target_reached "$((first_epoch - 1))")" == 1 ]]; then
+        printf 'Resumed checkpoint already reaches PESQ 3.4 on all 600 samples.\n'
+        exit 0
+    fi
+fi
 
-for epoch in {1..6}; do
+for ((epoch=first_epoch; epoch<=6; epoch++)); do
+    printf 'phase=train epoch=%s\n' "$epoch" >> "$log_dir/gpu_utilization.log"
     "$train_py" -u -m torch.distributed.run --standalone --nproc_per_node=2 \
-        train_light_metric.py --warmstart "$source_checkpoint" \
+        train_light_metric.py --warmstart "$source_checkpoint" "${upgrade_args[@]}" \
         --train-dir "$train_dir" --val-dir "$val_dir" \
         --checkpoint-dir "$checkpoint_dir" --best-dir "$best_dir" --log-dir "$log_dir" \
-        --num-epochs "$epoch" --parallel-mode ddp --batch-size 1 --grad-accum-steps 4 \
+        --num-epochs "$epoch" --parallel-mode ddp --batch-size 4 --grad-accum-steps 1 \
+        --metric-performance overlap \
         --learning-rate 0.0001 --metric-weight 0.05 --metric-lr 0.0001 --segment-seconds 6 \
         --num-workers 4 --strict-memory no --cpu-threads 2 --cpu-thread-scale 1 \
         --use-amp no --model-amp no --allow-tf32 no --resume yes --resume-reset-lr no \
         --stop-on-non-finite yes --skip-non-finite-batches no --save-every 1 \
         2>&1 | tee -a "$log_dir/training.log"
+    upgrade_args=()
+    printf 'phase=evaluation epoch=%s\n' "$epoch" >> "$log_dir/gpu_utilization.log"
     evaluate_epoch "$epoch"
-    reached="$("$train_py" - "$log_dir/pesq_selection/model_epoch_${epoch}/summary.json" "$source_summary" <<'PY_TARGET'
-import json
-import math
-from pathlib import Path
-import sys
-report, source = [json.loads(Path(path).read_text()) for path in sys.argv[1:]]
-assert report['status'] == 'complete' and report['completed_samples'] == report['expected_samples'] == 600
-for key in ('frontend', 'frontend_protocol', 'num_mics', 'selected_pairs_sha256', 'metadata_sha256', 'metric_protocol'):
-    assert report[key] == source[key], key
-assert report['metric_protocol']['target_gain_matching'] is False
-score = report['mean']['enhanced']['pesq']
-assert math.isfinite(score)
-print(int(score >= 3.4))
-PY_TARGET
-)"
+    reached="$(target_reached "$epoch")"
     if [[ "$reached" == 1 ]]; then
         printf 'Full 600-sample PESQ reached 3.4 at metric epoch %s; stopping for verification.\n' "$epoch"
         break

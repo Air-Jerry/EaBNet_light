@@ -1,0 +1,729 @@
+{
+  "rank": 1,
+  "performance": "standard",
+  "measurements": [
+    {
+      "phase": "warmup",
+      "seconds": 7.710325918858871,
+      "samples_per_second_local": 2.075139257196018,
+      "peak_allocated_mib": 1059.0146484375,
+      "profile": [
+        {
+          "function": "/home/nis/jinrui.yang/EaBNet_light/train_light.py:532:run_epoch",
+          "calls": 1,
+          "self_seconds": 0.0033714530000000004,
+          "cumulative_seconds": 7.710089546000001
+        },
+        {
+          "function": "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/_tensor.py:525:backward",
+          "calls": 32,
+          "self_seconds": 0.000157588,
+          "cumulative_seconds": 4.044476626000001
+        },
+        {
+          "function": "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/autograd/__init__.py:242:backward",
+          "calls": 32,
+          "self_seconds": 0.000154566,
+          "cumulative_seconds": 4.044314509
+        },
+        {
+          "function": "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/autograd/graph.py:816:_engine_run_backward",
+          "calls": 32,
+          "self_seconds": 0.00013499600000000002,
+          "cumulative_seconds": 4.043467398000001
+        },
+        {
+          "function": "~:0:<method 'run_backward' of 'torch._C._EngineBase' objects>",
+          "calls": 32,
+          "self_seconds": 4.043090168,
+          "cumulative_seconds": 4.043291104000001
+        },
+        {
+          "function": "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/nn/modules/module.py:1732:_wrapped_call_impl",
+          "calls": 8080,
+          "self_seconds": 0.003953702,
+          "cumulative_seconds": 1.7508882540000001
+        },
+        {
+          "function": "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/nn/modules/module.py:1740:_call_impl",
+          "calls": 8080,
+          "self_seconds": 0.009554543,
+          "cumulative_seconds": 1.75079003
+        },
+        {
+          "function": "/home/nis/jinrui.yang/EaBNet_light/light_metric_loss.py:105:__call__",
+          "calls": 16,
+          "self_seconds": 0.00342098,
+          "cumulative_seconds": 1.6779863970000002
+        },
+        {
+          "function": "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/nn/parallel/distributed.py:1637:forward",
+          "calls": 16,
+          "self_seconds": 0.000137018,
+          "cumulative_seconds": 1.6727030840000001
+        },
+        {
+          "function": "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/nn/parallel/distributed.py:1454:_run_ddp_forward",
+          "calls": 16,
+          "self_seconds": 9.4461e-05,
+          "cumulative_seconds": 1.652101032
+        },
+        {
+          "function": "/home/nis/jinrui.yang/EaBNet_light/light_quality_model.py:128:forward",
+          "calls": 16,
+          "self_seconds": 0.000311306,
+          "cumulative_seconds": 1.6516886000000002
+        },
+        {
+          "function": "/home/nis/jinrui.yang/EaBNet_light/light_quality_model.py:117:_forward",
+          "calls": 16,
+          "self_seconds": 0.000598116,
+          "cumulative_seconds": 1.6502925590000002
+        },
+        {
+          "function": "/home/nis/jinrui.yang/EaBNet_light/light_metric_loss.py:46:real_pesq",
+          "calls": 16,
+          "self_seconds": 0.0009885710000000002,
+          "cumulative_seconds": 1.057508825
+        },
+        {
+          "function": "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/pesq/_pesq.py:102:pesq",
+          "calls": 16,
+          "self_seconds": 2.6451e-05,
+          "cumulative_seconds": 1.054843754
+        },
+        {
+          "function": "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/pesq/_pesq.py:42:_pesq_inner",
+          "calls": 16,
+          "self_seconds": 1.0537447990000002,
+          "cumulative_seconds": 1.054807456
+        },
+        {
+          "function": "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/nn/modules/conv.py:553:forward",
+          "calls": 1536,
+          "self_seconds": 0.001503542,
+          "cumulative_seconds": 0.942014093
+        },
+        {
+          "function": "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/nn/modules/conv.py:536:_conv_forward",
+          "calls": 1536,
+          "self_seconds": 0.0009024870000000001,
+          "cumulative_seconds": 0.9398863510000001
+        },
+        {
+          "function": "~:0:<built-in method torch.conv2d>",
+          "calls": 1536,
+          "self_seconds": 0.9389838640000001,
+          "cumulative_seconds": 0.9389838640000001
+        },
+        {
+          "function": "/home/nis/jinrui.yang/EaBNet_light/EaBNet_light.py:499:forward",
+          "calls": 16,
+          "self_seconds": 0.0008681800000000001,
+          "cumulative_seconds": 0.916287213
+        },
+        {
+          "function": "/home/nis/jinrui.yang/EaBNet_light/EaBNet_light.py:406:forward",
+          "calls": 16,
+          "self_seconds": 0.0007275350000000001,
+          "cumulative_seconds": 0.891013775
+        },
+        {
+          "function": "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/nn/modules/container.py:248:forward",
+          "calls": 1008,
+          "self_seconds": 0.002204139,
+          "cumulative_seconds": 0.763939252
+        },
+        {
+          "function": "/home/nis/jinrui.yang/EaBNet_light/light_quality_model.py:69:forward",
+          "calls": 16,
+          "self_seconds": 0.000659256,
+          "cumulative_seconds": 0.701500231
+        },
+        {
+          "function": "/home/nis/jinrui.yang/EaBNet_light/light_quality_model.py:38:forward",
+          "calls": 128,
+          "self_seconds": 0.000363593,
+          "cumulative_seconds": 0.6875233940000001
+        },
+        {
+          "function": "/home/nis/jinrui.yang/EaBNet_light/EaBNet_light.py:280:forward",
+          "calls": 80,
+          "self_seconds": 0.00016287000000000002,
+          "cumulative_seconds": 0.575286496
+        },
+        {
+          "function": "/home/nis/jinrui.yang/EaBNet_light/EaBNet_light.py:111:forward",
+          "calls": 80,
+          "self_seconds": 6.4112e-05,
+          "cumulative_seconds": 0.486326087
+        },
+        {
+          "function": "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/nn/modules/conv.py:1142:forward",
+          "calls": 80,
+          "self_seconds": 0.000208433,
+          "cumulative_seconds": 0.48526183900000003
+        },
+        {
+          "function": "~:0:<built-in method torch.conv_transpose2d>",
+          "calls": 80,
+          "self_seconds": 0.48475878800000005,
+          "cumulative_seconds": 0.48475878800000005
+        },
+        {
+          "function": "/home/nis/jinrui.yang/EaBNet_light/light_quality_loss.py:107:__call__",
+          "calls": 16,
+          "self_seconds": 0.00527526,
+          "cumulative_seconds": 0.341658587
+        },
+        {
+          "function": "/home/nis/jinrui.yang/EaBNet_light/light_quality_loss.py:77:reconstruct",
+          "calls": 32,
+          "self_seconds": 0.000830608,
+          "cumulative_seconds": 0.32036042000000003
+        },
+        {
+          "function": "~:0:<built-in method torch.istft>",
+          "calls": 32,
+          "self_seconds": 0.317530519,
+          "cumulative_seconds": 0.317530519
+        },
+        {
+          "function": "/home/nis/jinrui.yang/EaBNet_light/EaBNet_light.py:265:forward",
+          "calls": 80,
+          "self_seconds": 0.000140963,
+          "cumulative_seconds": 0.271090675
+        },
+        {
+          "function": "/home/nis/jinrui.yang/EaBNet_light/EaBNet_light.py:237:forward",
+          "calls": 160,
+          "self_seconds": 0.0035834100000000004,
+          "cumulative_seconds": 0.21357804500000002
+        },
+        {
+          "function": "~:0:<method 'item' of 'torch._C.TensorBase' objects>",
+          "calls": 1574,
+          "self_seconds": 0.164133156,
+          "cumulative_seconds": 0.164133156
+        },
+        {
+          "function": "/home/nis/jinrui.yang/EaBNet_light/EaBNet_light.py:95:forward",
+          "calls": 80,
+          "self_seconds": 6.6195e-05,
+          "cumulative_seconds": 0.13384813
+        },
+        {
+          "function": "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/tqdm/std.py:1160:__iter__",
+          "calls": 17,
+          "self_seconds": 0.00018073900000000002,
+          "cumulative_seconds": 0.086487994
+        }
+      ]
+    },
+    {
+      "phase": "timed",
+      "seconds": 33.105070582125336,
+      "samples_per_second_local": 7.732954363136865,
+      "peak_allocated_mib": 1059.0146484375,
+      "profile": [
+        {
+          "function": "/home/nis/jinrui.yang/EaBNet_light/train_light.py:532:run_epoch",
+          "calls": 1,
+          "self_seconds": 0.057671985,
+          "cumulative_seconds": 33.104810151
+        },
+        {
+          "function": "/home/nis/jinrui.yang/EaBNet_light/light_metric_loss.py:105:__call__",
+          "calls": 256,
+          "self_seconds": 0.055177083,
+          "cumulative_seconds": 24.747285690000002
+        },
+        {
+          "function": "/home/nis/jinrui.yang/EaBNet_light/light_metric_loss.py:46:real_pesq",
+          "calls": 256,
+          "self_seconds": 0.015866584,
+          "cumulative_seconds": 16.939625821
+        },
+        {
+          "function": "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/pesq/_pesq.py:102:pesq",
+          "calls": 256,
+          "self_seconds": 0.00046738300000000003,
+          "cumulative_seconds": 16.913818384000002
+        },
+        {
+          "function": "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/pesq/_pesq.py:42:_pesq_inner",
+          "calls": 256,
+          "self_seconds": 16.898993605,
+          "cumulative_seconds": 16.913176178
+        },
+        {
+          "function": "/home/nis/jinrui.yang/EaBNet_light/light_quality_loss.py:107:__call__",
+          "calls": 256,
+          "self_seconds": 0.034356404,
+          "cumulative_seconds": 5.202322678000001
+        },
+        {
+          "function": "/home/nis/jinrui.yang/EaBNet_light/light_quality_loss.py:77:reconstruct",
+          "calls": 512,
+          "self_seconds": 0.013104445000000001,
+          "cumulative_seconds": 5.03366612
+        },
+        {
+          "function": "~:0:<built-in method torch.istft>",
+          "calls": 512,
+          "self_seconds": 4.986672242,
+          "cumulative_seconds": 4.986672242
+        },
+        {
+          "function": "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/nn/modules/module.py:1732:_wrapped_call_impl",
+          "calls": 129280,
+          "self_seconds": 0.06374871800000001,
+          "cumulative_seconds": 3.8942245800000004
+        },
+        {
+          "function": "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/nn/modules/module.py:1740:_call_impl",
+          "calls": 129280,
+          "self_seconds": 0.15010721000000002,
+          "cumulative_seconds": 3.89261903
+        },
+        {
+          "function": "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/nn/parallel/distributed.py:1637:forward",
+          "calls": 256,
+          "self_seconds": 0.00214427,
+          "cumulative_seconds": 3.005725333
+        },
+        {
+          "function": "~:0:<method 'item' of 'torch._C.TensorBase' objects>",
+          "calls": 25094,
+          "self_seconds": 2.824528003,
+          "cumulative_seconds": 2.824528003
+        },
+        {
+          "function": "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/nn/parallel/distributed.py:1454:_run_ddp_forward",
+          "calls": 256,
+          "self_seconds": 0.001380327,
+          "cumulative_seconds": 2.684744745
+        },
+        {
+          "function": "/home/nis/jinrui.yang/EaBNet_light/light_quality_model.py:128:forward",
+          "calls": 256,
+          "self_seconds": 0.004885678,
+          "cumulative_seconds": 2.678772259
+        },
+        {
+          "function": "/home/nis/jinrui.yang/EaBNet_light/light_quality_model.py:117:_forward",
+          "calls": 256,
+          "self_seconds": 0.009043966,
+          "cumulative_seconds": 2.6446305420000003
+        },
+        {
+          "function": "/home/nis/jinrui.yang/EaBNet_light/EaBNet_light.py:499:forward",
+          "calls": 256,
+          "self_seconds": 0.014167879000000001,
+          "cumulative_seconds": 2.007619977
+        },
+        {
+          "function": "/home/nis/jinrui.yang/EaBNet_light/EaBNet_light.py:406:forward",
+          "calls": 256,
+          "self_seconds": 0.011607918,
+          "cumulative_seconds": 1.8342884920000002
+        },
+        {
+          "function": "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/nn/modules/container.py:248:forward",
+          "calls": 16128,
+          "self_seconds": 0.034871820000000005,
+          "cumulative_seconds": 1.4229245110000002
+        },
+        {
+          "function": "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/_tensor.py:525:backward",
+          "calls": 512,
+          "self_seconds": 0.002280481,
+          "cumulative_seconds": 1.3436949100000002
+        },
+        {
+          "function": "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/autograd/__init__.py:242:backward",
+          "calls": 512,
+          "self_seconds": 0.002625489,
+          "cumulative_seconds": 1.341340457
+        },
+        {
+          "function": "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/autograd/graph.py:816:_engine_run_backward",
+          "calls": 512,
+          "self_seconds": 0.00211565,
+          "cumulative_seconds": 1.329206235
+        },
+        {
+          "function": "~:0:<method 'run_backward' of 'torch._C._EngineBase' objects>",
+          "calls": 512,
+          "self_seconds": 1.326408472,
+          "cumulative_seconds": 1.326408472
+        },
+        {
+          "function": "~:0:<built-in method torch.tensor>",
+          "calls": 1475,
+          "self_seconds": 1.0290795430000002,
+          "cumulative_seconds": 1.0290795430000002
+        },
+        {
+          "function": "/home/nis/jinrui.yang/EaBNet_light/EaBNet_light.py:237:forward",
+          "calls": 2560,
+          "self_seconds": 0.055706427,
+          "cumulative_seconds": 0.9563533750000001
+        },
+        {
+          "function": "/home/nis/jinrui.yang/EaBNet_light/light_metric_loss.py:42:forward",
+          "calls": 768,
+          "self_seconds": 0.002038387,
+          "cumulative_seconds": 0.883569409
+        },
+        {
+          "function": "/home/nis/jinrui.yang/EaBNet_light/EaBNet_light.py:265:forward",
+          "calls": 1280,
+          "self_seconds": 0.002084016,
+          "cumulative_seconds": 0.618841965
+        },
+        {
+          "function": "~:0:<built-in method builtins.all>",
+          "calls": 2368,
+          "self_seconds": 0.3022808,
+          "cumulative_seconds": 0.6166821640000001
+        },
+        {
+          "function": "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/nn/modules/module.py:1752:inner",
+          "calls": 4608,
+          "self_seconds": 0.013838343000000001,
+          "cumulative_seconds": 0.603858345
+        },
+        {
+          "function": "/home/nis/jinrui.yang/EaBNet_light/EaBNet_light.py:280:forward",
+          "calls": 1280,
+          "self_seconds": 0.002679121,
+          "cumulative_seconds": 0.581092037
+        },
+        {
+          "function": "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/nn/utils/spectral_norm.py:124:__call__",
+          "calls": 4608,
+          "self_seconds": 0.007035766000000001,
+          "cumulative_seconds": 0.5046014040000001
+        },
+        {
+          "function": "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/nn/utils/spectral_norm.py:61:compute_weight",
+          "calls": 4608,
+          "self_seconds": 0.06612142800000001,
+          "cumulative_seconds": 0.470019656
+        },
+        {
+          "function": "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/nn/modules/module.py:2591:_named_members",
+          "calls": 92928,
+          "self_seconds": 0.091188999,
+          "cumulative_seconds": 0.446215674
+        },
+        {
+          "function": "/home/nis/jinrui.yang/EaBNet_light/light_structure_variants.py:102:forward",
+          "calls": 768,
+          "self_seconds": 0.0035832660000000003,
+          "cumulative_seconds": 0.40070585000000003
+        },
+        {
+          "function": "/home/nis/jinrui.yang/EaBNet_light/EaBNet_light.py:350:forward",
+          "calls": 768,
+          "self_seconds": 0.0071800300000000004,
+          "cumulative_seconds": 0.385307418
+        },
+        {
+          "function": "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/nn/modules/conv.py:553:forward",
+          "calls": 24576,
+          "self_seconds": 0.023698253000000002,
+          "cumulative_seconds": 0.376322421
+        }
+      ]
+    }
+  ],
+  "source_epoch": 3,
+  "source_checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_cbam_metric_v1_metric_20261030_052113_1573812/model_epoch_3.pt",
+  "sample_ids": [
+    10239,
+    2970,
+    32782,
+    6763,
+    5831,
+    10508,
+    52819,
+    9419,
+    37581,
+    16775,
+    44715,
+    45316,
+    45344,
+    42295,
+    34705,
+    19577,
+    29656,
+    27649,
+    30671,
+    34279,
+    20331,
+    20301,
+    21145,
+    31779,
+    32966,
+    39656,
+    46262,
+    4099,
+    2949,
+    40117,
+    35448,
+    38812,
+    23232,
+    22790,
+    50357,
+    10001,
+    18405,
+    35805,
+    28456,
+    18442,
+    48530,
+    6237,
+    43583,
+    34398,
+    48852,
+    39059,
+    4306,
+    46438,
+    28890,
+    10377,
+    36755,
+    35676,
+    2786,
+    37990,
+    22564,
+    34880,
+    44232,
+    40147,
+    21615,
+    35239,
+    49305,
+    22244,
+    24833,
+    3024,
+    22172,
+    10099,
+    43311,
+    12765,
+    2418,
+    30085,
+    8247,
+    10265,
+    16865,
+    1950,
+    25182,
+    49044,
+    16772,
+    36041,
+    23725,
+    5960,
+    2351,
+    46027,
+    12584,
+    2084,
+    16071,
+    46819,
+    44234,
+    33212,
+    51047,
+    4070,
+    4666,
+    31556,
+    22025,
+    11856,
+    45076,
+    21728,
+    40132,
+    36320,
+    47720,
+    36485,
+    28391,
+    12792,
+    6209,
+    33888,
+    40081,
+    37026,
+    25450,
+    52423,
+    1178,
+    32641,
+    24033,
+    12743,
+    52473,
+    9107,
+    21866,
+    22480,
+    9701,
+    48088,
+    28274,
+    16850,
+    50764,
+    20035,
+    37144,
+    19439,
+    27537,
+    26313,
+    19641,
+    18448,
+    50577,
+    20121,
+    2328,
+    2354,
+    38758,
+    35115,
+    45247,
+    41342,
+    17932,
+    46695,
+    43011,
+    37017,
+    46785,
+    5931,
+    50137,
+    31392,
+    19155,
+    9572,
+    9666,
+    5626,
+    780,
+    26064,
+    53032,
+    22827,
+    14475,
+    18340,
+    28346,
+    32889,
+    30809,
+    50113,
+    38748,
+    45504,
+    17244,
+    36327,
+    26053,
+    25183,
+    15691,
+    50130,
+    23197,
+    53073,
+    4724,
+    39343,
+    36919,
+    50801,
+    30342,
+    46737,
+    43771,
+    38264,
+    44669,
+    42580,
+    26786,
+    42595,
+    45920,
+    41847,
+    3022,
+    40865,
+    40518,
+    18923,
+    26048,
+    17846,
+    4237,
+    52004,
+    44897,
+    45141,
+    19160,
+    44628,
+    48351,
+    13521,
+    21908,
+    879,
+    9492,
+    5324,
+    12,
+    25353,
+    6133,
+    2983,
+    23827,
+    19501,
+    46396,
+    29915,
+    204,
+    29337,
+    8263,
+    4778,
+    33052,
+    45844,
+    3406,
+    26607,
+    36100,
+    13748,
+    38036,
+    22983,
+    4399,
+    16373,
+    7822,
+    9567,
+    36262,
+    28258,
+    16841,
+    2796,
+    32572,
+    20096,
+    40890,
+    16246,
+    48879,
+    46894,
+    21378,
+    41072,
+    3270,
+    51891,
+    35169,
+    46166,
+    39914,
+    31447,
+    28537,
+    27105,
+    9185,
+    41840,
+    44681,
+    26694,
+    53087,
+    30852,
+    13968,
+    6343,
+    2041,
+    33611,
+    21525,
+    1974,
+    45910,
+    2712,
+    30368,
+    21444,
+    47760,
+    51923,
+    29590,
+    36968,
+    38986,
+    24193,
+    41999,
+    27176,
+    1873,
+    7003,
+    11847,
+    12877
+  ],
+  "generator_updates": 68,
+  "discriminator_updates": 272,
+  "effective_global_batch": 8,
+  "metric_stats": {
+    "valid_pesq_labels": 512,
+    "invalid_pesq_labels": 0,
+    "mean_training_pesq": 2.7757631093263626,
+    "discriminator_calibration_rmse": 0.04820666135820502,
+    "generator_metric_term": 0.28745544988751703,
+    "discriminator_updates_per_rank": 80672
+  }
+}

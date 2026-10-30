@@ -133,3 +133,62 @@ def test_actual_wideband_pesq_and_silence_failure():
     degraded = clean + np.random.default_rng(4).normal(0, 0.002, len(time)).astype(np.float32)
     assert real_pesq(clean, degraded) is not None
     assert real_pesq(np.zeros_like(clean), np.zeros_like(clean)) is None
+
+
+def test_accelerated_runtime_preserves_loss_gradients_and_discriminator_adam():
+    standard = MetricObjective("cpu", score_fn=lambda *args: 3.0)
+    fast = MetricObjective("cpu", score_fn=lambda *args: 3.0, accelerated=True)
+    fast.load_state_dict(copy.deepcopy(standard.state_dict()))
+    for _ in range(2):
+        outputs = []
+        for objective in (standard, fast):
+            objective.training = True
+            estimate, target, frames = features(objective)
+            torch.manual_seed(197)
+            loss = objective(estimate, target, frames)
+            loss.backward()
+            outputs.append((loss.detach(), estimate.grad.clone(), copy.deepcopy(objective.state_dict())))
+        torch.testing.assert_close(outputs[0][0], outputs[1][0], rtol=0, atol=0)
+        torch.testing.assert_close(outputs[0][1], outputs[1][1], rtol=1e-5, atol=1e-6)
+        # Shared ISTFT backward sums the two FP32 branches before its transform.
+        assert torch.linalg.vector_norm(outputs[0][1] - outputs[1][1]) / torch.linalg.vector_norm(outputs[0][1]) < 1e-4
+        for key, value in outputs[0][2]["discriminator"].items():
+            torch.testing.assert_close(value, outputs[1][2]["discriminator"][key], rtol=0, atol=0)
+        for one, two in zip(outputs[0][2]["optimizer"]["state"].values(),
+                            outputs[1][2]["optimizer"]["state"].values()):
+            for key in one:
+                torch.testing.assert_close(one[key], two[key], rtol=0, atol=0)
+
+
+def test_four_merged_examples_preserve_four_d_steps_and_accumulated_g_gradient():
+    standard = MetricObjective("cpu", score_fn=lambda *args: 3.0)
+    merged = MetricObjective("cpu", score_fn=lambda *args: 3.0, accelerated=True)
+    merged.load_state_dict(copy.deepcopy(standard.state_dict()))
+    standard.training = merged.training = True
+    references, targets, gradients, losses = [], [], [], []
+    torch.manual_seed(71)
+    for index in range(4):
+        estimate, target, frames = features(standard)
+        estimate = (estimate.detach() * (1 + 0.02 * index)).requires_grad_()
+        loss = standard(estimate, target, frames)
+        (loss / 4).backward()
+        gradients.append(estimate.grad)
+        references.append(target)
+        targets.append(standard._target)
+        losses.append(loss.detach())
+    merged._target = torch.cat(targets)
+    merged._lengths = [8000] * 4
+    estimate = torch.cat([reference * 0.8 * (1 + 0.02 * i)
+                          for i, reference in enumerate(references)]).requires_grad_()
+    torch.manual_seed(71)
+    loss = merged(estimate, torch.cat(references), [51] * 4)
+    loss.backward()
+    torch.testing.assert_close(loss, torch.stack(losses).mean(), rtol=1e-6, atol=1e-7)
+    expected = torch.cat(gradients)
+    assert torch.linalg.vector_norm(expected - estimate.grad) / torch.linalg.vector_norm(expected) < 1e-4
+    assert standard.updates == merged.updates == 4
+    for name, value in standard.discriminator.state_dict().items():
+        torch.testing.assert_close(value, merged.discriminator.state_dict()[name], rtol=0, atol=0)
+    for one, two in zip(standard.optimizer.state.values(), merged.optimizer.state.values()):
+        for key in one:
+            torch.testing.assert_close(one[key], two[key], rtol=0, atol=0)

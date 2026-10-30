@@ -1,0 +1,25 @@
+{
+  "phase": "train",
+  "epoch": 4,
+  "source": "logs_cbam_metric_v1/metric_20261030_052113_1573812/gpu_utilization.log",
+  "gpus": [
+    {
+      "index": 0,
+      "samples": 10,
+      "start": "2026/10/30 08:40:32.556",
+      "end": "2026/10/30 08:42:02.562",
+      "util_mean": 71.6,
+      "memory_used_mean_mib": 5277.2,
+      "power_mean_w": 116.713
+    },
+    {
+      "index": 1,
+      "samples": 10,
+      "start": "2026/10/30 08:40:32.556",
+      "end": "2026/10/30 08:42:02.562",
+      "util_mean": 73.7,
+      "memory_used_mean_mib": 5187.2,
+      "power_mean_w": 113.229
+    }
+  ]
+}

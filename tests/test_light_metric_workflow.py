@@ -107,7 +107,8 @@ def test_actual_two_rank_metric_update(metric_case, tmp_path):
                for k, v in trained["metric_state"]["discriminator"].items())
 
 
-def test_discriminator_ranks_agree_when_one_rank_has_no_label(tmp_path):
+@pytest.mark.parametrize("accelerated", [False, True])
+def test_discriminator_ranks_agree_when_one_rank_has_no_label(tmp_path, accelerated):
     worker = tmp_path / "metric_ddp_capture.py"
     worker.write_text('''
 import os
@@ -139,7 +140,8 @@ def main():
 
 if __name__ == '__main__':
     main()
-''', encoding="utf-8")
+'''.replace("score_fn=lambda *args: 3.0 if rank == 0 else None)",
+             f"score_fn=lambda *args: 3.0 if rank == 0 else None, accelerated={accelerated})"), encoding="utf-8")
     environment = os.environ.copy()
     environment.update(CUDA_VISIBLE_DEVICES="", OMP_NUM_THREADS="2", MKL_NUM_THREADS="2",
                        PYTHONPATH=os.pathsep.join((str(tmp_path), str(ROOT))))
@@ -158,6 +160,30 @@ if __name__ == '__main__':
     for first, second in zip(one["state"]["optimizer"]["state"].values(), two["state"]["optimizer"]["state"].values()):
         for name in first:
             torch.testing.assert_close(first[name], second[name], rtol=0, atol=0)
+
+
+def test_known_runtime_upgrade_preserves_full_checkpoint_and_rejects_unknown(metric_case):
+    _, argv = metric_case
+    run_cli("train_light_metric.py", [*argv, "--num-epochs", "1"])
+    latest = Path(argv[argv.index("--checkpoint-dir") + 1]) / "checkpoint_latest.pt"
+    state = torch.load(latest, weights_only=False)
+    state["args"]["metric_implementation_sha256"] = metric.LEGACY_RUNTIME.copy()
+    state["args"]["quality_loss_implementation_sha256"] = metric.LEGACY_RUNTIME["light_metric_loss.py"]
+    state["args"]["metric_discriminator_step_unit"] = "one globally averaged D update per microbatch; G accumulation unchanged"
+    state["args"].pop("metric_performance", None)
+    torch.save(state, latest)
+    with pytest.raises(ValueError, match="differs"):
+        metric.parse_args(argv)
+    run_cli("train_light_metric.py", [*argv, "--num-epochs", "2", "--upgrade-runtime"])
+    resumed = torch.load(latest, weights_only=False)
+    assert resumed["metric_state"]["updates"] == 4
+    assert {int(v["step"]) for v in resumed["optimizer_state_dict"]["state"].values()} == {2}
+    assert {int(v["step"]) for v in resumed["metric_state"]["optimizer"]["state"].values()} == {4}
+    assert resumed["args"]["metric_runtime_upgrade_from"]["epoch"] == 1
+    state["args"]["metric_implementation_sha256"]["light_metric_loss.py"] = "unknown"
+    torch.save(state, latest)
+    with pytest.raises(ValueError, match="known original"):
+        metric.parse_args([*argv, "--upgrade-runtime"])
 
 
 @pytest.mark.parametrize("fault", ["gain_matching", "partial_high_score"])

@@ -5,6 +5,8 @@ and utils.py. Copyright (c) 2023 Yexin Lu; see third_party/MP-SENet-LICENSE.
 """
 
 import math
+from concurrent.futures import ProcessPoolExecutor
+import multiprocessing
 
 import numpy as np
 import torch
@@ -66,7 +68,7 @@ class MetricObjective(QualityObjective):
     """
 
     def __init__(self, device, weight=0.05, discriminator_lr=1e-4, score_fn=real_pesq,
-                 **frontend):
+                 accelerated=False, **frontend):
         super().__init__(**frontend)
         if self.n_fft != 512 or self.hop_length != 160 or self.win_length != 320 or self.power != 0.5:
             raise ValueError("Metric experiment requires the existing 512/160/320/power0.5 frontend")
@@ -79,7 +81,24 @@ class MetricObjective(QualityObjective):
         self.score_fn = score_fn
         self.training = False
         self.updates = 0
+        self.accelerated = accelerated
+        self._reconstructions = None
+        self._score_pool = None
         self.reset_metric_stats()
+
+    def close(self):
+        if self._score_pool is not None:
+            self._score_pool.shutdown(wait=True)
+            self._score_pool = None
+
+    def reconstruct(self, estimate_ri, length):
+        cache = self._reconstructions
+        if cache is None:
+            return super().reconstruct(estimate_ri, length)
+        key = (estimate_ri.data_ptr(), tuple(estimate_ri.shape), tuple(estimate_ri.stride()), length)
+        if key not in cache:
+            cache[key] = super().reconstruct(estimate_ri, length)
+        return cache[key]
 
     def reset_metric_stats(self):
         # valid labels, invalid labels, score sum, prediction squared error, G term sum
@@ -103,18 +122,77 @@ class MetricObjective(QualityObjective):
         return (magnitude * magnitude.clamp_min(1e-8).pow(self.power - 1)).transpose(-1, -2)
 
     def __call__(self, estimate, target_stft, frame_list):
-        baseline_loss = super().__call__(estimate, target_stft, frame_list)
+        self._reconstructions = {} if self.accelerated and self.training else None
+        try:
+            return self._compute(estimate, target_stft, frame_list)
+        finally:
+            self._reconstructions = None
+
+    def _compute(self, estimate, target_stft, frame_list):
+        baseline_loss = None if self.accelerated and self.training else super().__call__(estimate, target_stft, frame_list)
         if not self.training:
             return baseline_loss
+        if self.accelerated and self.device.type == "cuda" and self._score_pool is None:
+            self._score_pool = ProcessPoolExecutor(max_workers=min(4, estimate.shape[0]),
+                mp_context=multiprocessing.get_context("spawn"))
         self.discriminator.train()
         examples = []
+        host_target = host_waveform = None
+        if self.accelerated and len(set(self._lengths)) == len(set(frame_list)) == 1:
+            length, frames = self._lengths[0], frame_list[0]
+            reconstructed = super().reconstruct(estimate[:, :, :frames], length)
+            for index in range(estimate.shape[0]):
+                view = estimate[index:index + 1, :, :frames]
+                key = (view.data_ptr(), tuple(view.shape), tuple(view.stride()), length)
+                self._reconstructions[key] = reconstructed[index:index + 1]
+            host_target = self._target[:, :length].detach().cpu().numpy()
+            host_waveform = reconstructed.detach().cpu().numpy()
         for index, (length, frames) in enumerate(zip(self._lengths, frame_list)):
             waveform = self.reconstruct(estimate[index:index + 1, :, :frames], length)[0]
             reference = self._target[index, :length]
-            score = self.score_fn(reference.detach().cpu().numpy(), waveform.detach().cpu().numpy())
+            waveforms = ((host_target[index], host_waveform[index]) if host_target is not None
+                         else (reference.detach().cpu().numpy(), waveform.detach().cpu().numpy()))
+            score = (self._score_pool.submit(self.score_fn, *waveforms) if self._score_pool
+                     else self.score_fn(*waveforms))
+            examples.append((reference, waveform, score))
+        examples = [(self._magnitude(reference), self._magnitude(waveform), score)
+                    for reference, waveform, score in examples]
+        if baseline_loss is None:
+            baseline_loss = super().__call__(estimate, target_stft, frame_list)
+
+        predictions = []
+        real_predictions = []
+        if self.accelerated and len(examples) == 1:
+            for clean, enhanced, _ in examples:
+                real_predictions.append(self.discriminator(clean[None].detach(), clean[None].detach()))
+                predictions.append(self.discriminator(clean[None].detach(), enhanced[None].detach()))
+        resolved = []
+        for clean, enhanced, score in examples:
+            if self._score_pool:
+                score = score.result()
             if score is not None and not math.isfinite(score):
                 raise FloatingPointError("Non-finite PESQ supervision")
-            examples.append((self._magnitude(reference), self._magnitude(waveform), score))
+            resolved.append((clean, enhanced, score))
+        examples = resolved
+
+        if self.accelerated and len(examples) > 1:
+            if len(set(self._lengths)) != 1 or len(set(frame_list)) != 1:
+                raise ValueError("Merged metric microbatches require equal waveform lengths")
+            # Capture each input gradient before the next D update changes its weights.
+            gradient = torch.zeros_like(estimate)
+            value = estimate.new_zeros(())
+            for example in examples:
+                term = self._metric_term(estimate, [example], [], [])
+                gradient.add_(torch.autograd.grad(term, estimate, retain_graph=True)[0].detach())
+                value.add_(term.detach())
+            gradient.div_(len(examples))
+            value.div_(len(examples))
+            surrogate = (estimate * gradient).sum()
+            return baseline_loss + self.weight * (surrogate + (value - surrogate.detach()))
+        return baseline_loss + self.weight * self._metric_term(
+            estimate, examples, real_predictions, predictions)
+
+    def _metric_term(self, estimate, examples, real_predictions, predictions):
 
         count = torch.tensor(sum(score is not None for _, _, score in examples),
                              device=self.device, dtype=torch.float32)
@@ -124,25 +202,43 @@ class MetricObjective(QualityObjective):
         world = dist.get_world_size() if distributed else 1
         self.optimizer.zero_grad(set_to_none=True)
         discriminator_loss = estimate.new_zeros(())
-        predictions = []
-        for clean, enhanced, score in examples:
-            real = self.discriminator(clean[None].detach(), clean[None].detach())
-            predicted = self.discriminator(clean[None].detach(), enhanced[None].detach())
-            predictions.append(predicted.detach())
+        for index, (clean, enhanced, score) in enumerate(examples):
+            if real_predictions:
+                real, predicted = real_predictions[index], predictions[index]
+                predictions[index] = predicted.detach()
+            else:
+                real = self.discriminator(clean[None].detach(), clean[None].detach())
+                predicted = self.discriminator(clean[None].detach(), enhanced[None].detach())
+                predictions.append(predicted.detach())
             label = 0.0 if score is None else (score - 1.0) / 3.5
             valid = float(score is not None)
             discriminator_loss = discriminator_loss + valid * (
                 F.mse_loss(real, torch.ones_like(real)) + (predicted - label).square().mean())
         discriminator_loss = discriminator_loss * world / count.clamp_min(1)
         discriminator_loss.backward()
-        finite = torch.tensor(int(all(p.grad is not None and torch.isfinite(p.grad).all()
-                                      for p in self.discriminator.parameters())), device=self.device)
+        parameters = list(self.discriminator.parameters())
+        if self.accelerated:
+            if any(p.grad is None for p in parameters):
+                raise RuntimeError("Missing discriminator gradient")
+            flat_gradient = torch.cat([p.grad.reshape(-1) for p in parameters])
+            finite = torch.isfinite(flat_gradient).all().to(torch.int32)
+        else:
+            finite = torch.tensor(int(all(p.grad is not None and torch.isfinite(p.grad).all()
+                                          for p in parameters)), device=self.device)
         if distributed:
             dist.all_reduce(finite, op=dist.ReduceOp.MIN)
         if not finite.item():
             raise FloatingPointError("Non-finite discriminator gradient; optimizer step aborted")
-        for parameter in self.discriminator.parameters():
-            if distributed:
+        if self.accelerated and distributed:
+            dist.all_reduce(flat_gradient)
+            flat_gradient.div_(world)
+            offset = 0
+            for parameter in parameters:
+                size = parameter.numel()
+                parameter.grad.copy_(flat_gradient[offset:offset + size].view_as(parameter))
+                offset += size
+        elif distributed:
+            for parameter in parameters:
                 dist.all_reduce(parameter.grad)
                 parameter.grad.div_(world)
         if count.item() > 0:
@@ -166,7 +262,7 @@ class MetricObjective(QualityObjective):
         finally:
             for parameter in self.discriminator.parameters():
                 parameter.requires_grad_(True)
-        return baseline_loss + self.weight * torch.stack(terms).mean()
+        return torch.stack(terms).mean()
 
     def metric_stats(self):
         values = self._metric_totals.clone()
