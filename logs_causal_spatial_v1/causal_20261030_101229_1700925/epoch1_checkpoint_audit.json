@@ -1,0 +1,26 @@
+{
+  "status": "passed",
+  "epoch": 1,
+  "candidate": "causal_spatial_v1",
+  "model_is_causal": true,
+  "future_frames": 0,
+  "generator_adam_step": 6700,
+  "all_weights_and_adam_finite": true,
+  "noncausal_backbones": 0,
+  "checkpoint_sha256": "e06af98019a1d1318e0b6c052c511374be72d7bb789f5de830bbb29640130398",
+  "train_loss": 0.6814694905096887,
+  "val_loss": 0.580615999152263,
+  "implementation_sha256": {
+    "light_causal_spatial_model.py": "b911ac848c86ca6b4a95933ae90d33a200d44f00ccaa8b98dc4b2cb7cf907a14",
+    "light_causal_stream.py": "86c266e39fd89227b99b1b6f46b943cff8b32a17c2c29f01234c3fcd18ebd42d",
+    "third_party/spatialnet/SpatialNet.py": "3baaa7136c893eba9aee9dfcdb40478a5f87f819682286abbec89a5d71d972f6",
+    "third_party/spatialnet/norm.py": "4c42f48a6d34dc82f25462782ba57e84dddfbfebb56b940f73a28b5ec41055cc",
+    "third_party/spatialnet/non_linear.py": "a985a7f81c8ebfbbd408ea753d7e9b81324d523c01afa1faca4285049640e79d",
+    "third_party/spatialnet/linear_group.py": "e6e0403b5dbdd787d511f0de9cef4335aa25ae46feee211554346c0a00cf2a43"
+  },
+  "training_implementation_sha256": {
+    "train_light_causal.py": "16367b2aa9e20db600d42ead0485b92e056d8fca509bb86f552d060898e782bc",
+    "train_light.py": "dbe303d9bd66495c226afee90fbae9f5c0bc8cf87f9e61f35431ce90b8d15b81",
+    "light_quality_loss.py": "d39581a21efd17823049385f09399e07bf63660d688192467bdd4c5c99ab88db"
+  }
+}

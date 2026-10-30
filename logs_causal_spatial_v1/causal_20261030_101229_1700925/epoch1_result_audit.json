@@ -1,0 +1,63 @@
+{
+  "status": "verified_complete_epoch1_epoch2_running",
+  "verified_utc": "2026-10-30T11:02:27Z",
+  "epoch1_mean": {
+    "enhanced": {
+      "pesq": 1.6966061929861704,
+      "stoi": 0.8845542078260339,
+      "estoi": 0.7656607452488176,
+      "si_snr_db": 7.22606696254237,
+      "sdr_db": 7.7941508744572
+    },
+    "noisy": {
+      "pesq": 1.0880955342451732,
+      "stoi": 0.6510592990906214,
+      "estoi": 0.3667556529781415,
+      "si_snr_db": -1.2095493301340097,
+      "sdr_db": -1.1495106109218791
+    }
+  },
+  "paired_pesq_vs_initial": {
+    "mean_delta": 0.6085313445329666,
+    "median_delta": 0.5651290416717529,
+    "improved": 587,
+    "decreased": 13
+  },
+  "same600_sample_ids_paths_lengths": true,
+  "target_gain_matching": false,
+  "model_causal": true,
+  "future_frames": 0,
+  "checkpoint_audit": "epoch1_checkpoint_audit.json",
+  "epoch1_training": {
+    "train_loss": 0.6814694905096887,
+    "val_loss": 0.580615999152263,
+    "global_samples": 53600,
+    "generator_adam_steps": 6700,
+    "nonfinite_skips": 0,
+    "mean_local_ms_per_batch": 876.9
+  },
+  "epoch1_gpu": [
+    {
+      "index": 0,
+      "samples": 2360,
+      "mean_util_pct": 99.41949152542372,
+      "mean_power_w": 139.62749152542372,
+      "peak_sampled_memory_mib": 2469.0
+    },
+    {
+      "index": 1,
+      "samples": 2360,
+      "mean_util_pct": 98.55254237288136,
+      "mean_power_w": 146.3301059322034,
+      "peak_sampled_memory_mib": 2451.0
+    }
+  ],
+  "live_epoch2_snapshot": {
+    "batches_done": 9360,
+    "batches_per_rank": 26800,
+    "remaining": "3:46:44",
+    "local_batches_per_second": 1.28
+  },
+  "next_check_not_before_utc": "2026-10-30T15:10:00Z",
+  "decision": "Continue the first few epochs of this fresh causal network to observe convergence; one completed epoch does not establish a capacity ceiling. No model, loss or metric changes. Target 3.4 not reached."
+}
