@@ -1,0 +1,38 @@
+{
+  "status": "passed",
+  "epoch": 4,
+  "generator_adam_step": 26800,
+  "discriminator_adam_step": 107200,
+  "all_weights_and_adam_finite": true,
+  "frozen_state_tensors_unchanged": 277,
+  "batch_size_per_gpu": 4,
+  "effective_global_batch": 8,
+  "runtime_upgrade": {
+    "epoch": 3,
+    "implementation": {
+      "light_quality_loss.py": "d39581a21efd17823049385f09399e07bf63660d688192467bdd4c5c99ab88db",
+      "light_metric_loss.py": "3ade5cbefd5cd5dfae0737dc2907ea331a583b9b6519ab81b9d3eccebc08d7cd",
+      "train_light_metric.py": "66ac737342cf7947c734ce7e3aeaf6070869fa3311b31ccb52bac4289bea3d6e"
+    },
+    "generator_adam_preserved": true,
+    "discriminator_adam_preserved": true,
+    "examples_per_rank_per_generator_update": 4,
+    "discriminator_updates_per_generator_update": 4
+  },
+  "gpu_epoch_window": [
+    {
+      "index": 0,
+      "samples": 217,
+      "util_mean": 65.65437788018433,
+      "memory_used_mean_mib": 5691.009216589861,
+      "power_mean_w": 111.81009216589862
+    },
+    {
+      "index": 1,
+      "samples": 217,
+      "util_mean": 61.09216589861751,
+      "memory_used_mean_mib": 5593.377880184332,
+      "power_mean_w": 109.43926267281105
+    }
+  ]
+}

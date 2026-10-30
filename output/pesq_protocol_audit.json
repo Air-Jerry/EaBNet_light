@@ -49,7 +49,7 @@
   },
   "decisive_source": {
     "path": "eval/track1_eval.py",
-    "sample_rate_default_line": 24,
+    "sample_rate_default_line": 23,
     "sample_rate_default": 16000,
     "mode_lines": [
       67,
