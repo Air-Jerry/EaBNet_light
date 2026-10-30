@@ -1,0 +1,38 @@
+frequency17 {"updates": 0, "mean_pesq": 1.7402154952287674, "per_sample_pesq": [1.470010757446289, 3.4126760959625244, 1.8236173391342163, 1.077903389930725, 1.4195609092712402, 1.3222476243972778, 1.7915174961090088, 1.6041903495788574], "mean_loss": 0.5726052802056074, "loss_components": {"samples": 8, "batches": 8, "spectral": 0.4393618404865265, "mrstft": 1.0883740186691284, "waveform": 0.2440607100725174, "total": 0.5726052522659302}, "gradient_norm_mean": 0.0, "gradient_norm_max": 0, "clipped_update_fraction": 0.0, "elapsed_seconds": 7.245377252111211}
+frequency17 update 1 elapsed 12.8
+frequency17 update 2 elapsed 17.92
+frequency17 update 3 elapsed 22.75
+frequency17 update 25 elapsed 131.67
+frequency17 update 50 elapsed 258.3
+frequency17 update 75 elapsed 384.4
+frequency17 update 100 elapsed 509.81
+frequency17 update 125 elapsed 635.88
+frequency17 update 150 elapsed 763.15
+frequency17 update 175 elapsed 893.04
+frequency17 update 200 elapsed 1019.31
+frequency17 update 225 elapsed 1144.03
+frequency17 update 250 elapsed 1263.77
+frequency17 update 275 elapsed 1385.02
+frequency17 update 300 elapsed 1510.52
+frequency17 update 325 elapsed 1636.57
+frequency17 update 350 elapsed 1762.11
+frequency17 update 375 elapsed 1888.07
+frequency17 update 400 elapsed 2014.2
+frequency17 {"updates": 400, "mean_pesq": 2.7300840318202972, "per_sample_pesq": [2.76330828666687, 4.073818206787109, 2.4058780670166016, 2.066988468170166, 2.652498245239258, 2.6189076900482178, 2.7488768100738525, 2.5103964805603027], "mean_loss": 0.4267799612134695, "loss_components": {"samples": 8, "batches": 8, "spectral": 0.3385235667228699, "mrstft": 0.7417703866958618, "waveform": 0.14079371094703674, "total": 0.42677995562553406}, "gradient_norm_mean": 6.62693675160408, "gradient_norm_max": 15.615297317504883, "clipped_update_fraction": 0.65, "elapsed_seconds": 2021.441803774098}
+frequency17 update 425 elapsed 2163.07
+frequency17 update 450 elapsed 2310.23
+frequency17 update 475 elapsed 2454.94
+frequency17 update 500 elapsed 2592.04
+frequency17 update 525 elapsed 2717.39
+frequency17 update 550 elapsed 2842.73
+frequency17 update 575 elapsed 2969.04
+frequency17 update 600 elapsed 3095.67
+frequency17 update 625 elapsed 3221.58
+frequency17 update 650 elapsed 3341.57
+frequency17 update 675 elapsed 3461.5
+frequency17 update 700 elapsed 3582.86
+frequency17 update 725 elapsed 3706.89
+frequency17 update 750 elapsed 3830.35
+frequency17 update 775 elapsed 3955.97
+frequency17 update 800 elapsed 4080.87
+frequency17 {"updates": 800, "mean_pesq": 2.942962557077408, "per_sample_pesq": [2.9815070629119873, 4.231122970581055, 2.5796000957489014, 2.322035789489746, 2.8458685874938965, 3.0871918201446533, 2.9357383251190186, 2.560635805130005], "mean_loss": 0.3998354747891426, "loss_components": {"samples": 8, "batches": 8, "spectral": 0.3198520243167877, "mrstft": 0.6730974316596985, "waveform": 0.1267368346452713, "total": 0.3998354375362396}, "gradient_norm_mean": 6.919311514496803, "gradient_norm_max": 16.01478385925293, "clipped_update_fraction": 0.66875, "elapsed_seconds": 4087.8427477420773}

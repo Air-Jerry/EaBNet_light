@@ -1,0 +1,14 @@
+causal_gru_refiner {"updates": 0, "mean_pesq": 1.7402154952287674, "per_sample_pesq": [1.470010757446289, 3.4126760959625244, 1.8236173391342163, 1.077903389930725, 1.4195609092712402, 1.3222476243972778, 1.7915174961090088, 1.6041903495788574], "mean_loss": 0.5726052802056074, "loss_components": {"samples": 8, "batches": 8, "spectral": 0.4393618404865265, "mrstft": 1.0883740186691284, "waveform": 0.2440607100725174, "total": 0.5726052522659302}, "gradient_norm_mean": 0.0, "gradient_norm_max": 0, "clipped_update_fraction": 0.0, "elapsed_seconds": 4.244913083035499}
+causal_gru_refiner update 1 elapsed 6.89
+causal_gru_refiner update 2 elapsed 9.4
+causal_gru_refiner update 3 elapsed 11.81
+causal_gru_refiner update 25 elapsed 66.29
+causal_gru_refiner update 50 elapsed 128.65
+causal_gru_refiner update 75 elapsed 191.2
+causal_gru_refiner update 100 elapsed 253.28
+causal_gru_refiner {"updates": 100, "mean_pesq": 1.751418113708496, "per_sample_pesq": [1.4595624208450317, 3.485536813735962, 1.852156162261963, 1.0781272649765015, 1.4269334077835083, 1.3144241571426392, 1.7922115325927734, 1.6023931503295898], "mean_loss": 0.5600107312202454, "loss_components": {"samples": 8, "batches": 8, "spectral": 0.42820537090301514, "mrstft": 1.0780450105667114, "waveform": 0.2400084137916565, "total": 0.5600107312202454}, "gradient_norm_mean": 0.1076736868917942, "gradient_norm_max": 0.826704740524292, "clipped_update_fraction": 0.0, "elapsed_seconds": 257.2914649648592}
+causal_gru_refiner update 125 elapsed 318.84
+causal_gru_refiner update 150 elapsed 378.69
+causal_gru_refiner update 175 elapsed 437.01
+causal_gru_refiner update 200 elapsed 495.76
+causal_gru_refiner {"updates": 200, "mean_pesq": 1.7544542253017426, "per_sample_pesq": [1.484699010848999, 3.4640696048736572, 1.8514056205749512, 1.0786492824554443, 1.435861349105835, 1.329023003578186, 1.7971025705337524, 1.5948233604431152], "mean_loss": 0.5579960569739342, "loss_components": {"samples": 8, "batches": 8, "spectral": 0.42755475640296936, "mrstft": 1.0664113759994507, "waveform": 0.2380015105009079, "total": 0.5579960346221924}, "gradient_norm_mean": 0.12829351357184351, "gradient_norm_max": 0.826704740524292, "clipped_update_fraction": 0.0, "elapsed_seconds": 499.6153838739265}

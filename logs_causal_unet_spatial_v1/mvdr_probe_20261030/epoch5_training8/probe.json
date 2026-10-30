@@ -1,0 +1,261 @@
+{
+  "status": "complete",
+  "scope": "Eight fixed training samples; causal CPU screening only, not generalization or real-time proof",
+  "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_causal_unet_spatial_v1_causal_fast_20261030_195249_1935855/model_epoch_5.pt",
+  "checkpoint_sha256": "475733c57f9c5b483c854a09145cf067e807929563f9da985c051e71898c190f",
+  "source_sha256": "568ed4f5c8660db79f1d9f58d6c4cc996a14f75857b1e0e56785cda2e26390db",
+  "mask_source": "Current trained model output and mixture only; no clean reference",
+  "alpha": 0.98,
+  "diagonal_loading": 0.001,
+  "mask_clip": [
+    0.001,
+    0.999
+  ],
+  "power_iterations": 3,
+  "reference_mic": 0,
+  "num_mics": 8,
+  "frontend": {
+    "sample_rate": 16000,
+    "n_fft": 512,
+    "hop_length": 160,
+    "win_length": 320,
+    "power": 0.5
+  },
+  "target_gain_matching": false,
+  "external_normalization": false,
+  "rows": [
+    {
+      "sample_id": 1,
+      "num_samples": 96000,
+      "metrics": {
+        "baseline": {
+          "pesq": 1.4700068235397339,
+          "si_snr_db": 12.320350672993744
+        },
+        "souden": {
+          "pesq": 1.1394298076629639,
+          "si_snr_db": 6.622764656678043
+        },
+        "rank1": {
+          "pesq": 1.0691170692443848,
+          "si_snr_db": 3.5056910701718125
+        },
+        "souden_wiener": {
+          "pesq": 1.2609118223190308,
+          "si_snr_db": 7.336016224350058
+        },
+        "rank1_wiener": {
+          "pesq": 1.299877405166626,
+          "si_snr_db": 6.023048929633724
+        }
+      }
+    },
+    {
+      "sample_id": 2,
+      "num_samples": 96000,
+      "metrics": {
+        "baseline": {
+          "pesq": 3.412672996520996,
+          "si_snr_db": 18.24741494162387
+        },
+        "souden": {
+          "pesq": 2.450171709060669,
+          "si_snr_db": 9.746098398135791
+        },
+        "rank1": {
+          "pesq": 2.1341607570648193,
+          "si_snr_db": 8.56945493034087
+        },
+        "souden_wiener": {
+          "pesq": 2.6931798458099365,
+          "si_snr_db": 9.804271341288112
+        },
+        "rank1_wiener": {
+          "pesq": 2.8545994758605957,
+          "si_snr_db": 9.488162238431707
+        }
+      }
+    },
+    {
+      "sample_id": 3,
+      "num_samples": 96000,
+      "metrics": {
+        "baseline": {
+          "pesq": 1.823616862297058,
+          "si_snr_db": 9.168333875639517
+        },
+        "souden": {
+          "pesq": 1.2808289527893066,
+          "si_snr_db": 2.511483616816485
+        },
+        "rank1": {
+          "pesq": 1.2047137022018433,
+          "si_snr_db": 0.7195992114560696
+        },
+        "souden_wiener": {
+          "pesq": 1.8172285556793213,
+          "si_snr_db": 5.886465879424721
+        },
+        "rank1_wiener": {
+          "pesq": 1.8204421997070312,
+          "si_snr_db": 4.844629019279823
+        }
+      }
+    },
+    {
+      "sample_id": 4,
+      "num_samples": 96000,
+      "metrics": {
+        "baseline": {
+          "pesq": 1.077903389930725,
+          "si_snr_db": -1.2733837384340578
+        },
+        "souden": {
+          "pesq": 1.0705639123916626,
+          "si_snr_db": -3.999585011713491
+        },
+        "rank1": {
+          "pesq": 1.0633660554885864,
+          "si_snr_db": -5.035672619415733
+        },
+        "souden_wiener": {
+          "pesq": 1.0753494501113892,
+          "si_snr_db": -3.1824417821371775
+        },
+        "rank1_wiener": {
+          "pesq": 1.0712707042694092,
+          "si_snr_db": -3.1469146348021466
+        }
+      }
+    },
+    {
+      "sample_id": 5,
+      "num_samples": 96000,
+      "metrics": {
+        "baseline": {
+          "pesq": 1.4195612668991089,
+          "si_snr_db": 9.999764929833573
+        },
+        "souden": {
+          "pesq": 1.2250618934631348,
+          "si_snr_db": 7.098085375804098
+        },
+        "rank1": {
+          "pesq": 1.1884921789169312,
+          "si_snr_db": 4.603893323506335
+        },
+        "souden_wiener": {
+          "pesq": 1.4905976057052612,
+          "si_snr_db": 8.60407864155549
+        },
+        "rank1_wiener": {
+          "pesq": 1.3677210807800293,
+          "si_snr_db": 8.726960850677498
+        }
+      }
+    },
+    {
+      "sample_id": 6,
+      "num_samples": 96000,
+      "metrics": {
+        "baseline": {
+          "pesq": 1.3222477436065674,
+          "si_snr_db": 7.755972921769833
+        },
+        "souden": {
+          "pesq": 1.2096409797668457,
+          "si_snr_db": 5.091695522188352
+        },
+        "rank1": {
+          "pesq": 1.1525931358337402,
+          "si_snr_db": 0.9082115414701983
+        },
+        "souden_wiener": {
+          "pesq": 1.2977769374847412,
+          "si_snr_db": 6.672364229442013
+        },
+        "rank1_wiener": {
+          "pesq": 1.2883694171905518,
+          "si_snr_db": 6.003519189700224
+        }
+      }
+    },
+    {
+      "sample_id": 7,
+      "num_samples": 96000,
+      "metrics": {
+        "baseline": {
+          "pesq": 1.7915149927139282,
+          "si_snr_db": 7.436629752438064
+        },
+        "souden": {
+          "pesq": 1.302320957183838,
+          "si_snr_db": 5.500679305306382
+        },
+        "rank1": {
+          "pesq": 1.2219648361206055,
+          "si_snr_db": 4.260735136622641
+        },
+        "souden_wiener": {
+          "pesq": 1.4542986154556274,
+          "si_snr_db": 6.565272956829318
+        },
+        "rank1_wiener": {
+          "pesq": 1.4578558206558228,
+          "si_snr_db": 5.957037042121477
+        }
+      }
+    },
+    {
+      "sample_id": 8,
+      "num_samples": 96000,
+      "metrics": {
+        "baseline": {
+          "pesq": 1.6041885614395142,
+          "si_snr_db": 8.360145248041057
+        },
+        "souden": {
+          "pesq": 1.4416651725769043,
+          "si_snr_db": 5.18995939616096
+        },
+        "rank1": {
+          "pesq": 1.282145619392395,
+          "si_snr_db": -0.8262851131724358
+        },
+        "souden_wiener": {
+          "pesq": 1.6497256755828857,
+          "si_snr_db": 6.8986708437377136
+        },
+        "rank1_wiener": {
+          "pesq": 1.554579734802246,
+          "si_snr_db": 6.260160540717582
+        }
+      }
+    }
+  ],
+  "formula_source": "https://docs.pytorch.org/audio/stable/generated/torchaudio.functional.mvdr_weights_souden.html",
+  "completed_samples": 8,
+  "elapsed_seconds": 35.15593444905244,
+  "mean": {
+    "baseline": {
+      "pesq": 1.740214079618454,
+      "si_snr_db": 9.0019035754882
+    },
+    "souden": {
+      "pesq": 1.3899604231119156,
+      "si_snr_db": 4.7201476574220775
+    },
+    "rank1": {
+      "pesq": 1.2895691692829132,
+      "si_snr_db": 2.0882034351224696
+    },
+    "souden_wiener": {
+      "pesq": 1.5923835635185242,
+      "si_snr_db": 6.073087291811282
+    },
+    "rank1_wiener": {
+      "pesq": 1.589339479804039,
+      "si_snr_db": 5.519575396969986
+    }
+  }
+}

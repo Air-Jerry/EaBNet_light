@@ -8,4 +8,4 @@ check_light_causal_cuda.py text eol=lf
 benchmark_light_causal.py text eol=lf
 light_causal_fast_model.py text eol=lf
 train_light_causal_fast.py text eol=lf
-experiments/probe_causal_resolution.py text eol=lf
+experiments/*.py text eol=lf

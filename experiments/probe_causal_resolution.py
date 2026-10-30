@@ -52,7 +52,11 @@ def main():
     parser.add_argument('--data-dir', required=True)
     parser.add_argument('--output-dir', required=True)
     parser.add_argument('--updates', type=int, default=200)
+    parser.add_argument('--warmstart', help='Fit only the current17-group model from this validated checkpoint; fresh Adam')
+    parser.add_argument('--refiner',action='store_true',help='Screen a causal GRU branch with cached, frozen causal backbone')
     args = parser.parse_args()
+    if args.updates < 1:raise ValueError('Use a positive update budget')
+    if args.refiner and not args.warmstart:raise ValueError('The refiner probe requires a trained causal warm-start')
     torch.set_num_threads(2)
     torch.set_num_interop_threads(1)
     root, output = Path(args.data_dir), Path(args.output_dir)
@@ -72,28 +76,61 @@ def main():
         seed=1234, updates=args.updates, effective_batch=2, learning_rate=0.001, segment_samples=96000,
         sample_audio_sha256=hashes, objective='Unchanged QualityObjective', precision='CPU FP32',
         source_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(), results=[])
+    source = None
+    if args.warmstart:
+        from light_candidate_runtime import read_candidate_checkpoint
+        checkpoint = Path(args.warmstart).expanduser().resolve()
+        source, _ = read_candidate_checkpoint(checkpoint, 'causal_unet_spatial_v1')
+        report['scope'] = 'Current trained causal model, eight-sample fitting capacity only; not generalization'
+        report['warmstart'] = dict(checkpoint=str(checkpoint),epoch=source['epoch'],
+            sha256=hashlib.sha256(checkpoint.read_bytes()).hexdigest(),optimizer='fresh Adam')
     shuffle = torch.Generator().manual_seed(1234)
     indices = torch.cat([torch.randperm(8,generator=shuffle) for _ in range((args.updates+3)//4)])
     assert len(indices)>=args.updates*2
-    for name, constructor in [('frequency17',CausalUNetSpatial),('frequency65',ResolutionSpatial)]:
+    constructors = [('frequency17',CausalUNetSpatial)]
+    if args.refiner:
+        from experiments.causal_gru_refiner import CausalGRURefiner
+        constructors=[('causal_gru_refiner',CausalGRURefiner)]
+        report['refiner_implementation_sha256']=hashlib.sha256(
+            Path(__file__).with_name('causal_gru_refiner.py').read_bytes()).hexdigest()
+    if source is None:constructors.append(('frequency65',ResolutionSpatial))
+    for name, constructor in constructors:
         torch.manual_seed(1234)
         model=constructor()
+        cached_baseline=None
+        if args.refiner:
+            model.backbone.load_state_dict(source['model_state_dict'],strict=True)
+            model.backbone.requires_grad_(False);model.backbone.eval()
+            with torch.no_grad():
+                cached=[]
+                for i in range(8):
+                    features,_=objective.build_features(mixture[i:i+1],target[i:i+1],512,160,320,.5,'cpu',[96000])
+                    cached.append(model.backbone(features))
+                cached_baseline=torch.cat(cached)
+            report['refiner_probe_backbone']='Frozen and cached for the exact fixed6s crops; no future frames or reference inputs'
+        elif source is not None:model.load_state_dict(source['model_state_dict'],strict=True)
         optimizer=torch.optim.Adam(model.parameters(),lr=0.001)
         start=time.perf_counter()
-        rows=[]
+        rows=[]; gradient_norms=[]
         for update in range(args.updates+1):
             if update in (0,args.updates//2,args.updates):
                 model.eval()
+                objective.reset_stats()
                 with torch.no_grad():
                     scores=[]; losses=[]
                     for i in range(8):
                         features,ref=objective.build_features(mixture[i:i+1],target[i:i+1],512,160,320,0.5,'cpu',[96000])
-                        estimate=model(features)
+                        estimate=(model.refine(features,cached_baseline[i:i+1])[0]
+                                  if args.refiner else model(features))
                         losses.append(float(objective(estimate,ref,[601])))
                         wave=objective.reconstruct(estimate,96000)[0].numpy()
                         scores.append(float(pesq(16000,target[i].numpy(),wave,'wb')))
                 row=dict(updates=update,mean_pesq=sum(scores)/8,per_sample_pesq=scores,
-                         mean_loss=sum(losses)/8,elapsed_seconds=time.perf_counter()-start)
+                         mean_loss=sum(losses)/8,loss_components=objective.stats(),
+                         gradient_norm_mean=sum(gradient_norms)/max(1,len(gradient_norms)),
+                         gradient_norm_max=max(gradient_norms,default=0),
+                         clipped_update_fraction=sum(x>5 for x in gradient_norms)/max(1,len(gradient_norms)),
+                         elapsed_seconds=time.perf_counter()-start)
                 rows.append(row)
                 print(name,json.dumps(row),flush=True)
                 report['active']=dict(candidate=name,completed_updates=update,results=rows)
@@ -103,16 +140,20 @@ def main():
             ids=indices[update*2:update*2+2]
             features,ref=objective.build_features(mixture[ids],target[ids],512,160,320,0.5,'cpu',[96000]*2)
             optimizer.zero_grad(set_to_none=True)
-            loss=objective(model(features),ref,[601]*2)
+            estimate=model.refine(features,cached_baseline[ids])[0] if args.refiner else model(features)
+            loss=objective(estimate,ref,[601]*2)
             assert torch.isfinite(loss)
             loss.backward()
             norm=torch.nn.utils.clip_grad_norm_(model.parameters(),5,error_if_nonfinite=True)
             assert torch.isfinite(norm)
+            gradient_norms.append(float(norm))
             optimizer.step()
             if update<3 or (update+1)%25==0:
                 print(name,'update',update+1,'elapsed',round(time.perf_counter()-start,2),flush=True)
+        assert all(torch.isfinite(v).all() for v in model.state_dict().values())
         torch.save(model.state_dict(),output/f'{name}.pt')
         report['results'].append(dict(candidate=name,parameters=sum(p.numel() for p in model.parameters()),
+                                      trainable_parameters=sum(p.numel() for p in model.parameters() if p.requires_grad),
                                       elapsed_seconds=time.perf_counter()-start,measurements=rows))
     report.pop('active',None)
     report['status']='complete'

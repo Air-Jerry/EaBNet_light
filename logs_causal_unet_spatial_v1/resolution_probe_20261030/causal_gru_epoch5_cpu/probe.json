@@ -1,0 +1,145 @@
+{
+  "status": "complete",
+  "scope": "Current trained causal model, eight-sample fitting capacity only; not generalization",
+  "seed": 1234,
+  "updates": 200,
+  "effective_batch": 2,
+  "learning_rate": 0.001,
+  "segment_samples": 96000,
+  "sample_audio_sha256": [
+    {
+      "mixture": "e6adf8464d11286af059399af1ec1f9310e9953ef3d6b5bf109a8a4c3e99bd46",
+      "target": "b4013bd11f8f55d58fc7c1f189c7b27a6da13845ec6ad855255b06fa8735c3a4"
+    },
+    {
+      "mixture": "dd9a79071803df73532d79b03a79459d70884437d2640f78bf2d15959f0177b6",
+      "target": "8a433b8e02b7cd5dd5a7ac7b96efa29a130dedc4ceb278d5958282bd1727e436"
+    },
+    {
+      "mixture": "d8e29a08ca9cd0c7352dc362ff54804c291b74968adff33526ac2f04283c1c13",
+      "target": "e697c6d72a5ee642e4dff923474a9285dc72c5dbc76a7960f383079090443a93"
+    },
+    {
+      "mixture": "7c233a786d028a1586478052951d5dc7161de136adc355d054cab663e5c7a529",
+      "target": "2139bce5d8f3938d4dd4115529d138ecb8b96d5656883b9092df8281e9742c68"
+    },
+    {
+      "mixture": "2dd8a49e959f1682f1176a6aab9d91712860a46b0a564945000bb028f24c05a0",
+      "target": "1ef1b36a5296f889fa5bec8d84dd074808f14887c70139fb84eb8f6ee9bda294"
+    },
+    {
+      "mixture": "ae93e57097da49ecc58a9148eb5044c65fee8fe490274954953a708251cbe0ba",
+      "target": "b1f63ea875a7f4b6e36525075b667b36774b171e8ed90948b580fd063c43d623"
+    },
+    {
+      "mixture": "b29529a808ed0ea58ff57fb96496ad893a80cbb470bed8bd4314ca6265378f84",
+      "target": "5a9df235b423e4bd30f9dc833a105699ef8a53ec265a5569edb73d538f06d4e0"
+    },
+    {
+      "mixture": "c4b15451011261ede2d430bbc77a0b5e31125100991a737bb64c3b0d241d7f2e",
+      "target": "c90b4b72d7f6f3673a655314f2449ec6e3eb4ee827feb66eb2a87125ee2d7815"
+    }
+  ],
+  "objective": "Unchanged QualityObjective",
+  "precision": "CPU FP32",
+  "source_sha256": "d53767168897e9abb49f65aefa3fdbea6cf91795d7661c3bd1db68d2a760a1f8",
+  "results": [
+    {
+      "candidate": "causal_gru_refiner",
+      "parameters": 2722322,
+      "trainable_parameters": 120258,
+      "elapsed_seconds": 499.7366847139783,
+      "measurements": [
+        {
+          "updates": 0,
+          "mean_pesq": 1.7402154952287674,
+          "per_sample_pesq": [
+            1.470010757446289,
+            3.4126760959625244,
+            1.8236173391342163,
+            1.077903389930725,
+            1.4195609092712402,
+            1.3222476243972778,
+            1.7915174961090088,
+            1.6041903495788574
+          ],
+          "mean_loss": 0.5726052802056074,
+          "loss_components": {
+            "samples": 8,
+            "batches": 8,
+            "spectral": 0.4393618404865265,
+            "mrstft": 1.0883740186691284,
+            "waveform": 0.2440607100725174,
+            "total": 0.5726052522659302
+          },
+          "gradient_norm_mean": 0.0,
+          "gradient_norm_max": 0,
+          "clipped_update_fraction": 0.0,
+          "elapsed_seconds": 4.244913083035499
+        },
+        {
+          "updates": 100,
+          "mean_pesq": 1.751418113708496,
+          "per_sample_pesq": [
+            1.4595624208450317,
+            3.485536813735962,
+            1.852156162261963,
+            1.0781272649765015,
+            1.4269334077835083,
+            1.3144241571426392,
+            1.7922115325927734,
+            1.6023931503295898
+          ],
+          "mean_loss": 0.5600107312202454,
+          "loss_components": {
+            "samples": 8,
+            "batches": 8,
+            "spectral": 0.42820537090301514,
+            "mrstft": 1.0780450105667114,
+            "waveform": 0.2400084137916565,
+            "total": 0.5600107312202454
+          },
+          "gradient_norm_mean": 0.1076736868917942,
+          "gradient_norm_max": 0.826704740524292,
+          "clipped_update_fraction": 0.0,
+          "elapsed_seconds": 257.2914649648592
+        },
+        {
+          "updates": 200,
+          "mean_pesq": 1.7544542253017426,
+          "per_sample_pesq": [
+            1.484699010848999,
+            3.4640696048736572,
+            1.8514056205749512,
+            1.0786492824554443,
+            1.435861349105835,
+            1.329023003578186,
+            1.7971025705337524,
+            1.5948233604431152
+          ],
+          "mean_loss": 0.5579960569739342,
+          "loss_components": {
+            "samples": 8,
+            "batches": 8,
+            "spectral": 0.42755475640296936,
+            "mrstft": 1.0664113759994507,
+            "waveform": 0.2380015105009079,
+            "total": 0.5579960346221924
+          },
+          "gradient_norm_mean": 0.12829351357184351,
+          "gradient_norm_max": 0.826704740524292,
+          "clipped_update_fraction": 0.0,
+          "elapsed_seconds": 499.6153838739265
+        }
+      ]
+    }
+  ],
+  "warmstart": {
+    "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_causal_unet_spatial_v1_causal_fast_20261030_195249_1935855/model_epoch_5.pt",
+    "epoch": 5,
+    "sha256": "475733c57f9c5b483c854a09145cf067e807929563f9da985c051e71898c190f",
+    "optimizer": "fresh Adam"
+  },
+  "refiner_implementation_sha256": "4a569000b9389ed78701c937b44e27b3f2bd8671fc4bcfa9bee3114879669200",
+  "refiner_probe_backbone": "Frozen and cached for the exact fixed6s crops; no future frames or reference inputs"
+}
