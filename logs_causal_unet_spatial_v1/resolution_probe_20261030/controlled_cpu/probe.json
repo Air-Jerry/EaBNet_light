@@ -1,0 +1,70 @@
+{
+  "status": "failed",
+  "scope": "Eight fixed real training samples, CPU fitting only; not generalization",
+  "seed": 1234,
+  "updates": 200,
+  "effective_batch": 2,
+  "learning_rate": 0.001,
+  "segment_samples": 96000,
+  "sample_audio_sha256": [
+    {
+      "mixture": "e6adf8464d11286af059399af1ec1f9310e9953ef3d6b5bf109a8a4c3e99bd46",
+      "target": "b4013bd11f8f55d58fc7c1f189c7b27a6da13845ec6ad855255b06fa8735c3a4"
+    },
+    {
+      "mixture": "dd9a79071803df73532d79b03a79459d70884437d2640f78bf2d15959f0177b6",
+      "target": "8a433b8e02b7cd5dd5a7ac7b96efa29a130dedc4ceb278d5958282bd1727e436"
+    },
+    {
+      "mixture": "d8e29a08ca9cd0c7352dc362ff54804c291b74968adff33526ac2f04283c1c13",
+      "target": "e697c6d72a5ee642e4dff923474a9285dc72c5dbc76a7960f383079090443a93"
+    },
+    {
+      "mixture": "7c233a786d028a1586478052951d5dc7161de136adc355d054cab663e5c7a529",
+      "target": "2139bce5d8f3938d4dd4115529d138ecb8b96d5656883b9092df8281e9742c68"
+    },
+    {
+      "mixture": "2dd8a49e959f1682f1176a6aab9d91712860a46b0a564945000bb028f24c05a0",
+      "target": "1ef1b36a5296f889fa5bec8d84dd074808f14887c70139fb84eb8f6ee9bda294"
+    },
+    {
+      "mixture": "ae93e57097da49ecc58a9148eb5044c65fee8fe490274954953a708251cbe0ba",
+      "target": "b1f63ea875a7f4b6e36525075b667b36774b171e8ed90948b580fd063c43d623"
+    },
+    {
+      "mixture": "b29529a808ed0ea58ff57fb96496ad893a80cbb470bed8bd4314ca6265378f84",
+      "target": "5a9df235b423e4bd30f9dc833a105699ef8a53ec265a5569edb73d538f06d4e0"
+    },
+    {
+      "mixture": "c4b15451011261ede2d430bbc77a0b5e31125100991a737bb64c3b0d241d7f2e",
+      "target": "c90b4b72d7f6f3673a655314f2449ec6e3eb4ee827feb66eb2a87125ee2d7815"
+    }
+  ],
+  "objective": "Unchanged QualityObjective",
+  "precision": "CPU FP32",
+  "source_sha256": "8a28403c82fa08ef797d42d3ace020732a22b90c97e7eeb6a1da993f8a11cd85",
+  "results": [],
+  "active": {
+    "candidate": "frequency17",
+    "completed_updates": 0,
+    "results": [
+      {
+        "updates": 0,
+        "mean_pesq": 1.11553256213665,
+        "per_sample_pesq": [
+          1.0460143089294434,
+          1.369909644126892,
+          1.0999191999435425,
+          1.0525591373443604,
+          1.0866179466247559,
+          1.0419906377792358,
+          1.0615350008010864,
+          1.1657146215438843
+        ],
+        "mean_loss": 1.6434473022818565,
+        "elapsed_seconds": 7.834497788920999
+      }
+    ]
+  },
+  "error": "Inference-mode Hann window cached before training in diagnostic; fixed no_grad in controlled_cpu_v2; production trainer unaffected"
+}

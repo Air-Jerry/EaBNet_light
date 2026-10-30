@@ -33,4 +33,8 @@ CUDA_VISIBLE_DEVICES=0,1 nohup bash run_light_causal.sh \
 
 首轮完整600条WB-PESQ为1.300029，距离3.4目标很远；速度提升不能当作质量达标。第二轮继续训练，按完整轮次结果评估质量趋势。初始化与首轮600条样本ID、输入路径及长度完全一致，noisy指标最大差7.82e-14（浮点误差），增益均为1。
 
+第2至5轮完整600条PESQ依次为1.749241、1.837397、2.014663、2.086434，仍未达到3.4。完整轮次计时继续在epoch_timing.jsonl中记录，未减少训练或评估样本数。
+
+结构筛选：服务器CPU上用相同8条真实训练样本、6秒裁剪、种子1234、batch2及200次Adam更新，比较17频率组/8层/hidden128与65频率组/4层/hidden96。最终小样本PESQ分别1.166596、1.275473，后者仅多0.108877；其参数量也不同，不能视作单一频率因素实验，更不能当作完整600条增益。保留当前完整训练，未凭这一结果切换结构。源代码为experiments/probe_causal_resolution.py，数据哈希及结果位于logs_causal_unet_spatial_v1/resolution_probe_20261030/controlled_cpu_v2/probe.json。最初诊断的Hann窗口推理缓存错误仅影响该诊断，修复后重新执行，生产训练未受影响。训练音频留在服务器，仅同步指标日志。
+
 推送命令：git push origin codex/9.16。

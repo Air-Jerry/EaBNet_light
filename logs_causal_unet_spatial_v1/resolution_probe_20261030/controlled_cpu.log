@@ -1,0 +1,13 @@
+frequency17 {"updates": 0, "mean_pesq": 1.11553256213665, "per_sample_pesq": [1.0460143089294434, 1.369909644126892, 1.0999191999435425, 1.0525591373443604, 1.0866179466247559, 1.0419906377792358, 1.0615350008010864, 1.1657146215438843], "mean_loss": 1.6434473022818565, "elapsed_seconds": 7.834497788920999}
+Traceback (most recent call last):
+  File "/home/nis/jinrui.yang/EaBNet_light/tmp/probe_causal_resolution.py", line 122, in <module>
+    if __name__=='__main__':main()
+  File "/home/nis/jinrui.yang/EaBNet_light/tmp/probe_causal_resolution.py", line 106, in main
+    loss=objective(model(features),ref,[601]*2)
+  File "/home/nis/jinrui.yang/EaBNet_light/light_quality_loss.py", line 136, in __call__
+    multiscale.append(self._multi_resolution(reconstructed, raw_target))
+  File "/home/nis/jinrui.yang/EaBNet_light/light_quality_loss.py", line 97, in _multi_resolution
+    estimated_mag = torch.stft(estimate, **kwargs).abs()
+  File "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/functional.py", line 704, in stft
+    return _VF.stft(  # type: ignore[attr-defined]
+RuntimeError: Inference tensors cannot be saved for backward. To work around you can make a clone to get a normal tensor and use it in autograd.

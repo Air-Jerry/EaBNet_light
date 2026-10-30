@@ -14,10 +14,34 @@
       "pesq": 1.3000290489196777,
       "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_causal_unet_spatial_v1_causal_fast_20261030_195249_1935855/model_epoch_1.pt",
       "checkpoint_sha256": "041565394e8fb5b07bac6bb44a7ad7820937a5b389f9069caa22388b30694aac"
+    },
+    {
+      "epoch": 2,
+      "pesq": 1.7492410729328791,
+      "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_causal_unet_spatial_v1_causal_fast_20261030_195249_1935855/model_epoch_2.pt",
+      "checkpoint_sha256": "40070da71ddfa233d13c01afe71c72fdab98c1aae871ffd861892c292b1bf85e"
+    },
+    {
+      "epoch": 3,
+      "pesq": 1.8373974653085072,
+      "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_causal_unet_spatial_v1_causal_fast_20261030_195249_1935855/model_epoch_3.pt",
+      "checkpoint_sha256": "82ed3051bb83a70d31b2dcc8d07470f819192648ec4eadeff772f270df459c4a"
+    },
+    {
+      "epoch": 4,
+      "pesq": 2.0146633903185527,
+      "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_causal_unet_spatial_v1_causal_fast_20261030_195249_1935855/model_epoch_4.pt",
+      "checkpoint_sha256": "0e8f691d60a42c97053f2b58a5def85e63654cc6a7293225ed96bdbc0b3b9088"
+    },
+    {
+      "epoch": 5,
+      "pesq": 2.086434445579847,
+      "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_causal_unet_spatial_v1_causal_fast_20261030_195249_1935855/model_epoch_5.pt",
+      "checkpoint_sha256": "475733c57f9c5b483c854a09145cf067e807929563f9da985c051e71898c190f"
     }
   ],
-  "best_completed_epoch": 1,
-  "best_completed_pesq": 1.3000290489196777,
+  "best_completed_epoch": 5,
+  "best_completed_pesq": 2.086434445579847,
   "target_reached": false,
   "final_full600_waveform_streaming_audit_required": true
 }
