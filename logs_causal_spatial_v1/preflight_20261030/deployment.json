@@ -1,0 +1,23 @@
+{
+  "status": "deployed_causal_only",
+  "files": {
+    "light_causal_stream.py": "028ddcdc53835bc9e5c3f76bdcbafa9b44e4ea2e444f7fed1d3e2b214abc6bb8",
+    "light_causal_spatial_model.py": "b911ac848c86ca6b4a95933ae90d33a200d44f00ccaa8b98dc4b2cb7cf907a14",
+    "CAUSAL_REALTIME.md": "b8f64bf94a7759b3a82d69f03f374d81315a79ea4618b9caf81129e5d60b9881",
+    "light_candidate_runtime.py": "ef1a5703654bc3abe9458760e167244eb51c59bce6272284a80c7c0983ba221c",
+    "benchmark_light_causal.py": "c350bc9ea2178c7c1c76be4124fc8e55067fdb900a7587eed60211373952df24",
+    "train_light_causal.py": "16367b2aa9e20db600d42ead0485b92e056d8fca509bb86f552d060898e782bc",
+    "third_party/spatialnet/linear_group.py": "e6e0403b5dbdd787d511f0de9cef4335aa25ae46feee211554346c0a00cf2a43",
+    "third_party/spatialnet/non_linear.py": "a985a7f81c8ebfbbd408ea753d7e9b81324d523c01afa1faca4285049640e79d",
+    "third_party/spatialnet/__init__.py": "9cd2bb7950b9dfdcc107381416f6f3903ebec36657db85cb6fc7275a5c0dd0de",
+    "third_party/spatialnet/LICENSE": "645f351f0b7855a4e71b0d2644ef924bd8944163fd1f3b4315e3172ef433ce16",
+    "third_party/spatialnet/SOURCE.json": "cd9948d21079f8b713e15913e8a5872f01ba8bc5b747df66291a36a8ad634be3",
+    "third_party/spatialnet/norm.py": "4c42f48a6d34dc82f25462782ba57e84dddfbfebb56b940f73a28b5ec41055cc",
+    "third_party/spatialnet/SpatialNet.py": "3baaa7136c893eba9aee9dfcdb40478a5f87f819682286abbec89a5d71d972f6"
+  },
+  "evaluate_light_sha256_unchanged": "0c3ada1425b33e16688e8424daba23681ac9ded4d8bee931ed24c69e59e5730b",
+  "cancelled_noncausal_process_groups": [
+    1686769,
+    1657942
+  ]
+}

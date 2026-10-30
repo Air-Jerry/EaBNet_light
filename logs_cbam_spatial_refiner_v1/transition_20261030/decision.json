@@ -1,0 +1,44 @@
+{
+  "status": "cancelled_by_causal_realtime_requirement",
+  "reason": "User requested an architecture change when detail tuning produces small gains.",
+  "evidence": {
+    "quality_epoch17_full600_wb_pesq": 2.8568443592389423,
+    "best_metric_full600_wb_pesq": 2.8652436349789303,
+    "best_metric_epoch": 2,
+    "improvement": 0.008399275739988,
+    "target": 3.4,
+    "gap_to_target": 0.5347563650210696,
+    "metric_epoch4_pesq": 2.863451295296351
+  },
+  "interpretation": "Current model and training scheme have not achieved the required quality. Small metric-stage gains justify changing the trainable architecture; they do not prove a mathematical ceiling or a flaw in the original paper.",
+  "cancelled_metric_epochs": [
+    6
+  ],
+  "new_candidate": "cbam_spatial_refiner_v1",
+  "trainable_network": "Author SpatialNet-small: eight spatial/narrow-band blocks, C96/FFN192/4 heads/squeeze8; independent of the old U-Net/BiGRU trainable refiner",
+  "source_policy": "Freeze the best completed full600 source. New network can use all eight mixture RI channels and the source estimate, with an unconstrained complex residual.",
+  "preserved_protocol": [
+    "same training metadata and full600 comparison metadata",
+    "16 kHz; n_fft512/hop160/win320; power0.5",
+    "first eight microphones, target reference mic0, no external waveform normalization",
+    "full-length FP32 inference, wideband PESQ, no reference-dependent gain matching"
+  ],
+  "gates": [
+    "finite real CUDA gradients, saved weights and Adam state",
+    "entire frozen source unchanged and independent new network weights updated",
+    "full600 initialization output matches its source",
+    "only actual full600 mean WB-PESQ >=3.4 satisfies the target"
+  ],
+  "monitoring": {
+    "transition_pid": 1686769,
+    "native_boundary_wait_not_before_utc": "2026-10-30T01:56:00Z",
+    "next_agent_check_not_before_utc": "2026-10-30T02:10:00Z",
+    "sampling": "nvidia-smi every5 sec during CUDA smoke and every10 sec during full training"
+  },
+  "cancelled_reason": "User requires the entire model causal real-time. No frozen noncausal base or noncausal postprocessor is allowed.",
+  "stopped_process_groups": [
+    1686769,
+    1657942
+  ],
+  "replacement_plan": "Independent end-to-end causal spatial model, bounded caches and full waveform streaming checks before any training."
+}

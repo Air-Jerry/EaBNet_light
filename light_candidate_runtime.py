@@ -18,16 +18,23 @@ SPATIAL_CANDIDATE = "cbam_spatial_refiner_v1"
 SPATIAL_IMPLEMENTATION_FILES = (*QUALITY_IMPLEMENTATION_FILES, "light_spatial_model.py",
     "third_party/spatialnet/SpatialNet.py", "third_party/spatialnet/norm.py",
     "third_party/spatialnet/non_linear.py", "third_party/spatialnet/linear_group.py")
+CAUSAL_CANDIDATE = "causal_spatial_v1"
+CAUSAL_IMPLEMENTATION_FILES = ("light_causal_spatial_model.py", "light_causal_stream.py",
+    "third_party/spatialnet/SpatialNet.py", "third_party/spatialnet/norm.py",
+    "third_party/spatialnet/non_linear.py", "third_party/spatialnet/linear_group.py")
 IDENTITY_FIELDS = ("sample_rate", "n_fft", "hop_length", "win_length", "power", "target_ref_mic",
                    "channels", "num_mics", "embed_dim", "cd1", "dfsmn_layers", "dfsmn_memory_size",
                    "norm_type", "bf_type", "topo_type", "is_causal")
 
 
 def all_model_candidates():
-    return (*all_reference_candidates(), QUALITY_CANDIDATE, SPATIAL_CANDIDATE)
+    return (*all_reference_candidates(), QUALITY_CANDIDATE, SPATIAL_CANDIDATE, CAUSAL_CANDIDATE)
 
 
 def build_model_candidate(candidate_id, **model_kwargs):
+    if candidate_id == CAUSAL_CANDIDATE:
+        from light_causal_spatial_model import CausalSpatialEnhancer
+        return CausalSpatialEnhancer(**model_kwargs)
     if candidate_id == SPATIAL_CANDIDATE:
         from light_spatial_model import EaBNetSpatialQuality
         return EaBNetSpatialQuality(**model_kwargs)
@@ -38,6 +45,25 @@ def build_model_candidate(candidate_id, **model_kwargs):
 
 
 def candidate_metadata(candidate_id):
+    if candidate_id == CAUSAL_CANDIDATE:
+        return {
+            "structure_candidate": candidate_id, "candidate_schema": 4,
+            "candidate_implementation_sha256": source_hashes(CAUSAL_IMPLEMENTATION_FILES),
+            "candidate_evidence": {
+                "candidate_id": candidate_id, "author_confirmed": False,
+                "exact_reproduction_verified": False,
+                "purpose": "End-to-end causal spatial adaptation; no noncausal source model.",
+                "model_causal": True, "future_frames": 0, "frozen_backbone": False,
+                "model_config": {"hidden": 96, "ffn": 192, "layers": 8, "heads": 4, "context": 128},
+                "temporal_convolution": "Left padding and fixed input caches",
+                "attention": "Current and at most 127 past frames; bounded per-layer K/V cache",
+                "normalization": "LayerNorm over channels; input scale from current-frame reference-mixture frequencies only",
+                "initialization": "Zero complex residual on current reference mixture",
+                "reference_audio_used_at_inference": False,
+                "waveform_streaming": "512/160/320, 16kHz, power0.5; 320-sample buffering budget plus compute/I-O",
+                "source_revision": "Audio-WestlakeU/NBSS@cc42fc8ad2e6642c09b8f4169a85b4766dc22b7e",
+            },
+        }
     if candidate_id == SPATIAL_CANDIDATE:
         return {
             "structure_candidate": candidate_id,

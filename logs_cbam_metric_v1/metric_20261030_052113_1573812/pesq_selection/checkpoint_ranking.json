@@ -1,5 +1,5 @@
 {
-  "status": "partial",
+  "status": "stopped_noncausal",
   "selection_metric": "mean enhanced PESQ",
   "selection_scope": "Same 600 validation/comparison samples; not an independent final test.",
   "target_pesq": 3.4,
@@ -10,8 +10,7 @@
     2,
     3,
     4,
-    5,
-    6
+    5
   ],
   "completed_epochs": [
     0,
@@ -257,7 +256,7 @@
     "gpu_smoke_report": "logs_cbam_metric_v1/gpu_smoke_20261030_051834_1572539/gpu_smoke_summary.json"
   },
   "runner": {
-    "status": "training",
+    "status": "stopped_by_causal_realtime_requirement",
     "pid": 1657942,
     "pgid": 1573809,
     "launch_log": "logs_cbam_metric_v1/launch_20261030_052112_1573809.log",
@@ -275,7 +274,7 @@
     "training_interval_seconds": 2400,
     "next_check_not_before_utc": "2026-10-30T02:00:00Z"
   },
-  "decision": "Epoch4 completed all600 samples, WB-PESQ2.863451. Full G/D Adam counters and frozen weights passed the optimized-runtime audit. Epoch5 is live; finish through epoch6 before the isolated SpatialNet CUDA gate. Target3.4 remains unmet.",
+  "decision": "User requires the entire signal path causal and streaming. The old CBAM/BiGRU generator is noncausal; stopped during epoch5 and cancelled epoch6. Prior full600 scores are historical noncausal results and do not satisfy the new requirement.",
   "epoch1_paired_pesq_vs_metric_baseline": {
     "mean_delta": -0.015869617263476053,
     "median_delta": -0.009312748908996582,
@@ -409,5 +408,11 @@
         "power_mean_w": 109.43926267281105
       }
     ]
-  }
+  },
+  "cancelled_epochs": [
+    5,
+    6
+  ],
+  "model_is_causal": false,
+  "eligible_for_current_causal_target": false
 }
