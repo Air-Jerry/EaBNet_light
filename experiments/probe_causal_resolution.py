@@ -54,9 +54,11 @@ def main():
     parser.add_argument('--updates', type=int, default=200)
     parser.add_argument('--warmstart', help='Fit only the current17-group model from this validated checkpoint; fresh Adam')
     parser.add_argument('--refiner',action='store_true',help='Screen a causal GRU branch with cached, frozen causal backbone')
+    parser.add_argument('--band',action='store_true',help='Compare the fully trainable global model and full-frequency recurrent beamforming')
     args = parser.parse_args()
     if args.updates < 1:raise ValueError('Use a positive update budget')
     if args.refiner and not args.warmstart:raise ValueError('The refiner probe requires a trained causal warm-start')
+    if args.band and (not args.warmstart or args.refiner):raise ValueError('Band comparison requires a global warm-start and no frozen refiner')
     torch.set_num_threads(2)
     torch.set_num_interop_threads(1)
     root, output = Path(args.data_dir), Path(args.output_dir)
@@ -76,11 +78,14 @@ def main():
         seed=1234, updates=args.updates, effective_batch=2, learning_rate=0.001, segment_samples=96000,
         sample_audio_sha256=hashes, objective='Unchanged QualityObjective', precision='CPU FP32',
         source_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(), results=[])
+    if args.band:
+        report.pop('sample_audio_sha256')
+        report['private_audio_hashes_exported']=False
     source = None
     if args.warmstart:
         from light_candidate_runtime import read_candidate_checkpoint
         checkpoint = Path(args.warmstart).expanduser().resolve()
-        source, _ = read_candidate_checkpoint(checkpoint, 'causal_unet_spatial_v1')
+        source, _ = read_candidate_checkpoint(checkpoint, 'causal_unet_global_v1' if args.band else 'causal_unet_spatial_v1')
         report['scope'] = 'Current trained causal model, eight-sample fitting capacity only; not generalization'
         report['warmstart'] = dict(checkpoint=str(checkpoint),epoch=source['epoch'],
             sha256=hashlib.sha256(checkpoint.read_bytes()).hexdigest(),optimizer='fresh Adam')
@@ -88,6 +93,12 @@ def main():
     indices = torch.cat([torch.randperm(8,generator=shuffle) for _ in range((args.updates+3)//4)])
     assert len(indices)>=args.updates*2
     constructors = [('frequency17',CausalUNetSpatial)]
+    if args.band:
+        from light_causal_global_model import CausalGlobalSpatial
+        from experiments.causal_band_beamformer import CausalBandBeamformer
+        constructors=[('global_control',CausalGlobalSpatial),('full_frequency_gru',CausalBandBeamformer)]
+        report['band_implementation_sha256']=hashlib.sha256(Path(__file__).with_name('causal_band_beamformer.py').read_bytes()).hexdigest()
+        report['scope']='Two fully trainable models from the same global checkpoint; eight-sample fitting only, not generalization'
     if args.refiner:
         from experiments.causal_gru_refiner import CausalGRURefiner
         constructors=[('causal_gru_refiner',CausalGRURefiner)]
@@ -108,7 +119,12 @@ def main():
                     cached.append(model.backbone(features))
                 cached_baseline=torch.cat(cached)
             report['refiner_probe_backbone']='Frozen and cached for the exact fixed6s crops; no future frames or reference inputs'
-        elif source is not None:model.load_state_dict(source['model_state_dict'],strict=True)
+        elif source is not None:
+            values=model.state_dict()
+            extra=set(values)-set(source['model_state_dict'])
+            assert not extra or (args.band and all(key.startswith('band_') for key in extra)),extra
+            values.update(source['model_state_dict'])
+            model.load_state_dict(values,strict=True)
         optimizer=torch.optim.Adam(model.parameters(),lr=0.001)
         start=time.perf_counter()
         rows=[]; gradient_norms=[]
@@ -156,8 +172,22 @@ def main():
                                       trainable_parameters=sum(p.numel() for p in model.parameters() if p.requires_grad),
                                       elapsed_seconds=time.perf_counter()-start,measurements=rows))
     report.pop('active',None)
+    if args.band:
+        assert all(hashlib.sha256((root/f'{name}_{i}.wav').read_bytes()).hexdigest()==hashes[i-1][name]
+            for i in range(1,9) for name in ('mixture','target'))
+        report['audio_file_occurrences_unchanged']=16
     report['status']='complete'
     (output/'probe.json').write_text(json.dumps(report,indent=2))
 
 
-if __name__=='__main__':main()
+if __name__=='__main__':
+    try:main()
+    except Exception as error:
+        if '--output-dir' in sys.argv:
+            output=Path(sys.argv[sys.argv.index('--output-dir')+1])
+            if output.is_dir():
+                result=output/'probe.json'
+                report=json.loads(result.read_text()) if result.exists() else {}
+                report.update(status='failed',error=f'{type(error).__name__}: {error}')
+                result.write_text(json.dumps(report,indent=2))
+        raise

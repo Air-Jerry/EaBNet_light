@@ -1,0 +1,30 @@
+{
+  "input_hop_samples": 160,
+  "input_hop_ms": 10,
+  "future_stft_frames": 0,
+  "buffering_delay_samples": 320,
+  "buffering_delay_ms": 20,
+  "stream_reset_per_utterance": true,
+  "warmup_state_discarded": true,
+  "completed_utterances": 2,
+  "audio_samples": 3782,
+  "measured_hops": 25,
+  "all_hop_ms": {
+    "mean": 8.271910920739174,
+    "p99": 9.544841768220067,
+    "max": 9.613101137802005
+  },
+  "deadline_miss_fraction": 0.0,
+  "all_hops_below_10ms": true,
+  "flush_max_ms": 9.181191911920905,
+  "full_vs_stream_waveform_max_error": 1.7881393432617188e-07,
+  "latency_scope": "CPU input transfer + streaming frontend/model/synthesis + CPU output transfer; excludes audio driver",
+  "end_of_stream": "Reflect only samples already received; no delay correction or clean-reference access",
+  "status": "passed",
+  "scope": "Server Torch2.5.1 CPU compatibility on two real audio prefixes; not full600 quality or CUDA real-time proof",
+  "checkpoint_sha256": "524ec41c6f845ecaa1fd6e8f8000fb7b72ce1e760769e76c019c0b04a247dcc4",
+  "adapter_sha256": "98198b82420c8085ab54f7c027d2d328c5264af39bd6a1bd0460be8a79db1fd8",
+  "torch_version": "2.5.1+cu121",
+  "device": "cpu",
+  "evaluator_sha256_unchanged": "0c3ada1425b33e16688e8424daba23681ac9ded4d8bee931ed24c69e59e5730b"
+}

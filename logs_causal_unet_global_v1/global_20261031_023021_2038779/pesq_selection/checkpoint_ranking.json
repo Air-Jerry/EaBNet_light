@@ -14,10 +14,28 @@
       "pesq": 2.3681534389654795,
       "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_causal_unet_global_v1_global_20261031_023021_2038779/model_epoch_1.pt",
       "checkpoint_sha256": "524ec41c6f845ecaa1fd6e8f8000fb7b72ce1e760769e76c019c0b04a247dcc4"
+    },
+    {
+      "epoch": 2,
+      "pesq": 2.3900392067432406,
+      "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_causal_unet_global_v1_global_20261031_023021_2038779/model_epoch_2.pt",
+      "checkpoint_sha256": "9db3613c7c37763b1b61c8981c56109c584a1b0a26f674c31280f3de69a2b9a1"
+    },
+    {
+      "epoch": 3,
+      "pesq": 2.422192035913467,
+      "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_causal_unet_global_v1_global_20261031_023021_2038779/model_epoch_3.pt",
+      "checkpoint_sha256": "a1392d56250becb21f341e4dca92485855d537f4298ea300fff6306c7c427b35"
+    },
+    {
+      "epoch": 4,
+      "pesq": 2.3948090805610023,
+      "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_causal_unet_global_v1_global_20261031_023021_2038779/model_epoch_4.pt",
+      "checkpoint_sha256": "dde0886dd6f80d68c41a33c73d0d22b09555e44276e1e64b236249723825a3bc"
     }
   ],
-  "best_completed_epoch": 1,
-  "best_completed_pesq": 2.3681534389654795,
+  "best_completed_epoch": 3,
+  "best_completed_pesq": 2.422192035913467,
   "target_reached": false,
   "final_full600_waveform_streaming_audit_required": true
 }
