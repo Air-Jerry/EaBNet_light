@@ -1,0 +1,69 @@
+{
+  "status": "suspended_at_complete_epoch7_for_short_preflight",
+  "root_pid": 2095049,
+  "root_start_ticks": 134692894,
+  "frozen_processes": [
+    {
+      "pid": 2095073,
+      "ppid": 2095049,
+      "sid": 2095049,
+      "state": "T",
+      "start_ticks": 134693105
+    },
+    {
+      "pid": 2102985,
+      "ppid": 2102983,
+      "sid": 2095049,
+      "state": "T",
+      "start_ticks": 134890812
+    },
+    {
+      "pid": 2102983,
+      "ppid": 2095049,
+      "sid": 2095049,
+      "state": "T",
+      "start_ticks": 134890812
+    },
+    {
+      "pid": 2102984,
+      "ppid": 2095049,
+      "sid": 2095049,
+      "state": "T",
+      "start_ticks": 134890812
+    },
+    {
+      "pid": 2095049,
+      "ppid": 1,
+      "sid": 2095049,
+      "state": "T",
+      "start_ticks": 134692894
+    }
+  ],
+  "completed_epoch": 7,
+  "retained_adam_updates": 46900,
+  "weights_match_immutable": true,
+  "all_weights_and_adam_finite": true,
+  "best_completed_epoch": 5,
+  "best_full600_pesq": 2.4343967906634014,
+  "target_reached": false,
+  "latest_epoch_timing": {
+    "epoch": 7,
+    "status": "complete",
+    "started_unix": 1793398802,
+    "finished_unix": 1793400777.5466254,
+    "total_seconds": 1975.5466253757477,
+    "training_validation_checkpoint_seconds": 1785,
+    "evaluation_audit_seconds": 190.54662537574768,
+    "training_samples": 53600,
+    "validation_samples": 600,
+    "full_metric_samples": 600,
+    "optimizer_updates_this_epoch": 6700,
+    "global_batch_size": 8,
+    "limit_seconds": 3600
+  },
+  "gpu_free_mib": [
+    11681.0625,
+    11699.0625
+  ],
+  "all_checkpoints_retained": true
+}

@@ -1,0 +1,16 @@
+{
+  "status": "stopped_for_recurrent65_full_training",
+  "latest_completed_epoch": 7,
+  "retained_adam_updates": 46900,
+  "old_global_root_pid": 2095049,
+  "all_original_checkpoints_retained": true,
+  "best_completed_epoch": 5,
+  "best_full600_pesq": 2.4343967906634014,
+  "new_candidate": "causal_recurrent_unet65_v1",
+  "new_cuda_checkpoint_sha256": "ce93f3c574e82c9566ab4a5fb426268e4c56534b70b82013f432d5a5e39e3403",
+  "new_cuda_finite_updates": 64,
+  "new_hot_global_samples_per_second": 21.7,
+  "new_stream_max_hop_ms": 3.3195349387824535,
+  "new_stream_waveform_max_error": 2.384185791015625e-07,
+  "remaining_old_live_session_members": []
+}

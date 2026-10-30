@@ -1,0 +1,17 @@
+{
+  "status": "partial",
+  "selection_scope": "Same full600 comparison samples; not an independent final test",
+  "model_is_causal": true,
+  "results": [
+    {
+      "epoch": 0,
+      "pesq": 1.088074848453204,
+      "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_causal_recurrent_unet65_v1_causal_recurrent65_20261031_065909_2104814/model_epoch_0.pt",
+      "checkpoint_sha256": "601964279ee32632efaacf9b1526700533f08cb8bf0c4f32988ef8f2e43b3f66"
+    }
+  ],
+  "best_completed_epoch": 0,
+  "best_completed_pesq": 1.088074848453204,
+  "target_reached": false,
+  "final_full600_waveform_streaming_audit_required": true
+}
