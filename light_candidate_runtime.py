@@ -22,16 +22,20 @@ CAUSAL_CANDIDATE = "causal_spatial_v1"
 CAUSAL_IMPLEMENTATION_FILES = ("light_causal_spatial_model.py", "light_causal_stream.py",
     "third_party/spatialnet/SpatialNet.py", "third_party/spatialnet/norm.py",
     "third_party/spatialnet/non_linear.py", "third_party/spatialnet/linear_group.py")
+FAST_CANDIDATE = "causal_unet_spatial_v1"
 IDENTITY_FIELDS = ("sample_rate", "n_fft", "hop_length", "win_length", "power", "target_ref_mic",
                    "channels", "num_mics", "embed_dim", "cd1", "dfsmn_layers", "dfsmn_memory_size",
                    "norm_type", "bf_type", "topo_type", "is_causal")
 
 
 def all_model_candidates():
-    return (*all_reference_candidates(), QUALITY_CANDIDATE, SPATIAL_CANDIDATE, CAUSAL_CANDIDATE)
+    return (*all_reference_candidates(), QUALITY_CANDIDATE, SPATIAL_CANDIDATE, CAUSAL_CANDIDATE, FAST_CANDIDATE)
 
 
 def build_model_candidate(candidate_id, **model_kwargs):
+    if candidate_id == FAST_CANDIDATE:
+        from light_causal_fast_model import CausalUNetSpatial
+        return CausalUNetSpatial(**model_kwargs)
     if candidate_id == CAUSAL_CANDIDATE:
         from light_causal_spatial_model import CausalSpatialEnhancer
         return CausalSpatialEnhancer(**model_kwargs)
@@ -45,6 +49,27 @@ def build_model_candidate(candidate_id, **model_kwargs):
 
 
 def candidate_metadata(candidate_id):
+    if candidate_id == FAST_CANDIDATE:
+        return {
+            "structure_candidate": candidate_id, "candidate_schema": 5,
+            "candidate_implementation_sha256": source_hashes((*CAUSAL_IMPLEMENTATION_FILES, "light_causal_fast_model.py")),
+            "candidate_evidence": {
+                "candidate_id": candidate_id, "author_confirmed": False,
+                "exact_reproduction_verified": False,
+                "purpose": "Multi-resolution causal spatial beamformer; end-to-end, no noncausal source",
+                "model_causal": True, "future_frames": 0, "frozen_backbone": False,
+                "model_config": {"widths": [32, 48, 64, 96, 128], "ffn": 256,
+                    "spatial_layers": 8, "heads": 4, "context": 128, "bottleneck_frequencies": 17},
+                "temporal_convolution": "Left padding and fixed input caches; frequency-only transposed convolutions",
+                "attention": "Current plus at most127 history frames at17 frequency groups",
+                "normalization": "Current-frame channels only; FP32 LayerNorm reductions with activation dtype preserved",
+                "output": "Unconstrained complex8-microphone residual beamforming weights; sum(weight*mixture), no conjugation",
+                "initialization": "Zero residual weights; current reference mixture",
+                "reference_audio_used_at_inference": False,
+                "waveform_streaming": "512/160/320,16kHz,power0.5;320-sample buffering plus compute/I-O; discarded warmup",
+                "source_revision": "Frequency modules adapted from Audio-WestlakeU/NBSS@cc42fc8ad2e6642c09b8f4169a85b4766dc22b7e",
+            },
+        }
     if candidate_id == CAUSAL_CANDIDATE:
         return {
             "structure_candidate": candidate_id, "candidate_schema": 4,

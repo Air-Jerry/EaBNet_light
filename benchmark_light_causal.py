@@ -11,7 +11,8 @@ import numpy as np
 import soundfile as sf
 import torch
 
-from light_causal_spatial_model import CausalSpatialEnhancer, CAUSAL_CANDIDATE
+from light_causal_spatial_model import CAUSAL_CANDIDATE
+from light_candidate_runtime import build_model_candidate
 from light_causal_stream import CausalWaveformStream
 from light_quality_loss import QualityObjective
 from train_light import build_stft_batch, resolve_record_path
@@ -30,13 +31,14 @@ def run(args):
         torch.manual_seed(1234)
         if args.checkpoint:
             from evaluate_light import load_model
-            model, _ = load_model(args.checkpoint, device, CAUSAL_CANDIDATE)
+            model, _ = load_model(args.checkpoint, device, args.candidate)
             report["checkpoint_sha256"] = hashlib.sha256(Path(args.checkpoint).read_bytes()).hexdigest()
         else:
-            model = CausalSpatialEnhancer().to(device).eval()
+            model = build_model_candidate(args.candidate).to(device).eval()
+            head = model.decoder if args.candidate == CAUSAL_CANDIDATE else model.beamformer
             with torch.no_grad():
-                model.decoder.weight.normal_(std=0.005)
-                model.decoder.bias.normal_(std=0.005)
+                head.weight.normal_(std=0.005)
+                head.bias.normal_(std=0.005)
         dataset = Path(args.train_dir).expanduser().resolve()
         with (dataset / "metadata.csv").open(encoding="utf-8", newline="") as handle:
             row = next(csv.DictReader(handle))
@@ -106,6 +108,7 @@ def run(args):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--checkpoint")
+    parser.add_argument("--candidate", choices=(CAUSAL_CANDIDATE, "causal_unet_spatial_v1"), default=CAUSAL_CANDIDATE)
     parser.add_argument("--train-dir", default="/data/ssd1/jinrui.yang/training_set")
     parser.add_argument("--output-dir", required=True)
     run(parser.parse_args())

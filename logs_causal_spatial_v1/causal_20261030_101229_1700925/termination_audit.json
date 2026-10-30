@@ -1,0 +1,7 @@
+{
+  "status": "stopped_by_one_hour_epoch_requirement",
+  "stopped_unix": 1793358581,
+  "old_launcher_pid": 1700925,
+  "process_present": false,
+  "reason": "Full epoch takes about6.5h; user requires at most1h; epoch1 checkpoint retained"
+}

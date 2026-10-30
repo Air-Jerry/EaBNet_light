@@ -12,15 +12,17 @@ from light_causal_spatial_model import CAUSAL_CANDIDATE
 from light_quality_loss import QualityObjective
 
 
-def parse_args(argv=None):
-    args = trainer.parse_args(sys.argv[1:] if argv is None else argv, defaults={
-        "checkpoint_dir": f"./checkpoints_{CAUSAL_CANDIDATE}",
-        "best_dir": f"./bestmodels_{CAUSAL_CANDIDATE}", "log_dir": f"./logs_{CAUSAL_CANDIDATE}",
+def parse_args(argv=None, candidate_id=CAUSAL_CANDIDATE, defaults=None, entry_file=None):
+    settings = {
+        "checkpoint_dir": f"./checkpoints_{candidate_id}",
+        "best_dir": f"./bestmodels_{candidate_id}", "log_dir": f"./logs_{candidate_id}",
         "num_epochs": 30, "learning_rate": 0.001, "batch_size": 1, "grad_accum_steps": 4,
         "segment_seconds": 6, "save_every": 1, "train_lr_patience": 3, "grad_clip": 5.0,
         "norm_type": "LN", "use_amp": "no", "model_amp": "no", "allow_tf32": "no",
         "stop_on_non_finite": "yes", "skip_non_finite_batches": "no",
-    })
+    }
+    settings.update(defaults or {})
+    args = trainer.parse_args(sys.argv[1:] if argv is None else argv, defaults=settings)
     if (args.sample_rate, args.n_fft, args.hop_length, args.win_length, args.power, args.num_mics) != (
             16000, 512, 160, 320, 0.5, 8):
         raise ValueError("Keep the existing 16kHz eight-microphone frontend")
@@ -32,13 +34,15 @@ def parse_args(argv=None):
     args.causal_training_precision = "CUDA bfloat16 activations; FP32 parameters, frontend, loss and inference; CPU FP32"
     args.causal_training_implementation_sha256 = {name: quality.sha256_file(Path(__file__).with_name(name))
         for name in ("train_light_causal.py", "train_light.py", "light_quality_loss.py")}
-    for name, value in candidate_metadata(CAUSAL_CANDIDATE).items():
+    if entry_file is not None:
+        args.causal_training_implementation_sha256[Path(entry_file).name] = quality.sha256_file(entry_file)
+    for name, value in candidate_metadata(candidate_id).items():
         setattr(args, name, value)
     latest = Path(args.checkpoint_dir).expanduser() / "checkpoint_latest.pt"
     if latest.exists():
         if args.resume != "yes":
             raise FileExistsError("Use --resume yes or a new output directory")
-        state, _ = read_candidate_checkpoint(latest, CAUSAL_CANDIDATE, args)
+        state, _ = read_candidate_checkpoint(latest, candidate_id, args)
         for name in ("target_ref_mic", "causal_training_objective", "causal_training_precision",
                      "causal_training_implementation_sha256"):
             if state["args"].get(name) != getattr(args, name):
@@ -60,7 +64,7 @@ def initialize_checkpoint(args, unused=None):
         if path.exists() and any(path.iterdir()):
             raise FileExistsError(f"New causal run requires empty outputs: {path}")
     torch.manual_seed(args.seed)
-    with select_model_factory(trainer, CAUSAL_CANDIDATE):
+    with select_model_factory(trainer, args.structure_candidate):
         model = trainer.create_model(args, torch.device("cpu"))
     optimizer = torch.optim.Adam(model.parameters(), lr=args.learning_rate, weight_decay=args.weight_decay)
     state = dict(epoch=0, best_val_loss=float("inf"), model_state_dict=model.state_dict(),
@@ -69,8 +73,8 @@ def initialize_checkpoint(args, unused=None):
     trainer.save_checkpoint(directory / "checkpoint_latest.pt", state)
 
 
-def main(argv=None):
-    args = parse_args(argv)
+def main(argv=None, candidate_id=CAUSAL_CANDIDATE, defaults=None, entry_file=None):
+    args = parse_args(argv, candidate_id, defaults, entry_file)
     if torch.cuda.is_available() and not torch.cuda.is_bf16_supported():
         raise RuntimeError("CUDA bfloat16 support is required for this training configuration")
     initializer = quality._initialize_checkpoint
@@ -94,7 +98,7 @@ def main(argv=None):
     trainer.parse_args = lambda: args
     trainer.run_epoch = causal_epoch
     try:
-        with select_model_factory(trainer, CAUSAL_CANDIDATE):
+        with select_model_factory(trainer, args.structure_candidate):
             trainer.main()
     finally:
         trainer.parse_args, trainer.run_epoch = parser, epoch

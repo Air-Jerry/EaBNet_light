@@ -1,0 +1,26 @@
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+                                                   Name    Self CPU %      Self CPU   CPU total %     CPU total  CPU time avg     Self CUDA   Self CUDA %    CUDA total  CUDA time avg    # of Calls  
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+                             aten::convolution_backward         0.37%       3.140ms        13.15%     110.553ms       1.514ms     217.605ms        25.04%     249.545ms       3.418ms            73  
+                                            aten::copy_         0.59%       4.937ms        14.08%     118.328ms      86.560us     188.729ms        21.71%     188.729ms     138.061us          1367  
+void wgrad_alg0_engine<__nv_bfloat16, 128, 5, 5, 3, ...         0.00%       0.000us         0.00%       0.000us       0.000us     132.420ms        15.24%     132.420ms       1.035ms           128  
+void at::native::elementwise_kernel<128, 2, at::nati...         0.00%       0.000us         0.00%       0.000us       0.000us      83.269ms         9.58%      83.269ms     383.728us           217  
+                    aten::_efficient_attention_backward         0.01%      68.169us         0.23%       1.957ms     244.628us      65.226ms         7.50%      67.876ms       8.484ms             8  
+fmha_cutlassB_bf16_aligned_64x64_k32_sm80(PyTorchMem...         0.00%       0.000us         0.00%       0.000us       0.000us      65.226ms         7.50%      65.226ms       8.153ms             8  
+                                aten::cudnn_convolution         0.33%       2.791ms         1.17%       9.806ms      71.577us      62.823ms         7.23%      62.823ms     458.560us           137  
+                                aten::native_layer_norm         0.31%       2.621ms         1.75%      14.685ms     152.973us      58.164ms         6.69%     101.693ms       1.059ms            96  
+void at::native::(anonymous namespace)::vectorized_l...         0.00%       0.000us         0.00%       0.000us       0.000us      58.164ms         6.69%      58.164ms     605.878us            96  
+void at::native::elementwise_kernel<128, 4, at::nati...         0.00%       0.000us         0.00%       0.000us       0.000us      54.955ms         6.32%      54.955ms     252.087us           218  
+                       aten::native_layer_norm_backward         0.04%     312.834us         2.46%      20.662ms     430.458us      49.048ms         5.64%      88.408ms       1.842ms            48  
+                                              aten::cat         0.10%     824.936us         0.60%       5.071ms      52.274us      44.788ms         5.15%      44.788ms     461.736us            97  
+void implicit_convolve_sgemm<__nv_bfloat16, __nv_bfl...         0.00%       0.000us         0.00%       0.000us       0.000us      44.515ms         5.12%      44.515ms      86.943us           512  
+void at::native::elementwise_kernel<128, 4, at::nati...         0.00%       0.000us         0.00%       0.000us       0.000us      42.359ms         4.87%      42.359ms     217.223us           195  
+                     aten::_efficient_attention_forward         0.02%     127.213us         0.24%       1.978ms     123.641us      40.491ms         4.66%      40.491ms       2.531ms            16  
+fmha_cutlassF_bf16_aligned_64x64_rf_sm80(PyTorchMemE...         0.00%       0.000us         0.00%       0.000us       0.000us      40.491ms         4.66%      40.491ms       2.531ms            16  
+                                             aten::add_         0.10%     832.344us         1.88%      15.768ms      31.919us      32.202ms         3.70%      32.202ms      65.186us           494  
+void at::native::unrolled_elementwise_kernel<at::nat...         0.00%       0.000us         0.00%       0.000us       0.000us      31.457ms         3.62%      31.457ms      55.479us           567  
+void at::native::unrolled_elementwise_kernel<at::nat...         0.00%       0.000us         0.00%       0.000us       0.000us      31.295ms         3.60%      31.295ms      89.414us           350  
+                                              aten::add         0.10%     828.112us         3.44%      28.923ms     235.143us      28.789ms         3.31%      28.789ms     234.055us           123  
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+Self CPU time total: 840.660ms
+Self CUDA time total: 869.179ms

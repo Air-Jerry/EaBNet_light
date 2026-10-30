@@ -21,7 +21,7 @@ ROOT = Path(__file__).resolve().parent
 def run(args):
     output = Path(args.output_dir).expanduser().resolve()
     output.mkdir(parents=True, exist_ok=False)
-    report = dict(status="running", scope="32 fixed training records; CUDA training correctness, not generalization")
+    report = dict(status="running", scope=f"{args.num_samples} fixed training records; CUDA training correctness, not generalization")
     sampler = None
     try:
         assert torch.cuda.device_count() == 2 and torch.cuda.is_bf16_supported()
@@ -30,11 +30,12 @@ def run(args):
         with (data / "metadata.csv").open(encoding="utf-8", newline="") as handle:
             reader = csv.DictReader(handle)
             fields, rows = reader.fieldnames, []
-            for _, row in zip(range(32), reader):
+            for _, row in zip(range(args.num_samples), reader):
                 for key in ("mixture_path", "target_path"):
                     row[key] = str(resolve_record_path(data, row[key]))
                 rows.append(row)
-        assert len(rows) == 32
+        assert args.num_samples >= 32 and args.num_samples % 8 == 0
+        assert len(rows) == args.num_samples
         subset = output / "dataset"
         subset.mkdir()
         with (subset / "metadata.csv").open("w", encoding="utf-8", newline="") as handle:
@@ -43,7 +44,7 @@ def run(args):
             writer.writerows(rows)
         checkpoints = output / "checkpoints"
         command = [sys.executable, "-u", "-m", "torch.distributed.run", "--standalone", "--nproc_per_node=2",
-            "train_light_causal.py", "--train-dir", str(subset), "--val-dir", str(subset),
+            args.entry, "--train-dir", str(subset), "--val-dir", str(subset),
             "--checkpoint-dir", str(checkpoints), "--best-dir", str(output / "best"),
             "--log-dir", str(output / "tensorboard"), "--num-epochs", "2", "--parallel-mode", "ddp",
             "--batch-size", str(args.batch_size), "--grad-accum-steps", str(4 // args.batch_size), "--segment-seconds", "6",
@@ -71,12 +72,13 @@ def run(args):
         assert state["epoch"] == 2 and not any(name.startswith("base.") for name in weights)
         assert all(torch.isfinite(value).all() for value in weights.values())
         optimizer = state["optimizer_state_dict"]["state"]
-        assert optimizer and {int(value["step"]) for value in optimizer.values()} == {8}
+        expected_steps = args.num_samples // 4
+        assert optimizer and {int(value["step"]) for value in optimizer.values()} == {expected_steps}
         assert all(torch.isfinite(value).all() for item in optimizer.values()
                    for value in item.values() if isinstance(value, torch.Tensor))
         changed = sum(not torch.equal(value, zero["model_state_dict"][name]) for name, value in weights.items())
         assert changed > len(weights) * 0.7
-        report.update(status="passed", epochs=2, generator_adam_step=8,
+        report.update(status="passed", epochs=2, generator_adam_step=expected_steps,
             all_weights_and_adam_finite=True, noncausal_frozen_backbones=0,
             state_tensors=len(weights), changed_state_tensors=changed,
             finite_gradients="Checked on both ranks before every optimizer step",
@@ -104,5 +106,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--train-dir", default="/data/ssd1/jinrui.yang/training_set")
     parser.add_argument("--batch-size", type=int, choices=(1, 2, 4), default=1)
+    parser.add_argument("--num-samples", type=int, default=32)
+    parser.add_argument("--entry", choices=("train_light_causal.py", "train_light_causal_fast.py"), default="train_light_causal.py")
     parser.add_argument("--output-dir", required=True)
     run(parser.parse_args())

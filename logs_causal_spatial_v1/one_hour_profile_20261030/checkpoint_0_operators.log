@@ -1,0 +1,26 @@
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+                                                   Name    Self CPU %      Self CPU   CPU total %     CPU total  CPU time avg     Self CUDA   Self CUDA %    CUDA total  CUDA time avg    # of Calls  
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+                             aten::convolution_backward         0.50%       3.135ms         8.04%      50.601ms     693.164us     208.470ms        31.46%     239.960ms       3.287ms            73  
+                                            aten::copy_         0.34%       2.146ms         6.61%      41.619ms      44.512us     136.386ms        20.58%     136.386ms     145.867us           935  
+void wgrad_alg0_engine<__nv_bfloat16, 128, 5, 5, 3, ...         0.00%       0.000us         0.00%       0.000us       0.000us     124.260ms        18.75%     124.260ms     970.779us           128  
+void at::native::elementwise_kernel<128, 2, at::nati...         0.00%       0.000us         0.00%       0.000us       0.000us      61.634ms         9.30%      61.634ms     382.822us           161  
+                    aten::_efficient_attention_backward         0.01%      73.597us         0.04%     260.001us      32.500us      60.641ms         9.15%      63.291ms       7.911ms             8  
+fmha_cutlassB_bf16_aligned_64x64_k32_sm80(PyTorchMem...         0.00%       0.000us         0.00%       0.000us       0.000us      60.641ms         9.15%      60.641ms       7.580ms             8  
+                       aten::native_layer_norm_backward         0.05%     289.077us         3.90%      24.582ms     512.135us      48.539ms         7.33%      87.878ms       1.831ms            48  
+void at::native::elementwise_kernel<128, 4, at::nati...         0.00%       0.000us         0.00%       0.000us       0.000us      33.301ms         5.03%      33.301ms     239.574us           139  
+                                aten::cudnn_convolution         0.16%     991.373us         0.33%       2.093ms      28.665us      32.698ms         4.93%      32.698ms     447.922us            73  
+void at::native::elementwise_kernel<128, 4, at::nati...         0.00%       0.000us         0.00%       0.000us       0.000us      30.252ms         4.57%      30.252ms     247.968us           122  
+                                aten::native_layer_norm         0.05%     329.847us         0.18%       1.134ms      23.635us      29.652ms         4.48%      51.698ms       1.077ms            48  
+void at::native::(anonymous namespace)::vectorized_l...         0.00%       0.000us         0.00%       0.000us       0.000us      29.652ms         4.48%      29.652ms     617.754us            48  
+void at::native::(anonymous namespace)::GammaBetaBac...         0.00%       0.000us         0.00%       0.000us       0.000us      25.462ms         3.84%      25.462ms     530.451us            48  
+                                              aten::cat         0.06%     385.084us         0.10%     604.068us      10.598us      24.725ms         3.73%      24.725ms     433.768us            57  
+void at::native::(anonymous namespace)::layer_norm_g...         0.00%       0.000us         0.00%       0.000us       0.000us      23.077ms         3.48%      23.077ms     480.776us            48  
+void at::native::unrolled_elementwise_kernel<at::nat...         0.00%       0.000us         0.00%       0.000us       0.000us      20.756ms         3.13%      20.756ms      68.728us           302  
+                     aten::_efficient_attention_forward         0.01%      48.222us         0.02%     111.432us      13.929us      20.748ms         3.13%      20.748ms       2.593ms             8  
+fmha_cutlassF_bf16_aligned_64x64_rf_sm80(PyTorchMemE...         0.00%       0.000us         0.00%       0.000us       0.000us      20.748ms         3.13%      20.748ms       2.593ms             8  
+                                             aten::add_         0.08%     494.829us         0.58%       3.658ms       8.508us      20.723ms         3.13%      20.723ms      48.193us           430  
+void cudnn::engines_precompiled::nchwToNhwcKernel<__...         0.00%       0.000us         0.00%       0.000us       0.000us      20.642ms         3.12%      20.642ms      26.738us           772  
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+Self CPU time total: 629.565ms
+Self CUDA time total: 662.605ms

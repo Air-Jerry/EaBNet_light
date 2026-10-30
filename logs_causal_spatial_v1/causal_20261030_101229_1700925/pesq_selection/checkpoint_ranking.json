@@ -1,5 +1,5 @@
 {
-  "status": "partial",
+  "status": "stopped_by_one_hour_epoch_requirement",
   "selection_scope": "Same full600 comparison samples; not an independent final test",
   "model_is_causal": true,
   "results": [
@@ -19,5 +19,7 @@
   "best_completed_epoch": 1,
   "best_completed_pesq": 1.6966061929861704,
   "target_reached": false,
-  "final_full600_waveform_streaming_audit_required": true
+  "final_full600_waveform_streaming_audit_required": true,
+  "terminal": true,
+  "partial_epoch_2_not_saved": true
 }

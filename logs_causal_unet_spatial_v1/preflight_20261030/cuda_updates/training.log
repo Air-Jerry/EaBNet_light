@@ -1,0 +1,156 @@
+WARNING:__main__:
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+[W1030 19:30:10.601641625 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
+[W1030 19:30:10.666048163 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
+Device: cuda:0
+DDP world_size/rank/local_rank: 2/0/0
+GPU IDs: [0]
+CPU threads (intra/inter-op): 2/1
+TF32/cudnn_benchmark: no/yes
+MALLOC_ARENA_MAX env: <unset> | mallopt target: 2
+Train dir: /home/nis/jinrui.yang/EaBNet_light/logs_causal_unet_spatial_v1/preflight_20261030/cuda_updates/dataset
+Val dir: /home/nis/jinrui.yang/EaBNet_light/logs_causal_unet_spatial_v1/preflight_20261030/cuda_updates/dataset
+Checkpoint dir: /home/nis/jinrui.yang/EaBNet_light/logs_causal_unet_spatial_v1/preflight_20261030/cuda_updates/checkpoints
+Best model dir: /home/nis/jinrui.yang/EaBNet_light/logs_causal_unet_spatial_v1/preflight_20261030/cuda_updates/best
+TensorBoard log dir: /home/nis/jinrui.yang/EaBNet_light/logs_causal_unet_spatial_v1/preflight_20261030/cuda_updates/tensorboard
+DataLoader config: workers=4, pin_memory=True, persistent_workers=False, prefetch_factor=2, strict_memory=no, segment_samples=96000, parallel_mode=ddp
+Enabled DistributedDataParallel
+/home/nis/jinrui.yang/EaBNet_light/train_light.py:789: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  checkpoint = torch.load(checkpoint_path, map_location=device)
+Resumed from /home/nis/jinrui.yang/EaBNet_light/logs_causal_unet_spatial_v1/preflight_20261030/cuda_updates/checkpoints/checkpoint_latest.pt at epoch 0, best_val_loss=inf
+Training samples: 256
+Validation samples: 256
+
+Epoch 1/2
+train:   0%|          | 0/32 [00:00<?, ?it/s]/home/nis/jinrui.yang/EaBNet_light/train_light.py:789: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  checkpoint = torch.load(checkpoint_path, map_location=device)
+Resumed from /home/nis/jinrui.yang/EaBNet_light/logs_causal_unet_spatial_v1/preflight_20261030/cuda_updates/checkpoints/checkpoint_latest.pt at epoch 0, best_val_loss=inf
+                                             [rank0]: Traceback (most recent call last):
+[rank0]:   File "/home/nis/jinrui.yang/EaBNet_light/train_light_causal_fast.py", line 13, in <module>
+[rank0]:     raise SystemExit(main())
+[rank0]:   File "/home/nis/jinrui.yang/EaBNet_light/train_light_causal_fast.py", line 8, in main
+[rank0]:     return train_main(argv, candidate_id=FAST_CANDIDATE,
+[rank0]:   File "/home/nis/jinrui.yang/EaBNet_light/train_light_causal.py", line 102, in main
+[rank0]:     trainer.main()
+[rank0]:   File "/home/nis/jinrui.yang/EaBNet_light/train_light.py", line 1081, in main
+[rank0]:     train_loss = run_epoch(model, train_loader, optimizer, scaler, device, gpu_ids, args, training=True)
+[rank0]:   File "/home/nis/jinrui.yang/EaBNet_light/train_light_causal.py", line 96, in causal_epoch
+[rank0]:     return epoch(*epoch_args, **epoch_kwargs)
+[rank0]:   File "/home/nis/jinrui.yang/EaBNet_light/train_light.py", line 606, in run_epoch
+[rank0]:     estimate = model(mixture_stft, frame_lengths=torch.tensor(frame_list, device=device))
+[rank0]:   File "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1736, in _wrapped_call_impl
+[rank0]:     return self._call_impl(*args, **kwargs)
+[rank0]:   File "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1747, in _call_impl
+[rank0]:     return forward_call(*args, **kwargs)
+[rank0]:   File "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/nn/parallel/distributed.py", line 1643, in forward
+[rank0]:     else self._run_ddp_forward(*inputs, **kwargs)
+[rank0]:   File "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/nn/parallel/distributed.py", line 1459, in _run_ddp_forward
+[rank0]:     return self.module(*inputs, **kwargs)  # type: ignore[index]
+[rank0]:   File "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1736, in _wrapped_call_impl
+[rank0]:     return self._call_impl(*args, **kwargs)
+[rank0]:   File "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1747, in _call_impl
+[rank0]:     return forward_call(*args, **kwargs)
+[rank0]:   File "/home/nis/jinrui.yang/EaBNet_light/light_causal_fast_model.py", line 150, in forward
+[rank0]:     return self.process(inpt)[0]
+[rank0]:   File "/home/nis/jinrui.yang/EaBNet_light/light_causal_fast_model.py", line 114, in process
+[rank0]:     value, memory = self.stem.process(features, memories.get("stem"), cache)
+[rank0]:   File "/home/nis/jinrui.yang/EaBNet_light/light_causal_fast_model.py", line 64, in process
+[rank0]:     output = self.activation(self.norm(self.conv(joined)))
+[rank0]:   File "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1736, in _wrapped_call_impl
+[rank0]:     return self._call_impl(*args, **kwargs)
+[rank0]:   File "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1747, in _call_impl
+[rank0]:     return forward_call(*args, **kwargs)
+[rank0]:   File "/home/nis/jinrui.yang/EaBNet_light/light_causal_fast_model.py", line 47, in forward
+[rank0]:     return self.norm(value.permute(0, 2, 3, 1)).permute(0, 3, 1, 2)
+[rank0]:   File "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1736, in _wrapped_call_impl
+[rank0]:     return self._call_impl(*args, **kwargs)
+[rank0]:   File "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1747, in _call_impl
+[rank0]:     return forward_call(*args, **kwargs)
+[rank0]:   File "/home/nis/jinrui.yang/EaBNet_light/light_causal_fast_model.py", line 27, in forward
+[rank0]:     value = F.layer_norm(value, self.normalized_shape, self.weight, self.bias, self.eps)
+[rank0]:   File "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/nn/functional.py", line 2900, in layer_norm
+[rank0]:     return torch.layer_norm(
+[rank0]: RuntimeError: expected scalar type BFloat16 but found Float
+[rank1]: Traceback (most recent call last):
+[rank1]:   File "/home/nis/jinrui.yang/EaBNet_light/train_light_causal_fast.py", line 13, in <module>
+[rank1]:     raise SystemExit(main())
+[rank1]:   File "/home/nis/jinrui.yang/EaBNet_light/train_light_causal_fast.py", line 8, in main
+[rank1]:     return train_main(argv, candidate_id=FAST_CANDIDATE,
+[rank1]:   File "/home/nis/jinrui.yang/EaBNet_light/train_light_causal.py", line 102, in main
+[rank1]:     trainer.main()
+[rank1]:   File "/home/nis/jinrui.yang/EaBNet_light/train_light.py", line 1081, in main
+[rank1]:     train_loss = run_epoch(model, train_loader, optimizer, scaler, device, gpu_ids, args, training=True)
+[rank1]:   File "/home/nis/jinrui.yang/EaBNet_light/train_light_causal.py", line 96, in causal_epoch
+[rank1]:     return epoch(*epoch_args, **epoch_kwargs)
+[rank1]:   File "/home/nis/jinrui.yang/EaBNet_light/train_light.py", line 606, in run_epoch
+[rank1]:     estimate = model(mixture_stft, frame_lengths=torch.tensor(frame_list, device=device))
+[rank1]:   File "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1736, in _wrapped_call_impl
+[rank1]:     return self._call_impl(*args, **kwargs)
+[rank1]:   File "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1747, in _call_impl
+[rank1]:     return forward_call(*args, **kwargs)
+[rank1]:   File "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/nn/parallel/distributed.py", line 1643, in forward
+[rank1]:     else self._run_ddp_forward(*inputs, **kwargs)
+[rank1]:   File "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/nn/parallel/distributed.py", line 1459, in _run_ddp_forward
+[rank1]:     return self.module(*inputs, **kwargs)  # type: ignore[index]
+[rank1]:   File "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1736, in _wrapped_call_impl
+[rank1]:     return self._call_impl(*args, **kwargs)
+[rank1]:   File "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1747, in _call_impl
+[rank1]:     return forward_call(*args, **kwargs)
+[rank1]:   File "/home/nis/jinrui.yang/EaBNet_light/light_causal_fast_model.py", line 150, in forward
+[rank1]:     return self.process(inpt)[0]
+[rank1]:   File "/home/nis/jinrui.yang/EaBNet_light/light_causal_fast_model.py", line 114, in process
+[rank1]:     value, memory = self.stem.process(features, memories.get("stem"), cache)
+[rank1]:   File "/home/nis/jinrui.yang/EaBNet_light/light_causal_fast_model.py", line 64, in process
+[rank1]:     output = self.activation(self.norm(self.conv(joined)))
+[rank1]:   File "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1736, in _wrapped_call_impl
+[rank1]:     return self._call_impl(*args, **kwargs)
+[rank1]:   File "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1747, in _call_impl
+[rank1]:     return forward_call(*args, **kwargs)
+[rank1]:   File "/home/nis/jinrui.yang/EaBNet_light/light_causal_fast_model.py", line 47, in forward
+[rank1]:     return self.norm(value.permute(0, 2, 3, 1)).permute(0, 3, 1, 2)
+[rank1]:   File "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1736, in _wrapped_call_impl
+[rank1]:     return self._call_impl(*args, **kwargs)
+[rank1]:   File "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1747, in _call_impl
+[rank1]:     return forward_call(*args, **kwargs)
+[rank1]:   File "/home/nis/jinrui.yang/EaBNet_light/light_causal_fast_model.py", line 27, in forward
+[rank1]:     value = F.layer_norm(value, self.normalized_shape, self.weight, self.bias, self.eps)
+[rank1]:   File "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/nn/functional.py", line 2900, in layer_norm
+[rank1]:     return torch.layer_norm(
+[rank1]: RuntimeError: expected scalar type BFloat16 but found Float
+W1030 19:30:11.785000 1926691 site-packages/torch/distributed/elastic/multiprocessing/api.py:897] Sending process 1926701 closing signal SIGTERM
+E1030 19:30:11.898000 1926691 site-packages/torch/distributed/elastic/multiprocessing/api.py:869] failed (exitcode: 1) local_rank: 0 (pid: 1926700) of binary: /home/nis/jinrui.yang/miniconda3/envs/EaBNet/bin/python
+Traceback (most recent call last):
+  File "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/distributed/run.py", line 923, in <module>
+    main()
+  File "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 355, in wrapper
+    return f(*args, **kwargs)
+  File "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/distributed/run.py", line 919, in main
+    run(args)
+  File "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/distributed/run.py", line 910, in run
+    elastic_launch(
+  File "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 138, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 269, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+train_light_causal_fast.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2026-10-30_19:30:11
+  host      : nca.g11
+  rank      : 0 (local_rank: 0)
+  exitcode  : 1 (pid: 1926700)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================

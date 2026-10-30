@@ -6,3 +6,5 @@ light_causal_stream.py text eol=lf
 train_light_causal.py text eol=lf
 check_light_causal_cuda.py text eol=lf
 benchmark_light_causal.py text eol=lf
+light_causal_fast_model.py text eol=lf
+train_light_causal_fast.py text eol=lf

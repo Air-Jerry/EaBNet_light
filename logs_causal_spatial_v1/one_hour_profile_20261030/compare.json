@@ -1,0 +1,44 @@
+[
+  {
+    "name": "original_dtype_fixed",
+    "status": "measured",
+    "seconds_per_sample": 0.5473940785741434,
+    "times": [
+      0.5475106730591506,
+      0.5471250561531633,
+      0.5480644130147994,
+      0.5468761720694602
+    ],
+    "parameters": 1589106,
+    "peak_allocated_bytes": 10998235648,
+    "train_only_epoch_2gpu_ideal_seconds": 14670.161305787042
+  },
+  {
+    "name": "original_dtype_padded",
+    "status": "measured",
+    "seconds_per_sample": 0.5639561705174856,
+    "times": [
+      0.5636039620731026,
+      0.563171248883009,
+      0.5642037210054696,
+      0.5648457501083612
+    ],
+    "parameters": 1589106,
+    "peak_allocated_bytes": 11121276928,
+    "train_only_epoch_2gpu_ideal_seconds": 15114.025369868614
+  },
+  {
+    "name": "multiresolution",
+    "status": "measured",
+    "seconds_per_sample": 0.03627182397758588,
+    "times": [
+      0.03618803690187633,
+      0.03645207406952977,
+      0.036168396938592196,
+      0.03627878800034523
+    ],
+    "parameters": 1676336,
+    "peak_allocated_bytes": 3018508288,
+    "train_only_epoch_2gpu_ideal_seconds": 972.0848825993016
+  }
+]
