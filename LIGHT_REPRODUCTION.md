@@ -88,7 +88,7 @@
 - 卷积时间 padding、FFT normalization、PReLU 参数共享粒度及所有初始化。
 - 训练损失及权重、0.5 幅度压缩、batch size、训练轮数、裁剪、梯度裁剪、AMP 和随机种子。
 - 训练/验证样本清单、RIR 实现及随机种子、干净目标是直达声还是含早期反射的信号、参考麦克风定义。
-- PESQ 模式/版本等指标实现。新评估显式采用 16 kHz 宽带 PESQ，但无法证明与作者的工具链相同。
+- PESQ 模式/版本等指标实现。正文 4.1 节只写 PESQ，未明示 WB/NB；沿其 ConferencingSpeech2021 评估来源核对，[官方 track1 脚本](https://github.com/ConferencingSpeech/ConferencingSpeech2021/blob/617df8116c0510b2addadb1de374d7b50eea4f2b/eval/track1_eval.py#L67-L68)在 16 kHz 音频上显式使用 `wb`。当前宽带评估与该公开协议一致；由于没有作者评估代码，仍不能证明版本及全部处理细节与作者完全相同。核查记录见 `output/pesq_protocol_audit.json`。
 
 `is_causal=yes` 仅约束 DFSMN 记忆。SA 对称时间卷积、CA 全时间池化和训练态 BN 都可能使用未来帧，整个模型不能宣称严格流式因果。论文所提原始 EaBNet 的 causal 属性不能自动继承。
 

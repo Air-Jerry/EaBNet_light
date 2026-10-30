@@ -1,0 +1,62 @@
+{
+  "question": "WB or NB PESQ in the supplied FCAE paper?",
+  "paper": {
+    "title": "A Lightweight Fourier Convolutional Attention Encoder for Multi-Channel Speech Enhancement",
+    "doi": "10.1109/ICASSP49357.2023.10095716",
+    "sha256": "d72e9e88a73526d4f338cf4b6d833f26dc5931e49aeb07827b1090b432fe88f8",
+    "checked_pages": [
+      3,
+      4,
+      5
+    ],
+    "rendered_pages_inspected": [
+      3,
+      4
+    ],
+    "section_4_1": "PESQ is named without an explicit WB/NB label; evaluation uses the ConferencingSpeech2021 development set.",
+    "section_4_2": "All utterances are resampled to 16kHz.",
+    "table_1": {
+      "noisy_pesq": 1.514,
+      "proposed_pesq": 2.359,
+      "column_label": "PESQ"
+    },
+    "reference_29": "Y. Hu and P. C. Loizou, Evaluation of objective quality measures for speech enhancement, 2008."
+  },
+  "official_challenge_sources": {
+    "commit": "617df8116c0510b2addadb1de374d7b50eea4f2b",
+    "files": [
+      {
+        "path": "eval/track1_eval.py",
+        "url": "https://github.com/ConferencingSpeech/ConferencingSpeech2021/blob/617df8116c0510b2addadb1de374d7b50eea4f2b/eval/track1_eval.py",
+        "sha256": "e0ac3ca3632b03d107af9034d5c3c1642b349d557a898a383d31a8843fda1717"
+      },
+      {
+        "path": "eval/track2_eval.py",
+        "url": "https://github.com/ConferencingSpeech/ConferencingSpeech2021/blob/617df8116c0510b2addadb1de374d7b50eea4f2b/eval/track2_eval.py",
+        "sha256": "6552d5a848f2abc6b8ba1242e6cc4ee1afe997dac09249ed139aea410b12ceb2"
+      },
+      {
+        "path": "eval/track2_eval_two.py",
+        "url": "https://github.com/ConferencingSpeech/ConferencingSpeech2021/blob/617df8116c0510b2addadb1de374d7b50eea4f2b/eval/track2_eval_two.py",
+        "sha256": "77b3a811cae723d8d7a3fe18d21484d39a9efabe2e9392d45f813dd3cd893e64"
+      },
+      {
+        "path": "requirements.txt",
+        "url": "https://github.com/ConferencingSpeech/ConferencingSpeech2021/blob/617df8116c0510b2addadb1de374d7b50eea4f2b/requirements.txt",
+        "sha256": "de507e0c2922c7889a9b9763daf62a35d9306b4047a52668eb6c34fcc423b13c"
+      }
+    ]
+  },
+  "decisive_source": {
+    "path": "eval/track1_eval.py",
+    "sample_rate_default_line": 24,
+    "sample_rate_default": 16000,
+    "mode_lines": [
+      67,
+      68
+    ],
+    "mode": "wb"
+  },
+  "conclusion": "The paper does not explicitly specify WB/NB. Its named challenge provides an explicit 16kHz WB scorer, supporting the current WB evaluation as consistent with that public protocol. Author-specific evaluator/version remains unverified.",
+  "active_goal_protocol": "Keep WB-PESQ target 3.4 on the same 600 comparison samples; no change to training, inference or metric calculation."
+}
