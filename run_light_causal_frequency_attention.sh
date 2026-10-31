@@ -7,13 +7,23 @@ if [[ $# -ne 1 ]]; then
 fi
 train_py="${TRAIN_PY:-$HOME/miniconda3/envs/EaBNet/bin/python}"
 export CUDA_VISIBLE_DEVICES="${CUDA_VISIBLE_DEVICES:-0,1}"
+entry="${CAUSAL_FREQUENCY_ATTENTION_ENTRY:-train_light_causal_frequency_attention.py}"
+case "$entry" in
+    train_light_causal_frequency_attention.py)
+        output_tag=causal_frequency_attention_v1; run_prefix=attention ;;
+    train_light_causal_compiled_attention.py)
+        output_tag=causal_compiled_attention_v1; run_prefix=compiled_attention
+        export TORCHINDUCTOR_CACHE_DIR="$PWD/tmp/inductor_causal_norm_v1"
+        export TORCHINDUCTOR_COMPILE_THREADS=2 ;;
+    *) printf 'Unsupported frequency-attention training entry.\n' >&2; exit 2 ;;
+esac
 preflight="$1"
 train_dir="/data/ssd1/jinrui.yang/training_set"
 val_dir="/data/ssd1/jinrui.yang/newset_rt60_005-015_on_NOISEX92/babble/training_set"
-mkdir -p logs_causal_frequency_attention_v1
-exec 9>logs_causal_frequency_attention_v1/.launcher.lock
+mkdir -p "logs_${output_tag}"
+exec 9>"logs_${output_tag}/.launcher.lock"
 flock -n 9 || { printf 'Another causal launcher is running.\n' >&2; exit 1; }
-warm=$("$train_py" - "$preflight" "$val_dir" <<'PY_PREFLIGHT'
+warm=$("$train_py" - "$preflight" "$val_dir" "$entry" <<'PY_PREFLIGHT'
 import hashlib,json,math,os,re,sys
 from pathlib import Path
 import torch
@@ -47,6 +57,9 @@ assert hashlib.sha256(p.read_bytes()).hexdigest()==check['checkpoint_sha256']==b
 state,_=read_candidate_checkpoint(p,'causal_frequency_attention_v1')
 assert state['args']['causal_training_objective']=='spectral_mrstft_waveform_pmsqe_v1'
 assert state['args']['pmsqe_weight']==0.1
+assert sys.argv[3] in state['args']['causal_training_implementation_sha256']
+if sys.argv[3]=='train_light_causal_compiled_attention.py':
+    assert 'experiments/compiled_training_norm.py' in state['args']['causal_training_implementation_sha256']
 warm=Path(state['args']['attention_warmstart_checkpoint']).expanduser().resolve()
 assert str(warm)==state['args']['attention_warmstart_checkpoint']
 assert hashlib.sha256(warm.read_bytes()).hexdigest()==state['args']['attention_warmstart_sha256']
@@ -61,6 +74,7 @@ names={'run_light_quality.sh','continue_light_quality.sh','run_light_metric.sh',
        'run_light_causal.sh','train_light_quality.py','train_light_metric.py','train_light_spatial.py',
        'train_light_causal.py','train_light_causal_frequency_attention.py','check_light_causal_cuda.py','benchmark_light_causal.py'}
 names.update({'run_light_causal_pmsqe.sh','train_light_causal_pmsqe.py','run_light_causal_fourier.sh','train_light_causal_fourier.py','run_light_causal_tcn.sh','train_light_causal_tcn.py','run_light_causal_frequency_attention.sh','train_light_causal_fast.py','train_light_causal_recurrent65.py','train_light_causal_recurrent.py','run_light_causal_global.sh'})
+names.update({'train_light_causal_compiled_attention.py','train_light_causal_pooled_attention.py','run_light_causal_compiled_attention.sh','run_light_causal_pooled_attention.sh'})
 ancestors=set();cursor=os.getpid()
 while cursor>1:
     ancestors.add(cursor)
@@ -81,14 +95,14 @@ PY_PREFLIGHT
 )
 batch_size=$("$train_py" -c "import json,sys;print(json.load(open(sys.argv[1]))['batch_size_per_gpu'])" "$preflight/cuda_final/cuda_check.json")
 grad_accum_steps=$((4 / batch_size))
-run="attention_$(date +%Y%m%d_%H%M%S)_$$"
+run="${run_prefix}_$(date +%Y%m%d_%H%M%S)_$$"
 if [[ -n "${CAUSAL_FREQUENCY_ATTENTION_RESUME_RUN:-}" ]]; then
     run="$(basename -- "$CAUSAL_FREQUENCY_ATTENTION_RESUME_RUN")"
-    [[ "$run" == attention_* && -d "./logs_causal_frequency_attention_v1/$run" ]] || { printf 'Invalid existing frequency-attention run.\n' >&2; exit 2; }
+    [[ "$run" == "${run_prefix}_"* && -d "./logs_${output_tag}/$run" ]] || { printf 'Invalid existing frequency-attention run.\n' >&2; exit 2; }
 fi
-checkpoints="./checkpoints_causal_frequency_attention_v1_${run}"
-best="./bestmodels_causal_frequency_attention_v1_${run}"
-logs="./logs_causal_frequency_attention_v1/${run}"
+checkpoints="./checkpoints_${output_tag}_${run}"
+best="./bestmodels_${output_tag}_${run}"
+logs="./logs_${output_tag}/${run}"
 mkdir -p "$logs"
 printf 'Run: %s\nCheckpoints: %s\nLogs: %s\n' "$run" "$checkpoints" "$logs"
 cp "$preflight/cuda_final/cuda_check.json" "$logs/cuda_preflight.json"
@@ -188,7 +202,7 @@ PY_RESUME
 )
     read -r start_epoch evaluation_reserve <<< "$resume_settings"
 else
-    "$train_py" -u train_light_causal_frequency_attention.py --warmstart "$warm" --train-dir "$train_dir" --val-dir "$val_dir" \
+    "$train_py" -u "$entry" --warmstart "$warm" --train-dir "$train_dir" --val-dir "$val_dir" \
     --checkpoint-dir "$checkpoints" --best-dir "$best" --log-dir "$logs" \
     --num-epochs 0 --parallel-mode none --num-workers 0 --cpu-threads 2 \
     --batch-size "$batch_size" --grad-accum-steps "$grad_accum_steps" \
@@ -207,7 +221,7 @@ for ((epoch=start_epoch; epoch<=30; epoch++)); do
     train_budget=$(( 3600 - evaluation_reserve ))
     printf 'phase=train epoch=%s\n' "$epoch" >> "$logs/gpu_utilization.log"
     timeout --kill-after=15s "${train_budget}s" "$train_py" -u -m torch.distributed.run --standalone --nproc_per_node=2 \
-        train_light_causal_frequency_attention.py --train-dir "$train_dir" --val-dir "$val_dir" \
+        "$entry" --train-dir "$train_dir" --val-dir "$val_dir" \
         --checkpoint-dir "$checkpoints" --best-dir "$best" --log-dir "$logs" \
         --num-epochs "$epoch" --parallel-mode ddp --batch-size "$batch_size" --grad-accum-steps "$grad_accum_steps" \
         --segment-seconds 6 --num-workers 4 --strict-memory no --cpu-threads 2 --cpu-thread-scale 1 \

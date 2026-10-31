@@ -1,0 +1,90 @@
+{
+  "status": "real_preflight_passed_formal_training_launched",
+  "architecture": "causal_frequency_attention_v1",
+  "candidate_schema": 11,
+  "author_confirmed": false,
+  "source_completed_epoch": 4,
+  "source_full600_pesq": 2.7692763803402585,
+  "source_checkpoint_sha256": "7c3c13e4029a88045d730d7dcab438c55c21a2c8f0947e9ee481c85471410ff1",
+  "training_change": "Compile existing channel LayerNorm only in CUDA training; original FP32 inference",
+  "quality_change": "Full257 frequency attention within each current frame; no future frames",
+  "single_gpu_profile": {
+    "scope": "Four real fixed training records; single-GPU pipeline profiling only, not quality or complete epoch evidence",
+    "baseline_mean_step_ms": 442.9343202151358,
+    "compiled_mean_step_ms": 338.6540098115802,
+    "measured_step_time_reduction_pct": 23.543063981338378,
+    "full_epoch_speed_not_proved_by_profile": true
+  },
+  "cuda_numerics": {
+    "cases": 8,
+    "future_frame_gradient_max_abs": 0.0,
+    "original_inference_bitwise_equal": true,
+    "max_relative_l2_output": 1.6132951714098454e-05,
+    "max_relative_l2_any_gradient": 1.845437327574473e-05
+  },
+  "real_dual_cuda": {
+    "training_records": 256,
+    "epochs": 2,
+    "adam_updates": 64,
+    "effective_global_batch": 8,
+    "all_weights_and_adam_finite": true,
+    "changed_state_tensors": 258,
+    "state_tensors": 258,
+    "checkpoint_sha256": "6e3b9fb9c833819fd768d49b729cf4067cb012f9b021c7eb4c34aa8148f19857"
+  },
+  "trained_weight_waveform_streaming": {
+    "checkpoint_sha256": "6e3b9fb9c833819fd768d49b729cf4067cb012f9b021c7eb4c34aa8148f19857",
+    "measured_hops": 600,
+    "future_perturbation_max_error": 0.0,
+    "full_vs_stream_waveform_max_error": 1.3113021850585938e-06,
+    "bounded_model_cache_bytes": 5822208,
+    "all_hops_below_10ms": true,
+    "all_hop_ms": {
+      "mean": 3.940931959465767,
+      "p99": 3.9979644026607275,
+      "max": 4.079706966876984
+    }
+  },
+  "timing_projection": {
+    "status": "measured",
+    "training_samples": 53600,
+    "validation_samples": 600,
+    "metric_samples": 600,
+    "cuda_checkpoint_sha256": "6e3b9fb9c833819fd768d49b729cf4067cb012f9b021c7eb4c34aa8148f19857",
+    "evaluation_checkpoint_sha256": "63724fc812af2956fd3f1f01e658f2396f18e6208f41295c4eb16002867abab1",
+    "training_samples_per_second": 20.0,
+    "validation_samples_per_second": 31.3,
+    "full600_evaluation_seconds": 198.4280954420101,
+    "overhead_reserve_seconds": 60,
+    "projected_complete_epoch_seconds": 2957.5974245154925
+  },
+  "baseline_full600_pesq": 2.7692763803402585,
+  "formal_launch": {
+    "status": "launched",
+    "pid": 2424407,
+    "start_cookie": "142640665",
+    "run": "compiled_attention_20261101_042437_2424407",
+    "log": "/home/nis/jinrui.yang/EaBNet_light/logs_causal_compiled_attention_v1/full_train_launch_20261101.log",
+    "launched_unix": 1793478277.7083962,
+    "source_checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_causal_pmsqe_v1_pmsqe_20261101_000221_2354428/model_epoch_4.pt",
+    "source_checkpoint_sha256": "7c3c13e4029a88045d730d7dcab438c55c21a2c8f0947e9ee481c85471410ff1",
+    "source_full600_pesq": 2.7692763803402585,
+    "training_samples": 53600,
+    "validation_samples": 600,
+    "metric_samples": 600,
+    "global_batch_size": 8,
+    "optimizer_updates_per_epoch": 6700,
+    "whole_epoch_limit_seconds": 3600,
+    "target_pesq": 3.4,
+    "pesq_mode": "wb",
+    "training_entry": "train_light_causal_compiled_attention.py",
+    "source_entry_sha256": "0b4737e452d95fbd9c2bb7ac6010706a1a5e2f35c76e119d1adf993b0adc41af",
+    "real_dual_cuda_64_updates_and_streaming_verified": true,
+    "final_full600_waveform_streaming_audit_still_required": true
+  },
+  "local_tests_passed": 31,
+  "full_training_quality_gain_unverified": true,
+  "actual_complete_epoch_time_unverified": true,
+  "final_full600_waveform_streaming_audit_still_required": true,
+  "user_evaluator_sha256": "0c3ada1425b33e16688e8424daba23681ac9ded4d8bee931ed24c69e59e5730b"
+}

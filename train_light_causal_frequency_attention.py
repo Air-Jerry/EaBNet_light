@@ -17,7 +17,7 @@ WARM_FIELDS = ('attention_warmstart_checkpoint', 'attention_warmstart_sha256',
     'attention_warmstart_epoch', 'attention_sample_epoch_offset', 'pmsqe_weight')
 
 
-def parse_args(argv=None, candidate_id=FREQUENCY_ATTENTION_CANDIDATE, entry_file=None):
+def parse_args(argv=None, candidate_id=FREQUENCY_ATTENTION_CANDIDATE, entry_file=None, training_files=()):
     selector = argparse.ArgumentParser(add_help=False)
     selector.add_argument('--warmstart')
     selected, remaining = selector.parse_known_args(sys.argv[1:] if argv is None else argv)
@@ -40,7 +40,7 @@ def parse_args(argv=None, candidate_id=FREQUENCY_ATTENTION_CANDIDATE, entry_file
     files = ('train_light_causal_frequency_attention.py','train_light_causal_pmsqe.py', 'train_light_causal.py', 'train_light.py',
         'light_quality_loss.py', 'experiments/causal_pmsqe_objective.py',
         'third_party/asteroid_pmsqe/pmsqe.py', 'third_party/asteroid_pmsqe/bark_matrix_16k.mat',
-        'third_party/asteroid_pmsqe/PROVENANCE.json')
+        'third_party/asteroid_pmsqe/PROVENANCE.json', *training_files)
     args.causal_training_implementation_sha256 = {name:causal.quality.sha256_file(ROOT / name) for name in files}
     if entry_file is not None:
         args.causal_training_implementation_sha256[Path(entry_file).name] = causal.quality.sha256_file(entry_file)
@@ -83,8 +83,8 @@ def parse_args(argv=None, candidate_id=FREQUENCY_ATTENTION_CANDIDATE, entry_file
     return args, source
 
 
-def main(argv=None, candidate_id=FREQUENCY_ATTENTION_CANDIDATE, entry_file=None):
-    args, source = parse_args(argv, candidate_id=candidate_id, entry_file=entry_file)
+def main(argv=None, candidate_id=FREQUENCY_ATTENTION_CANDIDATE, entry_file=None, training_files=()):
+    args, source = parse_args(argv, candidate_id=candidate_id, entry_file=entry_file, training_files=training_files)
     parser, initializer, objective = causal.parse_args, causal.initialize_checkpoint, causal.QualityObjective
     sampler = causal.trainer.DistributedSampler
 

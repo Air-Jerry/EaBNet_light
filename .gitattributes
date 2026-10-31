@@ -32,3 +32,5 @@ train_light_causal_frequency_attention.py text eol=lf
 run_light_causal_frequency_attention.sh text eol=lf
 train_light_causal_pooled_attention.py text eol=lf
 run_light_causal_pooled_attention.sh text eol=lf
+train_light_causal_compiled_attention.py text eol=lf
+run_light_causal_compiled_attention.sh text eol=lf

@@ -13,7 +13,7 @@ from test_light_quality_workflow import run_cli
 
 
 @pytest.mark.parametrize('refined', [False, True])
-@pytest.mark.parametrize('entry,candidate,schema', [('train_light_causal_frequency_attention.py', FREQUENCY_ATTENTION_CANDIDATE, 11), ('train_light_causal_pooled_attention.py', POOLED_FREQUENCY_ATTENTION_CANDIDATE, 12)])
+@pytest.mark.parametrize('entry,candidate,schema', [('train_light_causal_frequency_attention.py', FREQUENCY_ATTENTION_CANDIDATE, 11), ('train_light_causal_pooled_attention.py', POOLED_FREQUENCY_ATTENTION_CANDIDATE, 12), ('train_light_causal_compiled_attention.py', FREQUENCY_ATTENTION_CANDIDATE, 11)])
 def test_attention_warmstart_resume_and_saved_inference(argv, tmp_path, refined, entry, candidate, schema):
     arguments, _ = tcn_case(argv, tmp_path)
     run_cli('train_light_causal_tcn.py', [*arguments, '--num-epochs', '1'])
@@ -38,6 +38,8 @@ def test_attention_warmstart_resume_and_saved_inference(argv, tmp_path, refined,
     assert initial['args']['candidate_evidence']['future_frames'] == 0
     assert 'train_light_causal_pmsqe.py' in initial['args']['causal_training_implementation_sha256']
     assert entry in initial['args']['causal_training_implementation_sha256']
+    if entry == 'train_light_causal_compiled_attention.py':
+        assert 'experiments/compiled_training_norm.py' in initial['args']['causal_training_implementation_sha256']
     for name, value in original['model_state_dict'].items():
         torch.testing.assert_close(initial['model_state_dict'][name], value, rtol=0, atol=0)
     before, _ = evaluate_light.load_model(source, torch.device('cpu'), TCN_CANDIDATE)
