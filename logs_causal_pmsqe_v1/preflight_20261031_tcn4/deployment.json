@@ -1,0 +1,17 @@
+{
+  "status": "deployed_after_verified_complete_epoch4",
+  "files": {
+    "train_light_causal_pmsqe.py": "93ec48d74c537ae343f6e9dfeaab81f0839c046dc474ad74ab8cbf5defaf1fde",
+    "run_light_causal_pmsqe.sh": "6d361e49e9ee2f00ea6f2b93de5d8c1c7bc3cde5abb1e91ecbe15cef700031c3",
+    "check_light_causal_cuda.py": "6bbc4f13c48b07337a421187fdf81ab6edf2adac3cdd71fc18317a6aebd3e5b6"
+  },
+  "protected_files_unchanged": {
+    "evaluate_light.py": "0c3ada1425b33e16688e8424daba23681ac9ded4d8bee931ed24c69e59e5730b",
+    "light_candidate_runtime.py": "06b620d2e4af4f95256a133b00f2faf6c949eb573f61132b34151a1c740351b8",
+    "train_light_causal.py": "3b48d702de8c45b6d2766705c42465ddbbf12088b04226eaa1f607a8699c7379",
+    "train_light.py": "dbe303d9bd66495c226afee90fbae9f5c0bc8cf87f9e61f35431ce90b8d15b81",
+    "light_quality_loss.py": "d39581a21efd17823049385f09399e07bf63660d688192467bdd4c5c99ab88db",
+    "experiments/causal_tcn_mapping.py": "9f6c7d0f011a19d03d2716b1bef2081d7b58d11b4d426e66bce1997de0ae82df",
+    "run_light_causal_tcn.sh": "7ab5a7dc8e467bf72be8ae76c6cd985ec8e5e3ae16eefd29beabb2098fa9cf08"
+  }
+}

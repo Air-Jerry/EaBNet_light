@@ -8,7 +8,7 @@ import torch
 
 import train_light_causal as causal
 from experiments.causal_pmsqe_objective import PMSQEObjective
-from light_candidate_runtime import (TCN_CANDIDATE, FOURIER_CANDIDATE,
+from light_candidate_runtime import (TCN_CANDIDATE,
     candidate_metadata, read_candidate_checkpoint, select_model_factory)
 
 
@@ -29,7 +29,10 @@ def parse_args(argv=None):
     selector.add_argument('--warmstart')
     selector.add_argument('--frequency-fourier', choices=('yes', 'no'), default='no')
     selected, remaining = selector.parse_known_args(sys.argv[1:] if argv is None else argv)
-    candidate = FOURIER_CANDIDATE if selected.frequency_fourier == 'yes' else TCN_CANDIDATE
+    candidate = TCN_CANDIDATE
+    if selected.frequency_fourier == 'yes':
+        from light_candidate_runtime import FOURIER_CANDIDATE
+        candidate = FOURIER_CANDIDATE
     args = causal.trainer.parse_args(remaining, defaults=dict(
         checkpoint_dir='./checkpoints_causal_pmsqe_v1', best_dir='./bestmodels_causal_pmsqe_v1',
         log_dir='./logs_causal_pmsqe_v1', num_epochs=6, learning_rate=.0003,

@@ -1,0 +1,9 @@
+{
+  "status": "stopped_after_verified_complete_epoch4",
+  "latest_complete_epoch": 4,
+  "adam_updates": 26800,
+  "best_source_epoch": 3,
+  "all_checkpoints_preserved": true,
+  "selected_preflight": "/home/nis/jinrui.yang/EaBNet_light/logs_causal_pmsqe_v1/preflight_20261031_tcn4",
+  "new_objective": "spectral_mrstft_waveform_pmsqe_v1"
+}

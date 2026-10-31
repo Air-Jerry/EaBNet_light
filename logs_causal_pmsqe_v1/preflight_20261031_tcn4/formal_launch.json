@@ -1,0 +1,13 @@
+{
+  "status": "running",
+  "pid": 2354428,
+  "start_cookie": "141067072",
+  "sid": 2354428,
+  "launch_log": "/home/nis/jinrui.yang/EaBNet_light/logs_causal_pmsqe_v1/full_train_launch_20261101.log",
+  "preflight": "/home/nis/jinrui.yang/EaBNet_light/logs_causal_pmsqe_v1/preflight_20261031_tcn4",
+  "full_training_samples": 53600,
+  "full_validation_and_metric_samples": 600,
+  "global_batch": 8,
+  "updates_per_epoch": 6700,
+  "all_checkpoint_recovery_available": true
+}

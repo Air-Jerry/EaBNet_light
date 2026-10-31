@@ -1,0 +1,33 @@
+{
+  "status": "passed",
+  "scope": "256 real6s records,64 dual-CUDA updates; full600 zero-output identity and streaming, not generalization",
+  "mode": "TCN plus training-only PMSQE; Fourier disabled",
+  "source_epoch": 3,
+  "source_checkpoint_sha256": "3a7f6e7a2968980610847d3d67ecd257cd8f89e1fcdf39a24aa5cf5e73cd4301",
+  "source_full600_pesq": 2.6777219649155937,
+  "zero_full600_pesq": 2.6777219649155937,
+  "all251_state_tensors_changed": true,
+  "all_weights_and_adam_finite": true,
+  "streaming_all_hop_ms": {
+    "mean": 3.832965213029335,
+    "p99": 4.019586134236306,
+    "max": 4.2848289012908936
+  },
+  "bounded_cache_bytes": 5822208,
+  "future_error": 0.0,
+  "waveform_error": 3.5762786865234375e-07,
+  "timing_projection": {
+    "status": "measured",
+    "training_samples": 53600,
+    "validation_samples": 600,
+    "metric_samples": 600,
+    "cuda_checkpoint_sha256": "85a5db690ee5fec5eb2d96d679c6a1dda6d45a9f4a965917f9a6ff535fad6b01",
+    "evaluation_checkpoint_sha256": "c25e96fddf194cec9a5cd2c7817411642220b1b8e97f82b575d00463517743dd",
+    "training_samples_per_second": 16.9,
+    "validation_samples_per_second": 35.6,
+    "full600_evaluation_seconds": 195.97469741408713,
+    "overhead_reserve_seconds": 60,
+    "projected_complete_epoch_seconds": 3444.426263134452
+  },
+  "original_evaluator_unchanged": true
+}
