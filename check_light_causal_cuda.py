@@ -52,7 +52,7 @@ def run(args):
             "--cpu-threads", "2", "--cpu-thread-scale", "1", "--use-amp", "no", "--model-amp", "no",
             "--allow-tf32", "no", "--stop-on-non-finite", "yes", "--skip-non-finite-batches", "no", "--save-every", "1"]
         if args.warmstart:
-            if args.entry not in ('train_light_causal_global.py', 'train_light_causal_tcn.py'):
+            if args.entry not in ('train_light_causal_global.py', 'train_light_causal_tcn.py', 'train_light_causal_fourier.py'):
                 raise ValueError('The selected entry does not accept --warmstart')
             command.extend(['--warmstart',str(Path(args.warmstart).expanduser().resolve())])
         environment = os.environ.copy()
@@ -111,7 +111,7 @@ if __name__ == "__main__":
     parser.add_argument("--train-dir", default="/data/ssd1/jinrui.yang/training_set")
     parser.add_argument("--batch-size", type=int, choices=(1, 2, 4), default=1)
     parser.add_argument("--num-samples", type=int, default=32)
-    parser.add_argument("--entry", choices=("train_light_causal.py", "train_light_causal_fast.py", "train_light_causal_global.py", "train_light_causal_recurrent.py", "train_light_causal_recurrent65.py", "train_light_causal_tcn.py"), default="train_light_causal.py")
+    parser.add_argument("--entry", choices=("train_light_causal.py", "train_light_causal_fast.py", "train_light_causal_global.py", "train_light_causal_recurrent.py", "train_light_causal_recurrent65.py", "train_light_causal_tcn.py", "train_light_causal_fourier.py"), default="train_light_causal.py")
     parser.add_argument("--warmstart")
     parser.add_argument("--output-dir", required=True)
     run(parser.parse_args())

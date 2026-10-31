@@ -27,16 +27,20 @@ GLOBAL_CANDIDATE = "causal_unet_global_v1"
 RECURRENT_CANDIDATE = "causal_recurrent_spatial_v1"
 RECURRENT65_CANDIDATE = "causal_recurrent_unet65_v1"
 TCN_CANDIDATE = "causal_recurrent_tcn_v1"
+FOURIER_CANDIDATE = "causal_frequency_fourier_v1"
 IDENTITY_FIELDS = ("sample_rate", "n_fft", "hop_length", "win_length", "power", "target_ref_mic",
                    "channels", "num_mics", "embed_dim", "cd1", "dfsmn_layers", "dfsmn_memory_size",
                    "norm_type", "bf_type", "topo_type", "is_causal")
 
 
 def all_model_candidates():
-    return (*all_reference_candidates(), QUALITY_CANDIDATE, SPATIAL_CANDIDATE, CAUSAL_CANDIDATE, FAST_CANDIDATE, GLOBAL_CANDIDATE, RECURRENT_CANDIDATE, RECURRENT65_CANDIDATE, TCN_CANDIDATE)
+    return (*all_reference_candidates(), QUALITY_CANDIDATE, SPATIAL_CANDIDATE, CAUSAL_CANDIDATE, FAST_CANDIDATE, GLOBAL_CANDIDATE, RECURRENT_CANDIDATE, RECURRENT65_CANDIDATE, TCN_CANDIDATE, FOURIER_CANDIDATE)
 
 
 def build_model_candidate(candidate_id, **model_kwargs):
+    if candidate_id == FOURIER_CANDIDATE:
+        from experiments.causal_frequency_fourier import CausalFrequencyFourierTCN
+        return CausalFrequencyFourierTCN(**model_kwargs)
     if candidate_id == TCN_CANDIDATE:
         from experiments.causal_tcn_mapping import CausalTCNMapping
         return CausalTCNMapping(**model_kwargs)
@@ -65,6 +69,20 @@ def build_model_candidate(candidate_id, **model_kwargs):
 
 
 def candidate_metadata(candidate_id):
+    if candidate_id == FOURIER_CANDIDATE:
+        metadata = candidate_metadata(TCN_CANDIDATE)
+        files = (*metadata['candidate_implementation_sha256'], 'experiments/causal_frequency_fourier.py')
+        metadata.update(structure_candidate=candidate_id, candidate_schema=10,
+                        candidate_implementation_sha256=source_hashes(files))
+        evidence = metadata['candidate_evidence']
+        evidence.update(candidate_id=candidate_id,
+            purpose='Joint causal TCN with global frequency Fourier mixing within each current frame',
+            initialization='Validated complete causal TCN checkpoint; zero new Fourier output; fresh Adam')
+        evidence['model_config']['mapping']['frequency_fourier'] = dict(
+            transform_axis='frequency only; no time-axis transform', fft_length=512,
+            channels=32, nonlinear='64-channel pointwise layers, channel norm and SiLU',
+            extra_parameters=8448, extra_temporal_cache_bytes=0)
+        return metadata
     if candidate_id == TCN_CANDIDATE:
         metadata = candidate_metadata(RECURRENT65_CANDIDATE)
         files = (*metadata['candidate_implementation_sha256'], 'experiments/causal_tcn_mapping.py')
