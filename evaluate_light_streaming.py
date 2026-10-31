@@ -29,7 +29,7 @@ def require_full_comparison(report):
         raise ValueError('Streaming audit requires the same complete 600-utterance comparison')
     if report['metric_protocol']['target_gain_matching'] or report['metric_protocol']['external_normalization_clipping_or_alignment']:
         raise ValueError('Streaming audit forbids gain matching, external normalization or alignment')
-    if report['structure_candidate'] not in ('causal_unet_spatial_v1', 'causal_unet_global_v1', 'causal_recurrent_spatial_v1', 'causal_recurrent_unet65_v1'):
+    if report['structure_candidate'] not in ('causal_unet_spatial_v1', 'causal_unet_global_v1', 'causal_recurrent_spatial_v1', 'causal_recurrent_unet65_v1', 'causal_recurrent_tcn_v1'):
         raise ValueError('Streaming audit requires a supported causal checkpoint')
     if report['candidate_evidence'].get('model_causal') is not True or report['candidate_evidence'].get('future_frames') != 0:
         raise ValueError('Checkpoint evidence must identify a causal model with zero future frames')

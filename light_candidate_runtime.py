@@ -26,16 +26,20 @@ FAST_CANDIDATE = "causal_unet_spatial_v1"
 GLOBAL_CANDIDATE = "causal_unet_global_v1"
 RECURRENT_CANDIDATE = "causal_recurrent_spatial_v1"
 RECURRENT65_CANDIDATE = "causal_recurrent_unet65_v1"
+TCN_CANDIDATE = "causal_recurrent_tcn_v1"
 IDENTITY_FIELDS = ("sample_rate", "n_fft", "hop_length", "win_length", "power", "target_ref_mic",
                    "channels", "num_mics", "embed_dim", "cd1", "dfsmn_layers", "dfsmn_memory_size",
                    "norm_type", "bf_type", "topo_type", "is_causal")
 
 
 def all_model_candidates():
-    return (*all_reference_candidates(), QUALITY_CANDIDATE, SPATIAL_CANDIDATE, CAUSAL_CANDIDATE, FAST_CANDIDATE, GLOBAL_CANDIDATE, RECURRENT_CANDIDATE, RECURRENT65_CANDIDATE)
+    return (*all_reference_candidates(), QUALITY_CANDIDATE, SPATIAL_CANDIDATE, CAUSAL_CANDIDATE, FAST_CANDIDATE, GLOBAL_CANDIDATE, RECURRENT_CANDIDATE, RECURRENT65_CANDIDATE, TCN_CANDIDATE)
 
 
 def build_model_candidate(candidate_id, **model_kwargs):
+    if candidate_id == TCN_CANDIDATE:
+        from experiments.causal_tcn_mapping import CausalTCNMapping
+        return CausalTCNMapping(**model_kwargs)
     if candidate_id == RECURRENT65_CANDIDATE:
         from light_causal_recurrent65_model import CausalRecurrentUNet65
         return CausalRecurrentUNet65(**model_kwargs)
@@ -61,6 +65,21 @@ def build_model_candidate(candidate_id, **model_kwargs):
 
 
 def candidate_metadata(candidate_id):
+    if candidate_id == TCN_CANDIDATE:
+        metadata = candidate_metadata(RECURRENT65_CANDIDATE)
+        files = (*metadata['candidate_implementation_sha256'], 'experiments/causal_tcn_mapping.py')
+        metadata.update(structure_candidate=candidate_id, candidate_schema=9,
+                        candidate_implementation_sha256=source_hashes(files))
+        evidence = metadata['candidate_evidence']
+        evidence.update(candidate_id=candidate_id,
+            purpose='Jointly trained65-group spatial U-Net and full257-frequency causal TCN spectral mapping',
+            initialization='Validated complete recurrent65 checkpoint; zero new mapping output; fresh Adam',
+            output='Complex8-microphone residual beamforming plus current-mixture-scaled compressed RI mapping',
+            normalization='Current-frame channel LayerNorm; mapping scale from current reference-mixture frame only')
+        evidence['model_config'].update(mapping=dict(input=18, channels=32, output=2,
+            dilations=[1,2,4,8,16,32], kernel=[3,3], past_frames=126,
+            extra_cache_bytes_per_stream=4144896, frozen_parameters=0))
+        return metadata
     if candidate_id == RECURRENT65_CANDIDATE:
         metadata=candidate_metadata(FAST_CANDIDATE)
         metadata.update(structure_candidate=candidate_id,candidate_schema=8,

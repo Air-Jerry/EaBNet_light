@@ -104,10 +104,16 @@
       "pesq": 2.4787930558125177,
       "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_causal_recurrent_unet65_v1_causal_recurrent65_20261031_065909_2104814/model_epoch_16.pt",
       "checkpoint_sha256": "b9e1d630cdd14b21321686eb561732d1b5ae7a700460fc0ef5afbaf03f75681a"
+    },
+    {
+      "epoch": 17,
+      "pesq": 2.5366868688662847,
+      "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_causal_recurrent_unet65_v1_causal_recurrent65_20261031_065909_2104814/model_epoch_17.pt",
+      "checkpoint_sha256": "c4bc557679eefdd8db38a33c681d841e12bdf19e574027ef3578856920b51a87"
     }
   ],
-  "best_completed_epoch": 15,
-  "best_completed_pesq": 2.501303216020266,
+  "best_completed_epoch": 17,
+  "best_completed_pesq": 2.5366868688662847,
   "target_reached": false,
   "final_full600_waveform_streaming_audit_required": true
 }

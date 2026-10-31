@@ -1,0 +1,44 @@
+recurrent65_control {"updates": 0, "mean_pesq": 2.015420600771904, "per_sample_pesq": [1.6168984174728394, 3.965308427810669, 2.011383533477783, 1.3124523162841797, 1.6813976764678955, 1.5804543495178223, 1.9694149494171143, 1.9860551357269287], "mean_loss": 0.5000273436307907, "loss_components": {"samples": 8, "batches": 8, "spectral": 0.38232722878456116, "mrstft": 0.9839410781860352, "waveform": 0.19306007027626038, "total": 0.5000273585319519}, "gradient_norm_mean": 0.0, "gradient_norm_max": 0, "clipped_update_fraction": 0.0, "elapsed_seconds": 19.219321395037696}
+recurrent65_control update 1 elapsed 34.97
+recurrent65_control update 2 elapsed 49.57
+recurrent65_control update 3 elapsed 63.69
+recurrent65_control update 25 elapsed 312.44
+recurrent65_control update 50 elapsed 463.83
+recurrent65_control update 75 elapsed 615.05
+recurrent65_control update 100 elapsed 766.14
+recurrent65_control update 125 elapsed 914.38
+recurrent65_control update 150 elapsed 1065.89
+recurrent65_control update 175 elapsed 1211.33
+recurrent65_control update 200 elapsed 1355.9
+recurrent65_control {"updates": 200, "mean_pesq": 2.609653413295746, "per_sample_pesq": [2.4342777729034424, 4.047513008117676, 2.392096996307373, 2.152630090713501, 2.421485662460327, 2.216165542602539, 2.448030948638916, 2.7650272846221924], "mean_loss": 0.4278861880302429, "loss_components": {"samples": 8, "batches": 8, "spectral": 0.3398483097553253, "mrstft": 0.7385693192481995, "waveform": 0.14180941879749298, "total": 0.4278861880302429}, "gradient_norm_mean": 3.4262316915392876, "gradient_norm_max": 7.723498821258545, "clipped_update_fraction": 0.205, "elapsed_seconds": 1363.6509373520967}
+recurrent65_control update 225 elapsed 1511.65
+recurrent65_control update 250 elapsed 1662.6
+recurrent65_control update 275 elapsed 1814.06
+recurrent65_control update 300 elapsed 1965.73
+recurrent65_control update 325 elapsed 2117.03
+recurrent65_control update 350 elapsed 2268.72
+recurrent65_control update 375 elapsed 2420.5
+recurrent65_control update 400 elapsed 2571.15
+recurrent65_control {"updates": 400, "mean_pesq": 2.976262629032135, "per_sample_pesq": [2.817600727081299, 4.160027503967285, 2.744128942489624, 2.53436017036438, 3.0577476024627686, 2.655646324157715, 2.8170218467712402, 3.0235679149627686], "mean_loss": 0.39216441102325916, "loss_components": {"samples": 8, "batches": 8, "spectral": 0.3141663372516632, "mrstft": 0.6528581380844116, "waveform": 0.12712246179580688, "total": 0.392164409160614}, "gradient_norm_mean": 3.6699367423355578, "gradient_norm_max": 9.199857711791992, "clipped_update_fraction": 0.2475, "elapsed_seconds": 2579.4660676999483}
+full_frequency_tcn_mapping {"updates": 0, "mean_pesq": 2.015420600771904, "per_sample_pesq": [1.6168984174728394, 3.965308427810669, 2.011383533477783, 1.3124523162841797, 1.6813976764678955, 1.5804543495178223, 1.9694149494171143, 1.9860551357269287], "mean_loss": 0.5000273436307907, "loss_components": {"samples": 8, "batches": 8, "spectral": 0.38232722878456116, "mrstft": 0.9839410781860352, "waveform": 0.19306007027626038, "total": 0.5000273585319519}, "gradient_norm_mean": 0.0, "gradient_norm_max": 0, "clipped_update_fraction": 0.0, "elapsed_seconds": 10.283503765007481}
+full_frequency_tcn_mapping update 1 elapsed 19.28
+full_frequency_tcn_mapping update 2 elapsed 28.23
+full_frequency_tcn_mapping update 3 elapsed 37.36
+full_frequency_tcn_mapping update 25 elapsed 241.37
+full_frequency_tcn_mapping update 50 elapsed 470.77
+full_frequency_tcn_mapping update 75 elapsed 693.99
+full_frequency_tcn_mapping update 100 elapsed 916.63
+full_frequency_tcn_mapping update 125 elapsed 1133.66
+full_frequency_tcn_mapping update 150 elapsed 1336.92
+full_frequency_tcn_mapping update 175 elapsed 1568.26
+full_frequency_tcn_mapping update 200 elapsed 1817.53
+full_frequency_tcn_mapping {"updates": 200, "mean_pesq": 2.727779895067215, "per_sample_pesq": [2.5191869735717773, 4.137820720672607, 2.4892916679382324, 2.1722779273986816, 2.6586689949035645, 2.633615255355835, 2.4814743995666504, 2.729903221130371], "mean_loss": 0.41767180524766445, "loss_components": {"samples": 8, "batches": 8, "spectral": 0.331385999917984, "mrstft": 0.7232974171638489, "waveform": 0.13956058025360107, "total": 0.4176718294620514}, "gradient_norm_mean": 3.478766838312149, "gradient_norm_max": 11.73085880279541, "clipped_update_fraction": 0.205, "elapsed_seconds": 1828.5676395108458}
+full_frequency_tcn_mapping update 225 elapsed 2075.79
+full_frequency_tcn_mapping update 250 elapsed 2339.99
+full_frequency_tcn_mapping update 275 elapsed 2547.81
+full_frequency_tcn_mapping update 300 elapsed 2758.4
+full_frequency_tcn_mapping update 325 elapsed 2958.57
+full_frequency_tcn_mapping update 350 elapsed 3158.61
+full_frequency_tcn_mapping update 375 elapsed 3359.5
+full_frequency_tcn_mapping update 400 elapsed 3558.28
+full_frequency_tcn_mapping {"updates": 400, "mean_pesq": 3.078194260597229, "per_sample_pesq": [2.9378654956817627, 4.193458557128906, 2.922271728515625, 2.501638174057007, 3.170309066772461, 2.9643521308898926, 2.8716506958007812, 3.0640082359313965], "mean_loss": 0.38871330581605434, "loss_components": {"samples": 8, "batches": 8, "spectral": 0.311175137758255, "mrstft": 0.6525149345397949, "waveform": 0.12286652624607086, "total": 0.3887133002281189}, "gradient_norm_mean": 3.2349261070787905, "gradient_norm_max": 11.73085880279541, "clipped_update_fraction": 0.19, "elapsed_seconds": 3567.129896519007}
