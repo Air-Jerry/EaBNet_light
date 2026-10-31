@@ -14,7 +14,7 @@ import torch
 ROOT = Path(__file__).resolve().parents[1]
 
 
-@pytest.mark.parametrize('launcher,source_id,target_id', [('run_light_causal_tcn.sh','causal_recurrent_unet65_v1','causal_recurrent_tcn_v1'),('run_light_causal_fourier.sh','causal_recurrent_tcn_v1','causal_frequency_fourier_v1'),('run_light_causal_pmsqe.sh','causal_recurrent_tcn_v1','causal_recurrent_tcn_v1'),('run_light_causal_pmsqe.sh','causal_recurrent_tcn_v1','causal_frequency_fourier_v1')])
+@pytest.mark.parametrize('launcher,source_id,target_id', [('run_light_causal_tcn.sh','causal_recurrent_unet65_v1','causal_recurrent_tcn_v1'),('run_light_causal_fourier.sh','causal_recurrent_tcn_v1','causal_frequency_fourier_v1'),('run_light_causal_pmsqe.sh','causal_recurrent_tcn_v1','causal_recurrent_tcn_v1'),('run_light_causal_pmsqe.sh','causal_recurrent_tcn_v1','causal_frequency_fourier_v1'),('run_light_causal_frequency_attention.sh','causal_recurrent_tcn_v1','causal_frequency_attention_v1')])
 @pytest.mark.parametrize('fault', [None, 'partial', 'gain', 'baseline_changed', 'wrong_source'])
 def test_tcn_launcher_requires_full600_and_exact_warm_source(tmp_path, monkeypatch, fault, launcher, source_id, target_id):
     source = tmp_path / 'source.pt'; source_logs = tmp_path / 'source_logs'
@@ -50,7 +50,7 @@ def test_tcn_launcher_requires_full600_and_exact_warm_source(tmp_path, monkeypat
         assert rank['target_reached'] and rank['model_is_causal']
 
 
-@pytest.mark.parametrize('launcher', ['run_light_causal_tcn.sh','run_light_causal_fourier.sh','run_light_causal_pmsqe.sh'])
+@pytest.mark.parametrize('launcher', ['run_light_causal_tcn.sh','run_light_causal_fourier.sh','run_light_causal_pmsqe.sh','run_light_causal_frequency_attention.sh'])
 @pytest.mark.parametrize('rate,allowed', [('16.9',True),('16.0',False)])
 @pytest.mark.parametrize('fault', [None, 'partial_metrics', 'wrong_checkpoint', 'nonfinite_time'])
 def test_tcn_hour_projection_retains_full_data_and_measured_metrics(tmp_path, rate, allowed, fault, launcher):
@@ -78,7 +78,7 @@ def test_tcn_hour_projection_retains_full_data_and_measured_metrics(tmp_path, ra
         with pytest.raises(AssertionError): exec(compile(code,'complete hour budget','exec'),values)
 
 
-@pytest.mark.parametrize('launcher,warm_key', [('run_light_causal_tcn.sh','tcn_warmstart_checkpoint'),('run_light_causal_fourier.sh','fourier_warmstart_checkpoint'),('run_light_causal_pmsqe.sh','perceptual_warmstart_checkpoint')])
+@pytest.mark.parametrize('launcher,warm_key', [('run_light_causal_tcn.sh','tcn_warmstart_checkpoint'),('run_light_causal_fourier.sh','fourier_warmstart_checkpoint'),('run_light_causal_pmsqe.sh','perceptual_warmstart_checkpoint'),('run_light_causal_frequency_attention.sh','attention_warmstart_checkpoint')])
 @pytest.mark.parametrize('fault', [None, 'unfinished', 'wrong_directory', 'target_reached'])
 def test_tcn_resume_rejects_incomplete_boundaries(tmp_path, monkeypatch, fault, launcher, warm_key):
     root=tmp_path/'run'; root.mkdir()

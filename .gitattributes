@@ -28,3 +28,5 @@ run_light_causal_fourier.sh text eol=lf
 train_light_causal_pmsqe.py text eol=lf
 run_light_causal_pmsqe.sh text eol=lf
 audit_light_final.py text eol=lf
+train_light_causal_frequency_attention.py text eol=lf
+run_light_causal_frequency_attention.sh text eol=lf

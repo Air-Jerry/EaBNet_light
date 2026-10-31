@@ -1,0 +1,47 @@
+{
+  "status": "complete",
+  "scope": "Capacity and transfer diagnostics; no claim of full600 improvement",
+  "fixed8_attention_pesq": 2.941372364759445,
+  "fixed8_plain_pmsqe_pesq": 2.9507663249969482,
+  "fixed8_attention_delta_vs_plain_pmsqe": -0.009393960237503052,
+  "held_out32_results": [
+    {
+      "model": "full_source_epoch1",
+      "held_out32_pesq": 2.617069747298956
+    },
+    {
+      "model": "full_source_best",
+      "held_out32_pesq": 2.67810919880867
+    },
+    {
+      "model": "full_pmsqe_epoch1",
+      "held_out32_pesq": 2.7004209645092487
+    },
+    {
+      "model": "physical_fit8",
+      "held_out32_pesq": 2.154020119458437
+    },
+    {
+      "model": "pmsqe_fit8",
+      "held_out32_pesq": 2.222136724740267
+    },
+    {
+      "model": "fourier_pmsqe_fit8",
+      "held_out32_pesq": 2.234104707837105
+    }
+  ],
+  "selected_pairs_sha256": "404c9133bb22298afef07391af221e3a143728f69433401a40ee08df8ab3f610",
+  "interpretation": "All8-fit models regress on held-out32. Their8-fit scores cannot select generalization winners. Test structural frequency attention on full53600 training and full600 evaluation, after CUDA/causal/timing checks.",
+  "inference_note": "The inherited inference_unchanged field in the raw attention probe refers to no loss-time postprocessing. The model architecture does change after training.",
+  "local_checks": {
+    "causal_and_launch_gates": 78,
+    "actual_warmstart_train_resume_inference_cases": 2,
+    "existing_candidate_metadata_preserved": 14
+  },
+  "goal": {
+    "pesq": 3.4,
+    "pesq_mode": "wb",
+    "full_comparison_samples": 600,
+    "whole_epoch_limit_seconds": 3600
+  }
+}

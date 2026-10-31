@@ -1,0 +1,205 @@
+{
+  "status": "complete",
+  "scope": "Global current-frame frequency attention with unchanged PMSQE loss; same8 training crops and200 updates; not generalization",
+  "seed": 1234,
+  "updates": 200,
+  "effective_batch": 2,
+  "learning_rate": 0.001,
+  "segment_samples": 96000,
+  "precision": "CPU FP32",
+  "objective": "QualityObjective plus0.1 training-only upstream PMSQE",
+  "source_checkpoint_sha256": "e25692f5965d81439862dcd2036e6c18322975234daabf0700a85d9d84d8af19",
+  "source_epoch": 1,
+  "control_run": "logs_causal_recurrent_tcn_v1/frequency_fourier_probe_20261031/controlled_cpu",
+  "control_probe_sha256": "cedfce581046ee4ee1ade02c8943d3e760dd0716b819744146e1ee59ea8d8068",
+  "control_weights_sha256": "3e017a4bd46381b51d1dc029e9ddd1f9a6b376b58ed61fdba280a188ab8ac870",
+  "control_endpoint_recomputed_on_all8": true,
+  "initial_per_sample_scores_equal_control": true,
+  "control_measurements": [
+    {
+      "updates": 0,
+      "mean_pesq": 2.1405426412820816,
+      "per_sample_pesq": [
+        1.7601715326309204,
+        3.973151922225952,
+        2.072824001312256,
+        1.340329885482788,
+        1.9385490417480469,
+        1.817756175994873,
+        2.0598812103271484,
+        2.161677360534668
+      ],
+      "mean_loss": 0.4761709999293089,
+      "loss_components": {
+        "samples": 8,
+        "batches": 8,
+        "spectral": 0.36861544847488403,
+        "mrstft": 0.8989017009735107,
+        "waveform": 0.176653653383255,
+        "total": 0.47617101669311523
+      },
+      "gradient_norm_mean": 0.0,
+      "gradient_norm_max": 0,
+      "clipped_update_fraction": 0.0,
+      "elapsed_seconds": 8.747862584190443
+    },
+    {
+      "updates": 100,
+      "mean_pesq": 2.7432858049869537,
+      "per_sample_pesq": [
+        2.468151330947876,
+        4.110184192657471,
+        2.5711324214935303,
+        2.123431444168091,
+        2.887775182723999,
+        2.59895658493042,
+        2.439330816268921,
+        2.7473244667053223
+      ],
+      "mean_loss": 0.42187418043613434,
+      "loss_components": {
+        "samples": 8,
+        "batches": 8,
+        "spectral": 0.3349093496799469,
+        "mrstft": 0.7265693545341492,
+        "waveform": 0.1430792361497879,
+        "total": 0.42187419533729553
+      },
+      "gradient_norm_mean": 1.8228347900509834,
+      "gradient_norm_max": 8.124787330627441,
+      "clipped_update_fraction": 0.03,
+      "elapsed_seconds": 801.0164077081718
+    },
+    {
+      "updates": 200,
+      "mean_pesq": 2.723315477371216,
+      "per_sample_pesq": [
+        2.6015172004699707,
+        4.094302177429199,
+        2.474461793899536,
+        2.190197467803955,
+        2.5511512756347656,
+        2.5987155437469482,
+        2.503507614135742,
+        2.7726707458496094
+      ],
+      "mean_loss": 0.4219527132809162,
+      "loss_components": {
+        "samples": 8,
+        "batches": 8,
+        "spectral": 0.33172357082366943,
+        "mrstft": 0.7652444243431091,
+        "waveform": 0.1370469629764557,
+        "total": 0.4219527542591095
+      },
+      "gradient_norm_mean": 1.8097502081096173,
+      "gradient_norm_max": 8.124787330627441,
+      "clipped_update_fraction": 0.025,
+      "elapsed_seconds": 1604.3946779919788
+    }
+  ],
+  "private_audio_hashes_exported": false,
+  "implementation_sha256": {
+    "probe_causal_pmsqe.py": "5558a0bf7ad478180c32945775b6e984dbc28ef24c89ea21c007323d448cb9d9",
+    "causal_pmsqe_objective.py": "1625c9774f9676f663060c4a00effc490d33107f451ab9cdb4bf1bf7b1cf7737",
+    "causal_tcn_mapping.py": "9f6c7d0f011a19d03d2716b1bef2081d7b58d11b4d426e66bce1997de0ae82df"
+  },
+  "vendor_provenance_sha256": "67b33c9a9a43840abd689db28ad7675d821e34bdb811012ae68d8872aa93f369",
+  "parameters": 2574354,
+  "trainable_parameters": 2574354,
+  "measurements": [
+    {
+      "updates": 0,
+      "mean_pesq": 2.1405426412820816,
+      "per_sample_pesq": [
+        1.7601715326309204,
+        3.973151922225952,
+        2.072824001312256,
+        1.340329885482788,
+        1.9385490417480469,
+        1.817756175994873,
+        2.0598812103271484,
+        2.161677360534668
+      ],
+      "mean_loss": 0.5819165911525488,
+      "loss_components": {
+        "samples": 8,
+        "batches": 8,
+        "spectral": 0.36861544847488403,
+        "mrstft": 0.8989017009735107,
+        "waveform": 0.176653653383255,
+        "total": 0.47617101669311523,
+        "pmsqe": 1.0574558973312378,
+        "combined_total": 0.581916606426239
+      }
+    },
+    {
+      "updates": 100,
+      "mean_pesq": 2.832693338394165,
+      "per_sample_pesq": [
+        2.5949695110321045,
+        4.172874927520752,
+        2.679957389831543,
+        2.129202365875244,
+        3.038209915161133,
+        2.600092887878418,
+        2.680650234222412,
+        2.765589475631714
+      ],
+      "mean_loss": 0.48114996403455734,
+      "loss_components": {
+        "samples": 8,
+        "batches": 8,
+        "spectral": 0.33636507391929626,
+        "mrstft": 0.7478331327438354,
+        "waveform": 0.14704416692256927,
+        "total": 0.42585277557373047,
+        "pmsqe": 0.5529718995094299,
+        "combined_total": 0.4811499655246735
+      },
+      "elapsed_seconds": 914.373689893866,
+      "gradient_norm_mean": 3.514717314839363,
+      "gradient_norm_max": 7.498465538024902,
+      "clipped_update_fraction": 0.18
+    },
+    {
+      "updates": 200,
+      "mean_pesq": 2.941372364759445,
+      "per_sample_pesq": [
+        2.8123931884765625,
+        4.214035987854004,
+        2.6846275329589844,
+        2.295142889022827,
+        2.9793896675109863,
+        2.8128139972686768,
+        2.8420798778533936,
+        2.890495777130127
+      ],
+      "mean_loss": 0.46313428692519665,
+      "loss_components": {
+        "samples": 8,
+        "batches": 8,
+        "spectral": 0.3282584547996521,
+        "mrstft": 0.7199682593345642,
+        "waveform": 0.13981658220291138,
+        "total": 0.41423696279525757,
+        "pmsqe": 0.4889734089374542,
+        "combined_total": 0.463134303689003
+      },
+      "elapsed_seconds": 1854.1307340860367,
+      "gradient_norm_mean": 3.171070857644081,
+      "gradient_norm_max": 8.691080093383789,
+      "clipped_update_fraction": 0.145
+    }
+  ],
+  "adam_updates": 200,
+  "all_weights_and_adam_finite": true,
+  "audio_file_occurrences_unchanged": 16,
+  "inference_unchanged": true,
+  "endpoint_pesq_delta_vs_control": 0.21805688738822937,
+  "architecture": "CausalFrequencyAttentionTCN",
+  "additional_implementation_sha256": {
+    "probe_causal_frequency_attention.py": "813fcc667646e80295681c76b5422c53c8ef21e7d390bac5565707241dc0d410",
+    "causal_frequency_attention.py": "ac4c1283ab0d225b608d164db3439ecef73a2c8518fe6f13a212bcaedc9a203f"
+  }
+}

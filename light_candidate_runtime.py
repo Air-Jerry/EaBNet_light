@@ -28,16 +28,20 @@ RECURRENT_CANDIDATE = "causal_recurrent_spatial_v1"
 RECURRENT65_CANDIDATE = "causal_recurrent_unet65_v1"
 TCN_CANDIDATE = "causal_recurrent_tcn_v1"
 FOURIER_CANDIDATE = "causal_frequency_fourier_v1"
+FREQUENCY_ATTENTION_CANDIDATE = "causal_frequency_attention_v1"
 IDENTITY_FIELDS = ("sample_rate", "n_fft", "hop_length", "win_length", "power", "target_ref_mic",
                    "channels", "num_mics", "embed_dim", "cd1", "dfsmn_layers", "dfsmn_memory_size",
                    "norm_type", "bf_type", "topo_type", "is_causal")
 
 
 def all_model_candidates():
-    return (*all_reference_candidates(), QUALITY_CANDIDATE, SPATIAL_CANDIDATE, CAUSAL_CANDIDATE, FAST_CANDIDATE, GLOBAL_CANDIDATE, RECURRENT_CANDIDATE, RECURRENT65_CANDIDATE, TCN_CANDIDATE, FOURIER_CANDIDATE)
+    return (*all_reference_candidates(), QUALITY_CANDIDATE, SPATIAL_CANDIDATE, CAUSAL_CANDIDATE, FAST_CANDIDATE, GLOBAL_CANDIDATE, RECURRENT_CANDIDATE, RECURRENT65_CANDIDATE, TCN_CANDIDATE, FOURIER_CANDIDATE, FREQUENCY_ATTENTION_CANDIDATE)
 
 
 def build_model_candidate(candidate_id, **model_kwargs):
+    if candidate_id == FREQUENCY_ATTENTION_CANDIDATE:
+        from experiments.causal_frequency_attention import CausalFrequencyAttentionTCN
+        return CausalFrequencyAttentionTCN(**model_kwargs)
     if candidate_id == FOURIER_CANDIDATE:
         from experiments.causal_frequency_fourier import CausalFrequencyFourierTCN
         return CausalFrequencyFourierTCN(**model_kwargs)
@@ -69,6 +73,20 @@ def build_model_candidate(candidate_id, **model_kwargs):
 
 
 def candidate_metadata(candidate_id):
+    if candidate_id == FREQUENCY_ATTENTION_CANDIDATE:
+        metadata = candidate_metadata(TCN_CANDIDATE)
+        files = (*metadata['candidate_implementation_sha256'], 'experiments/causal_frequency_attention.py')
+        metadata.update(structure_candidate=candidate_id, candidate_schema=11,
+                        candidate_implementation_sha256=source_hashes(files))
+        evidence = metadata['candidate_evidence']
+        evidence.update(candidate_id=candidate_id,
+            purpose='Causal TCN with position-aware global frequency attention inside each current frame',
+            initialization='Complete causal TCN checkpoint; zero new frequency-attention output; fresh Adam')
+        evidence['model_config']['mapping']['frequency_attention'] = dict(
+            sequence_axis='257 current-frame frequencies; time is an independent batch axis',
+            channels=32, projection=64, heads=4, head_dim=16, dropout=0.,
+            learned_frequency_positions=True, extra_parameters=16704, extra_temporal_cache_bytes=0)
+        return metadata
     if candidate_id == FOURIER_CANDIDATE:
         metadata = candidate_metadata(TCN_CANDIDATE)
         files = (*metadata['candidate_implementation_sha256'], 'experiments/causal_frequency_fourier.py')
