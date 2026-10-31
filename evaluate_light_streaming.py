@@ -21,7 +21,7 @@ from light_causal_stream import CausalWaveformStream
 
 IDENTITY_FIELDS = ('checkpoint_sha256', 'structure_candidate', 'candidate_implementation_sha256',
     'candidate_evidence', 'frontend', 'frontend_protocol', 'num_mics', 'mixture_ref_mic',
-    'selected_pairs_sha256', 'metadata_sha256', 'metric_protocol', 'checkpoint_model_config')
+    'selected_pairs_sha256', 'metadata_sha256', 'metric_protocol', 'checkpoint_model_config', 'device')
 
 
 def require_full_comparison(report):
@@ -106,6 +106,9 @@ def run(argv=None):
     reference_path = Path(selected.reference_summary).expanduser().resolve()
     baseline = json.loads(reference_path.read_text())
     require_full_comparison(baseline)
+    device = evaluator.get_device(args.device)
+    if baseline.get('device') != str(device):
+        raise ValueError('Use an offline reference summary from the same device; CPU/GPU numerical drift is a separate comparison')
     if baseline['checkpoint_sha256'] != evaluator.sha256_file(args.checkpoint):
         raise ValueError('Reference summary belongs to a different checkpoint')
     records, info, protected = evaluator.resolve_evaluation_inputs(args)
@@ -132,6 +135,15 @@ def run(argv=None):
     try:
         report = evaluator.evaluate(args)
         require_full_comparison(report)
+        if len(wrapped) != 1 or wrapped[0].utterances != 600:
+            raise ValueError('Not every comparison utterance was streamed')
+        report['waveform_streaming'] = wrapped[0].evidence()
+        report['waveform_streaming']['adapter_sha256'] = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
+        report['waveform_streaming']['stream_source_sha256'] = evaluator.sha256_file(Path(__file__).with_name('light_causal_stream.py'))
+        report['waveform_streaming']['reference_summary_sha256'] = evaluator.sha256_file(reference_path)
+        report['waveform_streaming']['inference_backend'] = dict(device=str(device),
+            matmul_allow_tf32=torch.backends.cuda.matmul.allow_tf32,
+            cudnn_allow_tf32=torch.backends.cudnn.allow_tf32)
         for name in IDENTITY_FIELDS:
             if report[name] != baseline[name]:
                 raise ValueError(f'Streaming comparison identity differs: {name}')
@@ -140,12 +152,6 @@ def run(argv=None):
                 raise ValueError(f'Streaming noisy baseline differs: {name}')
         if abs(report['mean']['enhanced']['pesq'] - baseline['mean']['enhanced']['pesq']) > 1e-4:
             raise ValueError('Full600 streaming PESQ differs from offline PESQ')
-        if len(wrapped) != 1 or wrapped[0].utterances != 600:
-            raise ValueError('Not every comparison utterance was streamed')
-        report['waveform_streaming'] = wrapped[0].evidence()
-        report['waveform_streaming']['adapter_sha256'] = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
-        report['waveform_streaming']['stream_source_sha256'] = evaluator.sha256_file(Path(__file__).with_name('light_causal_stream.py'))
-        report['waveform_streaming']['reference_summary_sha256'] = evaluator.sha256_file(reference_path)
         report['streaming_quality_target_reached'] = report['mean']['enhanced']['pesq'] >= 3.4
         print(json.dumps(report['waveform_streaming'], indent=2), flush=True)
         return report

@@ -78,10 +78,10 @@ def test_adapter_failure_is_recorded_and_original_evaluator_is_restored(tmp_path
         checkpoint_sha256=hashlib.sha256(checkpoint.read_bytes()).hexdigest(),
         structure_candidate='causal_unet_global_v1', candidate_evidence=dict(model_causal=True, future_frames=0),
         metric_protocol=dict(target_gain_matching=False, external_normalization_clipping_or_alignment=False),
-        selected_pairs_sha256='same', metadata_sha256='same')
+        selected_pairs_sha256='same', metadata_sha256='same', device='cpu')
     reference.write_text(json.dumps(baseline))
     output = tmp_path / 'streaming.json'
-    args = SimpleNamespace(checkpoint=str(checkpoint), max_samples=0, match_estimate_level='no')
+    args = SimpleNamespace(checkpoint=str(checkpoint), max_samples=0, match_estimate_level='no', device='cpu')
     monkeypatch.setattr(evaluator, 'parse_args', lambda unused: args)
     monkeypatch.setattr(evaluator, 'resolve_evaluation_inputs', lambda unused: ([object()] * 600, {'metadata_sha256': 'same'}, set()))
     monkeypatch.setattr(evaluator, 'pairs_sha256', lambda unused: 'same')
@@ -101,3 +101,55 @@ def test_adapter_failure_is_recorded_and_original_evaluator_is_restored(tmp_path
     assert (evaluator.load_model, evaluator.build_stft_batch, evaluator.reconstruct_waveform) == original
     result = json.loads(output.read_text())
     assert result['status'] == 'failed' and 'Simulated inference failure' in result['error']
+
+
+def test_cross_device_reference_fails_before_loading_dataset(tmp_path, monkeypatch):
+    reference = tmp_path / 'cuda.json'
+    reference.write_text(json.dumps(dict(status='complete', expected_samples=600, completed_samples=600,
+        device='cuda', structure_candidate='causal_unet_global_v1',
+        candidate_evidence=dict(model_causal=True, future_frames=0),
+        metric_protocol=dict(target_gain_matching=False, external_normalization_clipping_or_alignment=False))))
+    monkeypatch.setattr(evaluator, 'parse_args', lambda unused: SimpleNamespace(
+        device='cpu', max_samples=0, match_estimate_level='no'))
+    monkeypatch.setattr(evaluator, 'resolve_evaluation_inputs', lambda unused: pytest.fail('Must reject before reading data'))
+    with pytest.raises(ValueError, match='same device'):
+        streaming.run(['--reference-summary', str(reference)])
+
+
+def test_failed_quality_gate_preserves_completed_waveform_diagnostics(tmp_path, monkeypatch):
+    checkpoint = tmp_path / 'saved.pt'; checkpoint.write_bytes(b'unit test identity')
+    reference = tmp_path / 'cpu.json'; output = tmp_path / 'streaming.json'
+    baseline = dict(status='complete', expected_samples=600, completed_samples=600, device='cpu',
+        checkpoint_sha256=evaluator.sha256_file(checkpoint), structure_candidate='causal_unet_global_v1',
+        candidate_evidence=dict(model_causal=True, future_frames=0),
+        metric_protocol=dict(target_gain_matching=False, external_normalization_clipping_or_alignment=False),
+        selected_pairs_sha256='same', metadata_sha256='same',
+        mean={kind:{key:3.0 for key in evaluator.METRICS} for kind in ('enhanced','noisy')})
+    for field in streaming.IDENTITY_FIELDS: baseline.setdefault(field, None)
+    reference.write_text(json.dumps(baseline))
+    args = SimpleNamespace(checkpoint=str(checkpoint), max_samples=0, match_estimate_level='no', device='cpu')
+    monkeypatch.setattr(evaluator, 'parse_args', lambda unused: args)
+    monkeypatch.setattr(evaluator, 'resolve_evaluation_inputs', lambda unused: ([object()]*600, {'metadata_sha256':'same'}, set()))
+    monkeypatch.setattr(evaluator, 'pairs_sha256', lambda unused: 'same')
+    monkeypatch.setattr(evaluator, '_output_plan', lambda *unused: ([],tmp_path,tmp_path/'metadata.csv',None,output))
+    monkeypatch.setattr(evaluator, 'load_model', lambda *unused: (None,{}))
+    monkeypatch.setattr(evaluator, 'resolve_frontend', lambda *unused: dict(sample_rate=16000,n_fft=512,hop_length=160,win_length=320,power=.5,target_ref_mic=0))
+
+    class SimulatedCompletedAdapter:
+        utterances = 600
+        def __init__(self, *unused): pass
+        def eval(self): return self
+        def evidence(self): return dict(completed_utterances=600, full_vs_stream_waveform_max_error=1e-6)
+
+    monkeypatch.setattr(streaming, 'WaveformAdapter', SimulatedCompletedAdapter)
+    def evaluate(unused):
+        evaluator.load_model(checkpoint,torch.device('cpu'))
+        report=copy.deepcopy(baseline); report['mean']['enhanced']['pesq']=2.9
+        output.write_text(json.dumps(report)); return report
+    monkeypatch.setattr(evaluator, 'evaluate', evaluate)
+    with pytest.raises(ValueError, match='PESQ differs'):
+        streaming.run(['--reference-summary', str(reference)])
+    report=json.loads(output.read_text())
+    assert report['status']=='failed'
+    assert report['waveform_streaming']['completed_utterances']==600
+    assert report['waveform_streaming']['full_vs_stream_waveform_max_error']==1e-6

@@ -1,0 +1,43 @@
+{
+  "status": "verified_same_device_quality_reconciliation",
+  "checkpoint_sha256": "1584637b8886d16a052f487d335834e725ab50aeefd41afb8f57a840883f8bf8",
+  "device": "cpu",
+  "complete_utterances": 600,
+  "same_identity_fields": [
+    "checkpoint_sha256",
+    "device",
+    "structure_candidate",
+    "candidate_implementation_sha256",
+    "candidate_evidence",
+    "frontend",
+    "frontend_protocol",
+    "num_mics",
+    "mixture_ref_mic",
+    "selected_pairs_sha256",
+    "metadata_sha256",
+    "metric_protocol",
+    "checkpoint_model_config",
+    "versions"
+  ],
+  "same_input_rows": true,
+  "noisy_metric_max_difference": 0.0,
+  "offline_cpu_wb_pesq": 2.4997616066535313,
+  "streaming_cpu_wb_pesq": 2.499762004216512,
+  "absolute_mean_pesq_difference": 3.975629807584369e-07,
+  "pesq_mean_tolerance": 0.0001,
+  "per_utterance_pesq_max_abs_difference": 0.00010609626770019531,
+  "per_utterance_pesq_mean_abs_difference": 5.714694658915202e-06,
+  "all600_same_cpu_waveform_allclose_guards_completed": true,
+  "waveform_guard_tolerance": {
+    "rtol": 0.001,
+    "atol": 1e-05
+  },
+  "previous_cross_device_failure_retained": true,
+  "source_adapter_sha256_at_stream_execution": "38322db8baaf260a6124c9b1caaebb10b914475eb0e721c4509bc2b8263dde02",
+  "streaming_summary_sha256": "284002f8a2cefac26ba5f847e2061482c941887d21f5f45a025eb47b7deca357",
+  "offline_summary_sha256": "c0c7a8ca2493a91aec5acd56f0567dfc51f263e43a53a96926329efd765aca7b",
+  "latency_gate_proven": false,
+  "latency_limitation": "Original failed aggregate gate did not persist hop/max-error statistics; CPU run also had concurrent load and affinity change. No deployment latency claim.",
+  "target_reached": false,
+  "verified_utc": "2026-10-31T10:37:32.686477+00:00"
+}

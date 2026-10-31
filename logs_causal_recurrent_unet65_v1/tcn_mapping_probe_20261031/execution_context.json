@@ -1,0 +1,40 @@
+{
+  "status": "launched",
+  "pid": 2248298,
+  "device": "CPU only",
+  "cpu_affinity": [
+    12,
+    14
+  ],
+  "started_utc": "2026-10-31T09:13:08.841619+00:00",
+  "source_epoch": 12,
+  "source_sha256": "1584637b8886d16a052f487d335834e725ab50aeefd41afb8f57a840883f8bf8",
+  "parameters": 2557650,
+  "additional_parameters": 22178,
+  "updates_each": 400,
+  "learning_rate": 0.001,
+  "global_batch": 2,
+  "all_source_and_new_parameters_trainable": true,
+  "scope": "Fixed8 training crops6s; fitting only, not full600 or generalization; new weights cannot warm-start formal training",
+  "concurrent_gpu_training": true,
+  "audio_or_private_manifest_exported": false,
+  "affinity_adjustments": [
+    {
+      "utc": "2026-10-31T09:17:44.053966+00:00",
+      "old_cpu_affinity": [
+        20,
+        21
+      ],
+      "new_cpu_affinity": [
+        12,
+        14
+      ],
+      "physical_core_ids": [
+        "24",
+        "28"
+      ],
+      "thread_count_updated": 4,
+      "reason": "The previous last logical CPUs were slower non-SMT cores; use two distinct SMT-capable physical cores"
+    }
+  ]
+}

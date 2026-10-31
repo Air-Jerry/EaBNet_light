@@ -1,0 +1,17 @@
+{
+  "status": "complete",
+  "pid": 2263783,
+  "started_utc": "2026-10-31T10:19:14.099800+00:00",
+  "cpu_affinity": [
+    6,
+    8
+  ],
+  "torch_threads": 2,
+  "checkpoint_sha256": "1584637b8886d16a052f487d335834e725ab50aeefd41afb8f57a840883f8bf8",
+  "device": "cpu",
+  "samples": 600,
+  "scope": "Same-device offline reference to distinguish CPU/GPU numerical difference from waveform streaming difference; no changed input/protocol or relaxed tolerance",
+  "concurrent_two_gpu_training": true,
+  "original_evaluate_light_unchanged": true,
+  "completed_utterances": 600
+}

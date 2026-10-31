@@ -92,10 +92,22 @@
       "pesq": 2.3752160892883936,
       "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_causal_recurrent_unet65_v1_causal_recurrent65_20261031_065909_2104814/model_epoch_14.pt",
       "checkpoint_sha256": "d9131628c7d892ab86841a7eab4b54b822f25fe57e67f16447364087da2aa4f4"
+    },
+    {
+      "epoch": 15,
+      "pesq": 2.501303216020266,
+      "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_causal_recurrent_unet65_v1_causal_recurrent65_20261031_065909_2104814/model_epoch_15.pt",
+      "checkpoint_sha256": "0e2016f0af289a7fd243a9bcf5a717b24e31f8c99ece82a06626541248e1594b"
+    },
+    {
+      "epoch": 16,
+      "pesq": 2.4787930558125177,
+      "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_causal_recurrent_unet65_v1_causal_recurrent65_20261031_065909_2104814/model_epoch_16.pt",
+      "checkpoint_sha256": "b9e1d630cdd14b21321686eb561732d1b5ae7a700460fc0ef5afbaf03f75681a"
     }
   ],
-  "best_completed_epoch": 12,
-  "best_completed_pesq": 2.500476786494255,
+  "best_completed_epoch": 15,
+  "best_completed_pesq": 2.501303216020266,
   "target_reached": false,
   "final_full600_waveform_streaming_audit_required": true
 }
