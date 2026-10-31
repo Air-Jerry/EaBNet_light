@@ -1,0 +1,210 @@
+{
+  "status": "complete",
+  "scope": "Same fully trainable causal recurrent65 model and checkpoint; physical versus training-only real WB-PESQ supervision; eight-sample fitting only, not generalization",
+  "seed": 1234,
+  "updates": 400,
+  "effective_batch": 2,
+  "learning_rate": 0.0001,
+  "segment_samples": 96000,
+  "objective": "Control QualityObjective; comparison MetricObjective weight0.05, fresh D Adam1e-4, no inference changes",
+  "precision": "CPU FP32",
+  "source_sha256": "960e705d3c97610b01bd2580017b6db9984d15918d76dc5dce0da201a6ca25f0",
+  "results": [
+    {
+      "candidate": "physical_control",
+      "parameters": 2535472,
+      "trainable_parameters": 2535472,
+      "elapsed_seconds": 2225.223856694065,
+      "measurements": [
+        {
+          "updates": 0,
+          "mean_pesq": 1.9398336857557297,
+          "per_sample_pesq": [
+            1.564740538597107,
+            3.8045365810394287,
+            1.7997605800628662,
+            1.2168470621109009,
+            1.7787039279937744,
+            1.486053228378296,
+            1.8752927780151367,
+            1.9927347898483276
+          ],
+          "mean_loss": 0.5092530455440283,
+          "loss_components": {
+            "samples": 8,
+            "batches": 8,
+            "spectral": 0.3918561339378357,
+            "mrstft": 0.9816150069236755,
+            "waveform": 0.19235365092754364,
+            "total": 0.5092530250549316
+          },
+          "gradient_norm_mean": 0.0,
+          "gradient_norm_max": 0,
+          "clipped_update_fraction": 0.0,
+          "elapsed_seconds": 8.71606295905076
+        },
+        {
+          "updates": 200,
+          "mean_pesq": 2.3498975336551666,
+          "per_sample_pesq": [
+            2.0963211059570312,
+            3.9966788291931152,
+            2.148770809173584,
+            1.6414194107055664,
+            2.3218116760253906,
+            2.184269428253174,
+            2.134258985519409,
+            2.2756500244140625
+          ],
+          "mean_loss": 0.4540953990072012,
+          "loss_components": {
+            "samples": 8,
+            "batches": 8,
+            "spectral": 0.35823461413383484,
+            "mrstft": 0.7974636554718018,
+            "waveform": 0.16114436089992523,
+            "total": 0.45409539341926575
+          },
+          "gradient_norm_mean": 2.701286843717098,
+          "gradient_norm_max": 8.379963874816895,
+          "clipped_update_fraction": 0.12,
+          "elapsed_seconds": 1124.189633981092
+        },
+        {
+          "updates": 400,
+          "mean_pesq": 2.549584448337555,
+          "per_sample_pesq": [
+            2.3639402389526367,
+            4.060305118560791,
+            2.1988372802734375,
+            1.9728965759277344,
+            2.6530120372772217,
+            2.378859281539917,
+            2.279519557952881,
+            2.4893054962158203
+          ],
+          "mean_loss": 0.4376378059387207,
+          "loss_components": {
+            "samples": 8,
+            "batches": 8,
+            "spectral": 0.3472352921962738,
+            "mrstft": 0.751787006855011,
+            "waveform": 0.1522383838891983,
+            "total": 0.4376378357410431
+          },
+          "gradient_norm_mean": 2.864896942228079,
+          "gradient_norm_max": 10.29749584197998,
+          "clipped_update_fraction": 0.15,
+          "elapsed_seconds": 2225.112554649124
+        }
+      ]
+    },
+    {
+      "candidate": "metric_supervision",
+      "parameters": 2535472,
+      "trainable_parameters": 2535472,
+      "elapsed_seconds": 2319.2477077501826,
+      "measurements": [
+        {
+          "updates": 0,
+          "mean_pesq": 1.9398336857557297,
+          "per_sample_pesq": [
+            1.564740538597107,
+            3.8045365810394287,
+            1.7997605800628662,
+            1.2168470621109009,
+            1.7787039279937744,
+            1.486053228378296,
+            1.8752927780151367,
+            1.9927347898483276
+          ],
+          "mean_loss": 0.5092530455440283,
+          "loss_components": {
+            "samples": 8,
+            "batches": 8,
+            "spectral": 0.3918561339378357,
+            "mrstft": 0.9816150069236755,
+            "waveform": 0.19235365092754364,
+            "total": 0.5092530250549316
+          },
+          "gradient_norm_mean": 0.0,
+          "gradient_norm_max": 0,
+          "clipped_update_fraction": 0.0,
+          "elapsed_seconds": 7.499085844960064
+        },
+        {
+          "updates": 200,
+          "mean_pesq": 2.299610733985901,
+          "per_sample_pesq": [
+            2.0707998275756836,
+            3.9436123371124268,
+            2.112828254699707,
+            1.5934300422668457,
+            2.2161762714385986,
+            2.1658499240875244,
+            2.046437978744507,
+            2.247751235961914
+          ],
+          "mean_loss": 0.4594340492039919,
+          "loss_components": {
+            "samples": 8,
+            "batches": 8,
+            "spectral": 0.36240503191947937,
+            "mrstft": 0.8049831390380859,
+            "waveform": 0.16530698537826538,
+            "total": 0.4594340920448303
+          },
+          "gradient_norm_mean": 2.9124706576764585,
+          "gradient_norm_max": 9.508203506469727,
+          "clipped_update_fraction": 0.125,
+          "elapsed_seconds": 1167.7723268030677
+        },
+        {
+          "updates": 400,
+          "mean_pesq": 2.4470454901456833,
+          "per_sample_pesq": [
+            2.267418146133423,
+            4.003390789031982,
+            2.2995779514312744,
+            1.8871294260025024,
+            2.4240851402282715,
+            2.2898316383361816,
+            2.035788059234619,
+            2.369142770767212
+          ],
+          "mean_loss": 0.44855766370892525,
+          "loss_components": {
+            "samples": 8,
+            "batches": 8,
+            "spectral": 0.3551933467388153,
+            "mrstft": 0.7737773656845093,
+            "waveform": 0.15986588597297668,
+            "total": 0.44855767488479614
+          },
+          "gradient_norm_mean": 2.798079301342368,
+          "gradient_norm_max": 9.591781616210938,
+          "clipped_update_fraction": 0.1325,
+          "elapsed_seconds": 2319.1188192160334
+        }
+      ]
+    }
+  ],
+  "private_audio_hashes_exported": false,
+  "warmstart": {
+    "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_causal_recurrent_unet65_v1_causal_recurrent65_20261031_065909_2104814/model_epoch_7.pt",
+    "epoch": 7,
+    "sha256": "211ee20771ec893472d1b430bfa5c92f8132da020b3a287a9251ac4f4ac6ae68",
+    "optimizer": "fresh Adam"
+  },
+  "metric_implementation_sha256": "c35f60706bd46d277b056201134ff827fd38485f56f9c43d42d4dbad9cf75154",
+  "training_metric_stats": {
+    "valid_pesq_labels": 800,
+    "invalid_pesq_labels": 0,
+    "mean_training_pesq": 2.277742811143398,
+    "discriminator_calibration_rmse": 0.24213674489930298,
+    "generator_metric_term": 0.40181941119416,
+    "discriminator_updates_per_rank": 800
+  },
+  "inference_unchanged": true,
+  "audio_file_occurrences_unchanged": 16
+}

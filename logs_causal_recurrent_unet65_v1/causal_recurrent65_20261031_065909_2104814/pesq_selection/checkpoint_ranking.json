@@ -56,10 +56,28 @@
       "pesq": 2.2438071300586064,
       "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_causal_recurrent_unet65_v1_causal_recurrent65_20261031_065909_2104814/model_epoch_8.pt",
       "checkpoint_sha256": "9278e8be8aa72a731a1177ed4d1dbde32495d33409ad99f0ef7f09954f0442fd"
+    },
+    {
+      "epoch": 9,
+      "pesq": 2.322766879995664,
+      "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_causal_recurrent_unet65_v1_causal_recurrent65_20261031_065909_2104814/model_epoch_9.pt",
+      "checkpoint_sha256": "a5b98184baedf1abe17d17e58bc547db4b66c1b466accdc516aaf1be96023a80"
+    },
+    {
+      "epoch": 10,
+      "pesq": 2.3556321082512537,
+      "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_causal_recurrent_unet65_v1_causal_recurrent65_20261031_065909_2104814/model_epoch_10.pt",
+      "checkpoint_sha256": "607d481648a2a96e8f35b3dc5ee166cdce30b748836ee6892a3136b607ce284e"
+    },
+    {
+      "epoch": 11,
+      "pesq": 2.4030049588282902,
+      "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_causal_recurrent_unet65_v1_causal_recurrent65_20261031_065909_2104814/model_epoch_11.pt",
+      "checkpoint_sha256": "6aa232084b32a982eb8df923eed4b4b1439bbe713387f4156deb9d20a6c0c2fb"
     }
   ],
-  "best_completed_epoch": 7,
-  "best_completed_pesq": 2.282656254172325,
+  "best_completed_epoch": 11,
+  "best_completed_pesq": 2.4030049588282902,
   "target_reached": false,
   "final_full600_waveform_streaming_audit_required": true
 }
