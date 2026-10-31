@@ -1,0 +1,198 @@
+{
+  "status": "complete",
+  "scope": "Paired32-record branch ablation; not full600 goal or separately retrained branch performance",
+  "checkpoint_sha256": "2b04a780b9520ea0589d5876c04e7661a7f943b3f9e438f2314167202e0e7b69",
+  "epoch": 2,
+  "cohort_pairs_sha256": "404c9133bb22298afef07391af221e3a143728f69433401a40ee08df8ab3f610",
+  "metadata_sha256": "8d0b4d229ebc42cd9892e6d0e0d36416007ded01fbc0b753df4bf7e6b734eb02",
+  "evaluator_sha256": "0c3ada1425b33e16688e8424daba23681ac9ded4d8bee931ed24c69e59e5730b",
+  "implementation_sha256": "06acba41371b2da4a41e0a61642853110d12e237535f94024ffb2b0f90551182",
+  "device": "cpu",
+  "precision": "float32",
+  "training_updates": 0,
+  "pesq_mode": "wb",
+  "sample_rate": 16000,
+  "normalization": "none",
+  "gain_matching": false,
+  "frontend": {
+    "n_fft": 512,
+    "hop_length": 160,
+    "win_length": 320,
+    "power": 0.5,
+    "microphones": 8,
+    "reference": 0
+  },
+  "source_training_objective": "spectral_mrstft_waveform_pmsqe_v1",
+  "interpretation": "Removing a jointly trained branch changes its operating point. Ablation scores do not bound separately retrained model capacity.",
+  "results": [
+    {
+      "snr": -5.0,
+      "full": 3.0958993434906006,
+      "spatial_only": 2.7512805461883545
+    },
+    {
+      "snr": -2.0,
+      "full": 3.3131773471832275,
+      "spatial_only": 2.7768211364746094
+    },
+    {
+      "snr": 0.0,
+      "full": 2.8408823013305664,
+      "spatial_only": 2.4769673347473145
+    },
+    {
+      "snr": 2.0,
+      "full": 1.3385270833969116,
+      "spatial_only": 1.3537324666976929
+    },
+    {
+      "snr": -5.0,
+      "full": 2.3101236820220947,
+      "spatial_only": 2.057502269744873
+    },
+    {
+      "snr": -2.0,
+      "full": 2.664931535720825,
+      "spatial_only": 2.3479866981506348
+    },
+    {
+      "snr": 0.0,
+      "full": 2.1951208114624023,
+      "spatial_only": 1.973404884338379
+    },
+    {
+      "snr": 2.0,
+      "full": 2.768364906311035,
+      "spatial_only": 2.496340274810791
+    },
+    {
+      "snr": -5.0,
+      "full": 2.4892730712890625,
+      "spatial_only": 2.2237367630004883
+    },
+    {
+      "snr": -2.0,
+      "full": 2.77290415763855,
+      "spatial_only": 2.492335081100464
+    },
+    {
+      "snr": 0.0,
+      "full": 3.864759922027588,
+      "spatial_only": 3.4244384765625
+    },
+    {
+      "snr": 2.0,
+      "full": 4.0975751876831055,
+      "spatial_only": 3.95955753326416
+    },
+    {
+      "snr": -5.0,
+      "full": 1.6969399452209473,
+      "spatial_only": 1.5795559883117676
+    },
+    {
+      "snr": -2.0,
+      "full": 1.1897615194320679,
+      "spatial_only": 1.2002509832382202
+    },
+    {
+      "snr": 0.0,
+      "full": 1.3803755044937134,
+      "spatial_only": 1.4428153038024902
+    },
+    {
+      "snr": 2.0,
+      "full": 3.61808443069458,
+      "spatial_only": 3.2156171798706055
+    },
+    {
+      "snr": -5.0,
+      "full": 1.070287823677063,
+      "spatial_only": 1.0830613374710083
+    },
+    {
+      "snr": -2.0,
+      "full": 3.832930326461792,
+      "spatial_only": 3.3887298107147217
+    },
+    {
+      "snr": 0.0,
+      "full": 3.214508295059204,
+      "spatial_only": 3.0052711963653564
+    },
+    {
+      "snr": 2.0,
+      "full": 2.8356075286865234,
+      "spatial_only": 2.6067116260528564
+    },
+    {
+      "snr": -5.0,
+      "full": 1.3022944927215576,
+      "spatial_only": 1.3849453926086426
+    },
+    {
+      "snr": -2.0,
+      "full": 3.47955060005188,
+      "spatial_only": 2.9748497009277344
+    },
+    {
+      "snr": 0.0,
+      "full": 3.667470932006836,
+      "spatial_only": 2.9968297481536865
+    },
+    {
+      "snr": 2.0,
+      "full": 2.7112069129943848,
+      "spatial_only": 2.391035795211792
+    },
+    {
+      "snr": -5.0,
+      "full": 3.3244404792785645,
+      "spatial_only": 3.016568899154663
+    },
+    {
+      "snr": -2.0,
+      "full": 3.8785767555236816,
+      "spatial_only": 3.4932992458343506
+    },
+    {
+      "snr": 0.0,
+      "full": 1.9039862155914307,
+      "spatial_only": 1.8881187438964844
+    },
+    {
+      "snr": 2.0,
+      "full": 4.052859783172607,
+      "spatial_only": 3.6229426860809326
+    },
+    {
+      "snr": -5.0,
+      "full": 3.1340408325195312,
+      "spatial_only": 2.359369993209839
+    },
+    {
+      "snr": -2.0,
+      "full": 1.3265204429626465,
+      "spatial_only": 1.2760776281356812
+    },
+    {
+      "snr": 0.0,
+      "full": 3.266883373260498,
+      "spatial_only": 2.806891679763794
+    },
+    {
+      "snr": 2.0,
+      "full": 3.41117525100708,
+      "spatial_only": 2.8850231170654297
+    }
+  ],
+  "checked_samples": 32,
+  "input_audio_unchanged": true,
+  "private_audio_hashes_exported": false,
+  "mean_pesq": {
+    "full": 2.7515325248241425,
+    "spatial_only": 2.4672521725296974
+  },
+  "full_better_count": 27,
+  "elapsed_seconds": 142.04118745797314
+}

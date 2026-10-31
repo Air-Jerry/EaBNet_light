@@ -1,0 +1,10 @@
+{
+  "status": "runner_deployed_not_executed",
+  "runner_sha256": "ad7d3415ba52953ebbcddd0129cd62fd381af91acff57fdf0e3b0e19dd68477b",
+  "original_evaluator_unchanged": true,
+  "goal_pesq": 3.4,
+  "full600_waveform_streaming_required": true,
+  "requires_training_launcher_terminal": true,
+  "attention_allowlist_update_required_at_verified_boundary": true,
+  "real_goal_checkpoint_not_yet_available": true
+}

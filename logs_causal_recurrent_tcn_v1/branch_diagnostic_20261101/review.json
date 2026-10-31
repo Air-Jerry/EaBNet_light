@@ -1,0 +1,35 @@
+{
+  "status": "complete",
+  "scope": "Paired32-record branch ablation; not full600 goal or separately retrained branch performance",
+  "source_checkpoint_sha256": "2b04a780b9520ea0589d5876c04e7661a7f943b3f9e438f2314167202e0e7b69",
+  "full": 2.7515325248241425,
+  "spatial_only": 2.4672521725296974,
+  "full_minus_spatial_only": 0.28428035229444504,
+  "full_better_count": 27,
+  "samples": 32,
+  "per_snr": {
+    "-5.0": {
+      "samples": 8,
+      "full": 2.3029124587774277,
+      "spatial_only": 2.0570026487112045
+    },
+    "-2.0": {
+      "samples": 8,
+      "full": 2.807294085621834,
+      "spatial_only": 2.493793785572052
+    },
+    "0.0": {
+      "samples": 8,
+      "full": 2.79174841940403,
+      "spatial_only": 2.5018421709537506
+    },
+    "2.0": {
+      "samples": 8,
+      "full": 3.1041751354932785,
+      "spatial_only": 2.8163700848817825
+    }
+  },
+  "decision": "Retain the jointly trained spatial backbone. Test global frequency attention in the residual spectral mapping on full training data; no new model quality claim yet.",
+  "limitation": "Removing a jointly trained branch changes its operating point. Ablation scores do not bound separately retrained model capacity.",
+  "goal_full600_wb_pesq": 3.4
+}
