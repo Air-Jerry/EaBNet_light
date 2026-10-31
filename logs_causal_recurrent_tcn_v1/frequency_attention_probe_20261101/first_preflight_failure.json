@@ -1,0 +1,10 @@
+{
+  "status": "failed_old_source_resumed",
+  "error": "CalledProcessError: Command '['/home/nis/jinrui.yang/miniconda3/envs/EaBNet/bin/python', '-c', 'import json; from light_candidate_runtime import all_model_candidates,candidate_metadata; print(json.dumps({n:candidate_metadata(n) for n in all_model_candidates()},sort_keys=True))']' returned non-zero exit status 1.",
+  "resumed_processes": [
+    2354428,
+    2354452,
+    2381444
+  ],
+  "deployed_files_rolled_back": false
+}
