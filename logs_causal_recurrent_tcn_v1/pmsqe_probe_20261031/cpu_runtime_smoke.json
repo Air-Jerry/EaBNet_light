@@ -1,0 +1,23 @@
+{
+  "status": "passed",
+  "scope": "Synthetic17-frame CPU compatibility and one finite Adam update only; not quality or GPU speed",
+  "torch_version": "2.5.1+cu121",
+  "all_model_gradients_and_weights_finite": true,
+  "synthetic_adam_updates": 1,
+  "loss_components": {
+    "samples": 1,
+    "batches": 1,
+    "spectral": 0.805260419845581,
+    "mrstft": 2.2462496757507324,
+    "waveform": 0.8716052174568176,
+    "total": 1.1170458793640137,
+    "pmsqe": 2.8396859169006348,
+    "combined_total": 1.401014471054077
+  },
+  "pmsqe_window_power_correction": 4.266666666666807,
+  "protected_active_source_and_user_evaluator_unchanged": true,
+  "implementation_sha256": {
+    "experiments/causal_pmsqe_objective.py": "1625c9774f9676f663060c4a00effc490d33107f451ab9cdb4bf1bf7b1cf7737",
+    "experiments/probe_causal_pmsqe.py": "5558a0bf7ad478180c32945775b6e984dbc28ef24c89ea21c007323d448cb9d9"
+  }
+}

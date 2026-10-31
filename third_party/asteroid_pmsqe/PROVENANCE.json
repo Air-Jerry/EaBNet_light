@@ -1,0 +1,22 @@
+{
+  "repository": "https://github.com/asteroid-team/asteroid",
+  "revision": "c15708a04d3d28e9a1cd50553c456299dbc6d236",
+  "scope": "Unmodified upstream16k PMSQE training loss and Bark weights; no inference code",
+  "files": {
+    "pmsqe.py": {
+      "upstream_path": "asteroid/losses/pmsqe.py",
+      "sha256": "66b5bd4f6b91c2f6087fe2834119595b07ce74d3906bcb00407b1a3288f2db95",
+      "bytes": 21981
+    },
+    "bark_matrix_16k.mat": {
+      "upstream_path": "asteroid/losses/bark_matrix_16k.mat",
+      "sha256": "74f409f0d188a0dd680def0a3786b496d7d7e8b28d39372e0b220c0ff51f7b29",
+      "bytes": 1363
+    },
+    "LICENSE": {
+      "upstream_path": "LICENSE",
+      "sha256": "c12aebc7a4eeeec2e482414004fd5d68275d7608552031cd48f4088b403f902d",
+      "bytes": 1072
+    }
+  }
+}
