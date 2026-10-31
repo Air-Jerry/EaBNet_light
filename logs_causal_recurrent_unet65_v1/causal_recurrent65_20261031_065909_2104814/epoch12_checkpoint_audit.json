@@ -1,0 +1,19 @@
+{
+  "status": "verified",
+  "epoch": 12,
+  "candidate": "causal_recurrent_unet65_v1",
+  "checkpoint_sha256": "1584637b8886d16a052f487d335834e725ab50aeefd41afb8f57a840883f8bf8",
+  "all_weights_and_adam_finite": true,
+  "changed_state_tensors": 193,
+  "adam_updates": 80400,
+  "all_saved_training_source_hashes_match": true,
+  "full_training_records": 53600,
+  "full_validation_records": 600,
+  "full_metric_records": 600,
+  "same_selected_pairs_metadata_frontend_channels_and_protocol": true,
+  "noisy_metrics_max_difference": 0.0,
+  "target_gain_matching": false,
+  "full600_wb_pesq": 2.500476786494255,
+  "target_reached": false,
+  "full600_waveform_streaming_audit": "Running separately on CPU; its latency under concurrent server load is diagnostic only"
+}
