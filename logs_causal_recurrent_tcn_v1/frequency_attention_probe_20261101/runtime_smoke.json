@@ -1,0 +1,12 @@
+{
+  "status": "passed",
+  "scope": "Synthetic17-frame CPU compatibility, not quality or GPU speed",
+  "torch_version": "2.5.1+cu121",
+  "parameters": 2574354,
+  "all_model_gradients_and_weights_finite": true,
+  "synthetic_adam_updates": 1,
+  "implementation_sha256": {
+    "experiments/causal_frequency_attention.py": "ac4c1283ab0d225b608d164db3439ecef73a2c8518fe6f13a212bcaedc9a203f",
+    "experiments/probe_causal_frequency_attention.py": "813fcc667646e80295681c76b5422c53c8ef21e7d390bac5565707241dc0d410"
+  }
+}
