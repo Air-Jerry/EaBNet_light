@@ -56,11 +56,13 @@ def main():
     parser.add_argument('--refiner',action='store_true',help='Screen a causal GRU branch with cached, frozen causal backbone')
     parser.add_argument('--band',action='store_true',help='Compare the fully trainable global model and full-frequency recurrent beamforming')
     parser.add_argument('--global-capacity',action='store_true',help='Compare fully trainable recurrent65 models with and without a larger global temporal block')
+    parser.add_argument('--multi-frame',action='store_true',help='Compare a fully trainable recurrent65 model with four strictly past beamforming taps')
     args = parser.parse_args()
     if args.updates < 1:raise ValueError('Use a positive update budget')
     if args.refiner and not args.warmstart:raise ValueError('The refiner probe requires a trained causal warm-start')
     if args.band and (not args.warmstart or args.refiner):raise ValueError('Band comparison requires a global warm-start and no frozen refiner')
     if args.global_capacity and (not args.warmstart or args.band or args.refiner):raise ValueError('Global capacity comparison requires a recurrent65 warm-start and no other branch')
+    if args.multi_frame and (not args.warmstart or args.band or args.refiner or args.global_capacity):raise ValueError('Multi-frame comparison requires a recurrent65 warm-start and no other branch')
     torch.set_num_threads(2)
     torch.set_num_interop_threads(1)
     root, output = Path(args.data_dir), Path(args.output_dir)
@@ -80,14 +82,14 @@ def main():
         seed=1234, updates=args.updates, effective_batch=2, learning_rate=0.001, segment_samples=96000,
         sample_audio_sha256=hashes, objective='Unchanged QualityObjective', precision='CPU FP32',
         source_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(), results=[])
-    if args.band or args.global_capacity:
+    if args.band or args.global_capacity or args.multi_frame:
         report.pop('sample_audio_sha256')
         report['private_audio_hashes_exported']=False
     source = None
     if args.warmstart:
         from light_candidate_runtime import read_candidate_checkpoint
         checkpoint = Path(args.warmstart).expanduser().resolve()
-        expected='causal_recurrent_unet65_v1' if args.global_capacity else ('causal_unet_global_v1' if args.band else 'causal_unet_spatial_v1')
+        expected='causal_recurrent_unet65_v1' if (args.global_capacity or args.multi_frame) else ('causal_unet_global_v1' if args.band else 'causal_unet_spatial_v1')
         source, _ = read_candidate_checkpoint(checkpoint, expected)
         report['scope'] = 'Current trained causal model, eight-sample fitting capacity only; not generalization'
         report['warmstart'] = dict(checkpoint=str(checkpoint),epoch=source['epoch'],
@@ -102,6 +104,12 @@ def main():
         constructors=[('recurrent65_control',CausalRecurrentUNet65),('global512_capacity',CausalGlobalCapacity)]
         report['capacity_implementation_sha256']=hashlib.sha256(Path(__file__).with_name('causal_global_capacity.py').read_bytes()).hexdigest()
         report['scope']='Two fully trainable recurrent65 models from the same checkpoint; fixed eight-sample fitting only, not generalization'
+    if args.multi_frame:
+        from light_causal_recurrent65_model import CausalRecurrentUNet65
+        from experiments.causal_multiframe import CausalMultiFrame
+        constructors=[('recurrent65_control',CausalRecurrentUNet65),('past4_multiframe',CausalMultiFrame)]
+        report['multiframe_implementation_sha256']=hashlib.sha256(Path(__file__).with_name('causal_multiframe.py').read_bytes()).hexdigest()
+        report['scope']='Two fully trainable recurrent65 models from the same checkpoint; four past-frame taps; fixed eight-sample fitting only, not generalization'
     if args.band:
         from light_causal_global_model import CausalGlobalSpatial
         from experiments.causal_band_beamformer import CausalBandBeamformer
@@ -131,7 +139,7 @@ def main():
         elif source is not None:
             values=model.state_dict()
             extra=set(values)-set(source['model_state_dict'])
-            allowed=(args.band and all(key.startswith('band_') for key in extra)) or (args.global_capacity and all(key.startswith('layers.5.') for key in extra))
+            allowed=(args.band and all(key.startswith('band_') for key in extra)) or (args.global_capacity and all(key.startswith('layers.5.') for key in extra)) or (args.multi_frame and all(key.startswith('past_beamformer.') for key in extra))
             assert not extra or allowed,extra
             values.update(source['model_state_dict'])
             model.load_state_dict(values,strict=True)
@@ -182,7 +190,7 @@ def main():
                                       trainable_parameters=sum(p.numel() for p in model.parameters() if p.requires_grad),
                                       elapsed_seconds=time.perf_counter()-start,measurements=rows))
     report.pop('active',None)
-    if args.band or args.global_capacity:
+    if args.band or args.global_capacity or args.multi_frame:
         assert all(hashlib.sha256((root/f'{name}_{i}.wav').read_bytes()).hexdigest()==hashes[i-1][name]
             for i in range(1,9) for name in ('mixture','target'))
         report['audio_file_occurrences_unchanged']=16
