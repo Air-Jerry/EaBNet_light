@@ -25,3 +25,5 @@ third_party/asteroid_pmsqe/PROVENANCE.json text eol=lf
 third_party/asteroid_pmsqe/*.mat binary
 train_light_causal_fourier.py text eol=lf
 run_light_causal_fourier.sh text eol=lf
+train_light_causal_pmsqe.py text eol=lf
+run_light_causal_pmsqe.sh text eol=lf
