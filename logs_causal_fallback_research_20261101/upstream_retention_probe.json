@@ -1,0 +1,40 @@
+{
+  "status": "complete",
+  "scope": "Pinned upstream component review on synthetic CPU tensors; no training or target-dataset performance",
+  "upstream": {
+    "repository": "https://github.com/Audio-WestlakeU/NBSS",
+    "revision": "cc42fc8ad2e6642c09b8f4169a85b4766dc22b7e",
+    "files": {
+      "models/arch/OnlineSpatialNet.py": {
+        "url": "https://raw.githubusercontent.com/Audio-WestlakeU/NBSS/cc42fc8ad2e6642c09b8f4169a85b4766dc22b7e/models/arch/OnlineSpatialNet.py",
+        "sha256": "9fbe358d7bdd5d21cd5b800e220b1d5cdcbb666b378bb42206d31f9367746a30"
+      },
+      "models/arch/base/retention.py": {
+        "url": "https://raw.githubusercontent.com/Audio-WestlakeU/NBSS/cc42fc8ad2e6642c09b8f4169a85b4766dc22b7e/models/arch/base/retention.py",
+        "sha256": "92feb404a0ddb2f574f46ce73f0e873be80a1a75e7eeeb0cb26c9bb44e3468b2"
+      },
+      "LICENSE": {
+        "url": "https://raw.githubusercontent.com/Audio-WestlakeU/NBSS/cc42fc8ad2e6642c09b8f4169a85b4766dc22b7e/LICENSE",
+        "sha256": "645f351f0b7855a4e71b0d2644ef924bd8944163fd1f3b4315e3172ef433ce16"
+      }
+    }
+  },
+  "torch_version": "2.14.0+cpu",
+  "heads": 4,
+  "hidden": 32,
+  "frames": 145,
+  "chunk_frames": 64,
+  "no_rope": true,
+  "lookahead_frames": 0,
+  "chunked_vs_recurrent_max_abs": 0.008560016751289368,
+  "parallel_vs_recurrent_max_abs": 8.940696716308594e-08,
+  "future_perturbation_max_abs": 0.0,
+  "future_gradient_max_abs": 0.0,
+  "recurrent_state_bytes_min": 4112,
+  "recurrent_state_bytes_max": 4112,
+  "upstream_causal_conv_external_state_call": {
+    "status": "failed",
+    "error": "TypeError: bad operand type for unary -: 'tuple'"
+  },
+  "note": "Existing public forward processes an utterance internally; a persistent per-hop adapter is still required. No claim of paper reproduction or3.4WB-PESQ."
+}

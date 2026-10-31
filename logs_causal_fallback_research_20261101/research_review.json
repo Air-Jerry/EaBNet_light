@@ -1,0 +1,69 @@
+{
+  "status": "complete_research_and_cpu_prototype_only",
+  "mode": "Light Search",
+  "source_policy": "public primary code and author paper only",
+  "objective": "Keep the full600 WB-PESQ3.4 target and causal realtime/full-epoch one-hour constraints",
+  "claims": [
+    {
+      "evidence": "E",
+      "claim": "FullSubNet+ default source uses utterance normalization and channel attention pooling over the time axis. It is not a drop-in strictly causal model.",
+      "sources": [
+        {
+          "url": "https://raw.githubusercontent.com/RookieJunChen/FullSubNet-plus/master/speech_enhance/fullsubnet_plus/model/fullsubnet_plus.py",
+          "locator": "constructor25, forward125-149"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/RookieJunChen/FullSubNet-plus/master/speech_enhance/audio_zen/model/module/attention_model.py",
+          "locator": "ChannelSELayer22-35; ChannelTimeSenseSELayer52-90"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/RookieJunChen/FullSubNet-plus/master/speech_enhance/audio_zen/model/base_model.py",
+          "locator": "offline_laplace_norm191-205"
+        }
+      ]
+    },
+    {
+      "evidence": "E",
+      "claim": "OnlineSpatialNet compares causal Retention/Mamba with masked attention, but its reported evaluation is8kHz, six microphones, direct-path targets and NB-PESQ.",
+      "source": "https://arxiv.org/html/2403.07675v2",
+      "locator": "SectionsII-A, III-A/B/E; TableI"
+    },
+    {
+      "evidence": "E",
+      "claim": "Pinned upstream Retention is causal in the tested synthetic case and has fixed-sized recurrent state, while chunked and recurrent modes differ numerically.",
+      "artifact": "upstream_retention_probe.json",
+      "revision": "cc42fc8ad2e6642c09b8f4169a85b4766dc22b7e"
+    },
+    {
+      "evidence": "E",
+      "claim": "The pinned upstream CausalConv1d raises TypeError for an external state dictionary in the exercised call. A persistent per-hop adapter needs repair before reuse.",
+      "artifact": "upstream_retention_probe.json"
+    },
+    {
+      "evidence": "E",
+      "claim": "Own canonical retention prototype passes4 CPU causality/state/streaming tests plus a default-sized6s forward/backward/Adam smoke.",
+      "artifact": "retention_default_cpu.json"
+    },
+    {
+      "evidence": "I",
+      "claim": "A frequency-specific matrix memory is a plausible structural fallback when the current attention trial gives little full-data improvement. It is not yet a selected replacement."
+    },
+    {
+      "evidence": "?",
+      "claim": "WB-PESQ gain on the fixed600 and full-epoch CUDA/latency compliance of the retention prototype remain unknown."
+    }
+  ],
+  "decision": "Continue the scheduled complete-data attention trial. Keep the new retention prototype isolated; do not deploy it or replace active model files before real CUDA/streaming/full-data evidence.",
+  "prototype": {
+    "path": "experiments/causal_retention_mapping.py",
+    "sha256": "12ab7f2ab6584ce2f53ca93f972b952ba971a26606b7d9bb138630971c6a963c",
+    "parameters": 2579698,
+    "local_tests_passed": 4,
+    "synthetic_default_6s_adam_steps": 1,
+    "registered_for_production": false,
+    "goal_metric_measured": false
+  },
+  "no_new_gpu_experiments": true,
+  "no_active_training_source_changes": true,
+  "stop_reason": "Both causal implementation mechanisms and benchmark-transfer limits resolved; further model selection requires the pending full-data result."
+}

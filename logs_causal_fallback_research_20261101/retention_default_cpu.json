@@ -1,0 +1,21 @@
+{
+  "status": "passed",
+  "scope": "Synthetic6s CPU FP32 default-sized forward/backward/Adam; no dataset quality or CUDA claim",
+  "torch_version": "2.14.0+cpu",
+  "microphones": 8,
+  "n_fft": 512,
+  "hop_length": 160,
+  "win_length": 320,
+  "power": 0.5,
+  "frames": 601,
+  "batch_size": 1,
+  "parameters": 2579698,
+  "optimizer_updates": 1,
+  "all_weights_gradients_and_adam_finite": true,
+  "both_frequency_attention_and_retention_gradients_nonzero": true,
+  "loss": 0.638207733631134,
+  "elapsed_seconds": 13.10553489997983,
+  "new_model_sha256": "12ab7f2ab6584ce2f53ca93f972b952ba971a26606b7d9bb138630971c6a963c",
+  "registered_for_production": false,
+  "trained_full600_goal_metric": false
+}
