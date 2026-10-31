@@ -1,0 +1,28 @@
+recurrent65_control {"updates": 0, "mean_pesq": 1.852760598063469, "per_sample_pesq": [1.5881702899932861, 3.712397813796997, 1.6892915964126587, 1.114748239517212, 1.6325889825820923, 1.5029245615005493, 1.8214356899261475, 1.7605276107788086], "mean_loss": 0.5360613781958818, "loss_components": {"samples": 8, "batches": 8, "spectral": 0.40811634063720703, "mrstft": 1.061050295829773, "waveform": 0.21840053796768188, "total": 0.5360614061355591}, "gradient_norm_mean": 0.0, "gradient_norm_max": 0, "clipped_update_fraction": 0.0, "elapsed_seconds": 8.643691432895139}
+recurrent65_control update 1 elapsed 15.2
+recurrent65_control update 2 elapsed 21.32
+recurrent65_control update 3 elapsed 27.16
+recurrent65_control update 25 elapsed 145.37
+recurrent65_control update 50 elapsed 283.07
+recurrent65_control update 75 elapsed 420.57
+recurrent65_control update 100 elapsed 557.99
+recurrent65_control {"updates": 100, "mean_pesq": 2.3636849522590637, "per_sample_pesq": [2.0885446071624756, 3.909121513366699, 2.1864335536956787, 1.874955415725708, 2.2540388107299805, 2.0118908882141113, 2.299774169921875, 2.2847206592559814], "mean_loss": 0.46252113580703735, "loss_components": {"samples": 8, "batches": 8, "spectral": 0.36748576164245605, "mrstft": 0.7923678159713745, "waveform": 0.15798628330230713, "total": 0.46252113580703735}, "gradient_norm_mean": 6.10513910651207, "gradient_norm_max": 13.3243989944458, "clipped_update_fraction": 0.57, "elapsed_seconds": 565.4391131210141}
+recurrent65_control update 125 elapsed 702.95
+recurrent65_control update 150 elapsed 840.51
+recurrent65_control update 175 elapsed 977.61
+recurrent65_control update 200 elapsed 1114.09
+recurrent65_control {"updates": 200, "mean_pesq": 2.5949835181236267, "per_sample_pesq": [2.486025810241699, 4.052558422088623, 2.344059467315674, 2.068230152130127, 2.5107741355895996, 2.3007755279541016, 2.57788348197937, 2.4195611476898193], "mean_loss": 0.4337101820856333, "loss_components": {"samples": 8, "batches": 8, "spectral": 0.34364980459213257, "mrstft": 0.753282904624939, "waveform": 0.14732079207897186, "total": 0.4337101876735687}, "gradient_norm_mean": 6.402691259980202, "gradient_norm_max": 14.2521390914917, "clipped_update_fraction": 0.6, "elapsed_seconds": 1121.536171420943}
+past4_multiframe {"updates": 0, "mean_pesq": 1.852760598063469, "per_sample_pesq": [1.5881702899932861, 3.712397813796997, 1.6892915964126587, 1.114748239517212, 1.6325889825820923, 1.5029245615005493, 1.8214356899261475, 1.7605276107788086], "mean_loss": 0.5360613781958818, "loss_components": {"samples": 8, "batches": 8, "spectral": 0.40811634063720703, "mrstft": 1.061050295829773, "waveform": 0.21840053796768188, "total": 0.5360614061355591}, "gradient_norm_mean": 0.0, "gradient_norm_max": 0, "clipped_update_fraction": 0.0, "elapsed_seconds": 7.8790534171275795}
+past4_multiframe update 1 elapsed 13.6
+past4_multiframe update 2 elapsed 19.33
+past4_multiframe update 3 elapsed 25.11
+past4_multiframe update 25 elapsed 151.53
+past4_multiframe update 50 elapsed 295.8
+past4_multiframe update 75 elapsed 439.98
+past4_multiframe update 100 elapsed 579.23
+past4_multiframe {"updates": 100, "mean_pesq": 2.3343750536441803, "per_sample_pesq": [1.96517014503479, 3.8634889125823975, 2.2164032459259033, 1.9126605987548828, 2.1684422492980957, 1.987572193145752, 2.2731504440307617, 2.2881126403808594], "mean_loss": 0.4631201419979334, "loss_components": {"samples": 8, "batches": 8, "spectral": 0.36535653471946716, "mrstft": 0.8235008716583252, "waveform": 0.1541353464126587, "total": 0.46312016248703003}, "gradient_norm_mean": 6.793126041889191, "gradient_norm_max": 12.94143295288086, "clipped_update_fraction": 0.76, "elapsed_seconds": 586.554207763169}
+past4_multiframe update 125 elapsed 722.01
+past4_multiframe update 150 elapsed 866.89
+past4_multiframe update 175 elapsed 1010.95
+past4_multiframe update 200 elapsed 1155.4
+past4_multiframe {"updates": 200, "mean_pesq": 2.4842672646045685, "per_sample_pesq": [2.219874143600464, 3.9703736305236816, 2.4276864528656006, 2.0808327198028564, 2.317885637283325, 2.072848320007324, 2.429119110107422, 2.355518102645874], "mean_loss": 0.44177762791514397, "loss_components": {"samples": 8, "batches": 8, "spectral": 0.3487522602081299, "mrstft": 0.781646192073822, "waveform": 0.1486077606678009, "total": 0.44177764654159546}, "gradient_norm_mean": 6.97843841791153, "gradient_norm_max": 13.672706604003906, "clipped_update_fraction": 0.765, "elapsed_seconds": 1163.2097634971142}
