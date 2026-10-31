@@ -1,0 +1,104 @@
+{
+  "status": "preflight_passed_formal_training_launched",
+  "candidate": "causal_recurrent_tcn_v1",
+  "model_parameters": 2557650,
+  "implementation_sha256": "9f6c7d0f011a19d03d2716b1bef2081d7b58d11b4d426e66bce1997de0ae82df",
+  "tests_passed": 27,
+  "cuda": {
+    "status": "passed",
+    "scope": "256 fixed training records; CUDA training correctness, not generalization",
+    "batch_size_per_gpu": 4,
+    "grad_accum_steps": 1,
+    "effective_global_batch": 8,
+    "torch_version": "2.5.1+cu121",
+    "devices": [
+      "NVIDIA GeForce RTX 4070",
+      "NVIDIA GeForce RTX 4070"
+    ],
+    "training_exit_code": 0,
+    "elapsed_seconds": 60.290180607000366,
+    "epochs": 2,
+    "generator_adam_step": 64,
+    "all_weights_and_adam_finite": true,
+    "noncausal_frozen_backbones": 0,
+    "state_tensors": 251,
+    "changed_state_tensors": 251,
+    "finite_gradients": "Checked on both ranks before every optimizer step",
+    "checkpoint_sha256": "ed5be185acd5f03108d2493ac01cfc249e922fcecd991d22ab1a98627df248cd",
+    "gpu_observations": [
+      {
+        "index": 0,
+        "samples": 13,
+        "utilization_mean_pct": 82.6923076923077,
+        "sampled_peak_memory_mib": 10430.0
+      },
+      {
+        "index": 1,
+        "samples": 13,
+        "utilization_mean_pct": 82.07692307692308,
+        "sampled_peak_memory_mib": 10392.0
+      }
+    ]
+  },
+  "streaming": {
+    "status": "measured",
+    "scope": "Causality, bounded state and real CUDA waveform streaming; no quality claim",
+    "checkpoint_sha256": "ed5be185acd5f03108d2493ac01cfc249e922fcecd991d22ab1a98627df248cd",
+    "device": "NVIDIA GeForce RTX 4070",
+    "torch_version": "2.5.1+cu121",
+    "sample_id": "0",
+    "evaluated_samples": 96000,
+    "parameters": 2557650,
+    "future_frames": 0,
+    "buffering_delay_samples": 320,
+    "buffering_delay_ms": 20,
+    "latency_scope": "CPU float32 input transfer + streaming frontend/model/synthesis + CPU output transfer; excludes audio driver",
+    "future_perturbation_max_error": 0.0,
+    "full_vs_stream_waveform_max_error": 3.5762786865234375e-07,
+    "bounded_model_cache_bytes": 5822208,
+    "measured_hops": 600,
+    "excluded_startup_hops": 128,
+    "warmup_hops": 129,
+    "warmup_state_discarded": true,
+    "all_hop_ms": {
+      "mean": 3.870376341510564,
+      "p99": 3.999011213891208,
+      "max": 4.693042952567339
+    },
+    "all_hops_below_10ms": true,
+    "steady_hop_ms": {
+      "mean": 3.869782637516668,
+      "p50": 3.8639350095763803,
+      "p95": 3.90650168992579,
+      "p99": 3.9900416112504904,
+      "max": 4.693042952567339
+    },
+    "steady_rtf": 0.38697826375166683,
+    "deadline_miss_fraction": 0.0,
+    "mean_rtf_below_one": true,
+    "p99_below_10ms": true,
+    "cuda_peak_allocated_bytes": 46808576
+  },
+  "complete_epoch_projection": {
+    "status": "measured",
+    "training_samples": 53600,
+    "validation_samples": 600,
+    "metric_samples": 600,
+    "cuda_checkpoint_sha256": "ed5be185acd5f03108d2493ac01cfc249e922fcecd991d22ab1a98627df248cd",
+    "evaluation_checkpoint_sha256": "ba66e0dd478cf0620ed22704d9601e27a60d6235701381b89a9ece6309c03c4b",
+    "training_samples_per_second": 16.9,
+    "validation_samples_per_second": 35.6,
+    "full600_evaluation_seconds": 200.74697556486353,
+    "overhead_reserve_seconds": 60,
+    "projected_complete_epoch_seconds": 3449.198541285228
+  },
+  "full600_zero_mapping_pesq": 2.5366868688662847,
+  "source_full600_pesq": 2.5366868688662847,
+  "original_600_protocol_preserved": true,
+  "previous_complete_source_epoch_retained": 18,
+  "formal_run": "tcn_20261031_200835_2296965",
+  "user_evaluate_light_sha256": "0c3ada1425b33e16688e8424daba23681ac9ded4d8bee931ed24c69e59e5730b",
+  "target_pesq": 3.4,
+  "target_achieved": false,
+  "evidence_scope": "CUDA64 updates and one6s streaming trace; quality gain and actual complete-epoch time require full formal training"
+}

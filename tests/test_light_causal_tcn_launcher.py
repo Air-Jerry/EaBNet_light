@@ -3,6 +3,7 @@
 import copy
 import hashlib
 import json
+import math
 from pathlib import Path
 import sys
 
@@ -48,16 +49,31 @@ def test_tcn_launcher_requires_full600_and_exact_warm_source(tmp_path, monkeypat
         assert rank['target_reached'] and rank['model_is_causal']
 
 
-@pytest.mark.parametrize('rate,allowed', [('18.0',True),('17.0',False)])
-def test_tcn_hour_projection_retains_full_data_and_reserve(rate, allowed):
+@pytest.mark.parametrize('rate,allowed', [('16.9',True),('16.0',False)])
+@pytest.mark.parametrize('fault', [None, 'partial_metrics', 'wrong_checkpoint', 'nonfinite_time'])
+def test_tcn_hour_projection_retains_full_data_and_measured_metrics(tmp_path, rate, allowed, fault):
     text = (ROOT / 'run_light_causal_tcn.sh').read_text()
     marker = 'rate=float(rates[-1]);predicted_training_seconds=53600/rate'
     code = marker + text.split(marker,1)[1].split("\nassert check['batch_size_per_gpu']",1)[0]
-    if allowed:
-        values={'rates':[rate]}; exec(compile(code,'complete hour budget','exec'),values)
-        assert values['predicted_training_seconds'] + 600 <= 3600
+    directory=tmp_path/'cuda_final/checkpoints';directory.mkdir(parents=True)
+    zero=directory/'model_epoch_0.pt';zero.write_bytes(b'actual zero checkpoint')
+    sha=hashlib.sha256(zero.read_bytes()).hexdigest()
+    baseline=dict(status='complete',completed_samples=599 if fault=='partial_metrics' else 600,
+        expected_samples=600,checkpoint_sha256=sha)
+    projection=dict(status='measured',training_samples=53600,validation_samples=600,metric_samples=600,
+        cuda_checkpoint_sha256='wrong' if fault=='wrong_checkpoint' else 'trained64',
+        evaluation_checkpoint_sha256=sha,training_samples_per_second=float(rate),
+        validation_samples_per_second=40.0,full600_evaluation_seconds=float('nan') if fault=='nonfinite_time' else 220.0)
+    (tmp_path/'timing_projection.json').write_text(json.dumps(projection))
+    result=tmp_path/'zero_mapping_full600';result.mkdir();(result/'summary.json').write_text(json.dumps(baseline))
+    (tmp_path/'cuda_final/training.log').write_text('[PERF][val] samples/s(local/global)=20.0/40.0\n'*2)
+    values=dict(rates=[rate],root=tmp_path,json=json,hashlib=hashlib,re=__import__('re'),math=math,
+                check={'checkpoint_sha256':'trained64'})
+    if allowed and fault is None:
+        exec(compile(code,'complete hour budget','exec'),values)
+        assert values['predicted_training_seconds'] + 15 + 220 + 60 <= 3600
     else:
-        with pytest.raises(AssertionError): exec(compile(code,'complete hour budget','exec'),{'rates':[rate]})
+        with pytest.raises(AssertionError): exec(compile(code,'complete hour budget','exec'),values)
 
 
 @pytest.mark.parametrize('fault', [None, 'unfinished', 'wrong_directory', 'target_reached'])

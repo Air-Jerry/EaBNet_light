@@ -23,9 +23,11 @@ class CausalMappingBlock(nn.Module):
         left, gate = self.input(self.norm(value)).chunk(2, dim=1)
         temporal = F.silu(left) * torch.sigmoid(gate)
         shape = (value.shape[0], temporal.shape[1], self.history_frames, value.shape[3])
-        if history is None: history = temporal.new_zeros(shape)
-        if history.shape != shape: raise ValueError('Mapping cache differs from input stream')
-        joined = torch.cat((history, temporal), dim=2)
+        if history is None:
+            joined = F.pad(temporal, (0, 0, self.history_frames, 0))
+        else:
+            if history.shape != shape: raise ValueError('Mapping cache differs from input stream')
+            joined = torch.cat((history, temporal), dim=2)
         result = value + self.output(self.activation(self.depthwise(joined)))
         return result, joined[:, :, -self.history_frames:].detach().clone() if cache else None
 
@@ -50,7 +52,8 @@ class CausalTCNMapping(CausalRecurrentUNet65):
             reference = inpt[..., 0, :].float()
             scale = torch.linalg.vector_norm(reference, dim=-1).mean(dim=-1, keepdim=True).unsqueeze(-1).clamp_min(1e-4)
             features = torch.cat((inpt.float().flatten(-2), estimate.permute(0, 2, 3, 1)), dim=-1) / scale
-            features = features.permute(0, 3, 1, 2).contiguous()
+            # Keep channel-last storage through pointwise and depthwise convolutions.
+            features = features.permute(0, 3, 1, 2).contiguous(memory_format=torch.channels_last)
         enabled = self.training and self.use_bfloat16_training and inpt.device.type == 'cuda'
         with torch.autocast(inpt.device.type, dtype=torch.bfloat16, enabled=enabled):
             value = self.mapping_input(features)

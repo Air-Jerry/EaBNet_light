@@ -1,9 +1,12 @@
 """Nonzero full-frequency mapping: causality, fixed caches and waveform identity."""
 
+import copy
+
 import pytest
 import torch
+import torch.nn.functional as F
 
-from experiments.causal_tcn_mapping import CausalTCNMapping
+from experiments.causal_tcn_mapping import CausalMappingBlock, CausalTCNMapping
 from light_causal_recurrent65_model import CausalRecurrentUNet65
 from light_causal_stream import CausalWaveformStream
 from light_quality_loss import QualityObjective
@@ -11,6 +14,29 @@ from train_light import build_stft_batch
 
 
 SMALL = dict(hidden=32, ffn=64, layers=2, global_hidden=16, context=5)
+
+
+@pytest.mark.parametrize('cached', [False, True])
+def test_layout_padding_preserves_original_values_gradients_and_cache(cached):
+    torch.set_num_threads(2)
+    torch.manual_seed(1234)
+    changed = CausalMappingBlock(8, 8)
+    original = copy.deepcopy(changed)
+    x = torch.randn(2, 8, 9, 257).contiguous(memory_format=torch.channels_last).requires_grad_()
+    baseline = x.detach().contiguous().requires_grad_()
+    history = torch.randn(2, 8, 16, 257) if cached else None
+    actual, memory = changed.process(x, history, cache=True)
+    left, gate = original.input(original.norm(baseline)).chunk(2, dim=1)
+    temporal = F.silu(left) * torch.sigmoid(gate)
+    old_history = temporal.new_zeros(2, 8, 16, 257) if history is None else history
+    joined = torch.cat((old_history, temporal), dim=2)
+    expected = baseline + original.output(original.activation(original.depthwise(joined)))
+    torch.testing.assert_close(actual, expected, rtol=1e-5, atol=1e-6)
+    torch.testing.assert_close(memory, joined[:, :, -16:], rtol=0, atol=0)
+    actual.square().mean().backward(); expected.square().mean().backward()
+    torch.testing.assert_close(x.grad, baseline.grad, rtol=1e-4, atol=1e-7)
+    for a, b in zip(changed.parameters(), original.parameters()):
+        torch.testing.assert_close(a.grad, b.grad, rtol=1e-4, atol=1e-6)
 
 
 @pytest.fixture

@@ -1,0 +1,156 @@
+{
+  "generator_sha256": "289d8541c4952592b93737c71010b02a434e7424bc53aad65259d2e22957000e",
+  "synthetic": {
+    "normal": {
+      "shape": [
+        4800,
+        9
+      ],
+      "measured_snr_db": -2.000000007483619,
+      "target_equals_independent_same_rir_convolution_max_abs_error": 7.450522809815396e-09
+    },
+    "silent_clean": {
+      "generator_accepted": true,
+      "target_all_zero": true,
+      "mixture_equals_target": false,
+      "metadata_claimed_snr_db": -2
+    },
+    "silent_noise": {
+      "generator_accepted": true,
+      "target_all_zero": false,
+      "mixture_equals_target": true,
+      "metadata_claimed_snr_db": -2
+    }
+  },
+  "rir": [
+    {
+      "dataset": "train",
+      "requested_rt60": 0.100003757877702,
+      "absorption": 0.99,
+      "rir_duration_seconds": 0.1509375,
+      "measured_from_metadata_rounded_geometry": true,
+      "measured_extrapolated_rt60_from_20db": 0.0005625000000000005,
+      "measured_extrapolated_rt60_from_60db": 0.08625000000000001,
+      "rir_support_ends_before_80pct_requested_rt60": false,
+      "residual_energy_at_80pct_requested_rt60_db": -60.96891899716201
+    },
+    {
+      "dataset": "train",
+      "requested_rt60": 0.3000029761161941,
+      "absorption": 0.35149,
+      "rir_duration_seconds": 0.237,
+      "measured_from_metadata_rounded_geometry": true,
+      "measured_extrapolated_rt60_from_20db": 0.27975,
+      "measured_extrapolated_rt60_from_60db": 0.2215625,
+      "rir_support_ends_before_80pct_requested_rt60": true,
+      "residual_energy_at_80pct_requested_rt60_db": null
+    },
+    {
+      "dataset": "train",
+      "requested_rt60": 0.5000103981562868,
+      "absorption": 0.25665,
+      "rir_duration_seconds": 0.214,
+      "measured_from_metadata_rounded_geometry": true,
+      "measured_extrapolated_rt60_from_20db": 0.3215625,
+      "measured_extrapolated_rt60_from_60db": 0.171375,
+      "rir_support_ends_before_80pct_requested_rt60": true,
+      "residual_energy_at_80pct_requested_rt60_db": null
+    },
+    {
+      "dataset": "train",
+      "requested_rt60": 0.6999661942288874,
+      "absorption": 0.12809,
+      "rir_duration_seconds": 0.1434375,
+      "measured_from_metadata_rounded_geometry": true,
+      "measured_extrapolated_rt60_from_20db": 0.23681249999999998,
+      "measured_extrapolated_rt60_from_60db": 0.12225,
+      "rir_support_ends_before_80pct_requested_rt60": true,
+      "residual_energy_at_80pct_requested_rt60_db": null
+    },
+    {
+      "dataset": "comparison",
+      "requested_rt60": 0.05039140390414864,
+      "absorption": 0.99,
+      "rir_duration_seconds": 0.1854375,
+      "measured_from_metadata_rounded_geometry": true,
+      "measured_extrapolated_rt60_from_20db": 0.019125,
+      "measured_extrapolated_rt60_from_60db": 0.0911875,
+      "rir_support_ends_before_80pct_requested_rt60": false,
+      "residual_energy_at_80pct_requested_rt60_db": -45.66094506971301
+    },
+    {
+      "dataset": "comparison",
+      "requested_rt60": 0.0999369832055971,
+      "absorption": 0.99,
+      "rir_duration_seconds": 0.24175,
+      "measured_from_metadata_rounded_geometry": true,
+      "measured_extrapolated_rt60_from_20db": 0.019874999999999997,
+      "measured_extrapolated_rt60_from_60db": 0.09137500000000001,
+      "rir_support_ends_before_80pct_requested_rt60": false,
+      "residual_energy_at_80pct_requested_rt60_db": -57.95444003277086
+    },
+    {
+      "dataset": "comparison",
+      "requested_rt60": 0.14989164402532595,
+      "absorption": 0.8324,
+      "rir_duration_seconds": 0.1970625,
+      "measured_from_metadata_rounded_geometry": true,
+      "measured_extrapolated_rt60_from_20db": 0.0691875,
+      "measured_extrapolated_rt60_from_60db": 0.11,
+      "rir_support_ends_before_80pct_requested_rt60": false,
+      "residual_energy_at_80pct_requested_rt60_db": -68.01317697403776
+    }
+  ],
+  "data_or_training_modified": false,
+  "private_audio_or_hashes_exported": false,
+  "clean_source_content_overlap": {
+    "train": {
+      "comparison_candidates_checked": 2,
+      "unresolved_candidates": 0,
+      "matching_decoded_source_audio_count": 2,
+      "only_same_basename_candidates_checked": true
+    },
+    "original_validation": {
+      "comparison_candidates_checked": 600,
+      "unresolved_candidates": 0,
+      "matching_decoded_source_audio_count": 600,
+      "only_same_basename_candidates_checked": true
+    }
+  },
+  "epoch17_descriptive_pesq_groups": {
+    "not_co_located": {
+      "count": 598,
+      "mean": 2.541644512012252
+    },
+    "target_doa_error_le_1deg": {
+      "count": 439,
+      "mean": 2.5639180640153296
+    },
+    "snr_2": {
+      "count": 150,
+      "mean": 2.8305027508735656
+    },
+    "snr_-5": {
+      "count": 140,
+      "mean": 2.1645271522658214
+    },
+    "snr_-2": {
+      "count": 161,
+      "mean": 2.376086936233947
+    },
+    "target_doa_error_gt_1deg": {
+      "count": 161,
+      "mean": 2.462435349174168
+    },
+    "snr_0": {
+      "count": 149,
+      "mean": 2.7641134942137957
+    },
+    "co_located": {
+      "count": 2,
+      "mean": 1.054351568222046
+    }
+  },
+  "status": "complete",
+  "rir_measurement_limitations": "Reconstructed using current max_order=10 and metadata positions rounded to millimetres; historical saved RIRs are unavailable. Near-anechoic decay is not diffuse, so 20dB RT60 extrapolation alone is unreliable. These are seven representative reconstructions, not measurements of every existing training waveform."
+}

@@ -14,7 +14,7 @@ mkdir -p logs_causal_recurrent_tcn_v1
 exec 9>logs_causal_recurrent_tcn_v1/.launcher.lock
 flock -n 9 || { printf 'Another causal launcher is running.\n' >&2; exit 1; }
 warm=$("$train_py" - "$preflight" "$val_dir" <<'PY_PREFLIGHT'
-import hashlib,json,os,re,sys
+import hashlib,json,math,os,re,sys
 from pathlib import Path
 import torch
 from light_candidate_runtime import read_candidate_checkpoint
@@ -25,9 +25,23 @@ assert check['all_weights_and_adam_finite'] and check['noncausal_frozen_backbone
 rates=re.findall(r'\[PERF\]\[train\].*?samples/s\(local/global\)=[\d.]+/([\d.]+)',(root/'cuda_final/training.log').read_text())
 assert len(rates)>=2
 rate=float(rates[-1]);predicted_training_seconds=53600/rate
-assert predicted_training_seconds+600<=3600,'Measured throughput plus600s reserve exceeds the one-hour budget'
+projection=json.loads((root/'timing_projection.json').read_text())
+baseline=json.loads((root/'zero_mapping_full600/summary.json').read_text())
+assert projection['status']=='measured'
+assert baseline['status']=='complete' and baseline['completed_samples']==baseline['expected_samples']==600
+assert (projection['training_samples'],projection['validation_samples'],projection['metric_samples'])==(53600,600,600)
+assert projection['cuda_checkpoint_sha256']==check['checkpoint_sha256']
+zero=root/'cuda_final/checkpoints/model_epoch_0.pt'
+assert projection['evaluation_checkpoint_sha256']==baseline['checkpoint_sha256']==hashlib.sha256(zero.read_bytes()).hexdigest()
+val_rates=re.findall(r'\[PERF\]\[val\].*?samples/s\(local/global\)=[\d.]+/([\d.]+)',(root/'cuda_final/training.log').read_text())
+assert len(val_rates)>=2
+val_rate=float(val_rates[-1]);evaluation_seconds=float(projection['full600_evaluation_seconds'])
+assert all(math.isfinite(value) and value>0 for value in (rate,val_rate,evaluation_seconds))
+assert projection['training_samples_per_second']==rate and projection['validation_samples_per_second']==val_rate
+predicted_complete_seconds=predicted_training_seconds+600/val_rate+evaluation_seconds+60
+assert predicted_complete_seconds<=3600,'Measured complete-epoch projection exceeds the one-hour budget'
 assert check['batch_size_per_gpu'] in (1,2,4) and check['batch_size_per_gpu']*check['grad_accum_steps']==4
-print(f'Projected training {predicted_training_seconds:.1f}s +600s reserve <=3600s',file=sys.stderr,flush=True)
+print(f'Projected complete epoch {predicted_complete_seconds:.1f}s, including measured full600 metrics and60s reserve',file=sys.stderr,flush=True)
 p=root/'cuda_final/checkpoints/model_epoch_2.pt'
 assert hashlib.sha256(p.read_bytes()).hexdigest()==check['checkpoint_sha256']==bench['checkpoint_sha256']
 state,_=read_candidate_checkpoint(p,'causal_recurrent_tcn_v1')
@@ -77,6 +91,7 @@ mkdir -p "$logs"
 printf 'Run: %s\nCheckpoints: %s\nLogs: %s\n' "$run" "$checkpoints" "$logs"
 cp "$preflight/cuda_final/cuda_check.json" "$logs/cuda_preflight.json"
 cp "$preflight/streaming_final/streaming_benchmark.json" "$logs/streaming_preflight.json"
+cp "$preflight/timing_projection.json" "$logs/timing_preflight.json"
 nvidia-smi --query-gpu=timestamp,index,utilization.gpu,memory.used,memory.total,power.draw \
     --format=csv,noheader,nounits -l 10 >> "$logs/gpu_utilization.log" &
 sampler=$!
