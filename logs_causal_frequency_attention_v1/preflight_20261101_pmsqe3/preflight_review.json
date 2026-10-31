@@ -1,0 +1,85 @@
+{
+  "status": "rejected_complete_epoch_time_projection_original_training_resumed",
+  "candidate": "causal_frequency_attention_v1",
+  "source_checkpoint_sha256": "725ec7a2cc8e88450f50c965cf4ce29f066fca11252bb36554119339b770a309",
+  "cuda": {
+    "status": "passed",
+    "epochs": 2,
+    "generator_adam_step": 64,
+    "all_weights_and_adam_finite": true,
+    "effective_global_batch": 8,
+    "state_tensors": 258,
+    "changed_state_tensors": 258,
+    "checkpoint_sha256": "6808bb5dd7294a46b423d4e1cf567cb12c4d8b90b14b6f53b229de2da4575f24",
+    "gpu_observations": [
+      {
+        "index": 0,
+        "samples": 13,
+        "utilization_mean_pct": 90.53846153846153,
+        "sampled_peak_memory_mib": 10836.0
+      },
+      {
+        "index": 1,
+        "samples": 13,
+        "utilization_mean_pct": 89.76923076923077,
+        "sampled_peak_memory_mib": 10842.0
+      }
+    ]
+  },
+  "streaming": {
+    "status": "measured",
+    "scope": "Causality, bounded state and real CUDA waveform streaming; no quality claim",
+    "checkpoint_sha256": "6808bb5dd7294a46b423d4e1cf567cb12c4d8b90b14b6f53b229de2da4575f24",
+    "device": "NVIDIA GeForce RTX 4070",
+    "torch_version": "2.5.1+cu121",
+    "evaluated_samples": 96000,
+    "parameters": 2574354,
+    "future_frames": 0,
+    "buffering_delay_samples": 320,
+    "buffering_delay_ms": 20,
+    "latency_scope": "CPU float32 input transfer + streaming frontend/model/synthesis + CPU output transfer; excludes audio driver",
+    "future_perturbation_max_error": 0.0,
+    "full_vs_stream_waveform_max_error": 6.556510925292969e-07,
+    "bounded_model_cache_bytes": 5822208,
+    "measured_hops": 600,
+    "excluded_startup_hops": 128,
+    "warmup_hops": 129,
+    "warmup_state_discarded": true,
+    "all_hop_ms": {
+      "mean": 3.954678804924091,
+      "p99": 4.055143427103758,
+      "max": 4.191021202132106
+    },
+    "all_hops_below_10ms": true,
+    "steady_hop_ms": {
+      "mean": 3.9390810731782624,
+      "p50": 3.9365149568766356,
+      "p95": 3.982775635086,
+      "p99": 4.032534405123442,
+      "max": 4.117795033380389
+    },
+    "steady_rtf": 0.3939081073178262,
+    "deadline_miss_fraction": 0.0,
+    "mean_rtf_below_one": true,
+    "p99_below_10ms": true,
+    "cuda_peak_allocated_bytes": 46877184
+  },
+  "final_full600_waveform_streaming_audit_still_required": true,
+  "timing_projection": {
+    "status": "measured",
+    "training_samples": 53600,
+    "validation_samples": 600,
+    "metric_samples": 600,
+    "cuda_checkpoint_sha256": "6808bb5dd7294a46b423d4e1cf567cb12c4d8b90b14b6f53b229de2da4575f24",
+    "evaluation_checkpoint_sha256": "10b3315b99fde957ab770d7722ff82ef41d18252dfe87c3bd9461d4d10ec78e0",
+    "training_samples_per_second": 15.9,
+    "validation_samples_per_second": 31.3,
+    "full600_evaluation_seconds": 195.69489515502937,
+    "overhead_reserve_seconds": 60,
+    "projected_complete_epoch_seconds": 3645.9334066184488
+  },
+  "full600_zero_attention_baseline_verified": true,
+  "full600_zero_attention_pesq": 2.7575588093201318,
+  "original_training_resumed": true,
+  "deployed_files_rolled_back": true
+}

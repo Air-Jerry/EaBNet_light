@@ -17,14 +17,14 @@ WARM_FIELDS = ('attention_warmstart_checkpoint', 'attention_warmstart_sha256',
     'attention_warmstart_epoch', 'attention_sample_epoch_offset', 'pmsqe_weight')
 
 
-def parse_args(argv=None):
+def parse_args(argv=None, candidate_id=FREQUENCY_ATTENTION_CANDIDATE, entry_file=None):
     selector = argparse.ArgumentParser(add_help=False)
     selector.add_argument('--warmstart')
     selected, remaining = selector.parse_known_args(sys.argv[1:] if argv is None else argv)
-    candidate = FREQUENCY_ATTENTION_CANDIDATE
+    candidate = candidate_id
     args = causal.trainer.parse_args(remaining, defaults=dict(
-        checkpoint_dir='./checkpoints_causal_frequency_attention_v1', best_dir='./bestmodels_causal_frequency_attention_v1',
-        log_dir='./logs_causal_frequency_attention_v1', num_epochs=6, learning_rate=.0003,
+        checkpoint_dir=f'./checkpoints_{candidate}', best_dir=f'./bestmodels_{candidate}',
+        log_dir=f'./logs_{candidate}', num_epochs=6, learning_rate=.0003,
         batch_size=4, grad_accum_steps=1, segment_seconds=6, save_every=1,
         train_lr_patience=3, grad_clip=5., norm_type='LN', use_amp='no',
         model_amp='no', allow_tf32='no', stop_on_non_finite='yes', skip_non_finite_batches='no'))
@@ -42,6 +42,8 @@ def parse_args(argv=None):
         'third_party/asteroid_pmsqe/pmsqe.py', 'third_party/asteroid_pmsqe/bark_matrix_16k.mat',
         'third_party/asteroid_pmsqe/PROVENANCE.json')
     args.causal_training_implementation_sha256 = {name:causal.quality.sha256_file(ROOT / name) for name in files}
+    if entry_file is not None:
+        args.causal_training_implementation_sha256[Path(entry_file).name] = causal.quality.sha256_file(entry_file)
     for name, value in candidate_metadata(candidate).items():
         setattr(args, name, value)
     latest = Path(args.checkpoint_dir).expanduser() / 'checkpoint_latest.pt'
@@ -81,8 +83,8 @@ def parse_args(argv=None):
     return args, source
 
 
-def main(argv=None):
-    args, source = parse_args(argv)
+def main(argv=None, candidate_id=FREQUENCY_ATTENTION_CANDIDATE, entry_file=None):
+    args, source = parse_args(argv, candidate_id=candidate_id, entry_file=entry_file)
     parser, initializer, objective = causal.parse_args, causal.initialize_checkpoint, causal.QualityObjective
     sampler = causal.trainer.DistributedSampler
 
@@ -120,7 +122,7 @@ def main(argv=None):
     causal.initialize_checkpoint, causal.QualityObjective = initialize, FrontendPMSQE
     causal.trainer.DistributedSampler = AlignedSampler
     try:
-        return causal.main([], candidate_id=args.structure_candidate, entry_file=__file__)
+        return causal.main([], candidate_id=args.structure_candidate, entry_file=entry_file or __file__)
     finally:
         causal.parse_args, causal.initialize_checkpoint, causal.QualityObjective = parser, initializer, objective
         causal.trainer.DistributedSampler = sampler

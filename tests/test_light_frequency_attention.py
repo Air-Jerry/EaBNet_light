@@ -1,8 +1,10 @@
 """Frame-local global frequency support, preserved source and bounded streaming."""
 
 import torch
+import pytest
 
 from experiments.causal_frequency_attention import CausalFrequencyAttentionTCN, FrequencyAttentionInput
+from experiments.causal_pooled_frequency_attention import CausalPooledFrequencyAttentionTCN, PooledFrequencyAttentionInput
 from experiments.causal_tcn_mapping import CausalTCNMapping
 from light_causal_stream import CausalWaveformStream
 from light_quality_loss import QualityObjective
@@ -12,9 +14,10 @@ from train_light import build_stft_batch
 SMALL = dict(hidden=32, ffn=64, layers=2, global_hidden=16, context=5, mapping_channels=8)
 
 
-def test_global_frequency_support_cannot_attend_to_other_time_frames():
+@pytest.mark.parametrize('constructor', [FrequencyAttentionInput, PooledFrequencyAttentionInput])
+def test_global_frequency_support_cannot_attend_to_other_time_frames(constructor):
     torch.set_num_threads(2); torch.manual_seed(89)
-    layer = FrequencyAttentionInput(3, 4)
+    layer = constructor(3, 4)
     layer.frequency_output.weight.data.normal_(std=.01)
     value = torch.randn(1, 3, 3, 257, requires_grad=True)
     layer(value)[:, :, 0, 0].sum().backward()
@@ -22,10 +25,11 @@ def test_global_frequency_support_cannot_attend_to_other_time_frames():
     assert torch.count_nonzero(value.grad[:, :, 1:]) == 0
 
 
-def test_zero_attention_preserves_source_and_crop_rng():
+@pytest.mark.parametrize('constructor', [CausalFrequencyAttentionTCN, CausalPooledFrequencyAttentionTCN])
+def test_zero_attention_preserves_source_and_crop_rng(constructor):
     torch.set_num_threads(2); torch.manual_seed(1234)
     old = CausalTCNMapping(**SMALL); rng = torch.get_rng_state()
-    torch.manual_seed(1234); changed = CausalFrequencyAttentionTCN(**SMALL)
+    torch.manual_seed(1234); changed = constructor(**SMALL)
     torch.testing.assert_close(torch.get_rng_state(), rng, rtol=0, atol=0)
     old.beamformer.weight.data.normal_(std=.01); old.mapping_output.weight.data.normal_(std=.01)
     state = changed.state_dict(); state.update(old.state_dict()); changed.load_state_dict(state, strict=True)
@@ -34,9 +38,10 @@ def test_zero_attention_preserves_source_and_crop_rng():
         torch.testing.assert_close(changed(value), old(value), rtol=0, atol=0)
 
 
-def test_nonzero_attention_and_source_have_zero_future_gradients():
+@pytest.mark.parametrize('constructor', [CausalFrequencyAttentionTCN, CausalPooledFrequencyAttentionTCN])
+def test_nonzero_attention_and_source_have_zero_future_gradients(constructor):
     torch.set_num_threads(2); torch.manual_seed(97)
-    model = CausalFrequencyAttentionTCN(**SMALL)
+    model = constructor(**SMALL)
     model.beamformer.weight.data.normal_(std=.01); model.mapping_output.weight.data.normal_(std=.01)
     model.mapping_input.frequency_output.weight.data.normal_(std=.01)
     value = (torch.randn(1, 17, 257, 8, 2) * .02).requires_grad_()
@@ -49,9 +54,10 @@ def test_nonzero_attention_and_source_have_zero_future_gradients():
     assert torch.count_nonzero(model.mapping_input.frequency_qkv.weight.grad) > 0
 
 
-def test_nonzero_attention_matches_waveform_stream_and_fixed_histories():
+@pytest.mark.parametrize('constructor', [CausalFrequencyAttentionTCN, CausalPooledFrequencyAttentionTCN])
+def test_nonzero_attention_matches_waveform_stream_and_fixed_histories(constructor):
     torch.set_num_threads(2); torch.manual_seed(101)
-    model = CausalFrequencyAttentionTCN(**SMALL).eval()
+    model = constructor(**SMALL).eval()
     model.beamformer.weight.data.normal_(std=.01); model.mapping_output.weight.data.normal_(std=.01)
     model.mapping_input.frequency_output.weight.data.normal_(std=.01)
     with torch.inference_mode():
@@ -69,3 +75,17 @@ def test_nonzero_attention_matches_waveform_stream_and_fixed_histories():
         stream = CausalWaveformStream(model); stream.warmup()
         outputs = [stream.push(wave[:, index:index + 160]) for index in range(0, 1617, 160)]
         torch.testing.assert_close(torch.cat([*outputs, stream.flush()], 1), expected, rtol=1e-4, atol=1e-6)
+
+
+def test_pooled_attention_retains_all_queries_with129_keys_and_values(monkeypatch):
+    import experiments.causal_pooled_frequency_attention as pooled
+    original = pooled.F.scaled_dot_product_attention
+    dimensions = []
+    def record(query, key, value, **kwargs):
+        dimensions.append((query.shape, key.shape, value.shape))
+        return original(query, key, value, **kwargs)
+    monkeypatch.setattr(pooled.F, 'scaled_dot_product_attention', record)
+    layer = PooledFrequencyAttentionInput(3, 4)
+    output = layer(torch.randn(1, 3, 3, 257))
+    assert output.shape == (1, 4, 3, 257)
+    assert dimensions == [(torch.Size([3, 4, 257, 16]), torch.Size([3, 4, 129, 16]), torch.Size([3, 4, 129, 16]))]

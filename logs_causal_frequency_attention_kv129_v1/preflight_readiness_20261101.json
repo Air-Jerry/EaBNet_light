@@ -1,0 +1,60 @@
+{
+  "status": "local_checks_passed_waiting_full_epoch4_boundary",
+  "candidate": "causal_frequency_attention_kv129_v1",
+  "candidate_schema": 12,
+  "frontend": {
+    "sample_rate": 16000,
+    "n_fft": 512,
+    "hop_length": 160,
+    "win_length": 320,
+    "power": 0.5,
+    "microphones": 8,
+    "reference": 0,
+    "normalization": "none"
+  },
+  "query_frequencies": 257,
+  "key_value_frequencies": 129,
+  "attention_score_pairs_per_head_and_frame": {
+    "previous": 66049,
+    "new": 33153,
+    "ratio": 0.5019455252918288
+  },
+  "savings_scope": "Attention score/value products only; no claim of50pct total-training acceleration",
+  "parameters": 2574354,
+  "extra_temporal_cache_bytes": 0,
+  "local_checks": {
+    "causal_frequency_and_launcher_gates": 99,
+    "actual_warmstart_train_resume_and_inference_cases": 4,
+    "previous_candidate_metadata_preserved": 15
+  },
+  "prior_full_attention_rejected_seconds": 3645.9334066184488,
+  "require_actual_whole_epoch_at_most_seconds": 3600,
+  "require_full_training_samples": 53600,
+  "require_full_metric_samples": 600,
+  "global_batch_size": 8,
+  "optimizer_updates_per_epoch": 6700,
+  "new_files_sha256": {
+    "light_candidate_runtime.py": "88153da067b279df68fbacc70871a5c82aca7ac2a210cb7ff788e8dbf4233441",
+    "check_light_causal_cuda.py": "bacd1d58378396db86c9c57be69e3a7f8dccfca223a7be0150206e1ea6370609",
+    "benchmark_light_causal.py": "97c1c33aee94c79292dabddab91ce070354ee87dde7168f08f56595c4be2d946",
+    "evaluate_light_streaming.py": "260325c085a2576f8c4aa16177372d7a45a9f7f34ae1993a82e5e2fffee5cfff",
+    "train_light_causal_frequency_attention.py": "4499ec4473a14d5b7a0d71df71f33caabb5fc2143d574341ad46491a3ab8a583",
+    "train_light_causal_pooled_attention.py": "9046580dd02be758ecfc24b5f945a9cdea816fc902053df33a783e2d48b86f6f",
+    "run_light_causal_pooled_attention.sh": "8bc7a113dbc3347b4da2e61035e75a2d0c65cdb2d34a9ddf2daa5e4732030772",
+    "experiments/causal_pooled_frequency_attention.py": "5f2c853009ecb26f30033699577c838279440b53fca70b8a96e1369c7a592b1d"
+  },
+  "protected_file_sha256": {
+    "evaluate_light.py": "0c3ada1425b33e16688e8424daba23681ac9ded4d8bee931ed24c69e59e5730b",
+    "train_light_causal.py": "3b48d702de8c45b6d2766705c42465ddbbf12088b04226eaa1f607a8699c7379",
+    "train_light.py": "dbe303d9bd66495c226afee90fbae9f5c0bc8cf87f9e61f35431ce90b8d15b81",
+    "light_quality_loss.py": "d39581a21efd17823049385f09399e07bf63660d688192467bdd4c5c99ab88db",
+    "experiments/causal_tcn_mapping.py": "9f6c7d0f011a19d03d2716b1bef2081d7b58d11b4d426e66bce1997de0ae82df",
+    "run_light_causal_tcn.sh": "7ab5a7dc8e467bf72be8ae76c6cd985ec8e5e3ae16eefd29beabb2098fa9cf08",
+    "train_light_causal_pmsqe.py": "93ec48d74c537ae343f6e9dfeaab81f0839c046dc474ad74ab8cbf5defaf1fde",
+    "experiments/causal_frequency_attention.py": "ac4c1283ab0d225b608d164db3439ecef73a2c8518fe6f13a212bcaedc9a203f"
+  },
+  "currently_active_model": "causal_recurrent_tcn_v1 with training-only PMSQE",
+  "next_quality_check": "2026-11-01 03:50 Asia/Shanghai",
+  "new_candidate_cuda_speed_and_quality_verified": false,
+  "fallback": "Any preflight failure restores the original files and resumes the same old launcher"
+}
