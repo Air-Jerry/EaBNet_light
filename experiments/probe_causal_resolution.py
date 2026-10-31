@@ -60,6 +60,7 @@ def main():
     parser.add_argument('--metric-objective',action='store_true',help='Compare physical loss and training-only real WB-PESQ supervision on the same recurrent65 model')
     parser.add_argument('--tcn-mapping',action='store_true',help='Compare recurrent65 and a trainable full-frequency causal TCN mapping branch')
     parser.add_argument('--spatial-cues',action='store_true',help='Compare recurrent65 with a trainable current-frame IPD and magnitude-ratio stem')
+    parser.add_argument('--frequency-fourier',action='store_true',help='Compare the trained TCN with global frame-local frequency Fourier mixing')
     parser.add_argument('--learning-rate',type=float,default=.001)
     args = parser.parse_args()
     if args.updates < 1:raise ValueError('Use a positive update budget')
@@ -70,6 +71,7 @@ def main():
     if args.metric_objective and (not args.warmstart or args.band or args.refiner or args.global_capacity or args.multi_frame):raise ValueError('Metric comparison requires a recurrent65 warm-start and no other branch')
     if args.tcn_mapping and (not args.warmstart or args.band or args.refiner or args.global_capacity or args.multi_frame or args.metric_objective):raise ValueError('TCN comparison requires a recurrent65 warm-start and no other branch')
     if args.spatial_cues and (not args.warmstart or args.band or args.refiner or args.global_capacity or args.multi_frame or args.metric_objective or args.tcn_mapping):raise ValueError('Spatial-cue comparison requires a recurrent65 warm-start and no other branch')
+    if args.frequency_fourier and (not args.warmstart or args.band or args.refiner or args.global_capacity or args.multi_frame or args.metric_objective or args.tcn_mapping or args.spatial_cues):raise ValueError('Frequency-Fourier comparison requires a TCN warm-start and no other branch')
     if not 0 < args.learning_rate < float('inf'):raise ValueError('Use a positive finite learning rate')
     torch.set_num_threads(2)
     torch.set_num_interop_threads(1)
@@ -90,7 +92,7 @@ def main():
         seed=1234, updates=args.updates, effective_batch=2, learning_rate=args.learning_rate, segment_samples=96000,
         sample_audio_sha256=hashes, objective='Unchanged QualityObjective', precision='CPU FP32',
         source_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(), results=[])
-    if args.band or args.global_capacity or args.multi_frame or args.metric_objective or args.tcn_mapping or args.spatial_cues:
+    if args.band or args.global_capacity or args.multi_frame or args.metric_objective or args.tcn_mapping or args.spatial_cues or args.frequency_fourier:
         report.pop('sample_audio_sha256')
         report['private_audio_hashes_exported']=False
     source = None
@@ -98,6 +100,7 @@ def main():
         from light_candidate_runtime import read_candidate_checkpoint
         checkpoint = Path(args.warmstart).expanduser().resolve()
         expected='causal_recurrent_unet65_v1' if (args.global_capacity or args.multi_frame or args.metric_objective or args.tcn_mapping or args.spatial_cues) else ('causal_unet_global_v1' if args.band else 'causal_unet_spatial_v1')
+        if args.frequency_fourier:expected='causal_recurrent_tcn_v1'
         source, _ = read_candidate_checkpoint(checkpoint, expected)
         report['scope'] = 'Current trained causal model, eight-sample fitting capacity only; not generalization'
         report['warmstart'] = dict(checkpoint=str(checkpoint),epoch=source['epoch'],
@@ -106,6 +109,13 @@ def main():
     indices = torch.cat([torch.randperm(8,generator=shuffle) for _ in range((args.updates+3)//4)])
     assert len(indices)>=args.updates*2
     constructors = [('frequency17',CausalUNetSpatial)]
+    if args.frequency_fourier:
+        from experiments.causal_tcn_mapping import CausalTCNMapping
+        from experiments.causal_frequency_fourier import CausalFrequencyFourierTCN
+        constructors=[('tcn_control',CausalTCNMapping),('frequency_fourier',CausalFrequencyFourierTCN)]
+        report['scope']='Two fully trainable TCN models; global frequency Fourier mixing per current frame, no time-axis FFT; same eight fixed training crops, not generalization'
+        report['fourier_implementation_sha256']=hashlib.sha256(Path(__file__).with_name('causal_frequency_fourier.py').read_bytes()).hexdigest()
+        report['tcn_implementation_sha256']=hashlib.sha256(Path(__file__).with_name('causal_tcn_mapping.py').read_bytes()).hexdigest()
     if args.spatial_cues:
         from light_causal_recurrent65_model import CausalRecurrentUNet65
         from experiments.causal_spatial_cues import CausalSpatialCueUNet65
@@ -151,7 +161,7 @@ def main():
     for name, constructor in constructors:
         torch.manual_seed(1234)
         model=constructor()
-        if args.spatial_cues:assert all(parameter.requires_grad for parameter in model.parameters())
+        if args.spatial_cues or args.frequency_fourier:assert all(parameter.requires_grad for parameter in model.parameters())
         cached_baseline=None
         if args.refiner:
             model.backbone.load_state_dict(source['model_state_dict'],strict=True)
@@ -166,7 +176,7 @@ def main():
         elif source is not None:
             values=model.state_dict()
             extra=set(values)-set(source['model_state_dict'])
-            allowed=(args.band and all(key.startswith('band_') for key in extra)) or (args.global_capacity and all(key.startswith('layers.5.') for key in extra)) or (args.multi_frame and all(key.startswith('past_beamformer.') for key in extra)) or (args.tcn_mapping and all(key.startswith('mapping_') for key in extra)) or (args.spatial_cues and all(key.startswith('stem.spatial_projection.') for key in extra))
+            allowed=(args.band and all(key.startswith('band_') for key in extra)) or (args.global_capacity and all(key.startswith('layers.5.') for key in extra)) or (args.multi_frame and all(key.startswith('past_beamformer.') for key in extra)) or (args.tcn_mapping and all(key.startswith('mapping_') for key in extra)) or (args.spatial_cues and all(key.startswith('stem.spatial_projection.') for key in extra)) or (args.frequency_fourier and all(key.startswith('mapping_input.fourier_') for key in extra))
             assert not extra or allowed,extra
             values.update(source['model_state_dict'])
             model.load_state_dict(values,strict=True)
@@ -232,7 +242,7 @@ def main():
                                       trainable_parameters=sum(p.numel() for p in model.parameters() if p.requires_grad),
                                       elapsed_seconds=time.perf_counter()-start,measurements=rows))
     report.pop('active',None)
-    if args.band or args.global_capacity or args.multi_frame or args.metric_objective or args.tcn_mapping or args.spatial_cues:
+    if args.band or args.global_capacity or args.multi_frame or args.metric_objective or args.tcn_mapping or args.spatial_cues or args.frequency_fourier:
         assert all(hashlib.sha256((root/f'{name}_{i}.wav').read_bytes()).hexdigest()==hashes[i-1][name]
             for i in range(1,9) for name in ('mixture','target'))
         report['audio_file_occurrences_unchanged']=16

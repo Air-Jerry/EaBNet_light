@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "scope": "Synthetic17-frame CPU runtime compatibility only, not quality or GPU speed",
+  "torch_version": "2.5.1+cu121",
+  "all_gradients_and_weights_finite": true,
+  "synthetic_adam_updates": 1,
+  "full_vs_stream_feature_max_error": 2.8721988201141357e-06,
+  "parameters": 2566098
+}
