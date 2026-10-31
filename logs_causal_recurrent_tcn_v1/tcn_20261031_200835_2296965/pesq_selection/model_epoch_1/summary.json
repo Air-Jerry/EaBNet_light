@@ -1,0 +1,184 @@
+{
+  "status": "complete",
+  "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_causal_recurrent_tcn_v1_tcn_20261031_200835_2296965/model_epoch_1.pt",
+  "checkpoint_sha256": "e25692f5965d81439862dcd2036e6c18322975234daabf0700a85d9d84d8af19",
+  "dataset": "/data/ssd1/jinrui.yang/newset_rt60_005-015_on_NOISEX92/babble/training_set",
+  "metadata_sha256": "8d0b4d229ebc42cd9892e6d0e0d36416007ded01fbc0b753df4bf7e6b734eb02",
+  "input_source": {
+    "mode": "metadata",
+    "dataset": "/data/ssd1/jinrui.yang/newset_rt60_005-015_on_NOISEX92/babble/training_set",
+    "metadata_path": "/data/ssd1/jinrui.yang/newset_rt60_005-015_on_NOISEX92/babble/training_set/metadata.csv",
+    "metadata_sha256": "8d0b4d229ebc42cd9892e6d0e0d36416007ded01fbc0b753df4bf7e6b734eb02",
+    "pairing": "metadata.csv mixture_path/target_path rows in original order",
+    "resolved_pairs_sha256": "18233928bdcb499f4e65e3b66a1f8c39387675d09f1621ae6ac94881d7444cfb",
+    "resolved_pairs_sha256_scope": "ordered sample IDs and resolved paths; not audio contents"
+  },
+  "selected_pairs_sha256": "18233928bdcb499f4e65e3b66a1f8c39387675d09f1621ae6ac94881d7444cfb",
+  "selected_pairs_sha256_scope": "ordered sample IDs and resolved paths; not audio contents",
+  "frontend": {
+    "sample_rate": 16000,
+    "n_fft": 512,
+    "hop_length": 160,
+    "win_length": 320,
+    "power": 0.5,
+    "target_ref_mic": 0
+  },
+  "num_mics": 8,
+  "frontend_protocol": {
+    "window": "periodic Hann",
+    "center": true,
+    "pad_mode": "reflect",
+    "normalized": false,
+    "onesided": true,
+    "waveform_normalization": "none",
+    "compression": "Z * abs(Z).clamp_min(1e-8) ** (power - 1)",
+    "inverse_compression": "piecewise exact inverse including the epsilon region",
+    "mixture_channels": "first 8 channels, original order",
+    "evaluation_extent": "full common-length utterance; no training crop or batch padding",
+    "inference_precision": "float32"
+  },
+  "checkpoint_model_config": {
+    "channels": 64,
+    "num_mics": 8,
+    "embed_dim": 64,
+    "kd1": 5,
+    "cd1": 64,
+    "d_feat": 256,
+    "p": 6,
+    "q": 3,
+    "bf_type": "lstm",
+    "topo_type": "mimo",
+    "intra_connect": "cat",
+    "norm_type": "LN",
+    "dfsmn_layers": 3,
+    "dfsmn_memory_size": 20,
+    "is_causal": "yes",
+    "is_u2": "yes"
+  },
+  "model_parameters": 2557650,
+  "structure_candidate": "causal_recurrent_tcn_v1",
+  "candidate_implementation_sha256": {
+    "light_causal_spatial_model.py": "b911ac848c86ca6b4a95933ae90d33a200d44f00ccaa8b98dc4b2cb7cf907a14",
+    "light_causal_stream.py": "86c266e39fd89227b99b1b6f46b943cff8b32a17c2c29f01234c3fcd18ebd42d",
+    "third_party/spatialnet/SpatialNet.py": "3baaa7136c893eba9aee9dfcdb40478a5f87f819682286abbec89a5d71d972f6",
+    "third_party/spatialnet/norm.py": "4c42f48a6d34dc82f25462782ba57e84dddfbfebb56b940f73a28b5ec41055cc",
+    "third_party/spatialnet/non_linear.py": "a985a7f81c8ebfbbd408ea753d7e9b81324d523c01afa1faca4285049640e79d",
+    "third_party/spatialnet/linear_group.py": "e6e0403b5dbdd787d511f0de9cef4335aa25ae46feee211554346c0a00cf2a43",
+    "light_causal_fast_model.py": "5d3f8153815e6a202b735ec3705c1f45a667557906bd299728c6cba7a5e126b9",
+    "light_causal_global_model.py": "43a7b8242a81fd0dcb922a82a2fa02e674f7d9340d78d1acb64952752162ec5e",
+    "light_causal_recurrent_model.py": "723a15ee4315bae86f4e4d632fcd25b9acfc8428c50263b6c8104cb7a2cacf8c",
+    "light_causal_recurrent65_model.py": "83977a1cce2eefa2fc66f2ac367499b7a6c8779feb63207f5f6bfed45dda2a68",
+    "experiments/causal_tcn_mapping.py": "9f6c7d0f011a19d03d2716b1bef2081d7b58d11b4d426e66bce1997de0ae82df"
+  },
+  "candidate_evidence": {
+    "candidate_id": "causal_recurrent_tcn_v1",
+    "author_confirmed": false,
+    "exact_reproduction_verified": false,
+    "purpose": "Jointly trained65-group spatial U-Net and full257-frequency causal TCN spectral mapping",
+    "model_causal": true,
+    "future_frames": 0,
+    "frozen_backbone": false,
+    "model_config": {
+      "widths": [
+        32,
+        48,
+        96
+      ],
+      "ffn": 192,
+      "spatial_layers": 4,
+      "bottleneck_frequencies": 65,
+      "global_temporal": {
+        "input": 6240,
+        "hidden": 128,
+        "layers": 1
+      },
+      "mapping": {
+        "input": 18,
+        "channels": 32,
+        "output": 2,
+        "dilations": [
+          1,
+          2,
+          4,
+          8,
+          16,
+          32
+        ],
+        "kernel": [
+          3,
+          3
+        ],
+        "past_frames": 126,
+        "extra_cache_bytes_per_stream": 4144896,
+        "frozen_parameters": 0
+      }
+    },
+    "temporal_convolution": "Left padding and fixed input caches; frequency-only transposed convolutions",
+    "attention": "Replaced by four unidirectional per-frequency GRU96 blocks plus one global GRU128, FP32",
+    "normalization": "Current-frame channel LayerNorm; mapping scale from current reference-mixture frame only",
+    "output": "Complex8-microphone residual beamforming plus current-mixture-scaled compressed RI mapping",
+    "initialization": "Validated complete recurrent65 checkpoint; zero new mapping output; fresh Adam",
+    "reference_audio_used_at_inference": false,
+    "waveform_streaming": "512/160/320,16kHz,power0.5;320-sample buffering plus compute/I-O; discarded warmup",
+    "source_revision": "Frequency modules adapted from Audio-WestlakeU/NBSS@cc42fc8ad2e6642c09b8f4169a85b4766dc22b7e",
+    "recurrent_state": "Fixed per-frequency and global hidden states plus left convolution histories"
+  },
+  "exact_reproduction_verified": false,
+  "quality_training": {},
+  "mixture_ref_mic": 0,
+  "device": "cuda",
+  "expected_samples": 600,
+  "completed_samples": 600,
+  "versions": {
+    "torch": "2.5.1+cu121",
+    "numpy": "2.2.5",
+    "soundfile": "0.13.1",
+    "pesq": "0.0.4",
+    "pystoi": "0.4.1",
+    "mir_eval": "0.8.2"
+  },
+  "mean": {
+    "enhanced": {
+      "pesq": 2.623355803489685,
+      "stoi": 0.9491726065734122,
+      "estoi": 0.8896762511389888,
+      "si_snr_db": 13.947761036553851,
+      "sdr_db": 15.064011359654875
+    },
+    "noisy": {
+      "pesq": 1.0880955342451732,
+      "stoi": 0.6510592990906214,
+      "estoi": 0.3667556529781415,
+      "si_snr_db": -1.2095493301340097,
+      "sdr_db": -1.1495106109218791
+    }
+  },
+  "outputs": {
+    "metadata_csv": "/home/nis/jinrui.yang/EaBNet_light/logs_causal_recurrent_tcn_v1/tcn_20261031_200835_2296965/pesq_selection/model_epoch_1/metadata.csv",
+    "extra_csv": null,
+    "summary_json": "/home/nis/jinrui.yang/EaBNet_light/logs_causal_recurrent_tcn_v1/tcn_20261031_200835_2296965/pesq_selection/model_epoch_1/summary.json",
+    "estimate_dir": "/home/nis/jinrui.yang/EaBNet_light/logs_causal_recurrent_tcn_v1/tcn_20261031_200835_2296965/pesq_selection/model_epoch_1",
+    "save_samples": false,
+    "wav_subtype": "FLOAT",
+    "mixture_wav": "selected mixture_ref_mic (mono)",
+    "estimate_wav": "raw model estimate"
+  },
+  "metric_protocol": {
+    "pesq": "pesq wideband",
+    "estoi": "pystoi extended=True; JSON estoi=fraction, CSV estoi_pct=100*estoi",
+    "stoi": "pystoi extended=False, fraction",
+    "si_snr_db": "zero-mean projection SI-SNR",
+    "si_snr_epsilon": 1e-08,
+    "sdr_db": "mir_eval.separation.bss_eval_sources, single source, 512-tap distortion filter; not SI-SNR",
+    "target_gain_matching": false,
+    "max_level_gain_db": 20.0,
+    "gain_rule": "none",
+    "external_normalization_clipping_or_alignment": false,
+    "length_policy": "truncate mixture and target to common length as in training Dataset; no delay correction",
+    "aggregation": "paired arithmetic mean over every selected utterance; failures abort with no mean"
+  },
+  "limitations": [
+    "Dataset and target convention must match the intended benchmark.",
+    "Gain matching, when enabled, uses the clean reference after inference and changes the evaluation protocol."
+  ]
+}

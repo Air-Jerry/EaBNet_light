@@ -1,0 +1,16 @@
+{
+  "status": "verified",
+  "samples": 600,
+  "baseline_pesq": 2.5366868688662847,
+  "epoch1_pesq": 2.623355803489685,
+  "mean_delta": 0.08666893462340038,
+  "median_delta": 0.06224381923675537,
+  "p10_delta": -0.051653289794921876,
+  "p90_delta": 0.2541197299957275,
+  "improved_samples": 465,
+  "unchanged_samples": 0,
+  "degraded_samples": 135,
+  "baseline_and_enhanced_use_same600_pairs": true,
+  "per_sample_paths_exported": false,
+  "checkpoint_sha256": "e25692f5965d81439862dcd2036e6c18322975234daabf0700a85d9d84d8af19"
+}
