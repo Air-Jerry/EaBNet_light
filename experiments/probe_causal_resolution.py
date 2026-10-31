@@ -57,12 +57,16 @@ def main():
     parser.add_argument('--band',action='store_true',help='Compare the fully trainable global model and full-frequency recurrent beamforming')
     parser.add_argument('--global-capacity',action='store_true',help='Compare fully trainable recurrent65 models with and without a larger global temporal block')
     parser.add_argument('--multi-frame',action='store_true',help='Compare a fully trainable recurrent65 model with four strictly past beamforming taps')
+    parser.add_argument('--metric-objective',action='store_true',help='Compare physical loss and training-only real WB-PESQ supervision on the same recurrent65 model')
+    parser.add_argument('--learning-rate',type=float,default=.001)
     args = parser.parse_args()
     if args.updates < 1:raise ValueError('Use a positive update budget')
     if args.refiner and not args.warmstart:raise ValueError('The refiner probe requires a trained causal warm-start')
     if args.band and (not args.warmstart or args.refiner):raise ValueError('Band comparison requires a global warm-start and no frozen refiner')
     if args.global_capacity and (not args.warmstart or args.band or args.refiner):raise ValueError('Global capacity comparison requires a recurrent65 warm-start and no other branch')
     if args.multi_frame and (not args.warmstart or args.band or args.refiner or args.global_capacity):raise ValueError('Multi-frame comparison requires a recurrent65 warm-start and no other branch')
+    if args.metric_objective and (not args.warmstart or args.band or args.refiner or args.global_capacity or args.multi_frame):raise ValueError('Metric comparison requires a recurrent65 warm-start and no other branch')
+    if not 0 < args.learning_rate < float('inf'):raise ValueError('Use a positive finite learning rate')
     torch.set_num_threads(2)
     torch.set_num_interop_threads(1)
     root, output = Path(args.data_dir), Path(args.output_dir)
@@ -79,17 +83,17 @@ def main():
                        for name in ('mixture','target')})
     mixture, target = torch.stack(mixture), torch.stack(target)
     report = dict(status='running', scope='Eight fixed real training samples, CPU fitting only; not generalization',
-        seed=1234, updates=args.updates, effective_batch=2, learning_rate=0.001, segment_samples=96000,
+        seed=1234, updates=args.updates, effective_batch=2, learning_rate=args.learning_rate, segment_samples=96000,
         sample_audio_sha256=hashes, objective='Unchanged QualityObjective', precision='CPU FP32',
         source_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(), results=[])
-    if args.band or args.global_capacity or args.multi_frame:
+    if args.band or args.global_capacity or args.multi_frame or args.metric_objective:
         report.pop('sample_audio_sha256')
         report['private_audio_hashes_exported']=False
     source = None
     if args.warmstart:
         from light_candidate_runtime import read_candidate_checkpoint
         checkpoint = Path(args.warmstart).expanduser().resolve()
-        expected='causal_recurrent_unet65_v1' if (args.global_capacity or args.multi_frame) else ('causal_unet_global_v1' if args.band else 'causal_unet_spatial_v1')
+        expected='causal_recurrent_unet65_v1' if (args.global_capacity or args.multi_frame or args.metric_objective) else ('causal_unet_global_v1' if args.band else 'causal_unet_spatial_v1')
         source, _ = read_candidate_checkpoint(checkpoint, expected)
         report['scope'] = 'Current trained causal model, eight-sample fitting capacity only; not generalization'
         report['warmstart'] = dict(checkpoint=str(checkpoint),epoch=source['epoch'],
@@ -98,6 +102,12 @@ def main():
     indices = torch.cat([torch.randperm(8,generator=shuffle) for _ in range((args.updates+3)//4)])
     assert len(indices)>=args.updates*2
     constructors = [('frequency17',CausalUNetSpatial)]
+    if args.metric_objective:
+        from light_causal_recurrent65_model import CausalRecurrentUNet65
+        constructors=[('physical_control',CausalRecurrentUNet65),('metric_supervision',CausalRecurrentUNet65)]
+        report['scope']='Same fully trainable causal recurrent65 model and checkpoint; physical versus training-only real WB-PESQ supervision; eight-sample fitting only, not generalization'
+        report['objective']='Control QualityObjective; comparison MetricObjective weight0.05, fresh D Adam1e-4, no inference changes'
+        report['metric_implementation_sha256']=hashlib.sha256(Path(__file__).resolve().parents[1].joinpath('light_metric_loss.py').read_bytes()).hexdigest()
     if args.global_capacity:
         from light_causal_recurrent65_model import CausalRecurrentUNet65
         from experiments.causal_global_capacity import CausalGlobalCapacity
@@ -143,12 +153,18 @@ def main():
             assert not extra or allowed,extra
             values.update(source['model_state_dict'])
             model.load_state_dict(values,strict=True)
-        optimizer=torch.optim.Adam(model.parameters(),lr=0.001)
+        metric_branch=args.metric_objective and name=='metric_supervision'
+        if args.metric_objective:
+            from light_metric_loss import MetricObjective
+            with torch.random.fork_rng(devices=[]):
+                objective=MetricObjective('cpu',accelerated=True) if metric_branch else QualityObjective()
+        optimizer=torch.optim.Adam(model.parameters(),lr=args.learning_rate)
         start=time.perf_counter()
         rows=[]; gradient_norms=[]
         for update in range(args.updates+1):
             if update in (0,args.updates//2,args.updates):
                 model.eval()
+                if metric_branch:objective.training=False
                 objective.reset_stats()
                 with torch.no_grad():
                     scores=[]; losses=[]
@@ -171,6 +187,7 @@ def main():
                 (output/'probe.json').write_text(json.dumps(report,indent=2))
             if update==args.updates:break
             model.train()
+            if metric_branch:objective.training=True
             ids=indices[update*2:update*2+2]
             features,ref=objective.build_features(mixture[ids],target[ids],512,160,320,0.5,'cpu',[96000]*2)
             optimizer.zero_grad(set_to_none=True)
@@ -185,12 +202,20 @@ def main():
             if update<3 or (update+1)%25==0:
                 print(name,'update',update+1,'elapsed',round(time.perf_counter()-start,2),flush=True)
         assert all(torch.isfinite(v).all() for v in model.state_dict().values())
+        if metric_branch:
+            assert all(torch.isfinite(v).all() for v in objective.discriminator.state_dict().values())
+            stats=objective.metric_stats()
+            assert stats['valid_pesq_labels']>0 and stats['discriminator_updates_per_rank']>0
+            report['training_metric_stats']=stats
+            report['inference_unchanged']=True
+            torch.save(objective.state_dict(),output/'training_only_metric_state.pt')
+            objective.close()
         torch.save(model.state_dict(),output/f'{name}.pt')
         report['results'].append(dict(candidate=name,parameters=sum(p.numel() for p in model.parameters()),
                                       trainable_parameters=sum(p.numel() for p in model.parameters() if p.requires_grad),
                                       elapsed_seconds=time.perf_counter()-start,measurements=rows))
     report.pop('active',None)
-    if args.band or args.global_capacity or args.multi_frame:
+    if args.band or args.global_capacity or args.multi_frame or args.metric_objective:
         assert all(hashlib.sha256((root/f'{name}_{i}.wav').read_bytes()).hexdigest()==hashes[i-1][name]
             for i in range(1,9) for name in ('mixture','target'))
         report['audio_file_occurrences_unchanged']=16

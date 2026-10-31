@@ -1,0 +1,55 @@
+{
+  "status": "verified_complete_epochs1_to8",
+  "scope": "Measured eight complete epochs on two RTX4070 12GB; includes all train/val/save/full600 metrics. Later epochs still require measurement.",
+  "candidate": "causal_recurrent_unet65_v1",
+  "training_samples": 53600,
+  "validation_samples": 600,
+  "full_metric_samples": 600,
+  "segment_seconds": 6,
+  "global_batch": 8,
+  "optimizer_updates_per_epoch": 6700,
+  "all_eight_under3600_seconds": true,
+  "epoch_seconds": [
+    2549.7586238384247,
+    2525.2047123908997,
+    2523.485614299774,
+    2520.1253876686096,
+    2559.8477692604065,
+    2458.9655437469482,
+    2558.840939283371,
+    2522.774898290634
+  ],
+  "mean_epoch_seconds": 2527.3754360973835,
+  "maximum_epoch_seconds": 2559.8477692604065,
+  "gpu_sampling_interval_seconds": 10,
+  "gpu_timestamp_timezone": "UTC+08:00",
+  "gpu_observations": [
+    {
+      "gpu_index": 0,
+      "complete_epoch_samples": 2021,
+      "complete_epoch_mean_utilization_pct": 87.6036615536863,
+      "training_validation_checkpoint_samples": 1866,
+      "training_validation_checkpoint_mean_utilization_pct": 94.12808145766346,
+      "sampled_peak_memory_mib": 9187.0
+    },
+    {
+      "gpu_index": 1,
+      "complete_epoch_samples": 2021,
+      "complete_epoch_mean_utilization_pct": 87.23899059871351,
+      "training_validation_checkpoint_samples": 1866,
+      "training_validation_checkpoint_mean_utilization_pct": 94.48553054662379,
+      "sampled_peak_memory_mib": 9309.0
+    }
+  ],
+  "quality": {
+    "best_completed_epoch": 7,
+    "best_full600_wb_pesq": 2.282656254172325,
+    "target": 3.4,
+    "target_reached": false
+  },
+  "evidence_sha256": {
+    "epoch_timing.jsonl": "d731672e58b8223ccbceaaa054c082d896c8430b70c8bdf1edeed210ca078343",
+    "gpu_utilization.log": "feaec930b46fe952d5f07c6ce6793ccd95b5eb8ea3ae23ff5ebca8776afd8840"
+  },
+  "evidence_sha256_scope": "LF-normalized epoch8 evidence snapshot; the raw GPU log may grow in later commits"
+}
