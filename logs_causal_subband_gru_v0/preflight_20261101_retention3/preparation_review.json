@@ -1,0 +1,29 @@
+{
+  "status": "isolated_stage_and_actual_cpu_entry_verified",
+  "stage": "/home/nis/jinrui.yang/EaBNet_light/tmp/subband_stage_20261101",
+  "production_files_unchanged": true,
+  "production_file_count": 91,
+  "user_evaluator_unchanged": true,
+  "overlay_sha256": {
+    "light_candidate_runtime.py": "80f895de18d3bc810e179d56efd6fe491291ba3dc2a66b1c9a2559ff47c3daba",
+    "run_light_causal.sh": "60ef3c746b9f96c1407da107e708bd4e9ce782da13012603cef5321aa7deafc2",
+    "check_light_causal_cuda.py": "6031bda1db4592e62ff2d446616e33bcab91ad5c4a1c72962c9414e327da7be0",
+    "benchmark_light_causal.py": "9f6c7266a5c80c63827bc6f77b60137bd8210e1e32f038d7d924f16a3bbf4be8",
+    "evaluate_light_streaming.py": "64c992c0c1ac6e99e99d1eff76aedc8ee46b634302cfdbdbdff72c917f8e9c9b",
+    "train_light_causal_subband.py": "073edd9006fc9e40c2dce2648a49629d8be530c8bb9c7c4de1e11a625d591e6a",
+    "run_light_causal_subband.sh": "cc3710fa5df538669f88e6bac2efeba4f570066ad9dcdc1497bfe64788cc822c",
+    "experiments/causal_subband_gru.py": "79fd8dca9b4e5541e77b99e338e71941d26868f266ba26a82e49471611e54227"
+  },
+  "cpu_entry_review": {
+    "status": "passed_actual_linux_cpu_entry_and_saved_source_identity",
+    "candidate_schema": 16,
+    "sampler_offset": 30,
+    "parameters": 2590644,
+    "source_identity_max_abs_error": 0,
+    "source_checkpoint_sha256": "1fb53e2494442c9161c2023b7e8e3615d6fad0c6d2ab82a0a74e622d2d5a1059",
+    "batch_size": 2,
+    "grad_accum_steps": 2,
+    "all_parameters_trainable": true,
+    "cuda_used": false
+  }
+}

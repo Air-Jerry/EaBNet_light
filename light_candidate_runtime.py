@@ -33,16 +33,20 @@ POOLED_FREQUENCY_ATTENTION_CANDIDATE = "causal_frequency_attention_kv129_v1"
 RETENTION_CANDIDATE = "causal_frequency_attention_retention_v1"
 FULLBAND_TCN_CANDIDATE = "causal_fullband_tcn_v1"
 FULLBAND_SPATIAL_CANDIDATE = "causal_fullband_spatial_tcn_v1"
+SUBBAND_GRU_CANDIDATE = "causal_retention_subband_gru_v1"
 IDENTITY_FIELDS = ("sample_rate", "n_fft", "hop_length", "win_length", "power", "target_ref_mic",
                    "channels", "num_mics", "embed_dim", "cd1", "dfsmn_layers", "dfsmn_memory_size",
                    "norm_type", "bf_type", "topo_type", "is_causal")
 
 
 def all_model_candidates():
-    return (*all_reference_candidates(), QUALITY_CANDIDATE, SPATIAL_CANDIDATE, CAUSAL_CANDIDATE, FAST_CANDIDATE, GLOBAL_CANDIDATE, RECURRENT_CANDIDATE, RECURRENT65_CANDIDATE, TCN_CANDIDATE, FOURIER_CANDIDATE, FREQUENCY_ATTENTION_CANDIDATE, POOLED_FREQUENCY_ATTENTION_CANDIDATE, RETENTION_CANDIDATE, FULLBAND_TCN_CANDIDATE, FULLBAND_SPATIAL_CANDIDATE)
+    return (*all_reference_candidates(), QUALITY_CANDIDATE, SPATIAL_CANDIDATE, CAUSAL_CANDIDATE, FAST_CANDIDATE, GLOBAL_CANDIDATE, RECURRENT_CANDIDATE, RECURRENT65_CANDIDATE, TCN_CANDIDATE, FOURIER_CANDIDATE, FREQUENCY_ATTENTION_CANDIDATE, POOLED_FREQUENCY_ATTENTION_CANDIDATE, RETENTION_CANDIDATE, FULLBAND_TCN_CANDIDATE, FULLBAND_SPATIAL_CANDIDATE, SUBBAND_GRU_CANDIDATE)
 
 
 def build_model_candidate(candidate_id, **model_kwargs):
+    if candidate_id == SUBBAND_GRU_CANDIDATE:
+        from experiments.causal_subband_gru import CausalSubbandGRU
+        return CausalSubbandGRU(build_model_candidate(RETENTION_CANDIDATE, **model_kwargs))
     if candidate_id == FULLBAND_SPATIAL_CANDIDATE:
         from experiments.causal_fullband_spatial_tcn import CausalFullbandSpatialTCN
         return CausalFullbandSpatialTCN(**model_kwargs)
@@ -89,6 +93,24 @@ def build_model_candidate(candidate_id, **model_kwargs):
 
 
 def candidate_metadata(candidate_id):
+    if candidate_id == SUBBAND_GRU_CANDIDATE:
+        metadata = candidate_metadata(RETENTION_CANDIDATE)
+        files = (*metadata['candidate_implementation_sha256'], 'experiments/causal_fullband_tcn.py',
+                 'experiments/causal_subband_gru.py')
+        metadata.update(structure_candidate=candidate_id, candidate_schema=16,
+                        candidate_implementation_sha256=source_hashes(files))
+        evidence = metadata['candidate_evidence']
+        evidence.update(candidate_id=candidate_id, base_candidate=RETENTION_CANDIDATE,
+            purpose='Full-resolution frequency-wise gated temporal states with explicit microphone spatial cues',
+            initialization='Complete retention checkpoint; zero additional output; all parameters trainable; fresh Adam',
+            frozen_backbone=False, reference_audio_used_at_inference=False)
+        evidence['model_config']['parameters'] = 2590644
+        evidence['model_config']['subband_gru'] = dict(frequencies=257, features=40,
+            hidden=32, layers=1, bidirectional=False, parameters_shared_across_frequencies=True,
+            independent_state_per_frequency=True, frequency_kernel=3, extra_parameters=10946,
+            extra_cache_bytes_per_stream_fp32=32896, output='Complex8-microphone residual plus compressed RI residual',
+            normalization='Current-frame channel LayerNorm and current reference-mixture frame scale only')
+        return metadata
     if candidate_id == FULLBAND_SPATIAL_CANDIDATE:
         metadata = candidate_metadata(FULLBAND_TCN_CANDIDATE)
         files = (*metadata['candidate_implementation_sha256'],'experiments/causal_fullband_spatial_tcn.py')

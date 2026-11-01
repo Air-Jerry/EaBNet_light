@@ -40,3 +40,5 @@ train_light_causal_fullband.py text eol=lf
 run_light_causal_fullband.sh text eol=lf
 train_light_causal_fullband_spatial.py text eol=lf
 run_light_causal_fullband_spatial.sh text eol=lf
+train_light_causal_subband.py text eol=lf
+run_light_causal_subband.sh text eol=lf

@@ -1,0 +1,18 @@
+{
+  "status": "staged_preflight_terminal",
+  "pid": 2534320,
+  "cookie": "145230038",
+  "preflight_exit_code": 0,
+  "review": {
+    "status": "passed_staged_dual_cuda_streaming_and_full600_source_identity",
+    "candidate": "causal_retention_subband_gru_v1",
+    "cuda_adam_updates": 64,
+    "all_weights_and_adam_finite": true,
+    "full600_warm_pesq": 2.896308812499046,
+    "source_full600_pesq": 2.896308812499046,
+    "projected_complete_epoch_seconds": 3328.6417380260896,
+    "formal_training_quality_and_actual_epoch_time_unverified": true
+  },
+  "dispatcher_resumed": true,
+  "production_files_unchanged": true
+}

@@ -1,0 +1,41 @@
+{
+  "status": "complete_fullband_spatial_epoch8_verified",
+  "checkpoint_sha256": "8d0b8052e271fc1416a03749513926c508139748e7bca189d7f3bd4ce5bd76c3",
+  "timing": {
+    "epoch": 8,
+    "status": "complete",
+    "started_unix": 1793520860,
+    "finished_unix": 1793523613.9099903,
+    "total_seconds": 2753.909990310669,
+    "training_validation_checkpoint_seconds": 2256,
+    "evaluation_audit_seconds": 497.90999031066895,
+    "training_samples": 53600,
+    "validation_samples": 600,
+    "full_metric_samples": 600,
+    "optimizer_updates_this_epoch": 6700,
+    "global_batch_size": 8,
+    "limit_seconds": 3600
+  },
+  "pesq": 2.3770508126417798,
+  "previous_model_full600_pesq": 2.0257745319604874,
+  "target_pesq": 3.4,
+  "target_reached": false,
+  "all_weights_and_adam_finite": true,
+  "adam_updates": 53600,
+  "full600_protocol_preserved": true,
+  "gpu_training_and_validation": [
+    {
+      "index": 0,
+      "samples": 226,
+      "mean_utilization_pct": 89.29203539823008,
+      "sampled_peak_memory_mib": 7921
+    },
+    {
+      "index": 1,
+      "samples": 226,
+      "mean_utilization_pct": 92.82300884955752,
+      "sampled_peak_memory_mib": 7903
+    }
+  ],
+  "final_trained_full600_waveform_streaming_audit_still_required": true
+}

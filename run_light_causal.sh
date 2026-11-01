@@ -16,6 +16,7 @@ case "$candidate" in
     causal_recurrent_unet65_v1) entry=train_light_causal_recurrent65.py; run_prefix=causal_recurrent65 ;;
     causal_fullband_tcn_v1) entry=train_light_causal_fullband.py; run_prefix=fullband ;;
     causal_fullband_spatial_tcn_v1) entry=train_light_causal_fullband_spatial.py; run_prefix=fullband_spatial; learning_rate=0.0003 ;;
+    causal_retention_subband_gru_v1) entry=train_light_causal_subband.py; run_prefix=retention_subband; learning_rate=0.0003 ;;
     *) printf 'Unsupported cold-start causal candidate: %s\n' "$candidate" >&2; exit 2 ;;
 esac
 train_dir="/data/ssd1/jinrui.yang/training_set"
@@ -43,17 +44,26 @@ assert bench['warmup_state_discarded'] and bench['mean_rtf_below_one'] and bench
 assert bench['all_hops_below_10ms'],'Investigate startup/live deadlines before full training'
 assert bench['full_vs_stream_waveform_max_error']<1e-5
 speeds=re.findall(r'\[PERF\]\[train\].*?samples/s\(local/global\)=[\d.]+/([\d.]+)',(root/'cuda_final/training.log').read_text())
-assert speeds and float(speeds[-1])>=20,'Hot global throughput is insufficient for the one-hour budget'
-if sys.argv[3] in ('causal_fullband_tcn_v1','causal_fullband_spatial_tcn_v1'):
+assert speeds and float(speeds[-1])>0
+if sys.argv[3]!='causal_retention_subband_gru_v1':
+    assert float(speeds[-1])>=20,'Hot global throughput is insufficient for the one-hour budget'
+if sys.argv[3] in ('causal_fullband_tcn_v1','causal_fullband_spatial_tcn_v1','causal_retention_subband_gru_v1'):
     assert state['args']['causal_training_objective']=='spectral_mrstft_waveform_pmsqe_v1'
     assert state['args']['pmsqe_weight']==.1
-    expected_entry='train_light_causal_fullband_spatial.py' if sys.argv[3]=='causal_fullband_spatial_tcn_v1' else 'train_light_causal_fullband.py'
+    expected_entry={'causal_fullband_spatial_tcn_v1':'train_light_causal_fullband_spatial.py',
+        'causal_retention_subband_gru_v1':'train_light_causal_subband.py'}.get(sys.argv[3],'train_light_causal_fullband.py')
     assert expected_entry in state['args']['causal_training_implementation_sha256']
     if sys.argv[3]=='causal_fullband_spatial_tcn_v1':
         warm=Path(state['args']['spatial_fullband_warmstart_checkpoint'])
         assert warm.is_absolute() and hashlib.sha256(warm.read_bytes()).hexdigest()==state['args']['spatial_fullband_warmstart_sha256']
         source,_=read_candidate_checkpoint(warm,'causal_fullband_tcn_v1')
         assert int(source['epoch'])==state['args']['spatial_fullband_sample_epoch_offset']>=1
+    if sys.argv[3]=='causal_retention_subband_gru_v1':
+        warm=Path(state['args']['subband_warmstart_checkpoint'])
+        assert warm.is_absolute() and hashlib.sha256(warm.read_bytes()).hexdigest()==state['args']['subband_warmstart_sha256']
+        source,_=read_candidate_checkpoint(warm,'causal_frequency_attention_retention_v1')
+        assert int(source['epoch'])>=1
+        assert source['args']['attention_sample_epoch_offset']+int(source['epoch'])==state['args']['subband_sample_epoch_offset']
     projection=json.loads((root/'timing_projection.json').read_text())
     baseline=json.loads((root/'zero_mapping_full600/summary.json').read_text())
     assert projection['status']=='measured'
@@ -65,7 +75,7 @@ if sys.argv[3] in ('causal_fullband_tcn_v1','causal_fullband_spatial_tcn_v1'):
     val_rates=re.findall(r'\[PERF\]\[val\].*?samples/s\(local/global\)=[\d.]+/([\d.]+)',(root/'cuda_final/training.log').read_text())
     assert val_rates
     predicted=53600/float(speeds[-1])+600/float(val_rates[-1])+projection['full600_evaluation_seconds']+60
-    assert 0<predicted<=3600,'Measured full-band complete-epoch projection exceeds one hour'
+    assert 0<predicted<=3600,'Measured complete-epoch projection exceeds one hour'
     assert abs(predicted-projection['projected_complete_epoch_seconds'])<1e-6
 assert hashlib.sha256((Path(sys.argv[2])/'metadata.csv').read_bytes()).hexdigest()=='8d0b4d229ebc42cd9892e6d0e0d36416007ded01fbc0b753df4bf7e6b734eb02'
 names={'run_light_quality.sh','continue_light_quality.sh','run_light_metric.sh','run_light_spatial.sh',
@@ -74,7 +84,8 @@ names={'run_light_quality.sh','continue_light_quality.sh','run_light_metric.sh',
        'run_light_causal_global.sh','train_light_causal_global.py','train_light_causal_recurrent.py','train_light_causal_recurrent65.py'}
 names.update({'run_light_causal_fullband.sh','train_light_causal_fullband.py',
     'run_light_causal_retention.sh','train_light_causal_retention.py','run_light_causal_frequency_attention.sh',
-    'run_light_causal_fullband_spatial.sh','train_light_causal_fullband_spatial.py'})
+    'run_light_causal_fullband_spatial.sh','train_light_causal_fullband_spatial.py',
+    'run_light_causal_subband.sh','train_light_causal_subband.py'})
 ancestors=set();cursor=os.getpid()
 while cursor>1:
     ancestors.add(cursor)
@@ -99,11 +110,12 @@ PY_BATCH
 )
 warm=''
 warm_args=()
-if [[ "$candidate" == causal_fullband_spatial_tcn_v1 ]]; then
-    warm=$("$train_py" - "$preflight/cuda_final/checkpoints/model_epoch_2.pt" <<'PY_WARM'
+if [[ "$candidate" == causal_fullband_spatial_tcn_v1 || "$candidate" == causal_retention_subband_gru_v1 ]]; then
+    warm=$("$train_py" - "$preflight/cuda_final/checkpoints/model_epoch_2.pt" "$candidate" <<'PY_WARM'
 import sys,torch
 state=torch.load(sys.argv[1],map_location='cpu',weights_only=False)
-print(state['args']['spatial_fullband_warmstart_checkpoint'])
+key='subband_warmstart_checkpoint' if sys.argv[2]=='causal_retention_subband_gru_v1' else 'spatial_fullband_warmstart_checkpoint'
+print(state['args'][key])
 PY_WARM
 )
     warm_args=(--warmstart "$warm")
@@ -150,20 +162,22 @@ import json,math,sys
 from pathlib import Path
 root=Path(sys.argv[1])/'pesq_selection';baseline=json.loads((root/'model_epoch_0/summary.json').read_text())
 candidate=sys.argv[2] if len(sys.argv)>2 else 'causal_unet_spatial_v1'
-if candidate=='causal_fullband_spatial_tcn_v1':
+if candidate in ('causal_fullband_spatial_tcn_v1','causal_retention_subband_gru_v1'):
     import hashlib,torch
     warm=Path(sys.argv[3]).resolve();source=torch.load(warm,map_location='cpu',weights_only=False)
     old=json.loads((Path(source['args']['log_dir'])/'pesq_selection'/f"model_epoch_{source['epoch']}"/'summary.json').read_text())
     assert old['status']=='complete' and old['completed_samples']==old['expected_samples']==600
     assert old['checkpoint_sha256']==hashlib.sha256(warm.read_bytes()).hexdigest()
-    assert old['structure_candidate']=='causal_fullband_tcn_v1'
+    expected_source='causal_frequency_attention_retention_v1' if candidate=='causal_retention_subband_gru_v1' else 'causal_fullband_tcn_v1'
+    assert old['structure_candidate']==expected_source
 else:
     old=json.loads(Path('logs_cbam_metric_v1/metric_20261030_052113_1573812/pesq_selection/model_epoch_0/summary.json').read_text())
 keys=('frontend','frontend_protocol','num_mics','selected_pairs_sha256','metadata_sha256','metric_protocol')
 for key in keys:assert baseline[key]==old[key],key
 for name,value in old['mean']['noisy'].items():assert abs(baseline['mean']['noisy'][name]-value)<1e-10,name
-expected=old['mean']['enhanced'] if candidate=='causal_fullband_spatial_tcn_v1' else baseline['mean']['noisy']
-tolerance=1e-4 if candidate=='causal_fullband_spatial_tcn_v1' else 1e-3
+warm_candidate=candidate in ('causal_fullband_spatial_tcn_v1','causal_retention_subband_gru_v1')
+expected=old['mean']['enhanced'] if warm_candidate else baseline['mean']['noisy']
+tolerance=1e-4 if warm_candidate else 1e-3
 for name,value in expected.items():assert abs(baseline['mean']['enhanced'][name]-value)<tolerance,name
 rows=[]
 for p in root.glob('model_epoch_*/summary.json'):
