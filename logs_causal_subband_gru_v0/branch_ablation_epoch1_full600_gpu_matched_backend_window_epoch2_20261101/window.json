@@ -1,0 +1,8 @@
+{
+  "status": "profile_failed_or_window_unavailable",
+  "owned_pid": 2619329,
+  "cookie": "147225763",
+  "error": "TimeoutError: Bounded profile expired; existing training resumes",
+  "dispatcher_resumed": true,
+  "protected_files_unchanged": true
+}

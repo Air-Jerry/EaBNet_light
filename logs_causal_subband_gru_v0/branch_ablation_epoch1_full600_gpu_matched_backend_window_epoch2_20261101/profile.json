@@ -1,0 +1,22 @@
+{
+  "status": "failed_or_partial",
+  "scope": "All600 same-forward-pass trained base/full comparison, GPU1 FP32; no training",
+  "checkpoint_sha256": "65691adf4dc09a85f589183b204618a9bcdc92bd8fb3f9ee2738aca8edba546c",
+  "metadata_sha256": "8d0b4d229ebc42cd9892e6d0e0d36416007ded01fbc0b753df4bf7e6b734eb02",
+  "expected_samples": 600,
+  "completed_samples": 303,
+  "numeric_backend": {
+    "matmul_allow_tf32": false,
+    "cudnn_allow_tf32": true,
+    "cudnn_benchmark": false,
+    "scope": "Matches original formal evaluator defaults; final audit still requires both TF32 flags false"
+  },
+  "physical_gpu": 1,
+  "weights_updated": false,
+  "original_frontend_used": true,
+  "target_gain_matching": false,
+  "external_normalization_clipping_or_alignment": false,
+  "model_prediction_unchanged_by_capture_hook": true,
+  "elapsed_seconds": 147.82522340700962,
+  "error": "TimeoutError: Bounded idle-GPU diagnostic interrupted"
+}

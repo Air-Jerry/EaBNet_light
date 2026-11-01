@@ -1,0 +1,82 @@
+{
+  "status": "complete",
+  "scope": "Full-band-conditioned head capacity fit on the same eight fixed training utterances; not generalization or goal completion",
+  "source_checkpoint_sha256": "65691adf4dc09a85f589183b204618a9bcdc92bd8fb3f9ee2738aca8edba546c",
+  "prototype_sha256": "8931dfa8d53c96654855427cf00c30f891fa051a279473088f329c8ca917710f",
+  "device": "cpu",
+  "seed": 1234,
+  "learning_rate": 0.001,
+  "batch_size": 2,
+  "requested_updates": 2,
+  "trainable_parameters": 790262,
+  "sample_ids": [
+    "5903",
+    "9643",
+    "14727",
+    "21394",
+    "51958",
+    "54962",
+    "55110",
+    "55595"
+  ],
+  "frozen_causal_base_predictions": true,
+  "noncausal_backbones": 0,
+  "original_frontend_and_objective_used": true,
+  "target_gain_matching": false,
+  "no_external_normalization_clipping_or_alignment": true,
+  "fitted_weights_saved_or_deployed": false,
+  "formal_full600_pesq": 2.8973679965734482,
+  "formal_goal_target": 3.4,
+  "formal_goal_achieved": false,
+  "completed_updates": 2,
+  "all_weights_gradients_and_adam_finite": true,
+  "per_sample_presentations": [
+    1,
+    0,
+    0,
+    0,
+    0,
+    1,
+    1,
+    1
+  ],
+  "evaluations": [
+    {
+      "updates": 0,
+      "pesq": 2.9877240508794785,
+      "per_sample_pesq": [
+        1.2541474103927612,
+        4.390690326690674,
+        3.9388275146484375,
+        1.187713384628296,
+        2.036229133605957,
+        4.294989585876465,
+        3.923510789871216,
+        2.8756842613220215
+      ],
+      "elapsed_seconds": 2.576077781850472
+    },
+    {
+      "updates": 2,
+      "pesq": 2.9677634090185165,
+      "per_sample_pesq": [
+        1.2640190124511719,
+        4.397197246551514,
+        3.935129404067993,
+        1.184360384941101,
+        2.0326173305511475,
+        4.2859272956848145,
+        3.763392686843872,
+        2.8794639110565186
+      ],
+      "elapsed_seconds": 7.988033925881609
+    }
+  ],
+  "first20_mean_training_loss": 0.510992169380188,
+  "last20_mean_training_loss": 0.510992169380188,
+  "best_training8_pesq": 2.9877240508794785,
+  "elapsed_seconds": 8.02744574798271,
+  "training_peak_allocated_bytes": null,
+  "original_source_evaluator_and_formal_checkpoint_unchanged": true,
+  "private_audio_features_and_hashes_exported": false
+}

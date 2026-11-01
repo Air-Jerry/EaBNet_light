@@ -1,0 +1,21 @@
+{
+  "status": "passed_cpu_only_not_quality_or_cuda_speed_proof",
+  "prototype_sha256": "8931dfa8d53c96654855427cf00c30f891fa051a279473088f329c8ca917710f",
+  "command": "python -m pytest tests/test_light_fullband_conditioned_subband.py -q",
+  "tests_passed": 3,
+  "elapsed_seconds": 17.15,
+  "nonzero_source_output_and_random_state_preserved": true,
+  "added_parameters_checked": 779316,
+  "finite_actual_training_updates": 2,
+  "nonzero_condition_future_perturbation_and_gradient_checks_passed": true,
+  "arbitrary_chunks_and_batch_partition_consistent": true,
+  "owned_fixed_state_checked": true,
+  "actual_waveform_samples": 96000,
+  "actual_input_hop_samples": 160,
+  "actual_input_hops": 600,
+  "added_fullband_state_bytes_per_stream_fp32": 512,
+  "waveform_check_rtol": 0.0001,
+  "waveform_check_atol": 0.000002,
+  "formal_candidate_registered_or_training_replaced": false,
+  "full600_quality_and_real_cuda_complete_epoch_time_verified": false
+}

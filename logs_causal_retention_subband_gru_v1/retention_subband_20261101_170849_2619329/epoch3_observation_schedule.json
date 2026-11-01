@@ -1,0 +1,14 @@
+{
+  "status": "same_owned_formal_launcher_verified_live_and_observer_started",
+  "launcher_pid": 2619329,
+  "launcher_start_cookie": "147225763",
+  "run": "retention_subband_20261101_170849_2619329",
+  "observe_epoch": 3,
+  "not_before_unix": 1793534325.9803915,
+  "expected_complete_unix": 1793534505.9803915,
+  "basis": "Epoch2 actual complete3422.4902 seconds, including all train/validation/checkpoint/full600 metrics and diagnostic waits",
+  "extra_gpu_polling": false,
+  "training_implementation_or_data_changed": false,
+  "goal_target_pesq": 3.4,
+  "goal_achieved": false
+}

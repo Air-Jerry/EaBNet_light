@@ -42,3 +42,4 @@ train_light_causal_fullband_spatial.py text eol=lf
 run_light_causal_fullband_spatial.sh text eol=lf
 train_light_causal_subband.py text eol=lf
 run_light_causal_subband.sh text eol=lf
+experiments/causal_fullband_conditioned_subband.py text eol=lf

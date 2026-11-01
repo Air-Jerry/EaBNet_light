@@ -1,0 +1,16 @@
+{
+  "status": "completed_epoch_losses_read_from_actual_training_log",
+  "checkpoint_sha256": "760dcc2843abc214f471b5a8e23af423c92a1f350d4d8d1fcd64f1292df96564",
+  "epoch": 2,
+  "train_loss": 0.474875,
+  "val_loss": 0.376362,
+  "learning_rate": 0.0003,
+  "full600_raw_wb_pesq": 2.8854969408114752,
+  "best_completed_epoch": 1,
+  "best_completed_full600_raw_wb_pesq": 2.8973679965734482,
+  "actual_complete_epoch_seconds": 3422.49019575119,
+  "complete_epoch_includes_all_diagnostic_waits": true,
+  "target_pesq": 3.4,
+  "target_reached": false,
+  "next_action": "Keep the same epoch3 active while separately testing full-band temporal conditioning"
+}

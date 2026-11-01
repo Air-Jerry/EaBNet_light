@@ -1,0 +1,22 @@
+{
+  "status": "complete",
+  "source_checkpoint_sha256": "65691adf4dc09a85f589183b204618a9bcdc92bd8fb3f9ee2738aca8edba546c",
+  "num_training_samples": 8,
+  "sample_ids": [
+    "5903",
+    "9643",
+    "14727",
+    "21394",
+    "51958",
+    "54962",
+    "55110",
+    "55595"
+  ],
+  "original_frontend_and_reference_used": true,
+  "causal_base_predictions_cached_on_cpu": true,
+  "trainable_head_parameters": 10946,
+  "original_source_evaluator_audio_and_checkpoint_unchanged": true,
+  "gpu_used": false,
+  "private_audio_features_stay_on_server": true,
+  "cache_not_for_inference_or_formal_training": true
+}

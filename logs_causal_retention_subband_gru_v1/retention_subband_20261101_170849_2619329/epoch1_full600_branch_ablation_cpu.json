@@ -1,0 +1,92 @@
+{
+  "status": "complete",
+  "scope": "All600 same-forward-pass base/full CPU FP32 ablation; not new training or a new goal score",
+  "checkpoint_sha256": "65691adf4dc09a85f589183b204618a9bcdc92bd8fb3f9ee2738aca8edba546c",
+  "metadata_sha256": "8d0b4d229ebc42cd9892e6d0e0d36416007ded01fbc0b753df4bf7e6b734eb02",
+  "completed_samples": 600,
+  "expected_samples": 600,
+  "workers": 4,
+  "threads_per_worker": 2,
+  "cpu_core_pairs": [
+    [
+      16,
+      18
+    ],
+    [
+      20,
+      22
+    ],
+    [
+      17,
+      19
+    ],
+    [
+      21,
+      23
+    ]
+  ],
+  "gpu_used": false,
+  "weights_updated": false,
+  "full_model_prediction_unchanged_by_capture_hook": true,
+  "original_source_evaluator_and_checkpoint_unchanged": true,
+  "overall": {
+    "count": 600,
+    "trained_base_wb_pesq": 2.8981479678551354,
+    "trained_full_wb_pesq": 2.897405653993289,
+    "paired_branch_contribution_mean": -0.0007423138618469238,
+    "paired_branch_contribution_std": 0.00880903599182006,
+    "improved_count": 270,
+    "improved_above_point01": 27,
+    "regressed_above_point01": 47
+  },
+  "by_geometric_direct_path_1000hz_coherence": {
+    "below_point8": {
+      "count": 408,
+      "trained_base_wb_pesq": 3.340393483346584,
+      "trained_full_wb_pesq": 3.339502980896071,
+      "paired_branch_contribution_mean": -0.0008905024505129047,
+      "paired_branch_contribution_std": 0.01039752481206537,
+      "improved_count": 198,
+      "improved_above_point01": 25,
+      "regressed_above_point01": 45
+    },
+    "point8_to_point95": {
+      "count": 85,
+      "trained_base_wb_pesq": 2.4308991530362296,
+      "trained_full_wb_pesq": 2.4303692495121676,
+      "paired_branch_contribution_mean": -0.0005299035240622128,
+      "paired_branch_contribution_std": 0.0036505200054630436,
+      "improved_count": 31,
+      "improved_above_point01": 0,
+      "regressed_above_point01": 1
+    },
+    "atleast_point95": {
+      "count": 107,
+      "trained_base_wb_pesq": 1.5830075841083704,
+      "trained_full_wb_pesq": 1.5826615886153461,
+      "paired_branch_contribution_mean": -0.0003459954930243091,
+      "paired_branch_contribution_std": 0.003470645721415184,
+      "improved_count": 41,
+      "improved_above_point01": 2,
+      "regressed_above_point01": 1
+    }
+  },
+  "formal_full600_gpu_wb_pesq": 2.8973679965734482,
+  "cpu_full_minus_formal_gpu_pesq": 3.765741984063098e-05,
+  "frontend": {
+    "sample_rate": 16000,
+    "n_fft": 512,
+    "hop_length": 160,
+    "win_length": 320,
+    "power": 0.5,
+    "num_mics": 8,
+    "reference_mic": 0
+  },
+  "external_normalization_clipping_or_alignment": false,
+  "target_gain_matching": false,
+  "input_extent": "Complete96000-sample utterances; no crop or padding",
+  "elapsed_seconds": 711.9296968020499,
+  "individual_audio_paths_hashes_waveforms_or_rows_exported": false,
+  "target_pesq": 3.4,
+  "target_reached": false
+}

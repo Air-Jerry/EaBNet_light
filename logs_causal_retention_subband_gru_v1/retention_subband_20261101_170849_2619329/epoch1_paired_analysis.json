@@ -1,0 +1,152 @@
+{
+  "status": "complete",
+  "scope": "Descriptive paired full600 analysis; no causal attribution or independent holdout claim",
+  "source_checkpoint_sha256": "1fb53e2494442c9161c2023b7e8e3615d6fad0c6d2ab82a0a74e622d2d5a1059",
+  "checkpoint_sha256": "65691adf4dc09a85f589183b204618a9bcdc92bd8fb3f9ee2738aca8edba546c",
+  "metadata_sha256": "8d0b4d229ebc42cd9892e6d0e0d36416007ded01fbc0b753df4bf7e6b734eb02",
+  "overall": {
+    "count": 600,
+    "source_pesq_mean": 2.896308812499046,
+    "current_pesq_mean": 2.8973679965734482,
+    "paired_mean_delta": 0.0010591840744018555,
+    "paired_delta_std": 0.15386905475571871,
+    "improved_count": 322,
+    "improved_above_point1": 82,
+    "regressed_above_point1": 69
+  },
+  "by_snr": {
+    "-5.0": {
+      "count": 140,
+      "source_pesq_mean": 2.540205921445574,
+      "current_pesq_mean": 2.542844087736947,
+      "paired_mean_delta": 0.0026381662913731166,
+      "paired_delta_std": 0.12054623030583082,
+      "improved_count": 75,
+      "improved_above_point1": 25,
+      "regressed_above_point1": 24
+    },
+    "-2.0": {
+      "count": 161,
+      "source_pesq_mean": 2.74176609886359,
+      "current_pesq_mean": 2.7445750377193,
+      "paired_mean_delta": 0.002808938855710237,
+      "paired_delta_std": 0.1111453582125834,
+      "improved_count": 86,
+      "improved_above_point1": 19,
+      "regressed_above_point1": 14
+    },
+    "0.0": {
+      "count": 149,
+      "source_pesq_mean": 3.142678744840942,
+      "current_pesq_mean": 3.137013977005978,
+      "paired_mean_delta": -0.005664767834964214,
+      "paired_delta_std": 0.24548679686835168,
+      "improved_count": 81,
+      "improved_above_point1": 19,
+      "regressed_above_point1": 15
+    },
+    "2.0": {
+      "count": 150,
+      "source_pesq_mean": 3.1498198906580606,
+      "current_pesq_mean": 3.1542064134279886,
+      "paired_mean_delta": 0.0043865227699279785,
+      "paired_delta_std": 0.08920374388852102,
+      "improved_count": 80,
+      "improved_above_point1": 19,
+      "regressed_above_point1": 16
+    }
+  },
+  "by_source_quality": {
+    "below2": {
+      "count": 121,
+      "source_pesq_mean": 1.4797289302526426,
+      "current_pesq_mean": 1.5049925579512415,
+      "paired_mean_delta": 0.025263627698598815,
+      "paired_delta_std": 0.05590366563663,
+      "improved_count": 83,
+      "improved_above_point1": 14,
+      "regressed_above_point1": 1
+    },
+    "2to3": {
+      "count": 163,
+      "source_pesq_mean": 2.558563962304519,
+      "current_pesq_mean": 2.5664730269484726,
+      "paired_mean_delta": 0.007909064643953476,
+      "paired_delta_std": 0.12861544841412262,
+      "improved_count": 88,
+      "improved_above_point1": 26,
+      "regressed_above_point1": 16
+    },
+    "atleast3": {
+      "count": 316,
+      "source_pesq_mean": 3.6129498768456374,
+      "current_pesq_mean": 3.601207579238505,
+      "paired_mean_delta": -0.01174229760713215,
+      "paired_delta_std": 0.18657983360588454,
+      "improved_count": 151,
+      "improved_above_point1": 42,
+      "regressed_above_point1": 52
+    }
+  },
+  "source_quality_halves": {
+    "lower": {
+      "count": 300,
+      "source_pesq_mean": 2.148323506116867,
+      "current_pesq_mean": 2.1634927666187287,
+      "paired_mean_delta": 0.015169260501861572,
+      "paired_delta_std": 0.10458838568911075,
+      "improved_count": 181,
+      "improved_above_point1": 41,
+      "regressed_above_point1": 18
+    },
+    "upper": {
+      "count": 300,
+      "source_pesq_mean": 3.6442941188812257,
+      "current_pesq_mean": 3.6312432265281678,
+      "paired_mean_delta": -0.013050892353057862,
+      "paired_delta_std": 0.18977474301973124,
+      "improved_count": 141,
+      "improved_above_point1": 41,
+      "regressed_above_point1": 51
+    }
+  },
+  "by_direct_path_1000hz_coherence": {
+    "below_point8": {
+      "count": 408,
+      "source_pesq_mean": 3.345457665768324,
+      "current_pesq_mean": 3.3394548963097965,
+      "paired_mean_delta": -0.006002769458527658,
+      "paired_delta_std": 0.1771654595206186,
+      "improved_count": 201,
+      "improved_above_point1": 54,
+      "regressed_above_point1": 58
+    },
+    "point8_to_point95": {
+      "count": 85,
+      "source_pesq_mean": 2.420351638513453,
+      "current_pesq_mean": 2.430327607603634,
+      "paired_mean_delta": 0.009975969090181239,
+      "paired_delta_std": 0.10387155175495807,
+      "improved_count": 51,
+      "improved_above_point1": 15,
+      "regressed_above_point1": 8
+    },
+    "atleast_point95": {
+      "count": 107,
+      "source_pesq_mean": 1.5617632765636267,
+      "current_pesq_mean": 1.5826668561061965,
+      "paired_mean_delta": 0.020903579542570026,
+      "paired_delta_std": 0.062122732948776536,
+      "improved_count": 70,
+      "improved_above_point1": 13,
+      "regressed_above_point1": 3
+    }
+  },
+  "coherence_scope": "Geometric direct-path steering approximation for first8 microphones,343m/s; not measured RIR or acoustic condition number",
+  "lower_half_required_mean_gain_if_upper_fixed": 1.0052640068531034,
+  "gpu_used": false,
+  "audio_read_or_modified": false,
+  "individual_audio_paths_hashes_or_rows_exported": false,
+  "objective_pesq": 3.4,
+  "target_reached": false
+}
