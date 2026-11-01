@@ -9,13 +9,14 @@ import torch
 import train_light_causal_fullband as fullband
 from experiments.compiled_training_norm import compiled_training_norms
 from experiments.compiled_training_retention import compiled_training_retention
-from light_candidate_runtime import (SUBBAND_GRU_CANDIDATE, FROZEN_CONDITIONED_CANDIDATE,
+from light_candidate_runtime import (SUBBAND_GRU_CANDIDATE, CONDITIONED_SUBBAND_CANDIDATE, FROZEN_CONDITIONED_CANDIDATE,
     candidate_metadata, read_candidate_checkpoint, select_model_factory)
 
 
 ROOT = Path(__file__).resolve().parent
 WARM_FIELDS = ('frozen_subband_warmstart_checkpoint', 'frozen_subband_warmstart_sha256',
-               'frozen_subband_warmstart_epoch', 'frozen_subband_sample_epoch_offset', 'pmsqe_weight')
+               'frozen_subband_warmstart_epoch', 'frozen_subband_warmstart_candidate',
+               'frozen_subband_sample_epoch_offset', 'pmsqe_weight')
 
 
 def parse_args(argv=None):
@@ -60,8 +61,12 @@ def parse_args(argv=None):
         if not selected.warmstart:raise ValueError('A new subband run requires a trained subband --warmstart')
         source_name = selected.warmstart
     path = Path(source_name).expanduser().resolve()
-    source, _ = read_candidate_checkpoint(path, SUBBAND_GRU_CANDIDATE)
-    offset = source['args'].get('subband_sample_epoch_offset')
+    source, _ = read_candidate_checkpoint(path)
+    source_candidate = source['args']['structure_candidate']
+    offset_key = {SUBBAND_GRU_CANDIDATE:'subband_sample_epoch_offset',
+                  CONDITIONED_SUBBAND_CANDIDATE:'conditioned_subband_sample_epoch_offset'}.get(source_candidate)
+    if offset_key is None:raise ValueError('Use a trained causal subband or conditioned-subband source')
+    offset = source['args'].get(offset_key)
     if (int(source['epoch']) < 1 or source['args']['seed'] != args.seed
             or isinstance(offset, bool) or not isinstance(offset, int) or offset < 0):
         raise ValueError('Use a completed subband checkpoint with matching seed and sampler provenance')
@@ -70,6 +75,7 @@ def parse_args(argv=None):
     args.frozen_subband_warmstart_checkpoint = str(path)
     args.frozen_subband_warmstart_sha256 = causal.quality.sha256_file(path)
     args.frozen_subband_warmstart_epoch = int(source['epoch'])
+    args.frozen_subband_warmstart_candidate = source_candidate
     args.frozen_subband_sample_epoch_offset = offset + int(source['epoch'])
     args.pmsqe_weight = .1
     if existing is not None:
@@ -99,7 +105,8 @@ def main(argv=None):
         target, warm = model.state_dict(), source['model_state_dict']
         assert set(warm) <= set(target)
         extra = set(target)-set(warm)
-        assert len(extra) == 10 and all(name.startswith('fullband_') for name in extra)
+        expected_extra = 10 if settings.frozen_subband_warmstart_candidate == SUBBAND_GRU_CANDIDATE else 0
+        assert len(extra) == expected_extra and all(name.startswith('fullband_') for name in extra)
         for name, value in warm.items():
             assert target[name].shape == value.shape and torch.isfinite(value).all(), name
             target[name] = value

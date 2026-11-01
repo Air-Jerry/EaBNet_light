@@ -6,26 +6,30 @@ import pytest
 import torch
 
 import evaluate_light
-from light_candidate_runtime import (SUBBAND_GRU_CANDIDATE, FROZEN_CONDITIONED_CANDIDATE,
+from light_candidate_runtime import (SUBBAND_GRU_CANDIDATE, CONDITIONED_SUBBAND_CANDIDATE, FROZEN_CONDITIONED_CANDIDATE,
                                      read_candidate_checkpoint)
 from test_light_causal_workflow import argv
 from test_light_causal_tcn_workflow import tcn_case
 from test_light_quality_workflow import run_cli
 
 
-def test_frozen_conditioned_subband_actual_warmstart_and_resume(argv, tmp_path):
+@pytest.mark.parametrize('conditioned_source',[False,True])
+def test_frozen_conditioned_subband_actual_warmstart_and_resume(argv, tmp_path, conditioned_source):
     arguments, _ = tcn_case(argv, tmp_path)
     arguments += ['--grad-accum-steps', '1']
     run_cli('train_light_causal_tcn.py', [*arguments, '--num-epochs', '1'])
     source = Path(arguments[arguments.index('--checkpoint-dir')+1])/'model_epoch_1.pt'
-    for name, entry in (('attention', 'train_light_causal_compiled_attention.py'),
+    chain = [('attention', 'train_light_causal_compiled_attention.py'),
                         ('retention', 'train_light_causal_retention.py'),
-                        ('subband', 'train_light_causal_subband.py')):
+                        ('subband', 'train_light_causal_subband.py')]
+    if conditioned_source:chain.append(('source_conditioned','train_light_causal_conditioned_subband.py'))
+    for name, entry in chain:
         for flag, part in (('--checkpoint-dir', 'checkpoints'), ('--best-dir', 'best'), ('--log-dir', 'logs')):
             arguments[arguments.index(flag)+1] = str(tmp_path/name/part)
         run_cli(entry, [*arguments, '--warmstart', str(source), '--num-epochs', '1'])
         source = Path(arguments[arguments.index('--checkpoint-dir')+1])/'model_epoch_1.pt'
-    original, _ = read_candidate_checkpoint(source, SUBBAND_GRU_CANDIDATE)
+    source_id = CONDITIONED_SUBBAND_CANDIDATE if conditioned_source else SUBBAND_GRU_CANDIDATE
+    original, _ = read_candidate_checkpoint(source, source_id)
     for flag, part in (('--checkpoint-dir', 'checkpoints'), ('--best-dir', 'best'), ('--log-dir', 'logs')):
         arguments[arguments.index(flag)+1] = str(tmp_path/'conditioned'/part)
     entry = 'train_light_causal_frozen_conditioned_subband.py'
@@ -33,11 +37,13 @@ def test_frozen_conditioned_subband_actual_warmstart_and_resume(argv, tmp_path):
     directory = Path(arguments[arguments.index('--checkpoint-dir')+1])
     initial, _ = read_candidate_checkpoint(directory/'model_epoch_0.pt', FROZEN_CONDITIONED_CANDIDATE)
     assert initial['args']['candidate_schema'] == 18
-    assert initial['args']['frozen_subband_sample_epoch_offset'] == original['args']['subband_sample_epoch_offset']+1
+    offset = 'conditioned_subband_sample_epoch_offset' if conditioned_source else 'subband_sample_epoch_offset'
+    assert initial['args']['frozen_subband_sample_epoch_offset'] == original['args'][offset]+1
+    assert initial['args']['frozen_subband_warmstart_candidate'] == source_id
     assert initial['args']['pmsqe_weight'] == .1 and not initial['optimizer_state_dict']['state']
     for key, value in original['model_state_dict'].items():
         torch.testing.assert_close(initial['model_state_dict'][key], value, rtol=0, atol=0)
-    before, _ = evaluate_light.load_model(source, torch.device('cpu'), SUBBAND_GRU_CANDIDATE)
+    before, _ = evaluate_light.load_model(source, torch.device('cpu'), source_id)
     after, _ = evaluate_light.load_model(directory/'model_epoch_0.pt', torch.device('cpu'), FROZEN_CONDITIONED_CANDIDATE)
     assert all(not p.requires_grad for p in after.base.parameters())
     assert all(p.requires_grad for name,p in after.named_parameters() if not name.startswith('base.'))

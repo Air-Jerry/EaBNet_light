@@ -1,0 +1,30 @@
+{
+  "status": "isolated_stage_and_actual_cpu_entry_verified",
+  "stage": "/home/nis/jinrui.yang/EaBNet_light/tmp/frozen_best_stage_20261101",
+  "production_files_unchanged": true,
+  "production_file_count": 97,
+  "user_evaluator_unchanged": true,
+  "overlay_sha256": {
+    "light_candidate_runtime.py": "5f4907356b61baf03aa494f0fd23ad3c8802970ff0d69cc2e802999bc7177900",
+    "run_light_causal.sh": "0e867400b08d1c8faa4d2df34648ffff2e361aef82b248f2fc0ddb57f3ee1c61",
+    "check_light_causal_cuda.py": "9b4d164078b90f20379252507b9ccb8cae27498d211799091c9bddb418fdd34a",
+    "benchmark_light_causal.py": "7914c4eb873a52d5baba74982114a1280e2189cc97d15aed664da405cdeae23e",
+    "evaluate_light_streaming.py": "dd0340a8cef75c878e86070841fdbb5475efd6d45fe3a73722375e2919f00f79",
+    "experiments/causal_frozen_conditioned_subband.py": "0d0094a3bdf3165fe9db11be86f6ed35cc778eb41918dac1a2ff8df46775305d",
+    "train_light_causal_frozen_conditioned_subband.py": "d35020fe08a0e2749372bb2555a2ade22123c23f15203c4ed9045af891be0f41",
+    "run_light_causal_frozen_conditioned_subband.sh": "6263a206a16aa1d2575487b1c00c9ad92c86bed1270f0c5373cba15b70e948de"
+  },
+  "cpu_entry_review": {
+    "status": "passed_actual_linux_cpu_entry_and_saved_source_identity",
+    "candidate_schema": 18,
+    "sampler_offset": 35,
+    "parameters": 3369960,
+    "source_identity_max_abs_error": 0.0,
+    "source_checkpoint_sha256": "1244d9efab485d4e834e93dcb60b1310311c643acfe19049121904a32cf16d08",
+    "batch_size": 2,
+    "grad_accum_steps": 2,
+    "trainable_parameters": 790262,
+    "frozen_causal_parameters": 2579698,
+    "cuda_used": false
+  }
+}

@@ -15,11 +15,12 @@ import torch
     ('causal_fullband_spatial_tcn_v1','causal_fullband_tcn_v1'),
     ('causal_retention_subband_gru_v1','causal_frequency_attention_retention_v1'),
     ('causal_fullband_conditioned_subband_v1','causal_retention_subband_gru_v1'),
-    ('causal_frozen_conditioned_subband_v1','causal_retention_subband_gru_v1')])
+    ('causal_frozen_conditioned_subband_v1','causal_retention_subband_gru_v1'),
+    ('causal_frozen_conditioned_subband_v1','causal_fullband_conditioned_subband_v1')])
 def test_spatial_launcher_binds_warm_source_and_complete_scores(tmp_path,monkeypatch,fault,candidate,source_id):
     old_logs=tmp_path/'source_logs'
     source=tmp_path/'source.pt'
-    torch.save(dict(epoch=1,args=dict(log_dir=str(old_logs))),source)
+    torch.save(dict(epoch=1,args=dict(log_dir=str(old_logs),structure_candidate=source_id)),source)
     report=dict(status='complete',completed_samples=600,expected_samples=600,
         structure_candidate=source_id,candidate_evidence=dict(model_causal=True,future_frames=0),
         candidate_implementation_sha256=dict(model='fixed'),frontend=dict(n_fft=512),

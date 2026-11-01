@@ -77,9 +77,12 @@ if sys.argv[3] in ('causal_fullband_tcn_v1','causal_fullband_spatial_tcn_v1','ca
     if sys.argv[3]=='causal_frozen_conditioned_subband_v1':
         warm=Path(state['args']['frozen_subband_warmstart_checkpoint'])
         assert warm.is_absolute() and hashlib.sha256(warm.read_bytes()).hexdigest()==state['args']['frozen_subband_warmstart_sha256']
-        source,_=read_candidate_checkpoint(warm,'causal_retention_subband_gru_v1')
+        source_id=state['args']['frozen_subband_warmstart_candidate']
+        assert source_id in ('causal_retention_subband_gru_v1','causal_fullband_conditioned_subband_v1')
+        source,_=read_candidate_checkpoint(warm,source_id)
         assert int(source['epoch'])>=1
-        assert source['args']['subband_sample_epoch_offset']+int(source['epoch'])==state['args']['frozen_subband_sample_epoch_offset']
+        offset='subband_sample_epoch_offset' if source_id=='causal_retention_subband_gru_v1' else 'conditioned_subband_sample_epoch_offset'
+        assert source['args'][offset]+int(source['epoch'])==state['args']['frozen_subband_sample_epoch_offset']
         assert state['args']['candidate_evidence']['frozen_backbone_is_causal'] is True
         assert check['frozen_causal_weights_unchanged'] is True
     projection=json.loads((root/'timing_projection.json').read_text())
@@ -193,6 +196,9 @@ if candidate in ('causal_fullband_spatial_tcn_v1','causal_retention_subband_gru_
     expected_source={'causal_retention_subband_gru_v1':'causal_frequency_attention_retention_v1',
         'causal_fullband_conditioned_subband_v1':'causal_retention_subband_gru_v1',
         'causal_frozen_conditioned_subband_v1':'causal_retention_subband_gru_v1'}.get(candidate,'causal_fullband_tcn_v1')
+    if candidate=='causal_frozen_conditioned_subband_v1':
+        expected_source=source['args'].get('structure_candidate')
+        assert expected_source in ('causal_retention_subband_gru_v1','causal_fullband_conditioned_subband_v1')
     assert old['structure_candidate']==expected_source
 else:
     old=json.loads(Path('logs_cbam_metric_v1/metric_20261030_052113_1573812/pesq_selection/model_epoch_0/summary.json').read_text())

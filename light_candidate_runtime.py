@@ -107,9 +107,11 @@ def candidate_metadata(candidate_id):
         metadata.update(structure_candidate=candidate_id, candidate_schema=18,
                         candidate_implementation_sha256=source_hashes(files))
         evidence = metadata['candidate_evidence']
+        evidence.pop('warm_start_candidate')
         evidence.update(candidate_id=candidate_id, frozen_backbone=True, frozen_backbone_is_causal=True,
+            warm_start_candidates=[SUBBAND_GRU_CANDIDATE, CONDITIONED_SUBBAND_CANDIDATE],
             purpose='Train the conditioned speech head with stable FP32 causal backbone predictions',
-            initialization='Complete subband checkpoint; zero full-band condition; fixed causal backbone; fresh head Adam')
+            initialization='Complete causal subband or conditioned checkpoint; preserve existing head; zero absent full-band condition; fixed causal backbone; fresh head Adam')
         evidence['model_config'].update(trainable_parameters=790262, frozen_causal_parameters=2579698,
             frozen_base_mode='FP32 eval during head training and inference')
         return metadata

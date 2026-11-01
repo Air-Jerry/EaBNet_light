@@ -1,0 +1,29 @@
+{
+  "status": "partial",
+  "selection_scope": "Same full600 comparison samples; not an independent final test",
+  "model_is_causal": true,
+  "results": [
+    {
+      "epoch": 0,
+      "pesq": 2.9295976958672205,
+      "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_causal_fullband_conditioned_subband_v1_conditioned_subband_20261101_202705_2670503/model_epoch_0.pt",
+      "checkpoint_sha256": "6fb05dc1734996fc110dc1278cef6e71d31491cf662add597d991f3705fbd7d0"
+    },
+    {
+      "epoch": 1,
+      "pesq": 2.8972804405291877,
+      "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_causal_fullband_conditioned_subband_v1_conditioned_subband_20261101_202705_2670503/model_epoch_1.pt",
+      "checkpoint_sha256": "20c538c98df275880526e9e30d183027ac886d7fd482b6061e20a395f24a708b"
+    },
+    {
+      "epoch": 2,
+      "pesq": 2.94880667646726,
+      "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_causal_fullband_conditioned_subband_v1_conditioned_subband_20261101_202705_2670503/model_epoch_2.pt",
+      "checkpoint_sha256": "1244d9efab485d4e834e93dcb60b1310311c643acfe19049121904a32cf16d08"
+    }
+  ],
+  "best_completed_epoch": 2,
+  "best_completed_pesq": 2.94880667646726,
+  "target_reached": false,
+  "final_full600_waveform_streaming_audit_required": true
+}
