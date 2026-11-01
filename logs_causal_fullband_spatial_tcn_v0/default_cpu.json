@@ -1,0 +1,32 @@
+{
+  "status": "passed",
+  "scope": "Default-size synthetic6s CPU; spectral chunks, not timed waveform pushes or dataset quality",
+  "parameters": 45501488,
+  "global_channels": 512,
+  "temporal_hidden": 1024,
+  "spatial_channels": 64,
+  "spatial_hidden": 96,
+  "spatial_dilations": [
+    1,
+    2,
+    4,
+    8
+  ],
+  "context": 1530,
+  "warm_source": "Synthetic nonzero source readouts, not a trained dataset checkpoint",
+  "warm_output_max_error": 0.0,
+  "optimizer_updates": 2,
+  "all_parameters_gradients_and_adam_finite": true,
+  "spatial_encoder_and_global_condition_gradients_nonzero": true,
+  "losses": [
+    7.836833953857422,
+    7.799421310424805
+  ],
+  "future_perturbation_max_error": 0.0,
+  "full_vs_spectral_chunk_waveform_max_error": 1.862645149230957e-08,
+  "owned_bounded_cache_bytes": 9227520,
+  "elapsed_seconds": 31.515000000130385,
+  "prototype_sha256": "2ddbcbc1fb26cab55eef46340e03101a03a62cf2710a37d7a89f175f4272cce6",
+  "registered_for_production": false,
+  "real_trained_warmstart_cuda_and_full600_quality_unverified": true
+}

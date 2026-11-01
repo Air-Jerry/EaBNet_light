@@ -1,0 +1,26 @@
+{
+  "status": "passed",
+  "scope": "Immutable trained epoch2 source and one fixed real6s pair; CPU numerical/gradient check only",
+  "device": "cpu",
+  "cuda_used": false,
+  "cpu_threads": 2,
+  "nice": 19,
+  "source_checkpoint_sha256": "3f032c25a87246915242380e59fc2dddd001660fa09552afae8122fbf073223d",
+  "source_epoch": 2,
+  "prototype_sha256": "2ddbcbc1fb26cab55eef46340e03101a03a62cf2710a37d7a89f175f4272cce6",
+  "parameters": 45501488,
+  "warm_source_parameters_preserved": true,
+  "warm_output_max_error": 0.0,
+  "optimizer_updates": 2,
+  "losses": [
+    0.9583054184913635,
+    0.8655784726142883
+  ],
+  "all_parameters_gradients_and_adam_finite": true,
+  "spatial_encoder_and_global_condition_gradients_nonzero": true,
+  "production_sources_and_source_checkpoint_unchanged": true,
+  "private_audio_paths_or_content_exported": false,
+  "registered_for_production": false,
+  "real_cuda_and_full600_quality_unverified": true,
+  "elapsed_seconds": 19.266910751815885
+}
