@@ -1,0 +1,104 @@
+{
+  "status": "complete",
+  "structure_candidate": "causal_fullchannel_dualpath_crn_v1",
+  "candidate_implementation_sha256": {
+    "light_causal_spatial_model.py": "b911ac848c86ca6b4a95933ae90d33a200d44f00ccaa8b98dc4b2cb7cf907a14",
+    "light_causal_stream.py": "86c266e39fd89227b99b1b6f46b943cff8b32a17c2c29f01234c3fcd18ebd42d",
+    "third_party/spatialnet/SpatialNet.py": "3baaa7136c893eba9aee9dfcdb40478a5f87f819682286abbec89a5d71d972f6",
+    "third_party/spatialnet/norm.py": "4c42f48a6d34dc82f25462782ba57e84dddfbfebb56b940f73a28b5ec41055cc",
+    "third_party/spatialnet/non_linear.py": "a985a7f81c8ebfbbd408ea753d7e9b81324d523c01afa1faca4285049640e79d",
+    "third_party/spatialnet/linear_group.py": "e6e0403b5dbdd787d511f0de9cef4335aa25ae46feee211554346c0a00cf2a43",
+    "light_causal_fast_model.py": "5d3f8153815e6a202b735ec3705c1f45a667557906bd299728c6cba7a5e126b9",
+    "experiments/causal_gated_multichannel_crn.py": "7419e586d86d37ec3f6514a6a4a9ed0c3e5d3c2c0c8cb962d97b90b1416af605",
+    "experiments/causal_fullchannel_dualpath_crn.py": "2f218a6746780d191d8c36f4e2369420e5157fba89adcedc064e3bd09a698c58"
+  },
+  "candidate_evidence": {
+    "candidate_id": "causal_fullchannel_dualpath_crn_v1",
+    "author_confirmed": false,
+    "exact_reproduction_verified": false,
+    "model_causal": true,
+    "future_frames": 0,
+    "purpose": "Independent full-channel frequency/time LSTM enhancement backbone",
+    "model_config": {
+      "input_features": 24,
+      "microphones": 8,
+      "frequencies": 257,
+      "recurrent_frequencies": 65,
+      "channels": 64,
+      "recurrent_layers": 6,
+      "frequency_hidden": 96,
+      "temporal_hidden": 128,
+      "frequency_recurrence": "Full-channel bidirectional LSTM within the current frame",
+      "temporal_recurrence": "Full-channel unidirectional LSTM with owned h/c states",
+      "parameters": 1783826,
+      "trainable_parameters": 1783826,
+      "frozen_parameters": 0,
+      "cache_bytes_per_stream_fp32": 933376
+    },
+    "initialization": "From scratch; zero output; exactly reference0 mixture",
+    "normalization": "Current-frame channel and frequency/channel LayerNorm; no temporal statistics",
+    "output": "Full257-bin complex8-microphone residual beamforming and compressed RI mapping",
+    "frozen_backbone": false,
+    "external_pretrained_weights": false,
+    "upstream_source_incorporated": false,
+    "reference_audio_used_at_inference": false,
+    "waveform_streaming": "512/160/320,16kHz,power0.5;320-sample buffering plus compute/I-O"
+  },
+  "frontend": {
+    "sample_rate": 16000,
+    "n_fft": 512,
+    "hop_length": 160,
+    "win_length": 320,
+    "power": 0.5,
+    "target_ref_mic": 0
+  },
+  "frontend_protocol": {
+    "window": "periodic Hann",
+    "center": true,
+    "pad_mode": "reflect",
+    "normalized": false,
+    "onesided": true,
+    "waveform_normalization": "none",
+    "compression": "Z * abs(Z).clamp_min(1e-8) ** (power - 1)",
+    "inverse_compression": "piecewise exact inverse including the epsilon region",
+    "mixture_channels": "first 8 channels, original order",
+    "evaluation_extent": "full common-length utterance; no training crop or batch padding",
+    "inference_precision": "float32"
+  },
+  "metric_protocol": {
+    "pesq": "pesq wideband",
+    "estoi": "pystoi extended=True; JSON estoi=fraction, CSV estoi_pct=100*estoi",
+    "stoi": "pystoi extended=False, fraction",
+    "si_snr_db": "zero-mean projection SI-SNR",
+    "si_snr_epsilon": 1e-08,
+    "sdr_db": "mir_eval.separation.bss_eval_sources, single source, 512-tap distortion filter; not SI-SNR",
+    "target_gain_matching": false,
+    "max_level_gain_db": 20.0,
+    "gain_rule": "none",
+    "external_normalization_clipping_or_alignment": false,
+    "length_policy": "truncate mixture and target to common length as in training Dataset; no delay correction",
+    "aggregation": "paired arithmetic mean over every selected utterance; failures abort with no mean"
+  },
+  "num_mics": 8,
+  "completed_samples": 600,
+  "expected_samples": 600,
+  "selected_pairs_sha256": "18233928bdcb499f4e65e3b66a1f8c39387675d09f1621ae6ac94881d7444cfb",
+  "metadata_sha256": "8d0b4d229ebc42cd9892e6d0e0d36416007ded01fbc0b753df4bf7e6b734eb02",
+  "mean": {
+    "enhanced": {
+      "pesq": 1.088074848453204,
+      "stoi": 0.651059299349094,
+      "estoi": 0.36675565316654857,
+      "si_snr_db": -1.2095493796378833,
+      "sdr_db": -1.1495106613214594
+    },
+    "noisy": {
+      "pesq": 1.0880955342451732,
+      "stoi": 0.6510592990906214,
+      "estoi": 0.3667556529781415,
+      "si_snr_db": -1.2095493301340101,
+      "sdr_db": -1.1495106109218791
+    }
+  },
+  "checkpoint_sha256": "93e2ef8eb940376d1de32a39938c9fc222f051feee7283a887ce5f2925aa1da7"
+}

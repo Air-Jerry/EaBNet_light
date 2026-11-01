@@ -37,16 +37,31 @@ SUBBAND_GRU_CANDIDATE = "causal_retention_subband_gru_v1"
 CONDITIONED_SUBBAND_CANDIDATE = "causal_fullband_conditioned_subband_v1"
 FROZEN_CONDITIONED_CANDIDATE = "causal_frozen_conditioned_subband_v1"
 SPATIAL_CONDITIONED_CANDIDATE = "causal_spatial_conditioned_subband_v1"
+GATED_MULTICHANNEL_CANDIDATE = "causal_gated_multichannel_crn_v1"
+FULLCHANNEL_DUALPATH_CANDIDATE = "causal_fullchannel_dualpath_crn_v1"
 IDENTITY_FIELDS = ("sample_rate", "n_fft", "hop_length", "win_length", "power", "target_ref_mic",
                    "channels", "num_mics", "embed_dim", "cd1", "dfsmn_layers", "dfsmn_memory_size",
                    "norm_type", "bf_type", "topo_type", "is_causal")
 
 
 def all_model_candidates():
-    return (*all_reference_candidates(), QUALITY_CANDIDATE, SPATIAL_CANDIDATE, CAUSAL_CANDIDATE, FAST_CANDIDATE, GLOBAL_CANDIDATE, RECURRENT_CANDIDATE, RECURRENT65_CANDIDATE, TCN_CANDIDATE, FOURIER_CANDIDATE, FREQUENCY_ATTENTION_CANDIDATE, POOLED_FREQUENCY_ATTENTION_CANDIDATE, RETENTION_CANDIDATE, FULLBAND_TCN_CANDIDATE, FULLBAND_SPATIAL_CANDIDATE, SUBBAND_GRU_CANDIDATE, CONDITIONED_SUBBAND_CANDIDATE, FROZEN_CONDITIONED_CANDIDATE, SPATIAL_CONDITIONED_CANDIDATE)
+    return (*all_reference_candidates(), QUALITY_CANDIDATE, SPATIAL_CANDIDATE, CAUSAL_CANDIDATE, FAST_CANDIDATE, GLOBAL_CANDIDATE, RECURRENT_CANDIDATE, RECURRENT65_CANDIDATE, TCN_CANDIDATE, FOURIER_CANDIDATE, FREQUENCY_ATTENTION_CANDIDATE, POOLED_FREQUENCY_ATTENTION_CANDIDATE, RETENTION_CANDIDATE, FULLBAND_TCN_CANDIDATE, FULLBAND_SPATIAL_CANDIDATE, SUBBAND_GRU_CANDIDATE, CONDITIONED_SUBBAND_CANDIDATE, FROZEN_CONDITIONED_CANDIDATE, SPATIAL_CONDITIONED_CANDIDATE, GATED_MULTICHANNEL_CANDIDATE, FULLCHANNEL_DUALPATH_CANDIDATE)
 
 
 def build_model_candidate(candidate_id, **model_kwargs):
+    if candidate_id == FULLCHANNEL_DUALPATH_CANDIDATE:
+        from experiments.causal_fullchannel_dualpath_crn import CausalFullChannelDualPathCRN
+        if (model_kwargs.get('c', 64) != 64 or model_kwargs.get('channels', 64) != 64
+                or model_kwargs.get('layers', 6) != 6 or model_kwargs.get('frequency_hidden', 96) != 96
+                or model_kwargs.get('temporal_hidden', 128) != 128 or 'recurrent_layers' in model_kwargs):
+            raise ValueError('Registered full-channel architecture requires64 channels,6 layers,96/128 hidden units')
+        return CausalFullChannelDualPathCRN(**model_kwargs)
+    if candidate_id == GATED_MULTICHANNEL_CANDIDATE:
+        from experiments.causal_gated_multichannel_crn import CausalGatedMultichannelCRN
+        if (model_kwargs.get('c', 64) != 64 or model_kwargs.get('channels', 64) != 64
+                or model_kwargs.get('recurrent_layers', 4) != 4):
+            raise ValueError('Registered gated architecture requires64 channels and4 recurrent layers')
+        return CausalGatedMultichannelCRN(**model_kwargs)
     if candidate_id == SPATIAL_CONDITIONED_CANDIDATE:
         from experiments.causal_spatial_conditioned_subband import CausalSpatialConditionedSubband
         return CausalSpatialConditionedSubband(build_model_candidate(RETENTION_CANDIDATE, **model_kwargs))
@@ -105,6 +120,48 @@ def build_model_candidate(candidate_id, **model_kwargs):
 
 
 def candidate_metadata(candidate_id):
+    if candidate_id == FULLCHANNEL_DUALPATH_CANDIDATE:
+        return dict(structure_candidate=candidate_id, candidate_schema=21,
+            candidate_implementation_sha256=source_hashes((*CAUSAL_IMPLEMENTATION_FILES,
+                'light_causal_fast_model.py', 'experiments/causal_gated_multichannel_crn.py',
+                'experiments/causal_fullchannel_dualpath_crn.py')),
+            candidate_evidence=dict(candidate_id=candidate_id, author_confirmed=False,
+                exact_reproduction_verified=False, model_causal=True, future_frames=0,
+                purpose='Independent full-channel frequency/time LSTM enhancement backbone',
+                model_config=dict(input_features=24, microphones=8, frequencies=257,
+                    recurrent_frequencies=65, channels=64, recurrent_layers=6,
+                    frequency_hidden=96, temporal_hidden=128,
+                    frequency_recurrence='Full-channel bidirectional LSTM within the current frame',
+                    temporal_recurrence='Full-channel unidirectional LSTM with owned h/c states',
+                    parameters=1783826, trainable_parameters=1783826, frozen_parameters=0,
+                    cache_bytes_per_stream_fp32=933376),
+                initialization='From scratch; zero output; exactly reference0 mixture',
+                normalization='Current-frame channel and frequency/channel LayerNorm; no temporal statistics',
+                output='Full257-bin complex8-microphone residual beamforming and compressed RI mapping',
+                frozen_backbone=False, external_pretrained_weights=False, upstream_source_incorporated=False,
+                reference_audio_used_at_inference=False,
+                waveform_streaming='512/160/320,16kHz,power0.5;320-sample buffering plus compute/I-O'))
+    if candidate_id == GATED_MULTICHANNEL_CANDIDATE:
+        return dict(structure_candidate=candidate_id, candidate_schema=20,
+            candidate_implementation_sha256=source_hashes((*CAUSAL_IMPLEMENTATION_FILES,
+                'experiments/causal_gated_multichannel_crn.py')),
+            candidate_evidence=dict(candidate_id=candidate_id, author_confirmed=False,
+                exact_reproduction_verified=False, model_causal=True, future_frames=0,
+                purpose='Independent causal eight-microphone grouped frequency/time recurrent backbone',
+                model_config=dict(input_features=24, microphones=8, frequencies=257,
+                    frequencies_at_recurrent_layers=65, channels=64, recurrent_layers=4,
+                    frequency_recurrence='Bidirectional within this frame only',
+                    temporal_recurrence='Unidirectional with owned fixed-size hidden states',
+                    temporal_gate_dilations=[1,2,5], parameters=405266,
+                    trainable_parameters=405266, frozen_parameters=0,
+                    cache_bytes_per_stream_fp32=600576),
+                initialization='From scratch; zero output; exactly reference0 mixture',
+                normalization='Fixed-statistics trainable affine; current-frame frequency/channel LayerNorm in residual branches',
+                output='Full257-bin complex8-microphone residual beamforming and compressed RI mapping',
+                frozen_backbone=False, external_pretrained_weights=False,
+                upstream_source_incorporated=False, reference_audio_used_at_inference=False,
+                design_evidence='Independently written grouped gates/dual-path adaptation motivated by GTCRN; no quality guarantee',
+                waveform_streaming='512/160/320,16kHz,power0.5;320-sample buffering plus compute/I-O'))
     if candidate_id == SPATIAL_CONDITIONED_CANDIDATE:
         metadata = candidate_metadata(FROZEN_CONDITIONED_CANDIDATE)
         files = (*metadata['candidate_implementation_sha256'], 'experiments/causal_spatial_conditioned_subband.py')

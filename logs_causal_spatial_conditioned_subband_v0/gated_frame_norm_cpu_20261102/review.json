@@ -1,0 +1,14 @@
+{
+  "status": "passed",
+  "scope": "Synthetic CPU normalization diagnostic, no quality evidence",
+  "initialized_trainable_parameters_identical": true,
+  "initial_trainable_parameters_sha256": "78619cffad2e520c99b3272b7d22115e37169f73a739068c0d0fdb8cf297e4f7",
+  "parameters": 405266,
+  "normalization_modules_replaced": 21,
+  "all_gradients_and_adam_finite": true,
+  "causality_in_train_and_eval": true,
+  "nonzero_future_gradients": 0,
+  "reference0_initialization_exact": true,
+  "partitioned_stream_equivalent": true,
+  "formal_goal_achieved": false
+}

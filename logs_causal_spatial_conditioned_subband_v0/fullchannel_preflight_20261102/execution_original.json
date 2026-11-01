@@ -1,0 +1,36 @@
+{
+  "status": "failed",
+  "candidate": "causal_fullchannel_dualpath_crn_v1",
+  "parameters": 1783826,
+  "trainable_parameters": 1783826,
+  "fixed_parameters": 0,
+  "scope": "Real original DataLoader/DDP correctness, speed and complete600 initialization; not trained quality",
+  "first_formal_epoch_quality_gate": {
+    "training_samples": 53600,
+    "validation_samples": 600,
+    "metric_samples": 600,
+    "finite_updates": 6700,
+    "min_gain_over_initial_full600_wb_pesq": 0.2,
+    "max_complete_epoch_seconds": 3600
+  },
+  "formal_goal_achieved": false,
+  "children": [
+    {
+      "phase": "cuda_launch.log",
+      "pid": 2820697,
+      "cookie": "151949662"
+    },
+    {
+      "phase": "streaming_launch.log",
+      "pid": 2821207,
+      "cookie": "151954318"
+    },
+    {
+      "phase": "zero_full600.log",
+      "pid": 2821408,
+      "cookie": "151954781"
+    }
+  ],
+  "error": "AssertionError: Measured complete-epoch projection exceeds one hour",
+  "elapsed_seconds": 268.67560592200607
+}

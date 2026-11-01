@@ -20,6 +20,8 @@ case "$candidate" in
     causal_fullband_conditioned_subband_v1) entry=train_light_causal_conditioned_subband.py; run_prefix=conditioned_subband; learning_rate=0.0003 ;;
     causal_frozen_conditioned_subband_v1) entry=train_light_causal_frozen_conditioned_subband.py; run_prefix=frozen_conditioned; learning_rate=0.001 ;;
     causal_spatial_conditioned_subband_v1) entry=train_light_causal_spatial_conditioned_subband.py; run_prefix=spatial_conditioned; learning_rate=0.001 ;;
+    causal_gated_multichannel_crn_v1) entry=train_light_causal_gated_multichannel.py; run_prefix=gated_multichannel; learning_rate=0.001 ;;
+    causal_fullchannel_dualpath_crn_v1) entry=train_light_causal_fullchannel_dualpath.py; run_prefix=fullchannel_dualpath; learning_rate=0.001 ;;
     *) printf 'Unsupported cold-start causal candidate: %s\n' "$candidate" >&2; exit 2 ;;
 esac
 train_dir="/data/ssd1/jinrui.yang/training_set"
@@ -48,16 +50,18 @@ assert bench['all_hops_below_10ms'],'Investigate startup/live deadlines before f
 assert bench['full_vs_stream_waveform_max_error']<1e-5
 speeds=re.findall(r'\[PERF\]\[train\].*?samples/s\(local/global\)=[\d.]+/([\d.]+)',(root/'cuda_final/training.log').read_text())
 assert speeds and float(speeds[-1])>0
-if sys.argv[3] not in ('causal_retention_subband_gru_v1','causal_fullband_conditioned_subband_v1','causal_frozen_conditioned_subband_v1','causal_spatial_conditioned_subband_v1'):
+if sys.argv[3] not in ('causal_retention_subband_gru_v1','causal_fullband_conditioned_subband_v1','causal_frozen_conditioned_subband_v1','causal_spatial_conditioned_subband_v1','causal_fullchannel_dualpath_crn_v1'):
     assert float(speeds[-1])>=20,'Hot global throughput is insufficient for the one-hour budget'
-if sys.argv[3] in ('causal_fullband_tcn_v1','causal_fullband_spatial_tcn_v1','causal_retention_subband_gru_v1','causal_fullband_conditioned_subband_v1','causal_frozen_conditioned_subband_v1','causal_spatial_conditioned_subband_v1'):
+if sys.argv[3] in ('causal_fullband_tcn_v1','causal_fullband_spatial_tcn_v1','causal_retention_subband_gru_v1','causal_fullband_conditioned_subband_v1','causal_frozen_conditioned_subband_v1','causal_spatial_conditioned_subband_v1','causal_gated_multichannel_crn_v1','causal_fullchannel_dualpath_crn_v1'):
     assert state['args']['causal_training_objective']=='spectral_mrstft_waveform_pmsqe_v1'
     assert state['args']['pmsqe_weight']==.1
     expected_entry={'causal_fullband_spatial_tcn_v1':'train_light_causal_fullband_spatial.py',
         'causal_retention_subband_gru_v1':'train_light_causal_subband.py',
         'causal_fullband_conditioned_subband_v1':'train_light_causal_conditioned_subband.py',
         'causal_frozen_conditioned_subband_v1':'train_light_causal_frozen_conditioned_subband.py',
-        'causal_spatial_conditioned_subband_v1':'train_light_causal_spatial_conditioned_subband.py'}.get(sys.argv[3],'train_light_causal_fullband.py')
+        'causal_spatial_conditioned_subband_v1':'train_light_causal_spatial_conditioned_subband.py',
+        'causal_gated_multichannel_crn_v1':'train_light_causal_gated_multichannel.py',
+        'causal_fullchannel_dualpath_crn_v1':'train_light_causal_fullchannel_dualpath.py'}.get(sys.argv[3],'train_light_causal_fullband.py')
     assert expected_entry in state['args']['causal_training_implementation_sha256']
     if sys.argv[3]=='causal_fullband_spatial_tcn_v1':
         warm=Path(state['args']['spatial_fullband_warmstart_checkpoint'])
@@ -120,6 +124,8 @@ names.update({'run_light_causal_fullband.sh','train_light_causal_fullband.py',
 names.update({'run_light_causal_conditioned_subband.sh','train_light_causal_conditioned_subband.py'})
 names.update({'run_light_causal_frozen_conditioned_subband.sh','train_light_causal_frozen_conditioned_subband.py'})
 names.update({'run_light_causal_spatial_conditioned_subband.sh','train_light_causal_spatial_conditioned_subband.py'})
+names.update({'run_light_causal_gated_multichannel.sh','train_light_causal_gated_multichannel.py'})
+names.update({'run_light_causal_fullchannel_dualpath.sh','train_light_causal_fullchannel_dualpath.py'})
 ancestors=set();cursor=os.getpid()
 while cursor>1:
     ancestors.add(cursor)

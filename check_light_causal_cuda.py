@@ -93,6 +93,17 @@ def run(args):
             del model
         else:
             assert not any(name.startswith('base.') for name in weights)
+        if state.get('args', {}).get('structure_candidate') == 'causal_gated_multichannel_crn_v1':
+            from light_candidate_runtime import build_model_candidate, read_candidate_checkpoint
+            read_candidate_checkpoint(checkpoints / 'model_epoch_2.pt', 'causal_gated_multichannel_crn_v1')
+            model = build_model_candidate('causal_gated_multichannel_crn_v1')
+            model.load_state_dict(weights, strict=True)
+            assert model.is_causal and model.M == 8
+            assert all(parameter.requires_grad for parameter in model.parameters())
+            buffers = list(model.named_buffers())
+            assert len(buffers) == 42 and all(torch.equal(value, zero['model_state_dict'][name]) for name, value in buffers)
+            report.update(fixed_statistics_state_tensors=len(buffers), fixed_statistics_unchanged=True)
+            del model
         assert all(torch.isfinite(value).all() for value in weights.values())
         optimizer = state["optimizer_state_dict"]["state"]
         expected_steps = args.num_samples // 4
@@ -138,7 +149,7 @@ if __name__ == "__main__":
     parser.add_argument("--train-dir", default="/data/ssd1/jinrui.yang/training_set")
     parser.add_argument("--batch-size", type=int, choices=(1, 2, 4), default=1)
     parser.add_argument("--num-samples", type=int, default=32)
-    parser.add_argument("--entry", choices=("train_light_causal.py", "train_light_causal_fast.py", "train_light_causal_global.py", "train_light_causal_recurrent.py", "train_light_causal_recurrent65.py", "train_light_causal_tcn.py", "train_light_causal_fourier.py", "train_light_causal_pmsqe.py", "train_light_causal_frequency_attention.py", "train_light_causal_pooled_attention.py", "train_light_causal_compiled_attention.py", "train_light_causal_retention.py", "train_light_causal_fullband.py", "train_light_causal_fullband_spatial.py", "train_light_causal_subband.py", "train_light_causal_conditioned_subband.py", "train_light_causal_frozen_conditioned_subband.py", "train_light_causal_spatial_conditioned_subband.py"), default="train_light_causal.py")
+    parser.add_argument("--entry", choices=("train_light_causal.py", "train_light_causal_fast.py", "train_light_causal_global.py", "train_light_causal_recurrent.py", "train_light_causal_recurrent65.py", "train_light_causal_tcn.py", "train_light_causal_fourier.py", "train_light_causal_pmsqe.py", "train_light_causal_frequency_attention.py", "train_light_causal_pooled_attention.py", "train_light_causal_compiled_attention.py", "train_light_causal_retention.py", "train_light_causal_fullband.py", "train_light_causal_fullband_spatial.py", "train_light_causal_subband.py", "train_light_causal_conditioned_subband.py", "train_light_causal_frozen_conditioned_subband.py", "train_light_causal_spatial_conditioned_subband.py", "train_light_causal_gated_multichannel.py", "train_light_causal_fullchannel_dualpath.py"), default="train_light_causal.py")
     parser.add_argument('--frequency-fourier', choices=('yes','no'), default='no')
     parser.add_argument("--warmstart")
     parser.add_argument("--output-dir", required=True)

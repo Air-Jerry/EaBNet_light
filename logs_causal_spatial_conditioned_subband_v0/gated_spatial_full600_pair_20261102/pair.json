@@ -1,0 +1,58 @@
+{
+  "status": "complete",
+  "scope": "Matched256 training records and full600 comparison; not formal training",
+  "gpu_indices": [
+    0,
+    1
+  ],
+  "children": [
+    {
+      "mode": "control",
+      "pid": 2807106,
+      "cookie": "151631841"
+    },
+    {
+      "mode": "spatial",
+      "pid": 2807107,
+      "cookie": "151631841"
+    }
+  ],
+  "exit_codes": {
+    "control": 0,
+    "spatial": 0
+  },
+  "results": {
+    "control": {
+      "full600_wb_pesq": 1.1142134388287863,
+      "last20_loss": 0.9433771222829819,
+      "warm_update_seconds": 0.3616334107282455,
+      "all_hops_below_10ms": true
+    },
+    "spatial": {
+      "full600_wb_pesq": 1.1207864610354106,
+      "last20_loss": 0.9283403366804123,
+      "warm_update_seconds": 0.4135537012848848,
+      "all_hops_below_10ms": true
+    }
+  },
+  "paired_spatial_minus_control": 0.006573022206624257,
+  "gpu_training_observations": [
+    {
+      "index": 0,
+      "samples": 38,
+      "mean_utilization_pct": 92.36842105263158,
+      "peak_memory_mib": 5829.0
+    },
+    {
+      "index": 1,
+      "samples": 43,
+      "mean_utilization_pct": 86.95348837209302,
+      "peak_memory_mib": 5833.0
+    }
+  ],
+  "matched_shared_initial_parameters_records_crops_and_updates": true,
+  "formal_goal_achieved": false,
+  "all_owned_children_terminal": true,
+  "production_sources_unchanged": true,
+  "elapsed_seconds": 437.10287879314274
+}

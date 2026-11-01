@@ -1,0 +1,67 @@
+{
+  "status": "complete",
+  "scope": "Two-update complete-model runtime and private teacher cache; not quality improvement or formal training",
+  "source_checkpoint_sha256": "21705e5325fb244e4243602d6f8cf02d71db1e5a3c939d4b86214358e8aa69b3",
+  "prototype_sha256": "0894fd22952a6e5c20b7a17116e5d05ddf9f3ebaafe9324bb8a7ba2d1c587ef7",
+  "gpu": 0,
+  "cpu_affinity": [
+    12,
+    14
+  ],
+  "formal_goal_achieved": false,
+  "private_features_audio_and_hashes_exported": false,
+  "runtime": [
+    {
+      "taps": 1,
+      "hops": 600,
+      "mean_ms": 8.209308664469669,
+      "p99_ms": 8.520215747412294,
+      "max_ms": 8.715349016711116,
+      "all_hops_below_10ms": true,
+      "model_cache_bytes": 6720400,
+      "future_perturbation_max_error": 2.384185791015625e-07,
+      "full_vs_stream_waveform_max_error": 7.003545761108398e-07,
+      "complete_teacher_included": true,
+      "nonzero_two_update_head": true,
+      "warmup_state_discarded": true
+    },
+    {
+      "taps": 4,
+      "hops": 600,
+      "mean_ms": 8.370298880618066,
+      "p99_ms": 8.482492512557656,
+      "max_ms": 8.594935992732644,
+      "all_hops_below_10ms": true,
+      "model_cache_bytes": 6769744,
+      "future_perturbation_max_error": 2.384185791015625e-07,
+      "full_vs_stream_waveform_max_error": 6.854534149169922e-07,
+      "complete_teacher_included": true,
+      "nonzero_two_update_head": true,
+      "warmup_state_discarded": true
+    }
+  ],
+  "cache": {
+    "status": "complete",
+    "scope": "Private fixed causal teacher estimates on256 training and complete600 comparison records",
+    "teacher_checkpoint_sha256": "21705e5325fb244e4243602d6f8cf02d71db1e5a3c939d4b86214358e8aa69b3",
+    "base_cache_checkpoint_sha256": "0d82b5c8a2287e85a9ca02a5c3137fb0e747d033eb4b3c224eebe5ad7e998774",
+    "all267_base_states_identical": true,
+    "training_samples": 256,
+    "validation_samples": 600,
+    "full600_wb_pesq": 2.9646163938442864,
+    "original_source_full600_wb_pesq": 2.964756427804629,
+    "cache_minus_original_pesq": -0.0001400339603425671,
+    "direct_model_max_errors": [
+      0.00010192394256591797,
+      0.0002719312906265259,
+      0.00041159335523843765
+    ],
+    "dtype": "float32",
+    "private_cache_bytes": 4231875672,
+    "source_evaluator_metadata_and_audio_unchanged": true,
+    "comparison_records_used_for_updates": false,
+    "prototype_sha256": "0894fd22952a6e5c20b7a17116e5d05ddf9f3ebaafe9324bb8a7ba2d1c587ef7",
+    "formal_goal_achieved": false
+  },
+  "elapsed_seconds": 113.44585588085465
+}

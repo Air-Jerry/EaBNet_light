@@ -1,0 +1,41 @@
+{
+  "status": "complete",
+  "scope": "Matched8 training records only; not full600 quality",
+  "gpu_indices": [
+    0,
+    1
+  ],
+  "children": [
+    {
+      "mode": "fixed_affine",
+      "pid": 2802546,
+      "cookie": "151529284"
+    },
+    {
+      "mode": "frame_channel_norm",
+      "pid": 2802547,
+      "cookie": "151529284"
+    }
+  ],
+  "exit_codes": {
+    "fixed_affine": 0,
+    "frame_channel_norm": 0
+  },
+  "results": {
+    "fixed_affine": {
+      "train8_pesq": 2.2354496121406555,
+      "last20_loss": 0.5861755430698394,
+      "all_hops_below_10ms": true
+    },
+    "frame_channel_norm": {
+      "train8_pesq": 2.5084964632987976,
+      "last20_loss": 0.5242175191640854,
+      "all_hops_below_10ms": true
+    }
+  },
+  "matched_initial_parameters_records_crops_and_updates": true,
+  "formal_goal_achieved": false,
+  "all_owned_children_terminal": true,
+  "production_sources_unchanged": true,
+  "elapsed_seconds": 316.9546612710692
+}

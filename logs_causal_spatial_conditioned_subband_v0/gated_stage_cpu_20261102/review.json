@@ -1,0 +1,21 @@
+{
+  "status": "passed_actual_linux_cpu_entry_and_initialization",
+  "candidate_schema": 20,
+  "parameters": 405266,
+  "trainable_parameters": 405266,
+  "fixed_parameters": 0,
+  "reference0_initialization_max_error": 0.0,
+  "prior23_candidate_identity_states_unchanged": true,
+  "prior_available_identities": 22,
+  "prior_unavailable_identities": {
+    "cbam_spatial_refiner_v1": {
+      "available": false,
+      "missing_source": "light_spatial_model.py"
+    }
+  },
+  "cuda_used": false,
+  "external_pretrained_weights": false,
+  "batch_size": 4,
+  "grad_accum_steps": 1,
+  "formal_quality_and_runtime_unverified": true
+}

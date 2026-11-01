@@ -1,0 +1,8 @@
+{
+  "status": "passed",
+  "exact_stop_body_exercised": true,
+  "owned_disposable_parent_and_child_terminal": true,
+  "unrelated_same_directory_session_untouched": true,
+  "real_training_signals": 0,
+  "gpu_used": false
+}

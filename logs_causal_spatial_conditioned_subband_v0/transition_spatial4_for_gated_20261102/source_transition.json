@@ -1,0 +1,632 @@
+{
+  "next_model_uses_retained_weights": false,
+  "retained_best_pesq": 2.964756427804629,
+  "new_model_prototype_sha256": "7419e586d86d37ec3f6514a6a4a9ed0c3e5d3c2c0c8cb962d97b90b1416af605",
+  "status": "old_spatial_terminal_all_completed_epochs_preserved",
+  "completed_epoch_preserved": 4,
+  "all_completed_checkpoints_preserved": true,
+  "old_root_pid": 2750523,
+  "old_root_cookie": "150329860",
+  "full600_scores": [
+    {
+      "epoch": 0,
+      "pesq": 2.9588393249114353,
+      "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_causal_spatial_conditioned_subband_v1_spatial_conditioned_20261102_014610_2750523/model_epoch_0.pt",
+      "checkpoint_sha256": "da604ecc8e433b60f4e80594b77ce595ab8dde32c46125c3ae10bebfa7baf9d1"
+    },
+    {
+      "epoch": 1,
+      "pesq": 2.941650945742925,
+      "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_causal_spatial_conditioned_subband_v1_spatial_conditioned_20261102_014610_2750523/model_epoch_1.pt",
+      "checkpoint_sha256": "08f9fa2f13e4e5340a8e6a09803e0e3d61064c415cd10004094868d4575c4333"
+    },
+    {
+      "epoch": 2,
+      "pesq": 2.9589011190334955,
+      "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_causal_spatial_conditioned_subband_v1_spatial_conditioned_20261102_014610_2750523/model_epoch_2.pt",
+      "checkpoint_sha256": "2392ea165f292dcdfec98a7801fc18cda6ac7db346092c6c8cc0f98f6d2c2bde"
+    },
+    {
+      "epoch": 3,
+      "pesq": 2.964756427804629,
+      "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_causal_spatial_conditioned_subband_v1_spatial_conditioned_20261102_014610_2750523/model_epoch_3.pt",
+      "checkpoint_sha256": "21705e5325fb244e4243602d6f8cf02d71db1e5a3c939d4b86214358e8aa69b3"
+    },
+    {
+      "epoch": 4,
+      "pesq": 2.960077912012736,
+      "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_causal_spatial_conditioned_subband_v1_spatial_conditioned_20261102_014610_2750523/model_epoch_4.pt",
+      "checkpoint_sha256": "d88b50ba83c445a633a89ba4003f0c81d58ea6825882176931f0675eeaf56cdd"
+    }
+  ],
+  "retained_best_checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_causal_spatial_conditioned_subband_v1_spatial_conditioned_20261102_014610_2750523/model_epoch_3.pt",
+  "retained_best_checkpoint_sha256": "21705e5325fb244e4243602d6f8cf02d71db1e5a3c939d4b86214358e8aa69b3",
+  "retained_best_full600_pesq": 2.964756427804629,
+  "stopped_processes": [
+    {
+      "pid": 2750523,
+      "state": "T",
+      "ppid": 1,
+      "sid": 2750523,
+      "cookie": "150329860",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light"
+    },
+    {
+      "pid": 2750562,
+      "state": "S",
+      "ppid": 2750523,
+      "sid": 2750523,
+      "cookie": "150330079",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light"
+    },
+    {
+      "pid": 2799355,
+      "state": "S",
+      "ppid": 2750523,
+      "sid": 2750523,
+      "cookie": "151464200",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light"
+    },
+    {
+      "pid": 2799356,
+      "state": "S",
+      "ppid": 2750523,
+      "sid": 2750523,
+      "cookie": "151464200",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light"
+    },
+    {
+      "pid": 2799357,
+      "state": "S",
+      "ppid": 2799355,
+      "sid": 2750523,
+      "cookie": "151464200",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light"
+    },
+    {
+      "pid": 2799360,
+      "state": "R",
+      "ppid": 2799357,
+      "sid": 2799360,
+      "cookie": "151464278",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light"
+    },
+    {
+      "pid": 2799361,
+      "state": "R",
+      "ppid": 2799357,
+      "sid": 2799361,
+      "cookie": "151464278",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light"
+    },
+    {
+      "pid": 2799442,
+      "state": "S",
+      "ppid": 2799360,
+      "sid": 2799360,
+      "cookie": "151465047",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light"
+    },
+    {
+      "pid": 2799443,
+      "state": "S",
+      "ppid": 2799361,
+      "sid": 2799361,
+      "cookie": "151465047",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light"
+    },
+    {
+      "pid": 2799446,
+      "state": "S",
+      "ppid": 2799360,
+      "sid": 2799360,
+      "cookie": "151465048",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light"
+    },
+    {
+      "pid": 2799447,
+      "state": "S",
+      "ppid": 2799361,
+      "sid": 2799361,
+      "cookie": "151465048",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light"
+    },
+    {
+      "pid": 2799450,
+      "state": "S",
+      "ppid": 2799360,
+      "sid": 2799360,
+      "cookie": "151465049",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light"
+    },
+    {
+      "pid": 2799451,
+      "state": "S",
+      "ppid": 2799361,
+      "sid": 2799361,
+      "cookie": "151465049",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light"
+    },
+    {
+      "pid": 2799454,
+      "state": "S",
+      "ppid": 2799360,
+      "sid": 2799360,
+      "cookie": "151465049",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light"
+    },
+    {
+      "pid": 2799456,
+      "state": "S",
+      "ppid": 2799361,
+      "sid": 2799361,
+      "cookie": "151465049",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light"
+    },
+    {
+      "pid": 2799484,
+      "state": "S",
+      "ppid": 2799361,
+      "sid": 2799361,
+      "cookie": "151465281",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light"
+    },
+    {
+      "pid": 2799485,
+      "state": "S",
+      "ppid": 2799360,
+      "sid": 2799360,
+      "cookie": "151465281",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light"
+    },
+    {
+      "pid": 2799512,
+      "state": "S",
+      "ppid": 2799484,
+      "sid": 2799361,
+      "cookie": "151465436",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light"
+    },
+    {
+      "pid": 2799513,
+      "state": "S",
+      "ppid": 2799485,
+      "sid": 2799360,
+      "cookie": "151465436",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light"
+    },
+    {
+      "pid": 2799516,
+      "state": "S",
+      "ppid": 2799484,
+      "sid": 2799361,
+      "cookie": "151465436",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light"
+    },
+    {
+      "pid": 2799517,
+      "state": "S",
+      "ppid": 2799485,
+      "sid": 2799360,
+      "cookie": "151465436",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light"
+    },
+    {
+      "pid": 2799520,
+      "state": "S",
+      "ppid": 2799484,
+      "sid": 2799361,
+      "cookie": "151465436",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light"
+    },
+    {
+      "pid": 2799521,
+      "state": "S",
+      "ppid": 2799485,
+      "sid": 2799360,
+      "cookie": "151465436",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light"
+    },
+    {
+      "pid": 2799524,
+      "state": "S",
+      "ppid": 2799484,
+      "sid": 2799361,
+      "cookie": "151465437",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light"
+    },
+    {
+      "pid": 2799525,
+      "state": "S",
+      "ppid": 2799485,
+      "sid": 2799360,
+      "cookie": "151465437",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light"
+    },
+    {
+      "pid": 2799528,
+      "state": "S",
+      "ppid": 2799485,
+      "sid": 2799360,
+      "cookie": "151465437",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light"
+    },
+    {
+      "pid": 2799529,
+      "state": "S",
+      "ppid": 2799484,
+      "sid": 2799361,
+      "cookie": "151465437",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light"
+    },
+    {
+      "pid": 2799532,
+      "state": "S",
+      "ppid": 2799485,
+      "sid": 2799360,
+      "cookie": "151465437",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light"
+    },
+    {
+      "pid": 2799533,
+      "state": "S",
+      "ppid": 2799484,
+      "sid": 2799361,
+      "cookie": "151465437",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light"
+    },
+    {
+      "pid": 2799536,
+      "state": "S",
+      "ppid": 2799484,
+      "sid": 2799361,
+      "cookie": "151465437",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light"
+    },
+    {
+      "pid": 2799537,
+      "state": "S",
+      "ppid": 2799485,
+      "sid": 2799360,
+      "cookie": "151465437",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light"
+    },
+    {
+      "pid": 2799540,
+      "state": "S",
+      "ppid": 2799484,
+      "sid": 2799361,
+      "cookie": "151465437",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light"
+    },
+    {
+      "pid": 2799541,
+      "state": "S",
+      "ppid": 2799485,
+      "sid": 2799360,
+      "cookie": "151465437",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light"
+    },
+    {
+      "pid": 2799544,
+      "state": "S",
+      "ppid": 2799484,
+      "sid": 2799361,
+      "cookie": "151465437",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light"
+    },
+    {
+      "pid": 2799545,
+      "state": "S",
+      "ppid": 2799485,
+      "sid": 2799360,
+      "cookie": "151465437",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light"
+    },
+    {
+      "pid": 2799548,
+      "state": "S",
+      "ppid": 2799484,
+      "sid": 2799361,
+      "cookie": "151465438",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light"
+    },
+    {
+      "pid": 2799549,
+      "state": "S",
+      "ppid": 2799485,
+      "sid": 2799360,
+      "cookie": "151465438",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light"
+    },
+    {
+      "pid": 2799552,
+      "state": "S",
+      "ppid": 2799485,
+      "sid": 2799360,
+      "cookie": "151465438",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light"
+    },
+    {
+      "pid": 2799553,
+      "state": "S",
+      "ppid": 2799484,
+      "sid": 2799361,
+      "cookie": "151465438",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light"
+    },
+    {
+      "pid": 2799556,
+      "state": "S",
+      "ppid": 2799485,
+      "sid": 2799360,
+      "cookie": "151465438",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light"
+    },
+    {
+      "pid": 2799557,
+      "state": "S",
+      "ppid": 2799484,
+      "sid": 2799361,
+      "cookie": "151465438",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light"
+    },
+    {
+      "pid": 2799560,
+      "state": "S",
+      "ppid": 2799484,
+      "sid": 2799361,
+      "cookie": "151465438",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light"
+    },
+    {
+      "pid": 2799561,
+      "state": "S",
+      "ppid": 2799485,
+      "sid": 2799360,
+      "cookie": "151465438",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light"
+    },
+    {
+      "pid": 2799564,
+      "state": "S",
+      "ppid": 2799484,
+      "sid": 2799361,
+      "cookie": "151465438",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light"
+    },
+    {
+      "pid": 2799565,
+      "state": "S",
+      "ppid": 2799485,
+      "sid": 2799360,
+      "cookie": "151465438",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light"
+    },
+    {
+      "pid": 2799568,
+      "state": "S",
+      "ppid": 2799484,
+      "sid": 2799361,
+      "cookie": "151465438",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light"
+    },
+    {
+      "pid": 2799569,
+      "state": "S",
+      "ppid": 2799485,
+      "sid": 2799360,
+      "cookie": "151465438",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light"
+    },
+    {
+      "pid": 2799572,
+      "state": "S",
+      "ppid": 2799484,
+      "sid": 2799361,
+      "cookie": "151465438",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light"
+    },
+    {
+      "pid": 2799573,
+      "state": "S",
+      "ppid": 2799485,
+      "sid": 2799360,
+      "cookie": "151465438",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light"
+    },
+    {
+      "pid": 2799576,
+      "state": "S",
+      "ppid": 2799484,
+      "sid": 2799361,
+      "cookie": "151465439",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light"
+    },
+    {
+      "pid": 2799577,
+      "state": "S",
+      "ppid": 2799485,
+      "sid": 2799360,
+      "cookie": "151465439",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light"
+    },
+    {
+      "pid": 2799580,
+      "state": "S",
+      "ppid": 2799484,
+      "sid": 2799361,
+      "cookie": "151465439",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light"
+    },
+    {
+      "pid": 2799581,
+      "state": "S",
+      "ppid": 2799485,
+      "sid": 2799360,
+      "cookie": "151465439",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light"
+    },
+    {
+      "pid": 2799584,
+      "state": "S",
+      "ppid": 2799484,
+      "sid": 2799361,
+      "cookie": "151465439",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light"
+    },
+    {
+      "pid": 2799585,
+      "state": "S",
+      "ppid": 2799485,
+      "sid": 2799360,
+      "cookie": "151465439",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light"
+    },
+    {
+      "pid": 2799588,
+      "state": "S",
+      "ppid": 2799484,
+      "sid": 2799361,
+      "cookie": "151465439",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light"
+    },
+    {
+      "pid": 2799589,
+      "state": "S",
+      "ppid": 2799485,
+      "sid": 2799360,
+      "cookie": "151465439",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light"
+    },
+    {
+      "pid": 2799592,
+      "state": "S",
+      "ppid": 2799484,
+      "sid": 2799361,
+      "cookie": "151465439",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light"
+    },
+    {
+      "pid": 2799593,
+      "state": "S",
+      "ppid": 2799485,
+      "sid": 2799360,
+      "cookie": "151465439",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light"
+    },
+    {
+      "pid": 2799596,
+      "state": "S",
+      "ppid": 2799484,
+      "sid": 2799361,
+      "cookie": "151465439",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light"
+    },
+    {
+      "pid": 2799597,
+      "state": "S",
+      "ppid": 2799485,
+      "sid": 2799360,
+      "cookie": "151465439",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light"
+    },
+    {
+      "pid": 2799600,
+      "state": "S",
+      "ppid": 2799484,
+      "sid": 2799361,
+      "cookie": "151465440",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light"
+    },
+    {
+      "pid": 2799601,
+      "state": "S",
+      "ppid": 2799485,
+      "sid": 2799360,
+      "cookie": "151465440",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light"
+    },
+    {
+      "pid": 2799604,
+      "state": "S",
+      "ppid": 2799484,
+      "sid": 2799361,
+      "cookie": "151465440",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light"
+    },
+    {
+      "pid": 2799605,
+      "state": "S",
+      "ppid": 2799485,
+      "sid": 2799360,
+      "cookie": "151465440",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light"
+    }
+  ]
+}

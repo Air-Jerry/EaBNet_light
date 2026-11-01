@@ -1,0 +1,26 @@
+{
+  "status": "passed_staged_dual_cuda_streaming_and_full600_initialization",
+  "candidate": "causal_fullchannel_dualpath_crn_v1",
+  "parameters": 1783826,
+  "trainable_parameters": 1783826,
+  "fixed_parameters": 0,
+  "cuda_adam_updates": 64,
+  "all_weights_and_adam_finite": true,
+  "initial_full600_wb_pesq": 1.088074848453204,
+  "projected_complete_epoch_seconds": 3156.169684447663,
+  "full600_evaluation_seconds": 217.46282980497926,
+  "original_failed_execution_preserved": true,
+  "original_execution_sha256": "ce5ddac13b2ec0dccff5321a6c6547cd748ef367fc7f166c2740c6844d854fe3",
+  "additional_training_or_metric_runs": 0,
+  "extra_hot_rate20_heuristic_replaced_by_actual_complete_epoch_budget": true,
+  "first_formal_epoch_quality_gate": {
+    "training_samples": 53600,
+    "validation_samples": 600,
+    "metric_samples": 600,
+    "finite_updates": 6700,
+    "min_gain_over_initial_full600_wb_pesq": 0.2,
+    "max_complete_epoch_seconds": 3600
+  },
+  "formal_training_quality_and_actual_epoch_time_unverified": true,
+  "formal_goal_achieved": false
+}

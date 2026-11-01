@@ -1,0 +1,62 @@
+{
+  "status": "complete_quality_gate_rejected",
+  "scope": "Recover only missing trained512-update runtime; no training or metric recomputation",
+  "original_pair_sha256": "efe5738cbeb6ca34d92e91f4ed1bc40619594188e665b1471346adf2144b66ba",
+  "original_failure": "Missing csv import after both complete600 evaluations",
+  "additional_optimizer_updates": 0,
+  "quality_scores_modified": false,
+  "formal_goal_achieved": false,
+  "results": {
+    "1": {
+      "full600_wb_pesq": 2.965381454229355,
+      "gain_over_initial": 0.0007650603850684057,
+      "optimizer_updates": 512,
+      "validation_samples": 600,
+      "all_trainable_gradients_and_adam_finite": true,
+      "runtime": {
+        "hops": 600,
+        "mean_ms": 8.27155917727699,
+        "p99_ms": 8.533249599859118,
+        "max_ms": 8.859388995915651,
+        "all_hops_below_10ms": true,
+        "future_perturbation_max_error": 4.470348358154297e-08,
+        "full_vs_stream_waveform_max_error": 6.910413503646851e-07
+      },
+      "advancement_gate_passed": false
+    },
+    "4": {
+      "full600_wb_pesq": 2.960652135411898,
+      "gain_over_initial": -0.003964258432388235,
+      "optimizer_updates": 512,
+      "validation_samples": 600,
+      "all_trainable_gradients_and_adam_finite": true,
+      "runtime": {
+        "hops": 600,
+        "mean_ms": 8.306222697331881,
+        "p99_ms": 8.37032956071198,
+        "max_ms": 8.507595164701343,
+        "all_hops_below_10ms": true,
+        "future_perturbation_max_error": 5.960464477539063e-08,
+        "full_vs_stream_waveform_max_error": 6.780028343200684e-07
+      },
+      "advancement_gate_passed": false
+    }
+  },
+  "original_failure_reports_preserved": true,
+  "production_evaluator_and_checkpoint_unchanged": true,
+  "gpu_training_observations": [
+    {
+      "index": 0,
+      "samples": 45,
+      "mean_utilization_pct": 93.11111111111111,
+      "peak_memory_mib": 5909.0
+    },
+    {
+      "index": 1,
+      "samples": 49,
+      "mean_utilization_pct": 92.95918367346938,
+      "peak_memory_mib": 6231.0
+    }
+  ],
+  "elapsed_seconds": 14.948488000081852
+}

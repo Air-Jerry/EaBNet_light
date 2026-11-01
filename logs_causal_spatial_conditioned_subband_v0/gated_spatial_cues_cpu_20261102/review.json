@@ -1,0 +1,16 @@
+{
+  "status": "passed",
+  "scope": "Synthetic CPU spatial-feature and causal normalization checks",
+  "shared_initial_weights_sha256": "78619cffad2e520c99b3272b7d22115e37169f73a739068c0d0fdb8cf297e4f7",
+  "shared_weights_identical": true,
+  "new_input_columns_zero": true,
+  "control_parameters": 405266,
+  "spatial_parameters": 411986,
+  "features": 45,
+  "ipd_and_level_ratio_equations_verified": true,
+  "zero_input_finite": true,
+  "train_and_eval_future_gradients_zero": true,
+  "nonzero_spatial_projection_gradient": true,
+  "partition_equivalence": true,
+  "formal_goal_achieved": false
+}
