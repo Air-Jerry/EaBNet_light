@@ -164,9 +164,65 @@ PY_WARM
     warm_args=(--warmstart "$warm")
 fi
 run="${run_prefix}_$(date +%Y%m%d_%H%M%S)_$$"
+if [[ -n "${CAUSAL_RESUME_RUN:-}" ]]; then
+    [[ "$candidate" == causal_fullchannel_dualpath_crn_v1 ]] || { printf 'Resume is verified for the full-channel candidate only.\n' >&2; exit 2; }
+    run="$(basename -- "$CAUSAL_RESUME_RUN")"
+    [[ "$run" == fullchannel_dualpath_* && -d "./logs_${candidate}/$run" ]] || { printf 'Invalid existing full-channel run.\n' >&2; exit 2; }
+fi
 checkpoints="./checkpoints_${candidate}_${run}"
 best="./bestmodels_${candidate}_${run}"
 logs="./logs_${candidate}/${run}"
+if [[ -n "${CAUSAL_RESUME_RUN:-}" ]]; then
+    resume_settings=$("$train_py" - "$logs" "$checkpoints" "$best" "$candidate" "$train_dir" "$val_dir" <<'PY_RESUME'
+import hashlib,json,math,sys,time,torch
+from pathlib import Path
+from audit_light_final import require_protocol
+from light_candidate_runtime import read_candidate_checkpoint
+torch.set_num_threads(2)
+root,checkpoints,best=map(lambda value:Path(value).resolve(),sys.argv[1:4])
+state,_=read_candidate_checkpoint(checkpoints/'checkpoint_latest.pt',sys.argv[4])
+epoch=int(state['epoch']);assert 1<=epoch<30 and state['args']['candidate_schema']==21
+for key,path in (('log_dir',root),('checkpoint_dir',checkpoints),('best_dir',best),('train_dir',Path(sys.argv[5]).resolve()),('val_dir',Path(sys.argv[6]).resolve())):
+    assert Path(state['args'][key]).resolve()==path,key
+assert state['args']['parallel_mode']=='ddp' and state['args']['batch_size']*state['args']['grad_accum_steps']*2==8
+for name,digest in state['args']['causal_training_implementation_sha256'].items():
+    assert hashlib.sha256(Path(name).read_bytes()).hexdigest()==digest,name
+timings=[json.loads(line) for line in (root/'epoch_timing.jsonl').read_text().splitlines() if line.strip()]
+timing=next(row for row in timings if row['epoch']==epoch)
+assert (timing['status'],timing['training_samples'],timing['validation_samples'],timing['full_metric_samples'],timing['optimizer_updates_this_epoch'],timing['global_batch_size'])==('complete',53600,600,600,6700,8)
+assert math.isfinite(timing['total_seconds']) and 0<timing['total_seconds']<=3600
+baseline=json.loads((root/'pesq_selection/model_epoch_0/summary.json').read_text())
+summary=json.loads((root/f'pesq_selection/model_epoch_{epoch}/summary.json').read_text())
+require_protocol(baseline);require_protocol(summary)
+assert baseline['structure_candidate']==summary['structure_candidate']==sys.argv[4]
+for key in ('frontend','frontend_protocol','num_mics','selected_pairs_sha256','metadata_sha256','metric_protocol','candidate_implementation_sha256','candidate_evidence'):
+    assert summary[key]==baseline[key],key
+assert all(math.isfinite(value) for metrics in summary['mean'].values() for value in metrics.values())
+for name,value in baseline['mean']['noisy'].items():assert abs(summary['mean']['noisy'][name]-value)<1e-9
+score=summary['mean']['enhanced']['pesq']
+assert math.isfinite(score) and baseline['mean']['enhanced']['pesq']+.2<=score<3.4
+ranking=json.loads((root/'pesq_selection/checkpoint_ranking.json').read_text())
+assert not ranking['target_reached'] and any(row['epoch']==epoch for row in ranking['results'])
+evaluated=checkpoints/f'model_epoch_{epoch}.pt'
+assert hashlib.sha256(evaluated.read_bytes()).hexdigest()==summary['checkpoint_sha256']
+reference,_=read_candidate_checkpoint(evaluated,sys.argv[4])
+assert state['model_state_dict'].keys()==reference['model_state_dict'].keys()
+assert all(torch.equal(value,reference['model_state_dict'][name]) and torch.isfinite(value).all() for name,value in state['model_state_dict'].items())
+optimizer=state['optimizer_state_dict'];other=reference['optimizer_state_dict']
+assert optimizer['param_groups']==other['param_groups'] and optimizer['state'].keys()==other['state'].keys()
+assert optimizer['state'] and {int(value['step']) for value in optimizer['state'].values()}=={epoch*6700}
+for index,values in optimizer['state'].items():
+    assert values.keys()==other['state'][index].keys()
+    for name,value in values.items():
+        assert torch.isfinite(value).all() and torch.equal(value,other['state'][index][name])
+assert state['lr_reducer_state']==reference['lr_reducer_state']
+reserve=math.ceil(timing['evaluation_audit_seconds'])+60
+assert 0<reserve<1200
+(root/'run_status.json').write_text(json.dumps(dict(status='running',resumed_from_completed_epoch=epoch,resumed_unix=time.time()),indent=2))
+print(epoch+1,reserve)
+PY_RESUME
+)
+fi
 mkdir -p "$logs"
 printf 'Run: %s\nCheckpoints: %s\nLogs: %s\n' "$run" "$checkpoints" "$logs"
 cp "$preflight/cuda_final/cuda_check.json" "$logs/cuda_preflight.json"
@@ -251,17 +307,22 @@ print(int(result['target_reached']))
 PY_RESULTS
 }
 
-"$train_py" -u "$entry" "${warm_args[@]}" --train-dir "$train_dir" --val-dir "$val_dir" \
+if [[ -n "${CAUSAL_RESUME_RUN:-}" ]]; then
+    read -r start_epoch evaluation_reserve <<< "$resume_settings"
+else
+    "$train_py" -u "$entry" "${warm_args[@]}" --train-dir "$train_dir" --val-dir "$val_dir" \
     --checkpoint-dir "$checkpoints" --best-dir "$best" --log-dir "$logs" \
     --num-epochs 0 --parallel-mode none --num-workers 0 --cpu-threads 2 \
-    2>&1 | tee "$logs/initialization.log"
-baseline_start=$(date +%s)
-phase=baseline_full600
-evaluate_epoch 0
-evaluation_reserve=$(( $(date +%s) - baseline_start + 60 ))
-(( evaluation_reserve < 1200 )) || { printf 'Full600 evaluation needs too much of the one-hour budget.\n' >&2; exit 1; }
+        2>&1 | tee "$logs/initialization.log"
+    baseline_start=$(date +%s)
+    phase=baseline_full600
+    evaluate_epoch 0
+    evaluation_reserve=$(( $(date +%s) - baseline_start + 60 ))
+    (( evaluation_reserve < 1200 )) || { printf 'Full600 evaluation needs too much of the one-hour budget.\n' >&2; exit 1; }
+    start_epoch=1
+fi
 check_results >/dev/null
-for epoch in {1..30}; do
+for ((epoch=start_epoch; epoch<=30; epoch++)); do
     phase="training_epoch_${epoch}"
     epoch_start=$(date +%s)
     train_budget=$(( 3600 - evaluation_reserve ))

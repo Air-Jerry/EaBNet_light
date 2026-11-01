@@ -1,0 +1,11 @@
+{
+  "status": "waiting_first_complete_epoch",
+  "first_pid": 2823736,
+  "first_cookie": "152013321",
+  "scope": "Continue only after complete53600/600/600 epoch1; retain same model, Adam and scheduler; at most through epoch4",
+  "controller_source_sha256": "f283bea045aa356c71afa1742c0129af1a1bb0b88b76efc05507b693f15a80cb",
+  "pending_resume_source_sha256": "934a5d39ff871dc8e50f33b2f4fd39e317730db9519c3c2fa0a669cb408fff7a",
+  "detailed_observation_utc": "2026-11-01T23:22:58.357116+00:00",
+  "gpu_queries_while_waiting": 0,
+  "formal_goal_achieved": false
+}

@@ -1,0 +1,21 @@
+{
+  "status": "cpu_continuation_builder_checked",
+  "unit_tests_passed": 191,
+  "resume_source_sha256": "934a5d39ff871dc8e50f33b2f4fd39e317730db9519c3c2fa0a669cb408fff7a",
+  "canonical_git_commit": "50fb0c4",
+  "unchanged_original_training_evaluation_and_timing_body": true,
+  "changed_training_body_rejected": true,
+  "first_epoch_sources_will_not_be_replaced": true,
+  "pytest_seconds": 31.42,
+  "test_files": [
+    "tests/test_light_fullchannel_resume.py",
+    "tests/test_light_fullchannel_dualpath_workflow.py",
+    "tests/test_light_gated_multichannel_workflow.py",
+    "tests/test_light_causal_tcn_launcher.py",
+    "tests/test_light_final_audit.py"
+  ],
+  "new_completed_boundary_test_cases": 23,
+  "actual_cuda_resumed_training_already_executed": false,
+  "source_and_adam_boundary_checks_are_unit_tests": true,
+  "formal_goal_achieved": false
+}

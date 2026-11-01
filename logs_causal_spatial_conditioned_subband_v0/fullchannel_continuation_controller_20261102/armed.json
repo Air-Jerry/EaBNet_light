@@ -1,0 +1,15 @@
+{
+  "status": "armed_waiting_existing_first_epoch",
+  "controller_pid": 2831985,
+  "controller_cookie": "152204695",
+  "controller_source_sha256": "f283bea045aa356c71afa1742c0129af1a1bb0b88b76efc05507b693f15a80cb",
+  "first_epoch_pid": 2823736,
+  "first_epoch_cookie": "152013321",
+  "expected_first_observation_utc": "2026-11-01T23:22:58.357116+00:00",
+  "controller_console": "/home/nis/jinrui.yang/EaBNet_light/logs_causal_spatial_conditioned_subband_v0/fullchannel_continuation_controller_20261102/controller_console.log",
+  "condition": "Only a complete finite same-protocol53600/600/600 epoch within3600s and gain>=.2 may resume; score>=3.4 routes to full final audit",
+  "continuation_scope": "Same run and Adam/scheduler state, at most epochs2-4; stop for final audit at3.4",
+  "no_gpu_queries_to_arm": true,
+  "running_training_sources_unchanged": true,
+  "formal_goal_achieved": false
+}

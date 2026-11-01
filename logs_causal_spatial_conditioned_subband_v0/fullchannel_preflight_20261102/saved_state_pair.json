@@ -1,0 +1,13 @@
+{
+  "status": "actual_completed_checkpoint_state_pair_identical",
+  "scope": "Original trainer completed256-record CUDA preflight; compare only64-update saved states, not formal53600 resume",
+  "epoch": 2,
+  "adam_updates": 64,
+  "model_state_tensors": 281,
+  "model_and_adam_moments_parameter_groups_and_scheduler_identical": true,
+  "evaluated_checkpoint_sha256": "34fe66089b306a7f419d8628019de98d0228bc243ce3cbcefcd401f44a914777",
+  "cpu_only": true,
+  "actual_resume_executed": false,
+  "checkpoint_files_unchanged": true,
+  "formal_goal_achieved": false
+}

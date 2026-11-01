@@ -1,0 +1,8 @@
+{
+  "status": "original_evaluator_final_protocol_contract_passed",
+  "evaluator_sha256": "0c3ada1425b33e16688e8424daba23681ac9ded4d8bee931ed24c69e59e5730b",
+  "original_mixture_ref_mic": 0,
+  "full_comparison_samples": 600,
+  "cpu_only": true,
+  "existing_checkpoint_or_metrics_modified": false
+}

@@ -80,6 +80,7 @@
     "aggregation": "paired arithmetic mean over every selected utterance; failures abort with no mean"
   },
   "num_mics": 8,
+  "mixture_ref_mic": 0,
   "completed_samples": 600,
   "expected_samples": 600,
   "selected_pairs_sha256": "18233928bdcb499f4e65e3b66a1f8c39387675d09f1621ae6ac94881d7444cfb",
