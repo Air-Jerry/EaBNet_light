@@ -20,6 +20,6 @@
   "formal_log_dir": "/home/nis/jinrui.yang/EaBNet_light/logs_causal_fullband_conditioned_subband_v1/conditioned_subband_20261101_202705_2670503",
   "formal_checkpoint_dir": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_causal_fullband_conditioned_subband_v1_conditioned_subband_20261101_202705_2670503",
   "actual_formal_baseline_full600_pesq": 2.9295976958672205,
-  "next_observed_epoch": 1,
-  "next_detailed_not_before_unix": 1793539401.5028627
+  "next_observed_epoch": 2,
+  "next_detailed_not_before_unix": 1793542775.6677747
 }

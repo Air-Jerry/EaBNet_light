@@ -1,0 +1,106 @@
+{
+  "status": "complete",
+  "scope": "All600 CPU FP32 actual full, captured causal base and condition-bypassed head; not new training or a new goal score",
+  "checkpoint_sha256": "20c538c98df275880526e9e30d183027ac886d7fd482b6061e20a395f24a708b",
+  "metadata_sha256": "8d0b4d229ebc42cd9892e6d0e0d36416007ded01fbc0b753df4bf7e6b734eb02",
+  "completed_samples": 600,
+  "expected_samples": 600,
+  "workers": 4,
+  "threads_per_worker": 2,
+  "cpu_core_pairs": [
+    [
+      16,
+      18
+    ],
+    [
+      20,
+      22
+    ],
+    [
+      17,
+      19
+    ],
+    [
+      21,
+      23
+    ]
+  ],
+  "gpu_used": false,
+  "weights_updated": false,
+  "full_model_prediction_unchanged_by_capture_hook": true,
+  "condition_bypass_reuses_same_base_prediction": true,
+  "learned_weights_not_modified": true,
+  "original_source_evaluator_and_checkpoint_unchanged": true,
+  "overall": {
+    "count": 600,
+    "trained_base_wb_pesq": 2.8976104416449866,
+    "trained_full_wb_pesq": 2.897274850606918,
+    "without_fullband_condition_wb_pesq": 2.8972329990069072,
+    "fullband_condition_contribution_mean": 4.185160001118978e-05,
+    "fullband_condition_improved_count": 284,
+    "paired_branch_contribution_mean": -0.0003355910380681356,
+    "paired_branch_contribution_std": 0.0061766684413043366,
+    "improved_count": 287,
+    "improved_above_point01": 18,
+    "regressed_above_point01": 26
+  },
+  "by_geometric_direct_path_1000hz_coherence": {
+    "below_point8": {
+      "count": 408,
+      "trained_base_wb_pesq": 3.34717879254444,
+      "trained_full_wb_pesq": 3.3465445620172165,
+      "without_fullband_condition_wb_pesq": 3.34649479126229,
+      "fullband_condition_contribution_mean": 4.977075492634493e-05,
+      "fullband_condition_improved_count": 195,
+      "paired_branch_contribution_mean": -0.0006342305272233253,
+      "paired_branch_contribution_std": 0.0061267543918152,
+      "improved_count": 189,
+      "improved_above_point01": 15,
+      "regressed_above_point01": 23
+    },
+    "point8_to_point95": {
+      "count": 85,
+      "trained_base_wb_pesq": 2.413721868571113,
+      "trained_full_wb_pesq": 2.413222512076883,
+      "without_fullband_condition_wb_pesq": 2.413210722979377,
+      "fullband_condition_contribution_mean": 1.178909750545726e-05,
+      "fullband_condition_improved_count": 36,
+      "paired_branch_contribution_mean": -0.0004993564942303826,
+      "paired_branch_contribution_std": 0.0031862220858997537,
+      "improved_count": 45,
+      "improved_above_point01": 1,
+      "regressed_above_point01": 2
+    },
+    "atleast_point95": {
+      "count": 107,
+      "trained_base_wb_pesq": 1.56776597009641,
+      "trained_full_wb_pesq": 1.5686992106036606,
+      "without_fullband_condition_wb_pesq": 1.5686636739802138,
+      "fullband_condition_contribution_mean": 3.5536623446740834e-05,
+      "fullband_condition_improved_count": 53,
+      "paired_branch_contribution_mean": 0.0009332405072506343,
+      "paired_branch_contribution_std": 0.007795124256494789,
+      "improved_count": 53,
+      "improved_above_point01": 2,
+      "regressed_above_point01": 1
+    }
+  },
+  "formal_full600_gpu_wb_pesq": 2.8972804405291877,
+  "cpu_full_minus_formal_gpu_pesq": -5.5899222695110495e-06,
+  "frontend": {
+    "sample_rate": 16000,
+    "n_fft": 512,
+    "hop_length": 160,
+    "win_length": 320,
+    "power": 0.5,
+    "num_mics": 8,
+    "reference_mic": 0
+  },
+  "external_normalization_clipping_or_alignment": false,
+  "target_gain_matching": false,
+  "input_extent": "Complete96000-sample utterances; no crop or padding",
+  "elapsed_seconds": 778.4394104301464,
+  "individual_audio_paths_hashes_waveforms_or_rows_exported": false,
+  "target_pesq": 3.4,
+  "target_reached": false
+}

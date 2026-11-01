@@ -1,0 +1,56 @@
+{
+  "status": "complete",
+  "scope": "Immutable first-epoch CPU parameter/update inspection",
+  "checkpoint_sha256": "20c538c98df275880526e9e30d183027ac886d7fd482b6061e20a395f24a708b",
+  "sampler_offset": 33,
+  "train_loss": 0.472497,
+  "val_loss": 0.373523,
+  "learning_rate": 0.0003,
+  "adam_updates": 6700,
+  "weight_change_groups": {
+    "causal_base": {
+      "changed_tensors": 266,
+      "delta_l2": 25.60575662406039,
+      "current_l2": 537.3487987378378,
+      "relative_to_initial_l2": 0.04781414899216135,
+      "state_elements_including_buffers": 2682662
+    },
+    "local_gru": {
+      "changed_tensors": 4,
+      "delta_l2": 4.149157433895465,
+      "current_l2": 19.80858924111503,
+      "relative_to_initial_l2": 0.24906552334912302,
+      "state_elements_including_buffers": 6336
+    },
+    "subband_output": {
+      "changed_tensors": 2,
+      "delta_l2": 0.159281331827784,
+      "current_l2": 0.33504462301763127,
+      "relative_to_initial_l2": 0.7705979497891248,
+      "state_elements_including_buffers": 594
+    },
+    "fullband_gru": {
+      "changed_tensors": 4,
+      "delta_l2": 5.783457155889862,
+      "current_l2": 26.05317549171474,
+      "relative_to_initial_l2": 0.22792745257331712,
+      "state_elements_including_buffers": 247296
+    },
+    "fullband_projection": {
+      "changed_tensors": 2,
+      "delta_l2": 11.189704283031327,
+      "current_l2": 38.499622978701204,
+      "relative_to_initial_l2": 0.30094678558580684,
+      "state_elements_including_buffers": 530448
+    },
+    "fullband_mix": {
+      "changed_tensors": 2,
+      "delta_l2": 0.38539907680310775,
+      "current_l2": 0.38539907680310775,
+      "relative_to_initial_l2": null,
+      "state_elements_including_buffers": 544
+    }
+  },
+  "gpu_used": false,
+  "parameters_or_source_modified": false
+}

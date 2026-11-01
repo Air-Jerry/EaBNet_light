@@ -45,3 +45,6 @@ run_light_causal_subband.sh text eol=lf
 experiments/causal_fullband_conditioned_subband.py text eol=lf
 train_light_causal_conditioned_subband.py text eol=lf
 run_light_causal_conditioned_subband.sh text eol=lf
+experiments/causal_frozen_conditioned_subband.py text eol=lf
+train_light_causal_frozen_conditioned_subband.py text eol=lf
+run_light_causal_frozen_conditioned_subband.sh text eol=lf

@@ -1,0 +1,27 @@
+{
+  "status": "passed_actual_source3_cpu_two_update_check",
+  "source_checkpoint_sha256": "214c1608dd7496738bade60d83fd4f130c571f50880a214094ebe3d2ab9458ad",
+  "prototype_sha256": "0d0094a3bdf3165fe9db11be86f6ed35cc778eb41918dac1a2ff8df46775305d",
+  "source_identity_max_error": 0.0,
+  "trainable_parameters": 790262,
+  "frozen_causal_parameters": 2579698,
+  "parameters": 3369960,
+  "adam_updates": 2,
+  "batch_size": 2,
+  "samples_per_utterance": 96000,
+  "losses": [
+    0.4980413317680359,
+    0.5023355484008789
+  ],
+  "backbone_parameters_and_buffers_unchanged": true,
+  "frozen_backbone_in_inference_mode": true,
+  "fullband_gru_updated": true,
+  "all_trainable_gradients_and_adam_finite": true,
+  "cached_old_base_predictions_used": false,
+  "gpu_used": false,
+  "source_audio_features_and_audio_hashes_exported": false,
+  "fitted_weights_saved_or_deployed": false,
+  "existing_source_evaluator_and_checkpoints_unchanged": true,
+  "quality_and_formal_training_unverified": true,
+  "elapsed_seconds": 31.575018397998065
+}

@@ -1,0 +1,13 @@
+{
+  "status": "passed_actual_linux_cpu_entry_and_saved_source_identity",
+  "candidate_schema": 18,
+  "sampler_offset": 33,
+  "parameters": 3369960,
+  "source_identity_max_abs_error": 0.0,
+  "source_checkpoint_sha256": "214c1608dd7496738bade60d83fd4f130c571f50880a214094ebe3d2ab9458ad",
+  "batch_size": 2,
+  "grad_accum_steps": 2,
+  "trainable_parameters": 790262,
+  "frozen_causal_parameters": 2579698,
+  "cuda_used": false
+}

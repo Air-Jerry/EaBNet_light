@@ -35,16 +35,20 @@ FULLBAND_TCN_CANDIDATE = "causal_fullband_tcn_v1"
 FULLBAND_SPATIAL_CANDIDATE = "causal_fullband_spatial_tcn_v1"
 SUBBAND_GRU_CANDIDATE = "causal_retention_subband_gru_v1"
 CONDITIONED_SUBBAND_CANDIDATE = "causal_fullband_conditioned_subband_v1"
+FROZEN_CONDITIONED_CANDIDATE = "causal_frozen_conditioned_subband_v1"
 IDENTITY_FIELDS = ("sample_rate", "n_fft", "hop_length", "win_length", "power", "target_ref_mic",
                    "channels", "num_mics", "embed_dim", "cd1", "dfsmn_layers", "dfsmn_memory_size",
                    "norm_type", "bf_type", "topo_type", "is_causal")
 
 
 def all_model_candidates():
-    return (*all_reference_candidates(), QUALITY_CANDIDATE, SPATIAL_CANDIDATE, CAUSAL_CANDIDATE, FAST_CANDIDATE, GLOBAL_CANDIDATE, RECURRENT_CANDIDATE, RECURRENT65_CANDIDATE, TCN_CANDIDATE, FOURIER_CANDIDATE, FREQUENCY_ATTENTION_CANDIDATE, POOLED_FREQUENCY_ATTENTION_CANDIDATE, RETENTION_CANDIDATE, FULLBAND_TCN_CANDIDATE, FULLBAND_SPATIAL_CANDIDATE, SUBBAND_GRU_CANDIDATE, CONDITIONED_SUBBAND_CANDIDATE)
+    return (*all_reference_candidates(), QUALITY_CANDIDATE, SPATIAL_CANDIDATE, CAUSAL_CANDIDATE, FAST_CANDIDATE, GLOBAL_CANDIDATE, RECURRENT_CANDIDATE, RECURRENT65_CANDIDATE, TCN_CANDIDATE, FOURIER_CANDIDATE, FREQUENCY_ATTENTION_CANDIDATE, POOLED_FREQUENCY_ATTENTION_CANDIDATE, RETENTION_CANDIDATE, FULLBAND_TCN_CANDIDATE, FULLBAND_SPATIAL_CANDIDATE, SUBBAND_GRU_CANDIDATE, CONDITIONED_SUBBAND_CANDIDATE, FROZEN_CONDITIONED_CANDIDATE)
 
 
 def build_model_candidate(candidate_id, **model_kwargs):
+    if candidate_id == FROZEN_CONDITIONED_CANDIDATE:
+        from experiments.causal_frozen_conditioned_subband import CausalFrozenBaseConditionedSubband
+        return CausalFrozenBaseConditionedSubband(build_model_candidate(RETENTION_CANDIDATE, **model_kwargs))
     if candidate_id == CONDITIONED_SUBBAND_CANDIDATE:
         from experiments.causal_fullband_conditioned_subband import CausalFullbandConditionedSubband
         return CausalFullbandConditionedSubband(build_model_candidate(RETENTION_CANDIDATE, **model_kwargs))
@@ -97,6 +101,18 @@ def build_model_candidate(candidate_id, **model_kwargs):
 
 
 def candidate_metadata(candidate_id):
+    if candidate_id == FROZEN_CONDITIONED_CANDIDATE:
+        metadata = candidate_metadata(CONDITIONED_SUBBAND_CANDIDATE)
+        files = (*metadata['candidate_implementation_sha256'], 'experiments/causal_frozen_conditioned_subband.py')
+        metadata.update(structure_candidate=candidate_id, candidate_schema=18,
+                        candidate_implementation_sha256=source_hashes(files))
+        evidence = metadata['candidate_evidence']
+        evidence.update(candidate_id=candidate_id, frozen_backbone=True, frozen_backbone_is_causal=True,
+            purpose='Train the conditioned speech head with stable FP32 causal backbone predictions',
+            initialization='Complete subband checkpoint; zero full-band condition; fixed causal backbone; fresh head Adam')
+        evidence['model_config'].update(trainable_parameters=790262, frozen_causal_parameters=2579698,
+            frozen_base_mode='FP32 eval during head training and inference')
+        return metadata
     if candidate_id == CONDITIONED_SUBBAND_CANDIDATE:
         metadata = candidate_metadata(SUBBAND_GRU_CANDIDATE)
         files = (*metadata['candidate_implementation_sha256'], 'experiments/causal_fullband_conditioned_subband.py')
