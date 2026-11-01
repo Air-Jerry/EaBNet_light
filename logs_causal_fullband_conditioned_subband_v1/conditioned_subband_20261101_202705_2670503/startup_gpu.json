@@ -1,0 +1,18 @@
+{
+  "scope": "Existing10-second sampler during epoch1 startup; not full-epoch utilization",
+  "observations": [
+    {
+      "index": 0,
+      "samples": 19,
+      "last6_mean_utilization_pct": 96.33333333333333,
+      "sampled_peak_memory_mib": 7739.0
+    },
+    {
+      "index": 1,
+      "samples": 19,
+      "last6_mean_utilization_pct": 82.0,
+      "sampled_peak_memory_mib": 7721.0
+    }
+  ],
+  "additional_gpu_queries": 0
+}

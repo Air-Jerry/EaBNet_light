@@ -1,0 +1,132 @@
+{
+  "status": "complete",
+  "scope": "Full-band-conditioned head capacity fit on the same eight fixed training utterances; not generalization or goal completion",
+  "source_checkpoint_sha256": "65691adf4dc09a85f589183b204618a9bcdc92bd8fb3f9ee2738aca8edba546c",
+  "prototype_sha256": "8931dfa8d53c96654855427cf00c30f891fa051a279473088f329c8ca917710f",
+  "device": "cuda",
+  "seed": 1234,
+  "learning_rate": 0.001,
+  "batch_size": 2,
+  "requested_updates": 800,
+  "trainable_parameters": 790262,
+  "sample_ids": [
+    "5903",
+    "9643",
+    "14727",
+    "21394",
+    "51958",
+    "54962",
+    "55110",
+    "55595"
+  ],
+  "frozen_causal_base_predictions": true,
+  "noncausal_backbones": 0,
+  "original_frontend_and_objective_used": true,
+  "target_gain_matching": false,
+  "no_external_normalization_clipping_or_alignment": true,
+  "fitted_weights_saved_or_deployed": false,
+  "formal_full600_pesq": 2.8973679965734482,
+  "formal_goal_target": 3.4,
+  "formal_goal_achieved": false,
+  "completed_updates": 800,
+  "all_weights_gradients_and_adam_finite": true,
+  "per_sample_presentations": [
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200
+  ],
+  "evaluations": [
+    {
+      "updates": 0,
+      "pesq": 2.987716570496559,
+      "per_sample_pesq": [
+        1.254148244857788,
+        4.390687942504883,
+        3.9387826919555664,
+        1.1877137422561646,
+        2.0362277030944824,
+        4.294994831085205,
+        3.9234867095947266,
+        2.8756906986236572
+      ],
+      "elapsed_seconds": 0.8657394631300122
+    },
+    {
+      "updates": 200,
+      "pesq": 3.029635712504387,
+      "per_sample_pesq": [
+        1.3017876148223877,
+        4.42243766784668,
+        3.98626446723938,
+        1.204748272895813,
+        2.103177785873413,
+        4.319619655609131,
+        3.943098545074463,
+        2.955951690673828
+      ],
+      "elapsed_seconds": 9.369430121034384
+    },
+    {
+      "updates": 400,
+      "pesq": 3.109365239739418,
+      "per_sample_pesq": [
+        1.432018518447876,
+        4.427837371826172,
+        4.042177677154541,
+        1.3265491724014282,
+        2.2097525596618652,
+        4.373628616333008,
+        3.951810359954834,
+        3.11114764213562
+      ],
+      "elapsed_seconds": 14.351266361074522
+    },
+    {
+      "updates": 800,
+      "pesq": 3.228248953819275,
+      "per_sample_pesq": [
+        1.6132457256317139,
+        4.439846038818359,
+        4.074410438537598,
+        1.4099624156951904,
+        2.467463731765747,
+        4.427436828613281,
+        4.022325038909912,
+        3.3713014125823975
+      ],
+      "elapsed_seconds": 23.69729030900635
+    }
+  ],
+  "first20_mean_training_loss": 0.45711174979805946,
+  "last20_mean_training_loss": 0.38713541254401207,
+  "best_training8_pesq": 3.228248953819275,
+  "elapsed_seconds": 29.197334735188633,
+  "training_peak_allocated_bytes": 1587388416,
+  "original_source_evaluator_and_formal_checkpoint_unchanged": true,
+  "private_audio_features_and_hashes_exported": false,
+  "actual_trained_head_full_model_runtime": {
+    "scope": "Actual full source backbone plus the trained eight-sample head; causality/runtime only, not generalization",
+    "actual_parameters": 3369960,
+    "physical_gpu": 1,
+    "future_frames": 0,
+    "tf32": false,
+    "future_perturbation_max_error": 0.0,
+    "full_vs_stream_waveform_max_error": 1.4826655387878418e-06,
+    "measured_hops": 600,
+    "all_hop_ms": {
+      "mean": 4.967804178983594,
+      "p99": 5.261201141402125,
+      "max": 5.504908040165901
+    },
+    "all_hops_below_10ms": true,
+    "bounded_model_cache_bytes": 6118800,
+    "added_fullband_cache_bytes": 512,
+    "buffering_delay_samples": 320,
+    "warmup_state_discarded": true
+  }
+}

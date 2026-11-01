@@ -1,0 +1,10 @@
+{
+  "status": "passed_staged_dual_cuda_streaming_and_full600_source_identity",
+  "candidate": "causal_fullband_conditioned_subband_v1",
+  "cuda_adam_updates": 64,
+  "all_weights_and_adam_finite": true,
+  "full600_warm_pesq": 2.9295976958672205,
+  "source_full600_pesq": 2.9295976958672205,
+  "projected_complete_epoch_seconds": 3346.811227037269,
+  "formal_training_quality_and_actual_epoch_time_unverified": true
+}
