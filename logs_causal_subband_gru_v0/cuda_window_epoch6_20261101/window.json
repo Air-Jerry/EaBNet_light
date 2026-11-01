@@ -1,0 +1,9 @@
+{
+  "status": "profile_terminal",
+  "owned_pid": 2534320,
+  "cookie": "145230038",
+  "profile_exit_code": 1,
+  "gpu1_free_mib_before": 11861,
+  "dispatcher_resumed": true,
+  "protected_files_unchanged": true
+}

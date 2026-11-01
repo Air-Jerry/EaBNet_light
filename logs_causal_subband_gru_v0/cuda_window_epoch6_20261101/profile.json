@@ -1,0 +1,10 @@
+{
+  "status": "failed",
+  "scope": "Single GPU cost and 600 actual waveform hops; not full600 quality or complete-epoch proof",
+  "physical_gpu": 1,
+  "other_gpu_evaluating_existing_epoch": 6,
+  "tf32": false,
+  "batch_size": 4,
+  "segment_samples": 96000,
+  "error": "OutOfMemoryError: CUDA out of memory. Tried to allocate 1.48 GiB. GPU 0 has a total capacity of 11.60 GiB of which 645.00 MiB is free. Including non-PyTorch memory, this process has 10.95 GiB memory in use. Of the allocated memory 10.65 GiB is allocated by PyTorch, and 92.71 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)"
+}

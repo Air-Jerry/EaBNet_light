@@ -1,0 +1,31 @@
+{
+  "status": "complete_cpu_source_identity_gradients_and_waveform_streaming",
+  "prototype_sha256": "79fd8dca9b4e5541e77b99e338e71941d26868f266ba26a82e49471611e54227",
+  "source_checkpoint_sha256": "1fb53e2494442c9161c2023b7e8e3615d6fad0c6d2ab82a0a74e622d2d5a1059",
+  "source_candidate": "causal_frequency_attention_retention_v1",
+  "source_full600_wb_pesq": 2.896308812499046,
+  "source_parameters": 2579698,
+  "parameters": 2590644,
+  "added_parameters": 10946,
+  "added_cache_bytes_per_stream_fp32": 32896,
+  "source_identity_max_abs_error": 0.0,
+  "constructor_preserves_rng": true,
+  "all_parameters_trainable": true,
+  "finite_training_updates": 2,
+  "all_weights_gradients_and_adam_finite": true,
+  "recurrent_and_input_gradients_nonzero_after_second_update": true,
+  "future_perturbation_max_abs_error": 0.0,
+  "waveform_hops": 600,
+  "waveform_stream_vs_offline_max_abs_error": 5.960464477539063e-08,
+  "one_sample_training_losses": [
+    0.3731047511100769,
+    0.375430166721344
+  ],
+  "protected_files_unchanged": 17,
+  "source_checkpoint_unchanged": true,
+  "cuda_used": false,
+  "production_candidate_registered": false,
+  "full600_quality_unverified": true,
+  "cuda_memory_speed_and_complete_epoch_budget_unverified": true,
+  "elapsed_seconds": 46.7181689129211
+}
