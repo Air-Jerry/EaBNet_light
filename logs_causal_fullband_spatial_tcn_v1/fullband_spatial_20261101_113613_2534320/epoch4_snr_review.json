@@ -1,0 +1,216 @@
+{
+  "scope": "Descriptive paired full600 SNR groups; different architectures and cumulative training exposure, not controlled architecture ablation",
+  "cohort_count": 600,
+  "new_gpu_work": false,
+  "evaluations_reused_only": true,
+  "models": {
+    "spatial_epoch1": {
+      "checkpoint_sha256": "8884ead7ab1a9e1d2769d3a2509940da8560c2930b0252e6671d4e4dc885adde",
+      "mean_metrics": {
+        "pesq": 2.225096715092659,
+        "stoi": 0.9239021961648037,
+        "estoi": 0.8427552007250081,
+        "si_snr_db": 11.849331201324176,
+        "sdr_db": 13.13375467159314
+      },
+      "snr_groups": [
+        {
+          "snr_db": -5,
+          "count": 140,
+          "pesq": 1.885065906388419,
+          "estoi": 0.783579800549371,
+          "si_snr_db": 8.959414696783325
+        },
+        {
+          "snr_db": -2,
+          "count": 161,
+          "pesq": 2.0492625540087683,
+          "estoi": 0.8184303275712721,
+          "si_snr_db": 10.688635530122967
+        },
+        {
+          "snr_db": 0,
+          "count": 149,
+          "pesq": 2.450901838757048,
+          "estoi": 0.8800279795152437,
+          "si_snr_db": 13.711703088446662
+        },
+        {
+          "snr_db": 2,
+          "count": 150,
+          "pesq": 2.5068877132733665,
+          "estoi": 0.8870699778089784,
+          "si_snr_db": 13.942443884776596
+        }
+      ]
+    },
+    "spatial_epoch2": {
+      "checkpoint_sha256": "b3a1090895474d25a1c29eb8f78ef9a782683d585686f896fea372d66e372f3c",
+      "mean_metrics": {
+        "pesq": 2.2846693980693815,
+        "stoi": 0.9261392626629007,
+        "estoi": 0.8488835196926497,
+        "si_snr_db": 12.281340847084932,
+        "sdr_db": 13.57930748335563
+      },
+      "snr_groups": [
+        {
+          "snr_db": -5,
+          "count": 140,
+          "pesq": 1.938189069713865,
+          "estoi": 0.7901406553401539,
+          "si_snr_db": 9.52984088602139
+        },
+        {
+          "snr_db": -2,
+          "count": 161,
+          "pesq": 2.104007167105349,
+          "estoi": 0.8252076518388864,
+          "si_snr_db": 11.146688064970148
+        },
+        {
+          "snr_db": 0,
+          "count": 149,
+          "pesq": 2.5256034159820353,
+          "estoi": 0.8861345759355502,
+          "si_snr_db": 14.139427221270626
+        },
+        {
+          "snr_db": 2,
+          "count": 150,
+          "pesq": 2.562634041309357,
+          "estoi": 0.8921195753834041,
+          "si_snr_db": 14.221568998522983
+        }
+      ]
+    },
+    "spatial_epoch3": {
+      "checkpoint_sha256": "e850527d88588b68ef43c5a6ac69410de7884efe00542b41b7fe7d28c9118639",
+      "mean_metrics": {
+        "pesq": 2.3130942432085675,
+        "stoi": 0.9270386037864684,
+        "estoi": 0.8517548423976579,
+        "si_snr_db": 12.452157714198929,
+        "sdr_db": 13.789537421030461
+      },
+      "snr_groups": [
+        {
+          "snr_db": -5,
+          "count": 140,
+          "pesq": 1.961399257183075,
+          "estoi": 0.7949981075933162,
+          "si_snr_db": 9.625421532729323
+        },
+        {
+          "snr_db": -2,
+          "count": 161,
+          "pesq": 2.1419974735804965,
+          "estoi": 0.8278607425941756,
+          "si_snr_db": 11.261579727272784
+        },
+        {
+          "snr_db": 0,
+          "count": 149,
+          "pesq": 2.5569390962587906,
+          "estoi": 0.8877735936721237,
+          "si_snr_db": 14.410808350542384
+        },
+        {
+          "snr_db": 2,
+          "count": 150,
+          "pesq": 2.582767542203267,
+          "estoi": 0.8945955024048113,
+          "si_snr_db": 14.422738890770123
+        }
+      ]
+    },
+    "spatial_epoch4": {
+      "checkpoint_sha256": "bc1f459c8f2aa4c98ddc51147daa82e48b8b3860e9364d26091af8ccbf88c0e9",
+      "mean_metrics": {
+        "pesq": 2.3326034037272136,
+        "stoi": 0.930322924969809,
+        "estoi": 0.8574229620853383,
+        "si_snr_db": 12.278965784702073,
+        "sdr_db": 13.506484093853988
+      },
+      "snr_groups": [
+        {
+          "snr_db": -5,
+          "count": 140,
+          "pesq": 1.9733773257051195,
+          "estoi": 0.8024785624144168,
+          "si_snr_db": 9.386871534527346
+        },
+        {
+          "snr_db": -2,
+          "count": 161,
+          "pesq": 2.1699793064816397,
+          "estoi": 0.8346584924599391,
+          "si_snr_db": 11.109290359111322
+        },
+        {
+          "snr_db": 0,
+          "count": 149,
+          "pesq": 2.5732100705972454,
+          "estoi": 0.89216510894965,
+          "si_snr_db": 14.17305305144858
+        },
+        {
+          "snr_db": 2,
+          "count": 150,
+          "pesq": 2.603428318500519,
+          "estoi": 0.89862773329091,
+          "si_snr_db": 14.352245356697699
+        }
+      ]
+    },
+    "historical_retention_epoch3": {
+      "checkpoint_sha256": "1fb53e2494442c9161c2023b7e8e3615d6fad0c6d2ab82a0a74e622d2d5a1059",
+      "mean_metrics": {
+        "pesq": 2.896308812499046,
+        "stoi": 0.9554147396216837,
+        "estoi": 0.9039541366264643,
+        "si_snr_db": 14.606972803883737,
+        "sdr_db": 15.974288021664085
+      },
+      "snr_groups": [
+        {
+          "snr_db": -5,
+          "count": 140,
+          "pesq": 2.540205921445574,
+          "estoi": 0.8636693634329903,
+          "si_snr_db": 12.11336926600961
+        },
+        {
+          "snr_db": -2,
+          "count": 161,
+          "pesq": 2.74176609886359,
+          "estoi": 0.886348337395261,
+          "si_snr_db": 13.474888011379196
+        },
+        {
+          "snr_db": 0,
+          "count": 149,
+          "pesq": 3.142678744840942,
+          "estoi": 0.9294347962904551,
+          "si_snr_db": 16.28952939614443
+        },
+        {
+          "snr_db": 2,
+          "count": 150,
+          "pesq": 3.1498198906580606,
+          "estoi": 0.9351393608489674,
+          "si_snr_db": 16.478100901542167
+        }
+      ]
+    }
+  },
+  "paired_epoch4_vs_epoch3": {
+    "improved": 362,
+    "mean_pesq_change": 0.01950916051864624
+  },
+  "paired_epoch4_vs_historical_best": {
+    "improved": 3,
+    "mean_pesq_change": -0.5637054087718328
+  }
+}
