@@ -1,0 +1,36 @@
+{
+  "generator_sha256": "289d8541c4952592b93737c71010b02a434e7424bc53aad65259d2e22957000e",
+  "original_functions_exercised": true,
+  "geometry": {
+    "room_dimensions_metres": [3.0, 3.0, 2.5],
+    "array_center_metres": [2.5, 2.5, 1.2],
+    "requested_target_angle_degrees": 45.0,
+    "requested_noise_angle_degrees": 60.0,
+    "requested_distance_metres": 3.0,
+    "actual_target_position_metres": [2.8, 2.8, 1.2],
+    "actual_noise_position_metres": [2.8, 2.8, 1.2],
+    "actual_distance_metres": 0.4242640687119283,
+    "actual_source_positions_equal": true
+  },
+  "absorption": {
+    "room_dimensions_metres": [10.0, 10.0, 3.0],
+    "requested_rt60_seconds": 0.05,
+    "required_sabine_alpha": 3.01875,
+    "returned_alpha": 0.99,
+    "actual_rt60_not_measured_by_this_check": true
+  },
+  "resume_original_main_with_acoustic_stub": {
+    "interrupted_after_committed_samples": 3,
+    "uninterrupted_samples": 21,
+    "resumed_samples": 21,
+    "mismatched_rng_draws_after_resume": 18,
+    "resume_restarts_rng_sequence": true
+  },
+  "existing_waveform_audit_date": "2026-10-31",
+  "existing_comparison_waveform_pairs_checked": 600,
+  "existing_training_waveform_pairs_sampled": 560,
+  "training_waveforms_not_all_checked": true,
+  "original_generator_and_comments_unchanged": true,
+  "existing_audio_and_running_training_unchanged": true,
+  "status": "complete"
+}
