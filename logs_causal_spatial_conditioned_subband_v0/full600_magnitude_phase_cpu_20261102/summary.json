@@ -1,0 +1,67 @@
+{
+  "status": "complete",
+  "scope": "Reference-assisted magnitude/phase CPU diagnostics on private cached inputs; not deployable or a model-quality claim",
+  "source_checkpoint_sha256": "5d6f0df91ab9fe51e62deedfe87a5a59b5fcbce22b4e39993102b037f1f2e1d8",
+  "cache_source_checkpoint_sha256": "0d82b5c8a2287e85a9ca02a5c3137fb0e747d033eb4b3c224eebe5ad7e998774",
+  "fixed_causal_backbone_state_tensors_equal": 267,
+  "expected_samples": 600,
+  "device": "cpu",
+  "workers": 2,
+  "threads_per_worker": 2,
+  "zero_bin_phase_convention": "angle(0)=0",
+  "reference_assisted": true,
+  "raw_model_score_separate": true,
+  "estimated_waveforms_saved": false,
+  "training_updates": 0,
+  "audio_paths_and_audio_hashes_exported": false,
+  "formal_goal_target": 3.4,
+  "formal_goal_achieved": false,
+  "completed_samples": 600,
+  "formal_raw_model_full600_wb_pesq": 2.9588393249114353,
+  "cached_cpu_minus_formal_raw_pesq": -0.00026788989702852817,
+  "mean_wb_pesq": {
+    "raw_model": 2.958571435014407,
+    "reference_magnitude_model_phase": 3.668717147310575,
+    "model_magnitude_reference_phase": 3.2607454405228298
+  },
+  "mean_reference_assisted_delta": {
+    "reference_magnitude_model_phase": 0.710145712296168,
+    "model_magnitude_reference_phase": 0.3021740055084228
+  },
+  "by_nominal_snr": {
+    "-2": {
+      "count": 161,
+      "mean_wb_pesq": {
+        "raw_model": 2.810324960613843,
+        "reference_magnitude_model_phase": 3.5402652639779983,
+        "model_magnitude_reference_phase": 3.1335034474082617
+      }
+    },
+    "-5": {
+      "count": 140,
+      "mean_wb_pesq": {
+        "raw_model": 2.61130833029747,
+        "reference_magnitude_model_phase": 3.3956659197807313,
+        "model_magnitude_reference_phase": 2.9154970714024135
+      }
+    },
+    "0": {
+      "count": 149,
+      "mean_wb_pesq": {
+        "raw_model": 3.198669280781842,
+        "reference_magnitude_model_phase": 3.8647700036132098,
+        "model_magnitude_reference_phase": 3.481591086259624
+      }
+    },
+    "2": {
+      "count": 150,
+      "mean_wb_pesq": {
+        "raw_model": 3.2033043551445006,
+        "reference_magnitude_model_phase": 3.8666908105214435,
+        "model_magnitude_reference_phase": 3.5001769828796387
+      }
+    }
+  },
+  "production_code_source_checkpoints_and_metadata_unchanged": true,
+  "elapsed_seconds": 318.71356516401283
+}

@@ -1,0 +1,17 @@
+{
+  "status": "passed",
+  "scope": "Synthetic CPU structure, gradients and actual waveform streaming; no quality claim",
+  "prototype_sha256": "b48e5f05a725cb2a40d5572bdfd62d7b4b2365a8c7351f49b1638dda63a68d65",
+  "trainable_gain_head_parameters": 789701,
+  "initialized_source_error": 0.0,
+  "source_weights_unchanged": true,
+  "source_phase_sine_error": 7.009420954773304e-08,
+  "all_trainable_gradients_finite": true,
+  "future_gradient_nonzero_count": 0,
+  "waveform_hops": 600,
+  "full_vs_stream_waveform_max_error": 1.4901161193847656e-08,
+  "added_state_bytes": 33408,
+  "reference_used_by_model": false,
+  "quality_evaluated": false,
+  "formal_goal_achieved": false
+}
