@@ -1,0 +1,29 @@
+{
+  "scope": "Descriptive cumulative sampler exposure; different prior stages and optimizer states, not an equal-budget architecture ablation",
+  "historical_best": {
+    "checkpoint_sha256": "1fb53e2494442c9161c2023b7e8e3615d6fad0c6d2ab82a0a74e622d2d5a1059",
+    "checkpoint_epoch": 3,
+    "sampler_epoch_offset": 27,
+    "cumulative_sampler_epochs": 30,
+    "unique_parameters": 2579698,
+    "state_tensor_elements_including_aliases": 2682662,
+    "full600_wb_pesq": 2.896308812499046
+  },
+  "current_verified": {
+    "checkpoint_sha256": "b3a1090895474d25a1c29eb8f78ef9a782683d585686f896fea372d66e372f3c",
+    "warm_global_epochs": 4,
+    "completed_spatial_epochs": 2,
+    "cumulative_global_sampler_epochs": 6,
+    "unique_parameters": 45501488,
+    "full600_wb_pesq": 2.2846693980693815
+  },
+  "cuda_used": false,
+  "old_checkpoint_unchanged": true,
+  "subsequent_verified": {
+    "checkpoint_sha256": "e850527d88588b68ef43c5a6ac69410de7884efe00542b41b7fe7d28c9118639",
+    "warm_global_epochs": 4,
+    "completed_spatial_epochs": 3,
+    "cumulative_global_sampler_epochs": 7,
+    "full600_wb_pesq": 2.3130942432085675
+  }
+}

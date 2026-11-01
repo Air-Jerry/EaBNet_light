@@ -1,0 +1,51 @@
+{
+  "status": "complete",
+  "scope": "Fixed32 SNR-stratified training-set diagnostic, not validation/full600 quality or independent generalization",
+  "source_checkpoint_sha256": "1fb53e2494442c9161c2023b7e8e3615d6fad0c6d2ab82a0a74e622d2d5a1059",
+  "cohort_sample_ids_sha256": "03495650d7f2ceb10c4f885419d2be46039ca88d3af43964da6c1d39e1e4a2f5",
+  "seed": 7322,
+  "expected_samples": 32,
+  "completed_samples": 32,
+  "device": "cpu",
+  "decay": 0.98,
+  "diagonal_loading": 0.001,
+  "mask_floor": 0.001,
+  "input_mics": 8,
+  "reference_mic": 0,
+  "frontend": {
+    "sample_rate": 16000,
+    "n_fft": 512,
+    "hop_length": 160,
+    "win_length": 320,
+    "power": 0.5
+  },
+  "gain_clipping_or_alignment": false,
+  "clean_reference_used_for_masks_or_covariances": false,
+  "prototype_registered_for_production": false,
+  "cuda_cost_and_full600_quality_unverified": true,
+  "prototype_sha256": "359562950016c09bb9d1886f3d2033f765a6a70b1a90927fced8ec9686d917c4",
+  "cohort_scope": "training records only",
+  "parameters_selected_before_scores": true,
+  "nice": 19,
+  "cpu_threads": 2,
+  "production_sources_and_source_checkpoint_unchanged": true,
+  "cuda_used": false,
+  "elapsed_seconds": 125.44492720789276,
+  "mean": {
+    "neural": {
+      "pesq": 2.5014248564839363,
+      "stoi": 0.9242669279696836,
+      "estoi": 0.8385638854411299,
+      "si_snr_db": 11.899418463022519,
+      "sdr_db": 12.616811273007453
+    },
+    "souden": {
+      "pesq": 1.5023060142993927,
+      "stoi": 0.8554481082140727,
+      "estoi": 0.7058787031092139,
+      "si_snr_db": 5.6454839220327555,
+      "sdr_db": 6.64181952310424
+    }
+  },
+  "improved_samples": 0
+}
