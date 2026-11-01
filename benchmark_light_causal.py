@@ -77,7 +77,7 @@ def run(args):
             actual = torch.cat(outputs, dim=1)
             difference = (actual - full).abs()
             assert torch.allclose(actual, full, rtol=1e-3, atol=1e-5), difference.max().item()
-            startup_hops = 0 if args.candidate == 'causal_fullband_tcn_v1' else model.context
+            startup_hops = 0 if args.candidate in ('causal_fullband_tcn_v1','causal_fullband_spatial_tcn_v1') else model.context
             steady = np.array(durations[startup_hops:])
             assert len(steady) >= 100
             def tensor_bytes(value):
@@ -109,7 +109,7 @@ def run(args):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--checkpoint")
-    parser.add_argument("--candidate", choices=(CAUSAL_CANDIDATE, "causal_unet_spatial_v1", "causal_unet_global_v1", 'causal_recurrent_spatial_v1', 'causal_recurrent_unet65_v1', 'causal_recurrent_tcn_v1', 'causal_frequency_fourier_v1', 'causal_frequency_attention_v1', 'causal_frequency_attention_kv129_v1', 'causal_frequency_attention_retention_v1', 'causal_fullband_tcn_v1'), default=CAUSAL_CANDIDATE)
+    parser.add_argument("--candidate", choices=(CAUSAL_CANDIDATE, "causal_unet_spatial_v1", "causal_unet_global_v1", 'causal_recurrent_spatial_v1', 'causal_recurrent_unet65_v1', 'causal_recurrent_tcn_v1', 'causal_frequency_fourier_v1', 'causal_frequency_attention_v1', 'causal_frequency_attention_kv129_v1', 'causal_frequency_attention_retention_v1', 'causal_fullband_tcn_v1', 'causal_fullband_spatial_tcn_v1'), default=CAUSAL_CANDIDATE)
     parser.add_argument("--train-dir", default="/data/ssd1/jinrui.yang/training_set")
     parser.add_argument("--output-dir", required=True)
     run(parser.parse_args())

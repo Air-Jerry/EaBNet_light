@@ -9,11 +9,13 @@ train_py="${TRAIN_PY:-$HOME/miniconda3/envs/EaBNet/bin/python}"
 export CUDA_VISIBLE_DEVICES="${CUDA_VISIBLE_DEVICES:-0,1}"
 preflight="$1"
 candidate="${CAUSAL_MODEL_CANDIDATE:-causal_unet_spatial_v1}"
+learning_rate=0.001
 case "$candidate" in
     causal_unet_spatial_v1) entry=train_light_causal_fast.py; run_prefix=causal_fast ;;
     causal_recurrent_spatial_v1) entry=train_light_causal_recurrent.py; run_prefix=causal_recurrent ;;
     causal_recurrent_unet65_v1) entry=train_light_causal_recurrent65.py; run_prefix=causal_recurrent65 ;;
     causal_fullband_tcn_v1) entry=train_light_causal_fullband.py; run_prefix=fullband ;;
+    causal_fullband_spatial_tcn_v1) entry=train_light_causal_fullband_spatial.py; run_prefix=fullband_spatial; learning_rate=0.0003 ;;
     *) printf 'Unsupported cold-start causal candidate: %s\n' "$candidate" >&2; exit 2 ;;
 esac
 train_dir="/data/ssd1/jinrui.yang/training_set"
@@ -42,10 +44,16 @@ assert bench['all_hops_below_10ms'],'Investigate startup/live deadlines before f
 assert bench['full_vs_stream_waveform_max_error']<1e-5
 speeds=re.findall(r'\[PERF\]\[train\].*?samples/s\(local/global\)=[\d.]+/([\d.]+)',(root/'cuda_final/training.log').read_text())
 assert speeds and float(speeds[-1])>=20,'Hot global throughput is insufficient for the one-hour budget'
-if sys.argv[3]=='causal_fullband_tcn_v1':
+if sys.argv[3] in ('causal_fullband_tcn_v1','causal_fullband_spatial_tcn_v1'):
     assert state['args']['causal_training_objective']=='spectral_mrstft_waveform_pmsqe_v1'
     assert state['args']['pmsqe_weight']==.1
-    assert 'train_light_causal_fullband.py' in state['args']['causal_training_implementation_sha256']
+    expected_entry='train_light_causal_fullband_spatial.py' if sys.argv[3]=='causal_fullband_spatial_tcn_v1' else 'train_light_causal_fullband.py'
+    assert expected_entry in state['args']['causal_training_implementation_sha256']
+    if sys.argv[3]=='causal_fullband_spatial_tcn_v1':
+        warm=Path(state['args']['spatial_fullband_warmstart_checkpoint'])
+        assert warm.is_absolute() and hashlib.sha256(warm.read_bytes()).hexdigest()==state['args']['spatial_fullband_warmstart_sha256']
+        source,_=read_candidate_checkpoint(warm,'causal_fullband_tcn_v1')
+        assert int(source['epoch'])==state['args']['spatial_fullband_sample_epoch_offset']>=1
     projection=json.loads((root/'timing_projection.json').read_text())
     baseline=json.loads((root/'zero_mapping_full600/summary.json').read_text())
     assert projection['status']=='measured'
@@ -65,7 +73,8 @@ names={'run_light_quality.sh','continue_light_quality.sh','run_light_metric.sh',
        'train_light_causal.py','train_light_causal_fast.py','check_light_causal_cuda.py','benchmark_light_causal.py',
        'run_light_causal_global.sh','train_light_causal_global.py','train_light_causal_recurrent.py','train_light_causal_recurrent65.py'}
 names.update({'run_light_causal_fullband.sh','train_light_causal_fullband.py',
-    'run_light_causal_retention.sh','train_light_causal_retention.py','run_light_causal_frequency_attention.sh'})
+    'run_light_causal_retention.sh','train_light_causal_retention.py','run_light_causal_frequency_attention.sh',
+    'run_light_causal_fullband_spatial.sh','train_light_causal_fullband_spatial.py'})
 ancestors=set();cursor=os.getpid()
 while cursor>1:
     ancestors.add(cursor)
@@ -88,6 +97,17 @@ check=json.load(open(sys.argv[1]))
 print(check['batch_size_per_gpu'],check['grad_accum_steps'])
 PY_BATCH
 )
+warm=''
+warm_args=()
+if [[ "$candidate" == causal_fullband_spatial_tcn_v1 ]]; then
+    warm=$("$train_py" - "$preflight/cuda_final/checkpoints/model_epoch_2.pt" <<'PY_WARM'
+import sys,torch
+state=torch.load(sys.argv[1],map_location='cpu',weights_only=False)
+print(state['args']['spatial_fullband_warmstart_checkpoint'])
+PY_WARM
+)
+    warm_args=(--warmstart "$warm")
+fi
 run="${run_prefix}_$(date +%Y%m%d_%H%M%S)_$$"
 checkpoints="./checkpoints_${candidate}_${run}"
 best="./bestmodels_${candidate}_${run}"
@@ -125,16 +145,26 @@ evaluate_epoch() {
 }
 
 check_results() {
-    "$train_py" - "$logs" "$candidate" <<'PY_RESULTS'
+    "$train_py" - "$logs" "$candidate" "$warm" <<'PY_RESULTS'
 import json,math,sys
 from pathlib import Path
 root=Path(sys.argv[1])/'pesq_selection';baseline=json.loads((root/'model_epoch_0/summary.json').read_text())
 candidate=sys.argv[2] if len(sys.argv)>2 else 'causal_unet_spatial_v1'
-old=json.loads(Path('logs_cbam_metric_v1/metric_20261030_052113_1573812/pesq_selection/model_epoch_0/summary.json').read_text())
+if candidate=='causal_fullband_spatial_tcn_v1':
+    import hashlib,torch
+    warm=Path(sys.argv[3]).resolve();source=torch.load(warm,map_location='cpu',weights_only=False)
+    old=json.loads((Path(source['args']['log_dir'])/'pesq_selection'/f"model_epoch_{source['epoch']}"/'summary.json').read_text())
+    assert old['status']=='complete' and old['completed_samples']==old['expected_samples']==600
+    assert old['checkpoint_sha256']==hashlib.sha256(warm.read_bytes()).hexdigest()
+    assert old['structure_candidate']=='causal_fullband_tcn_v1'
+else:
+    old=json.loads(Path('logs_cbam_metric_v1/metric_20261030_052113_1573812/pesq_selection/model_epoch_0/summary.json').read_text())
 keys=('frontend','frontend_protocol','num_mics','selected_pairs_sha256','metadata_sha256','metric_protocol')
 for key in keys:assert baseline[key]==old[key],key
 for name,value in old['mean']['noisy'].items():assert abs(baseline['mean']['noisy'][name]-value)<1e-10,name
-for name,value in baseline['mean']['noisy'].items():assert abs(baseline['mean']['enhanced'][name]-value)<1e-3,name
+expected=old['mean']['enhanced'] if candidate=='causal_fullband_spatial_tcn_v1' else baseline['mean']['noisy']
+tolerance=1e-4 if candidate=='causal_fullband_spatial_tcn_v1' else 1e-3
+for name,value in expected.items():assert abs(baseline['mean']['enhanced'][name]-value)<tolerance,name
 rows=[]
 for p in root.glob('model_epoch_*/summary.json'):
     r=json.loads(p.read_text());epoch=int(p.parent.name.rsplit('_',1)[1])
@@ -158,7 +188,7 @@ print(int(result['target_reached']))
 PY_RESULTS
 }
 
-"$train_py" -u "$entry" --train-dir "$train_dir" --val-dir "$val_dir" \
+"$train_py" -u "$entry" "${warm_args[@]}" --train-dir "$train_dir" --val-dir "$val_dir" \
     --checkpoint-dir "$checkpoints" --best-dir "$best" --log-dir "$logs" \
     --num-epochs 0 --parallel-mode none --num-workers 0 --cpu-threads 2 \
     2>&1 | tee "$logs/initialization.log"
@@ -178,7 +208,7 @@ for epoch in {1..30}; do
         --checkpoint-dir "$checkpoints" --best-dir "$best" --log-dir "$logs" \
         --num-epochs "$epoch" --parallel-mode ddp --batch-size "$batch_size" --grad-accum-steps "$grad_accum_steps" \
         --segment-seconds 6 --num-workers 4 --strict-memory no --cpu-threads 2 --cpu-thread-scale 1 \
-        --learning-rate 0.001 --grad-clip 5 --use-amp no --model-amp no --allow-tf32 no \
+        --learning-rate "$learning_rate" --grad-clip 5 --use-amp no --model-amp no --allow-tf32 no \
         --resume yes --resume-reset-lr no --stop-on-non-finite yes --skip-non-finite-batches no \
         --save-every 1 2>&1 | tee -a "$logs/training.log"
     printf 'phase=evaluation epoch=%s\n' "$epoch" >> "$logs/gpu_utilization.log"

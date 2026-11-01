@@ -32,16 +32,20 @@ FREQUENCY_ATTENTION_CANDIDATE = "causal_frequency_attention_v1"
 POOLED_FREQUENCY_ATTENTION_CANDIDATE = "causal_frequency_attention_kv129_v1"
 RETENTION_CANDIDATE = "causal_frequency_attention_retention_v1"
 FULLBAND_TCN_CANDIDATE = "causal_fullband_tcn_v1"
+FULLBAND_SPATIAL_CANDIDATE = "causal_fullband_spatial_tcn_v1"
 IDENTITY_FIELDS = ("sample_rate", "n_fft", "hop_length", "win_length", "power", "target_ref_mic",
                    "channels", "num_mics", "embed_dim", "cd1", "dfsmn_layers", "dfsmn_memory_size",
                    "norm_type", "bf_type", "topo_type", "is_causal")
 
 
 def all_model_candidates():
-    return (*all_reference_candidates(), QUALITY_CANDIDATE, SPATIAL_CANDIDATE, CAUSAL_CANDIDATE, FAST_CANDIDATE, GLOBAL_CANDIDATE, RECURRENT_CANDIDATE, RECURRENT65_CANDIDATE, TCN_CANDIDATE, FOURIER_CANDIDATE, FREQUENCY_ATTENTION_CANDIDATE, POOLED_FREQUENCY_ATTENTION_CANDIDATE, RETENTION_CANDIDATE, FULLBAND_TCN_CANDIDATE)
+    return (*all_reference_candidates(), QUALITY_CANDIDATE, SPATIAL_CANDIDATE, CAUSAL_CANDIDATE, FAST_CANDIDATE, GLOBAL_CANDIDATE, RECURRENT_CANDIDATE, RECURRENT65_CANDIDATE, TCN_CANDIDATE, FOURIER_CANDIDATE, FREQUENCY_ATTENTION_CANDIDATE, POOLED_FREQUENCY_ATTENTION_CANDIDATE, RETENTION_CANDIDATE, FULLBAND_TCN_CANDIDATE, FULLBAND_SPATIAL_CANDIDATE)
 
 
 def build_model_candidate(candidate_id, **model_kwargs):
+    if candidate_id == FULLBAND_SPATIAL_CANDIDATE:
+        from experiments.causal_fullband_spatial_tcn import CausalFullbandSpatialTCN
+        return CausalFullbandSpatialTCN(**model_kwargs)
     if candidate_id == FULLBAND_TCN_CANDIDATE:
         from experiments.causal_fullband_tcn import CausalFullbandTCN
         return CausalFullbandTCN(**model_kwargs)
@@ -85,6 +89,20 @@ def build_model_candidate(candidate_id, **model_kwargs):
 
 
 def candidate_metadata(candidate_id):
+    if candidate_id == FULLBAND_SPATIAL_CANDIDATE:
+        metadata = candidate_metadata(FULLBAND_TCN_CANDIDATE)
+        files = (*metadata['candidate_implementation_sha256'],'experiments/causal_fullband_spatial_tcn.py')
+        metadata.update(structure_candidate=candidate_id,candidate_schema=15,
+            candidate_implementation_sha256=source_hashes(files))
+        evidence = metadata['candidate_evidence']
+        evidence.update(candidate_id=candidate_id,
+            purpose='Joint global full-band context and direct per-frequency causal spatial encoding',
+            initialization='Complete full-band checkpoint; zero extra spatial output; fresh Adam')
+        evidence['model_config'].update(parameters=45501488,cache_bytes_per_stream_fp32=9227520,
+            direct_spatial_path=dict(features_per_frequency=38,channels=64,hidden=96,
+                dilations=[1,2,4,8],kernel=[3,3],past_frames=30,
+                global_condition='Current global representation conditions output after local temporal layers'))
+        return metadata
     if candidate_id == FULLBAND_TCN_CANDIDATE:
         return dict(structure_candidate=candidate_id, candidate_schema=14,
             candidate_implementation_sha256=source_hashes((*CAUSAL_IMPLEMENTATION_FILES,
