@@ -1,0 +1,21 @@
+{
+  "status": "completed_epoch_losses_read_from_actual_training_logs",
+  "checkpoint_sha256": "65691adf4dc09a85f589183b204618a9bcdc92bd8fb3f9ee2738aca8edba546c",
+  "epoch": 1,
+  "train_loss": 0.475797,
+  "val_loss": 0.372835,
+  "learning_rate": 0.0003,
+  "source_retention_epoch3": {
+    "train_loss": 0.476554,
+    "val_loss": 0.372543,
+    "learning_rate": 0.0003,
+    "full600_raw_wb_pesq": 2.896308812499046
+  },
+  "full600_raw_wb_pesq": 2.8973679965734482,
+  "full600_pesq_delta_from_warm_source": 0.001059184074402,
+  "actual_complete_epoch_seconds": 3319.9372816085815,
+  "target_pesq": 3.4,
+  "target_reached": false,
+  "one_epoch_does_not_establish_architecture_ceiling": true,
+  "next_action": "Continue the same formal epoch2 without changing active source or data; inspect at the measured epoch ETA"
+}

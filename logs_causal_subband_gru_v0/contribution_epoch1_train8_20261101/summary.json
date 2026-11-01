@@ -1,0 +1,292 @@
+{
+  "status": "complete",
+  "scope": "Eight fixed training utterances; contribution diagnostic only, not generalization",
+  "checkpoint_sha256": "65691adf4dc09a85f589183b204618a9bcdc92bd8fb3f9ee2738aca8edba546c",
+  "source_checkpoint_sha256": "1fb53e2494442c9161c2023b7e8e3615d6fad0c6d2ab82a0a74e622d2d5a1059",
+  "num_samples": 8,
+  "selected_indices": [
+    5622,
+    9184,
+    14026,
+    20376,
+    49484,
+    52345,
+    52486,
+    52948
+  ],
+  "seed": 1234,
+  "device": "cpu",
+  "cpu_cores": [
+    16,
+    18
+  ],
+  "external_normalization_clipping_or_alignment": false,
+  "target_gain_matching": false,
+  "parameters_updated": false,
+  "group_weight_changes": {
+    "base": {
+      "delta_l2": 25.818914647289915,
+      "current_l2": 531.8791504696566,
+      "relative_to_initial_l2": 0.048715333324552926
+    },
+    "subband_gru": {
+      "delta_l2": 6.548602816218653,
+      "current_l2": 9.591510090967901,
+      "relative_to_initial_l2": 0.8072676123758158
+    },
+    "subband_output": {
+      "delta_l2": 0.04685282243584671,
+      "current_l2": 0.04685282243584671,
+      "relative_to_initial_l2": null
+    }
+  },
+  "elapsed_seconds": 75.07764863106422,
+  "original_source_evaluator_audio_and_checkpoints_unchanged": true,
+  "gpu_used": false,
+  "mean": {
+    "source_retention3": {
+      "pesq": 2.9742948561906815,
+      "stoi": 0.9144637489913616,
+      "estoi": 0.8555622551943995,
+      "si_snr_db": 15.070802774987136,
+      "sdr_db": 16.216849060353958
+    },
+    "trained_base": {
+      "pesq": 2.9881722778081894,
+      "stoi": 0.9153685332617485,
+      "estoi": 0.857215159844517,
+      "si_snr_db": 15.033000726125413,
+      "sdr_db": 16.194414302626086
+    },
+    "trained_full": {
+      "pesq": 2.9877240508794785,
+      "stoi": 0.9153423368968172,
+      "estoi": 0.8571576444026419,
+      "si_snr_db": 15.034277336591575,
+      "sdr_db": 16.19693088592224
+    }
+  },
+  "mean_subband_relative_compressed_spectrum_l2": 0.008172468893462792,
+  "samples": [
+    {
+      "sample_id": "5903",
+      "metrics": {
+        "source_retention3": {
+          "pesq": 1.3012264966964722,
+          "stoi": 0.7056381398606465,
+          "estoi": 0.615416485393505,
+          "si_snr_db": 6.198099341799326,
+          "sdr_db": 6.506757422145956
+        },
+        "trained_base": {
+          "pesq": 1.2546374797821045,
+          "stoi": 0.7068411431776419,
+          "estoi": 0.6104335243096821,
+          "si_snr_db": 5.32974441165611,
+          "sdr_db": 5.755870479454124
+        },
+        "trained_full": {
+          "pesq": 1.2541474103927612,
+          "stoi": 0.7067631521505661,
+          "estoi": 0.6105083608642594,
+          "si_snr_db": 5.32914353795106,
+          "sdr_db": 5.756713456498554
+        }
+      },
+      "subband_relative_compressed_spectrum_l2": 0.014936765655875206
+    },
+    {
+      "sample_id": "9643",
+      "metrics": {
+        "source_retention3": {
+          "pesq": 4.374946594238281,
+          "stoi": 0.9981202318099434,
+          "estoi": 0.9957435615859007,
+          "si_snr_db": 26.158681115475552,
+          "sdr_db": 28.103045346037973
+        },
+        "trained_base": {
+          "pesq": 4.389619827270508,
+          "stoi": 0.9980384076630417,
+          "estoi": 0.995009100273065,
+          "si_snr_db": 26.455891213824504,
+          "sdr_db": 28.103952992273115
+        },
+        "trained_full": {
+          "pesq": 4.390690326690674,
+          "stoi": 0.9980458209394717,
+          "estoi": 0.9950244269591734,
+          "si_snr_db": 26.46379410205856,
+          "sdr_db": 28.11080303151789
+        }
+      },
+      "subband_relative_compressed_spectrum_l2": 0.004548215307295322
+    },
+    {
+      "sample_id": "14727",
+      "metrics": {
+        "source_retention3": {
+          "pesq": 3.9354536533355713,
+          "stoi": 0.9945801332758423,
+          "estoi": 0.9837778267086609,
+          "si_snr_db": 18.69529284005314,
+          "sdr_db": 20.439579367794604
+        },
+        "trained_base": {
+          "pesq": 3.9390671253204346,
+          "stoi": 0.9945626379980969,
+          "estoi": 0.984139499225529,
+          "si_snr_db": 18.44938980638226,
+          "sdr_db": 20.272605896252472
+        },
+        "trained_full": {
+          "pesq": 3.9388275146484375,
+          "stoi": 0.9945643062519975,
+          "estoi": 0.9841493538229046,
+          "si_snr_db": 18.451123666854986,
+          "sdr_db": 20.279050025782052
+        }
+      },
+      "subband_relative_compressed_spectrum_l2": 0.005215347278863192
+    },
+    {
+      "sample_id": "21394",
+      "metrics": {
+        "source_retention3": {
+          "pesq": 1.1798313856124878,
+          "stoi": 0.8000874032136026,
+          "estoi": 0.6412788887781222,
+          "si_snr_db": 1.8008981480428023,
+          "sdr_db": 2.559466497367718
+        },
+        "trained_base": {
+          "pesq": 1.1877344846725464,
+          "stoi": 0.794724869529201,
+          "estoi": 0.6423319658411407,
+          "si_snr_db": 1.7682568823108142,
+          "sdr_db": 2.45636733583966
+        },
+        "trained_full": {
+          "pesq": 1.187713384628296,
+          "stoi": 0.7945774773298087,
+          "estoi": 0.6418499772782782,
+          "si_snr_db": 1.767787317576628,
+          "sdr_db": 2.455216748173155
+        }
+      },
+      "subband_relative_compressed_spectrum_l2": 0.01556456834077835
+    },
+    {
+      "sample_id": "51958",
+      "metrics": {
+        "source_retention3": {
+          "pesq": 1.9019132852554321,
+          "stoi": 0.9102879346118686,
+          "estoi": 0.8071543468210641,
+          "si_snr_db": 9.000687246684455,
+          "sdr_db": 9.347260675722225
+        },
+        "trained_base": {
+          "pesq": 2.036958694458008,
+          "stoi": 0.9191497439416326,
+          "estoi": 0.8217066864268773,
+          "si_snr_db": 9.326259918410651,
+          "sdr_db": 9.682888735767634
+        },
+        "trained_full": {
+          "pesq": 2.036229133605957,
+          "stoi": 0.9191721109048291,
+          "estoi": 0.8216635799927415,
+          "si_snr_db": 9.329044428420113,
+          "sdr_db": 9.684642772252799
+        }
+      },
+      "subband_relative_compressed_spectrum_l2": 0.007794322445988655
+    },
+    {
+      "sample_id": "54962",
+      "metrics": {
+        "source_retention3": {
+          "pesq": 4.3090972900390625,
+          "stoi": 0.9809173376242921,
+          "estoi": 0.9493978572747113,
+          "si_snr_db": 25.58718206443128,
+          "sdr_db": 27.491853799768915
+        },
+        "trained_base": {
+          "pesq": 4.295516014099121,
+          "stoi": 0.9825502881044029,
+          "estoi": 0.953598030746006,
+          "si_snr_db": 25.529001815031933,
+          "sdr_db": 27.500162857551654
+        },
+        "trained_full": {
+          "pesq": 4.294989585876465,
+          "stoi": 0.9825310669687326,
+          "estoi": 0.9535456491736487,
+          "si_snr_db": 25.526142999045835,
+          "sdr_db": 27.49632253047317
+        }
+      },
+      "subband_relative_compressed_spectrum_l2": 0.005994206294417381
+    },
+    {
+      "sample_id": "55110",
+      "metrics": {
+        "source_retention3": {
+          "pesq": 3.918045997619629,
+          "stoi": 0.9943801592425008,
+          "estoi": 0.9847545635323517,
+          "si_snr_db": 21.27771358561624,
+          "sdr_db": 23.171443533703272
+        },
+        "trained_base": {
+          "pesq": 3.9243080615997314,
+          "stoi": 0.9944860574327603,
+          "estoi": 0.9845109390555475,
+          "si_snr_db": 21.5631235140724,
+          "sdr_db": 23.71353863100207
+        },
+        "trained_full": {
+          "pesq": 3.923510789871216,
+          "stoi": 0.9944848354344842,
+          "estoi": 0.9845328860009936,
+          "si_snr_db": 21.564641497374318,
+          "sdr_db": 23.72244556728426
+        }
+      },
+      "subband_relative_compressed_spectrum_l2": 0.0074625276029109955
+    },
+    {
+      "sample_id": "55595",
+      "metrics": {
+        "source_retention3": {
+          "pesq": 2.8738441467285156,
+          "stoi": 0.9316986522921963,
+          "estoi": 0.8669745114608804,
+          "si_snr_db": 11.847867857794283,
+          "sdr_db": 12.115385840291008
+        },
+        "trained_base": {
+          "pesq": 2.8775365352630615,
+          "stoi": 0.9325951182472103,
+          "estoi": 0.8659915328782885,
+          "si_snr_db": 11.842338247314634,
+          "sdr_db": 12.069927492867965
+        },
+        "trained_full": {
+          "pesq": 2.8756842613220215,
+          "stoi": 0.9325999251946476,
+          "estoi": 0.865986921129136,
+          "si_snr_db": 11.8425411434511,
+          "sdr_db": 12.07025295539604
+        }
+      },
+      "subband_relative_compressed_spectrum_l2": 0.0038637982215732336
+    }
+  ],
+  "private_audio_paths_and_hashes_exported": false,
+  "formal_full600_pesq": 2.8973679965734482,
+  "target_pesq": 3.4,
+  "target_reached": false
+}
