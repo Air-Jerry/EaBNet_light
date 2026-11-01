@@ -52,7 +52,7 @@ def run(args):
             "--cpu-threads", "2", "--cpu-thread-scale", "1", "--use-amp", "no", "--model-amp", "no",
             "--allow-tf32", "no", "--stop-on-non-finite", "yes", "--skip-non-finite-batches", "no", "--save-every", "1"]
         if args.warmstart:
-            if args.entry not in ('train_light_causal_global.py', 'train_light_causal_tcn.py', 'train_light_causal_fourier.py', 'train_light_causal_pmsqe.py', 'train_light_causal_frequency_attention.py', 'train_light_causal_pooled_attention.py', 'train_light_causal_compiled_attention.py', 'train_light_causal_retention.py', 'train_light_causal_fullband_spatial.py', 'train_light_causal_subband.py', 'train_light_causal_conditioned_subband.py', 'train_light_causal_frozen_conditioned_subband.py'):
+            if args.entry not in ('train_light_causal_global.py', 'train_light_causal_tcn.py', 'train_light_causal_fourier.py', 'train_light_causal_pmsqe.py', 'train_light_causal_frequency_attention.py', 'train_light_causal_pooled_attention.py', 'train_light_causal_compiled_attention.py', 'train_light_causal_retention.py', 'train_light_causal_fullband_spatial.py', 'train_light_causal_subband.py', 'train_light_causal_conditioned_subband.py', 'train_light_causal_frozen_conditioned_subband.py', 'train_light_causal_spatial_conditioned_subband.py'):
                 raise ValueError('The selected entry does not accept --warmstart')
             command.extend(['--warmstart',str(Path(args.warmstart).expanduser().resolve())])
         if args.entry == 'train_light_causal_pmsqe.py':
@@ -78,14 +78,14 @@ def run(args):
         state = torch.load(checkpoints / "model_epoch_2.pt", map_location="cpu", weights_only=False)
         weights = state["model_state_dict"]
         assert state["epoch"] == 2
-        if state.get('args', {}).get('structure_candidate') in ('causal_retention_subband_gru_v1', 'causal_fullband_conditioned_subband_v1', 'causal_frozen_conditioned_subband_v1'):
+        if state.get('args', {}).get('structure_candidate') in ('causal_retention_subband_gru_v1', 'causal_fullband_conditioned_subband_v1', 'causal_frozen_conditioned_subband_v1', 'causal_spatial_conditioned_subband_v1'):
             from light_candidate_runtime import build_model_candidate, read_candidate_checkpoint
             selected_candidate = state['args']['structure_candidate']
             read_candidate_checkpoint(checkpoints / 'model_epoch_2.pt', selected_candidate)
             model = build_model_candidate(selected_candidate)
             model.load_state_dict(weights, strict=True)
             assert model.is_causal and model.base.is_causal
-            fixed_base = selected_candidate == 'causal_frozen_conditioned_subband_v1'
+            fixed_base = selected_candidate in ('causal_frozen_conditioned_subband_v1', 'causal_spatial_conditioned_subband_v1')
             assert all(p.requires_grad != fixed_base for p in model.base.parameters())
             assert all(p.requires_grad for name, p in model.named_parameters() if not name.startswith('base.'))
             assert state['args']['candidate_evidence']['base_candidate'] == 'causal_frequency_attention_retention_v1'
@@ -100,7 +100,7 @@ def run(args):
         assert all(torch.isfinite(value).all() for item in optimizer.values()
                    for value in item.values() if isinstance(value, torch.Tensor))
         changed = sum(not torch.equal(value, zero["model_state_dict"][name]) for name, value in weights.items())
-        fixed_base = state.get('args', {}).get('structure_candidate') == 'causal_frozen_conditioned_subband_v1'
+        fixed_base = state.get('args', {}).get('structure_candidate') in ('causal_frozen_conditioned_subband_v1', 'causal_spatial_conditioned_subband_v1')
         if fixed_base:
             frozen = [name for name in weights if name.startswith('base.')]
             trainable = [name for name in weights if not name.startswith('base.')]
@@ -138,7 +138,7 @@ if __name__ == "__main__":
     parser.add_argument("--train-dir", default="/data/ssd1/jinrui.yang/training_set")
     parser.add_argument("--batch-size", type=int, choices=(1, 2, 4), default=1)
     parser.add_argument("--num-samples", type=int, default=32)
-    parser.add_argument("--entry", choices=("train_light_causal.py", "train_light_causal_fast.py", "train_light_causal_global.py", "train_light_causal_recurrent.py", "train_light_causal_recurrent65.py", "train_light_causal_tcn.py", "train_light_causal_fourier.py", "train_light_causal_pmsqe.py", "train_light_causal_frequency_attention.py", "train_light_causal_pooled_attention.py", "train_light_causal_compiled_attention.py", "train_light_causal_retention.py", "train_light_causal_fullband.py", "train_light_causal_fullband_spatial.py", "train_light_causal_subband.py", "train_light_causal_conditioned_subband.py", "train_light_causal_frozen_conditioned_subband.py"), default="train_light_causal.py")
+    parser.add_argument("--entry", choices=("train_light_causal.py", "train_light_causal_fast.py", "train_light_causal_global.py", "train_light_causal_recurrent.py", "train_light_causal_recurrent65.py", "train_light_causal_tcn.py", "train_light_causal_fourier.py", "train_light_causal_pmsqe.py", "train_light_causal_frequency_attention.py", "train_light_causal_pooled_attention.py", "train_light_causal_compiled_attention.py", "train_light_causal_retention.py", "train_light_causal_fullband.py", "train_light_causal_fullband_spatial.py", "train_light_causal_subband.py", "train_light_causal_conditioned_subband.py", "train_light_causal_frozen_conditioned_subband.py", "train_light_causal_spatial_conditioned_subband.py"), default="train_light_causal.py")
     parser.add_argument('--frequency-fourier', choices=('yes','no'), default='no')
     parser.add_argument("--warmstart")
     parser.add_argument("--output-dir", required=True)

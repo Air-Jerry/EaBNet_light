@@ -1,0 +1,73 @@
+{
+  "status": "complete",
+  "scope": "Matched additional head-only updates on256 training records and all600 comparison records; not full53600 formal training or goal completion",
+  "source_checkpoint_sha256": "0d82b5c8a2287e85a9ca02a5c3137fb0e747d033eb4b3c224eebe5ad7e998774",
+  "prototype_sha256": "254a4c0c27cccbcf5a956c4e232cab7391f234b16c438a1b26438357528fd2c2",
+  "device": "cuda",
+  "physical_gpu": 1,
+  "seed": 1234,
+  "global_batch": 8,
+  "microbatch": 4,
+  "grad_accum_steps": 2,
+  "learning_rate": 0.001,
+  "updates_per_variant": 256,
+  "validation_samples": 600,
+  "source_audio_features_and_audio_hashes_exported": false,
+  "fitted_weights_saved_or_deployed": false,
+  "target_gain_matching": false,
+  "external_normalization_clipping_or_alignment": false,
+  "pretrained_source_has_seen_training_records": true,
+  "comparison_records_used_for_updates": false,
+  "formal_goal_target": 3.4,
+  "formal_goal_achieved": false,
+  "results": {
+    "control": {
+      "completed_updates": 256,
+      "training_presentations": 2048,
+      "per_record_presentations": 8,
+      "full600_wb_pesq": 2.945104943315188,
+      "initial_full600_wb_pesq": 2.9541060400009154,
+      "full600_gain": -0.009001096685727437,
+      "first20_loss": 0.48373073190450666,
+      "last20_loss": 0.445913664996624,
+      "elapsed_seconds": 73.73525989591144,
+      "all_weights_gradients_and_adam_finite": true
+    },
+    "spatial": {
+      "completed_updates": 256,
+      "training_presentations": 2048,
+      "per_record_presentations": 8,
+      "full600_wb_pesq": 2.9555245860417685,
+      "initial_full600_wb_pesq": 2.9541060400009154,
+      "full600_gain": 0.0014185460408528646,
+      "first20_loss": 0.4837272509932518,
+      "last20_loss": 0.44484235942363737,
+      "elapsed_seconds": 79.50906558404677,
+      "all_weights_gradients_and_adam_finite": true
+    }
+  },
+  "initial_source_pesq": 2.9541060400009154,
+  "initial_control_new_spatial_max_spectral_error": 0.0,
+  "cached_base_minus_actual_source_wb_pesq": -0.0001401060819627986,
+  "paired_spatial_minus_control_mean": 0.010419642726580303,
+  "improved_count": 382,
+  "improved_above_point01": 247,
+  "regressed_above_point01": 98,
+  "elapsed_seconds": 299.25043028220534,
+  "actual_trained_head_full_model_runtime": {
+    "parameters": 5058680,
+    "future_perturbation_max_error": 0.0,
+    "full_vs_stream_waveform_max_error": 7.599592208862305e-07,
+    "measured_hops": 600,
+    "all_hop_ms": {
+      "mean": 4.949351518104474,
+      "p99": 5.0177237880416214,
+      "max": 5.8120249304920435
+    },
+    "all_hops_below_10ms": true,
+    "added_cache_bytes": 1024,
+    "bounded_model_cache_bytes": 6119824,
+    "warmup_state_discarded": true
+  },
+  "original_source_evaluator_and_checkpoint_unchanged": true
+}

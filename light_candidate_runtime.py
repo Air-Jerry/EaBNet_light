@@ -36,16 +36,20 @@ FULLBAND_SPATIAL_CANDIDATE = "causal_fullband_spatial_tcn_v1"
 SUBBAND_GRU_CANDIDATE = "causal_retention_subband_gru_v1"
 CONDITIONED_SUBBAND_CANDIDATE = "causal_fullband_conditioned_subband_v1"
 FROZEN_CONDITIONED_CANDIDATE = "causal_frozen_conditioned_subband_v1"
+SPATIAL_CONDITIONED_CANDIDATE = "causal_spatial_conditioned_subband_v1"
 IDENTITY_FIELDS = ("sample_rate", "n_fft", "hop_length", "win_length", "power", "target_ref_mic",
                    "channels", "num_mics", "embed_dim", "cd1", "dfsmn_layers", "dfsmn_memory_size",
                    "norm_type", "bf_type", "topo_type", "is_causal")
 
 
 def all_model_candidates():
-    return (*all_reference_candidates(), QUALITY_CANDIDATE, SPATIAL_CANDIDATE, CAUSAL_CANDIDATE, FAST_CANDIDATE, GLOBAL_CANDIDATE, RECURRENT_CANDIDATE, RECURRENT65_CANDIDATE, TCN_CANDIDATE, FOURIER_CANDIDATE, FREQUENCY_ATTENTION_CANDIDATE, POOLED_FREQUENCY_ATTENTION_CANDIDATE, RETENTION_CANDIDATE, FULLBAND_TCN_CANDIDATE, FULLBAND_SPATIAL_CANDIDATE, SUBBAND_GRU_CANDIDATE, CONDITIONED_SUBBAND_CANDIDATE, FROZEN_CONDITIONED_CANDIDATE)
+    return (*all_reference_candidates(), QUALITY_CANDIDATE, SPATIAL_CANDIDATE, CAUSAL_CANDIDATE, FAST_CANDIDATE, GLOBAL_CANDIDATE, RECURRENT_CANDIDATE, RECURRENT65_CANDIDATE, TCN_CANDIDATE, FOURIER_CANDIDATE, FREQUENCY_ATTENTION_CANDIDATE, POOLED_FREQUENCY_ATTENTION_CANDIDATE, RETENTION_CANDIDATE, FULLBAND_TCN_CANDIDATE, FULLBAND_SPATIAL_CANDIDATE, SUBBAND_GRU_CANDIDATE, CONDITIONED_SUBBAND_CANDIDATE, FROZEN_CONDITIONED_CANDIDATE, SPATIAL_CONDITIONED_CANDIDATE)
 
 
 def build_model_candidate(candidate_id, **model_kwargs):
+    if candidate_id == SPATIAL_CONDITIONED_CANDIDATE:
+        from experiments.causal_spatial_conditioned_subband import CausalSpatialConditionedSubband
+        return CausalSpatialConditionedSubband(build_model_candidate(RETENTION_CANDIDATE, **model_kwargs))
     if candidate_id == FROZEN_CONDITIONED_CANDIDATE:
         from experiments.causal_frozen_conditioned_subband import CausalFrozenBaseConditionedSubband
         return CausalFrozenBaseConditionedSubband(build_model_candidate(RETENTION_CANDIDATE, **model_kwargs))
@@ -101,6 +105,23 @@ def build_model_candidate(candidate_id, **model_kwargs):
 
 
 def candidate_metadata(candidate_id):
+    if candidate_id == SPATIAL_CONDITIONED_CANDIDATE:
+        metadata = candidate_metadata(FROZEN_CONDITIONED_CANDIDATE)
+        files = (*metadata['candidate_implementation_sha256'], 'experiments/causal_spatial_conditioned_subband.py')
+        metadata.update(structure_candidate=candidate_id, candidate_schema=19,
+                        candidate_implementation_sha256=source_hashes(files))
+        evidence = metadata['candidate_evidence']
+        evidence.pop('warm_start_candidates')
+        evidence.update(candidate_id=candidate_id, warm_start_candidate=FROZEN_CONDITIONED_CANDIDATE,
+            purpose='Global causal temporal conditioning from microphone phase, level and speech cues across frequency',
+            initialization='Complete trained fixed-base conditioned checkpoint; zero additional spatial condition; fixed causal backbone; fresh head Adam')
+        evidence['model_config'].update(parameters=5058680,trainable_parameters=2478982,
+            global_spatial_condition=dict(input_features=40,frequency_channels=32,
+                frequency_kernels=[5,3,3,3],frequency_stride=2,frequency_bins_after_encoder=17,
+                temporal_kernels=1,recurrent_hidden=256,bidirectional=False,condition_channels=16,
+                extra_parameters=1688720,extra_cache_bytes_per_stream_fp32=1024,
+                normalization='Current-frame channel LayerNorm only'))
+        return metadata
     if candidate_id == FROZEN_CONDITIONED_CANDIDATE:
         metadata = candidate_metadata(CONDITIONED_SUBBAND_CANDIDATE)
         files = (*metadata['candidate_implementation_sha256'], 'experiments/causal_frozen_conditioned_subband.py')

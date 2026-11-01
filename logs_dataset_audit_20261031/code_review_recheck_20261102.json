@@ -1,0 +1,70 @@
+{
+  "checked_at_utc": "2026-11-01T17:19:46.601610+00:00",
+  "generator_sha256": "289d8541c4952592b93737c71010b02a434e7424bc53aad65259d2e22957000e",
+  "original_functions_exercised": [
+    "inverse_sabine",
+    "polar_to_xy",
+    "rms",
+    "main (acoustics stubbed)"
+  ],
+  "geometry_counterexample": {
+    "requested_degrees": [
+      45,
+      60
+    ],
+    "requested_radius_m": 3.0,
+    "actual_target_m": [
+      2.8,
+      2.8,
+      1.2
+    ],
+    "actual_noise_m": [
+      2.8,
+      2.8,
+      1.2
+    ],
+    "actual_radius_m": 0.4242640687119283,
+    "source_positions_collide": true
+  },
+  "rt60_counterexample": {
+    "room_m": [
+      10,
+      10,
+      3
+    ],
+    "requested_rt60_s": 0.05,
+    "required_sabine_absorption": 3.0187500000000003,
+    "returned_absorption": 0.99,
+    "actual_rir_not_simulated_this_check": true
+  },
+  "zero_noise_rms": 1e-06,
+  "zero_noise_guard_reachable": false,
+  "resume_test": {
+    "generator_sha256": "289d8541c4952592b93737c71010b02a434e7424bc53aad65259d2e22957000e",
+    "original_main_exercised": true,
+    "acoustic_generation_stubbed": true,
+    "seed": 1234,
+    "uninterrupted_samples": 21,
+    "resumed_samples": 21,
+    "interrupted_after_committed_samples": 3,
+    "prefix_equal_before_interruption": 3,
+    "mismatched_rng_draws_after_resume": 18,
+    "resume_restarts_rng_sequence": true,
+    "missing_previous_audio_not_validated": true,
+    "original_source_modified": false,
+    "status": "complete"
+  },
+  "float_wav_preserves_values_outside_unit_range": true,
+  "current_loader": {
+    "first_mics": 8,
+    "target_reference_channel": 0,
+    "external_normalization": "none"
+  },
+  "existing_waveform_evidence_date": "2026-10-31",
+  "existing_comparison_waveform_pairs_checked": 600,
+  "existing_training_waveform_pairs_sampled": 560,
+  "full_training_waveforms_not_reaudited": true,
+  "source_and_comments_unchanged": true,
+  "existing_audio_and_training_unchanged": true,
+  "status": "completed_code_review"
+}
