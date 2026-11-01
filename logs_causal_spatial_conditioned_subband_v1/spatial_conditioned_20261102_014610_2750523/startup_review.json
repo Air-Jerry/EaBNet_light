@@ -1,0 +1,22 @@
+{
+  "status": "formal_initialization_full600_and_live_launcher_verified",
+  "formal_pid": 2750523,
+  "formal_cookie": "150329860",
+  "formal_run": "spatial_conditioned_20261102_014610_2750523",
+  "sampler_offset": 38,
+  "initialized_from_completed_source_epoch": 3,
+  "source_checkpoint_sha256": "5d6f0df91ab9fe51e62deedfe87a5a59b5fcbce22b4e39993102b037f1f2e1d8",
+  "formal_baseline_full600_pesq": 2.9588393249114353,
+  "existing_source_weights_preserved": true,
+  "extra_spatial_projection_zero": true,
+  "fresh_adam_empty": true,
+  "deployed_file_count_verified": 103,
+  "user_evaluator_unchanged": true,
+  "parameters": 5058680,
+  "trainable_parameters": 2478982,
+  "frozen_causal_parameters": 2579698,
+  "next_detailed_not_before_unix": 1793557749.2158835,
+  "training_updates_and_quality_still_unverified": true,
+  "target_pesq": 3.4,
+  "target_achieved": false
+}

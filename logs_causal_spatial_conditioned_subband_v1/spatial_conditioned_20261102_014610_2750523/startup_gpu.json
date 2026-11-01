@@ -1,0 +1,40 @@
+{
+  "status": "live_dual_rank_startup_and_existing_gpu_sampler_verified",
+  "formal_pid": 2750523,
+  "formal_cookie": "150329860",
+  "workers": [
+    {
+      "pid": 2751831,
+      "parent_pid": 2751828,
+      "cookie": "150351421"
+    },
+    {
+      "pid": 2751832,
+      "parent_pid": 2751828,
+      "cookie": "150351421"
+    }
+  ],
+  "batch_size_per_gpu": 4,
+  "grad_accum_steps": 1,
+  "global_batch_size": 8,
+  "training_samples": 53600,
+  "validation_samples": 600,
+  "additional_gpu_queries": 0,
+  "scope": "Startup only; not full-epoch GPU utilization or speed",
+  "gpu": [
+    {
+      "index": 0,
+      "train_samples_available": 31,
+      "recent_samples": 6,
+      "recent_mean_utilization_pct": 98.0,
+      "sampled_peak_memory_mib": 5005.0
+    },
+    {
+      "index": 1,
+      "train_samples_available": 31,
+      "recent_samples": 6,
+      "recent_mean_utilization_pct": 98.66666666666667,
+      "sampled_peak_memory_mib": 4987.0
+    }
+  ]
+}

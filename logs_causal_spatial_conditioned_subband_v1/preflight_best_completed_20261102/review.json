@@ -1,0 +1,16 @@
+{
+  "status": "passed_staged_dual_cuda_streaming_and_full600_source_identity",
+  "candidate": "causal_spatial_conditioned_subband_v1",
+  "parameters": 5058680,
+  "cuda_adam_updates": 64,
+  "all_weights_and_adam_finite": true,
+  "source_checkpoint_sha256": "5d6f0df91ab9fe51e62deedfe87a5a59b5fcbce22b4e39993102b037f1f2e1d8",
+  "source_epoch": 3,
+  "frozen_causal_weights_unchanged": true,
+  "trainable_parameters": 2478982,
+  "frozen_causal_parameters": 2579698,
+  "full600_warm_pesq": 2.9588393249114353,
+  "source_full600_pesq": 2.9588393249114353,
+  "projected_complete_epoch_seconds": 2547.920200685544,
+  "formal_training_quality_and_actual_epoch_time_unverified": true
+}
