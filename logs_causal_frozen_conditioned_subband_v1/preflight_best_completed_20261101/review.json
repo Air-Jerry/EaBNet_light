@@ -1,0 +1,15 @@
+{
+  "status": "passed_staged_dual_cuda_streaming_and_full600_source_identity",
+  "candidate": "causal_frozen_conditioned_subband_v1",
+  "cuda_adam_updates": 64,
+  "all_weights_and_adam_finite": true,
+  "source_checkpoint_sha256": "1244d9efab485d4e834e93dcb60b1310311c643acfe19049121904a32cf16d08",
+  "source_epoch": 2,
+  "frozen_causal_weights_unchanged": true,
+  "trainable_parameters": 790262,
+  "frozen_causal_parameters": 2579698,
+  "full600_warm_pesq": 2.94880667646726,
+  "source_full600_pesq": 2.94880667646726,
+  "projected_complete_epoch_seconds": 2438.869038688019,
+  "formal_training_quality_and_actual_epoch_time_unverified": true
+}

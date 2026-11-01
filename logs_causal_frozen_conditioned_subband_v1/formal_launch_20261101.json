@@ -1,0 +1,25 @@
+{
+  "status": "formal_launched_after_staged_preflight",
+  "formal_pid": 2716074,
+  "formal_cookie": "149520071",
+  "launched_unix": 1793547070.2623348,
+  "formal_log": "/home/nis/jinrui.yang/EaBNet_light/logs_causal_frozen_conditioned_subband_v1/full_train_launch_20261101.log",
+  "source_checkpoint_sha256": "1244d9efab485d4e834e93dcb60b1310311c643acfe19049121904a32cf16d08",
+  "source_full600_pesq": 2.94880667646726,
+  "candidate": "causal_frozen_conditioned_subband_v1",
+  "projected_complete_epoch_seconds": 2438.869038688019,
+  "original_completed_epochs_preserved": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "user_evaluator_unchanged": true,
+  "formal_full600_quality_and_actual_complete_epoch_time_unverified": true,
+  "formal_run": "frozen_conditioned_20261101_233112_2716074",
+  "formal_log_dir": "/home/nis/jinrui.yang/EaBNet_light/logs_causal_frozen_conditioned_subband_v1/frozen_conditioned_20261101_233112_2716074",
+  "formal_checkpoint_dir": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_causal_frozen_conditioned_subband_v1_frozen_conditioned_20261101_233112_2716074",
+  "actual_formal_baseline_full600_pesq": 2.94880667646726,
+  "next_observed_epoch": 1,
+  "next_detailed_not_before_unix": 1793549539.4532497
+}

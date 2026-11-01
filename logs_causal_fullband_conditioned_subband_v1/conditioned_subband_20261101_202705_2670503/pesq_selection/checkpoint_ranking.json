@@ -20,6 +20,12 @@
       "pesq": 2.94880667646726,
       "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_causal_fullband_conditioned_subband_v1_conditioned_subband_20261101_202705_2670503/model_epoch_2.pt",
       "checkpoint_sha256": "1244d9efab485d4e834e93dcb60b1310311c643acfe19049121904a32cf16d08"
+    },
+    {
+      "epoch": 3,
+      "pesq": 2.919976534644763,
+      "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_causal_fullband_conditioned_subband_v1_conditioned_subband_20261101_202705_2670503/model_epoch_3.pt",
+      "checkpoint_sha256": "1100eb10f37fdf62696a4298f4f046b5eecd0bec62ddd010fce42decefe78f0b"
     }
   ],
   "best_completed_epoch": 2,
