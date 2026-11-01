@@ -31,16 +31,20 @@ FOURIER_CANDIDATE = "causal_frequency_fourier_v1"
 FREQUENCY_ATTENTION_CANDIDATE = "causal_frequency_attention_v1"
 POOLED_FREQUENCY_ATTENTION_CANDIDATE = "causal_frequency_attention_kv129_v1"
 RETENTION_CANDIDATE = "causal_frequency_attention_retention_v1"
+FULLBAND_TCN_CANDIDATE = "causal_fullband_tcn_v1"
 IDENTITY_FIELDS = ("sample_rate", "n_fft", "hop_length", "win_length", "power", "target_ref_mic",
                    "channels", "num_mics", "embed_dim", "cd1", "dfsmn_layers", "dfsmn_memory_size",
                    "norm_type", "bf_type", "topo_type", "is_causal")
 
 
 def all_model_candidates():
-    return (*all_reference_candidates(), QUALITY_CANDIDATE, SPATIAL_CANDIDATE, CAUSAL_CANDIDATE, FAST_CANDIDATE, GLOBAL_CANDIDATE, RECURRENT_CANDIDATE, RECURRENT65_CANDIDATE, TCN_CANDIDATE, FOURIER_CANDIDATE, FREQUENCY_ATTENTION_CANDIDATE, POOLED_FREQUENCY_ATTENTION_CANDIDATE, RETENTION_CANDIDATE)
+    return (*all_reference_candidates(), QUALITY_CANDIDATE, SPATIAL_CANDIDATE, CAUSAL_CANDIDATE, FAST_CANDIDATE, GLOBAL_CANDIDATE, RECURRENT_CANDIDATE, RECURRENT65_CANDIDATE, TCN_CANDIDATE, FOURIER_CANDIDATE, FREQUENCY_ATTENTION_CANDIDATE, POOLED_FREQUENCY_ATTENTION_CANDIDATE, RETENTION_CANDIDATE, FULLBAND_TCN_CANDIDATE)
 
 
 def build_model_candidate(candidate_id, **model_kwargs):
+    if candidate_id == FULLBAND_TCN_CANDIDATE:
+        from experiments.causal_fullband_tcn import CausalFullbandTCN
+        return CausalFullbandTCN(**model_kwargs)
     if candidate_id == RETENTION_CANDIDATE:
         from experiments.causal_retention_mapping import CausalAttentionRetentionTCN
         return CausalAttentionRetentionTCN(**model_kwargs)
@@ -81,6 +85,22 @@ def build_model_candidate(candidate_id, **model_kwargs):
 
 
 def candidate_metadata(candidate_id):
+    if candidate_id == FULLBAND_TCN_CANDIDATE:
+        return dict(structure_candidate=candidate_id, candidate_schema=14,
+            candidate_implementation_sha256=source_hashes((*CAUSAL_IMPLEMENTATION_FILES,
+                'light_causal_fast_model.py', 'experiments/causal_fullband_tcn.py')),
+            candidate_evidence=dict(candidate_id=candidate_id, author_confirmed=False,
+                exact_reproduction_verified=False, model_causal=True, future_frames=0,
+                purpose='Dense full-band causal TCN with explicit current-frame microphone phase and level cues',
+                model_config=dict(input_features=9766, frequencies=257, microphones=8, channels=512,
+                    temporal_hidden=1024, repeats=3, dilations=[1,2,4,8,16,32,64,128],
+                    layers=24, past_frames=1530, parameters=45352542,
+                    cache_bytes_per_stream_fp32=6266880),
+                initialization='From scratch; zero beamforming residual and mapping; exact reference0 mixture',
+                normalization='Current-frame LayerNorm; input scale uses current reference-mixture frame only',
+                output='Complex8-microphone residual beamforming and compressed RI mapping',
+                frozen_backbone=False, reference_audio_used_at_inference=False,
+                waveform_streaming='512/160/320,16kHz,power0.5;320-sample buffering plus compute/I-O'))
     if candidate_id == RETENTION_CANDIDATE:
         metadata = candidate_metadata(FREQUENCY_ATTENTION_CANDIDATE)
         files = (*metadata['candidate_implementation_sha256'], 'experiments/causal_retention_mapping.py')

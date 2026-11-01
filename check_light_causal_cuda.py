@@ -115,7 +115,7 @@ if __name__ == "__main__":
     parser.add_argument("--train-dir", default="/data/ssd1/jinrui.yang/training_set")
     parser.add_argument("--batch-size", type=int, choices=(1, 2, 4), default=1)
     parser.add_argument("--num-samples", type=int, default=32)
-    parser.add_argument("--entry", choices=("train_light_causal.py", "train_light_causal_fast.py", "train_light_causal_global.py", "train_light_causal_recurrent.py", "train_light_causal_recurrent65.py", "train_light_causal_tcn.py", "train_light_causal_fourier.py", "train_light_causal_pmsqe.py", "train_light_causal_frequency_attention.py", "train_light_causal_pooled_attention.py", "train_light_causal_compiled_attention.py", "train_light_causal_retention.py"), default="train_light_causal.py")
+    parser.add_argument("--entry", choices=("train_light_causal.py", "train_light_causal_fast.py", "train_light_causal_global.py", "train_light_causal_recurrent.py", "train_light_causal_recurrent65.py", "train_light_causal_tcn.py", "train_light_causal_fourier.py", "train_light_causal_pmsqe.py", "train_light_causal_frequency_attention.py", "train_light_causal_pooled_attention.py", "train_light_causal_compiled_attention.py", "train_light_causal_retention.py", "train_light_causal_fullband.py"), default="train_light_causal.py")
     parser.add_argument('--frequency-fourier', choices=('yes','no'), default='no')
     parser.add_argument("--warmstart")
     parser.add_argument("--output-dir", required=True)

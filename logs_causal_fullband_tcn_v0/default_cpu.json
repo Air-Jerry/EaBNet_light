@@ -1,0 +1,25 @@
+{
+  "status": "passed",
+  "scope": "Synthetic6s default-size CPU forward/backward/Adam; not dataset quality or CUDA",
+  "parameters": 45352542,
+  "fullband_channels": 512,
+  "temporal_hidden": 1024,
+  "layers": 24,
+  "past_frames": 1530,
+  "input_features": 9766,
+  "frames": 601,
+  "batch_size": 1,
+  "optimizer_updates": 2,
+  "all_weights_gradients_and_adam_finite": true,
+  "encoder_gradient_nonzero": true,
+  "losses": [
+    7.8095574378967285,
+    7.744936943054199
+  ],
+  "elapsed_seconds": 63.70299999997951,
+  "future_perturbation_max_error": 0.0,
+  "full_vs_stream_waveform_max_error": 1.4901161193847656e-08,
+  "prototype_sha256": "d0a627624895b4e43484f74274cb63954cf4e517b956d5b670aeebec65403ed9",
+  "registered_for_production": false,
+  "full600_quality_and_cuda_cost_unverified": true
+}

@@ -36,3 +36,5 @@ train_light_causal_compiled_attention.py text eol=lf
 run_light_causal_compiled_attention.sh text eol=lf
 train_light_causal_retention.py text eol=lf
 run_light_causal_retention.sh text eol=lf
+train_light_causal_fullband.py text eol=lf
+run_light_causal_fullband.sh text eol=lf

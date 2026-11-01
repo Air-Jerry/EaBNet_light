@@ -13,6 +13,7 @@ case "$candidate" in
     causal_unet_spatial_v1) entry=train_light_causal_fast.py; run_prefix=causal_fast ;;
     causal_recurrent_spatial_v1) entry=train_light_causal_recurrent.py; run_prefix=causal_recurrent ;;
     causal_recurrent_unet65_v1) entry=train_light_causal_recurrent65.py; run_prefix=causal_recurrent65 ;;
+    causal_fullband_tcn_v1) entry=train_light_causal_fullband.py; run_prefix=fullband ;;
     *) printf 'Unsupported cold-start causal candidate: %s\n' "$candidate" >&2; exit 2 ;;
 esac
 train_dir="/data/ssd1/jinrui.yang/training_set"
@@ -41,11 +42,30 @@ assert bench['all_hops_below_10ms'],'Investigate startup/live deadlines before f
 assert bench['full_vs_stream_waveform_max_error']<1e-5
 speeds=re.findall(r'\[PERF\]\[train\].*?samples/s\(local/global\)=[\d.]+/([\d.]+)',(root/'cuda_final/training.log').read_text())
 assert speeds and float(speeds[-1])>=20,'Hot global throughput is insufficient for the one-hour budget'
+if sys.argv[3]=='causal_fullband_tcn_v1':
+    assert state['args']['causal_training_objective']=='spectral_mrstft_waveform_pmsqe_v1'
+    assert state['args']['pmsqe_weight']==.1
+    assert 'train_light_causal_fullband.py' in state['args']['causal_training_implementation_sha256']
+    projection=json.loads((root/'timing_projection.json').read_text())
+    baseline=json.loads((root/'zero_mapping_full600/summary.json').read_text())
+    assert projection['status']=='measured'
+    assert (projection['training_samples'],projection['validation_samples'],projection['metric_samples'])==(53600,600,600)
+    assert projection['cuda_checkpoint_sha256']==check['checkpoint_sha256']
+    assert baseline['status']=='complete' and baseline['completed_samples']==baseline['expected_samples']==600
+    zero=root/'cuda_final/checkpoints/model_epoch_0.pt'
+    assert projection['evaluation_checkpoint_sha256']==baseline['checkpoint_sha256']==hashlib.sha256(zero.read_bytes()).hexdigest()
+    val_rates=re.findall(r'\[PERF\]\[val\].*?samples/s\(local/global\)=[\d.]+/([\d.]+)',(root/'cuda_final/training.log').read_text())
+    assert val_rates
+    predicted=53600/float(speeds[-1])+600/float(val_rates[-1])+projection['full600_evaluation_seconds']+60
+    assert 0<predicted<=3600,'Measured full-band complete-epoch projection exceeds one hour'
+    assert abs(predicted-projection['projected_complete_epoch_seconds'])<1e-6
 assert hashlib.sha256((Path(sys.argv[2])/'metadata.csv').read_bytes()).hexdigest()=='8d0b4d229ebc42cd9892e6d0e0d36416007ded01fbc0b753df4bf7e6b734eb02'
 names={'run_light_quality.sh','continue_light_quality.sh','run_light_metric.sh','run_light_spatial.sh',
        'run_light_causal.sh','train_light_quality.py','train_light_metric.py','train_light_spatial.py',
        'train_light_causal.py','train_light_causal_fast.py','check_light_causal_cuda.py','benchmark_light_causal.py',
        'run_light_causal_global.sh','train_light_causal_global.py','train_light_causal_recurrent.py','train_light_causal_recurrent65.py'}
+names.update({'run_light_causal_fullband.sh','train_light_causal_fullband.py',
+    'run_light_causal_retention.sh','train_light_causal_retention.py','run_light_causal_frequency_attention.sh'})
 ancestors=set();cursor=os.getpid()
 while cursor>1:
     ancestors.add(cursor)

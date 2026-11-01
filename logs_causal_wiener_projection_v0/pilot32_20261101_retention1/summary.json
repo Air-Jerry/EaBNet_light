@@ -1,0 +1,43 @@
+{
+  "status": "complete",
+  "scope": "Fixed32 stratified paired CPU diagnostic, not full600 or independent generalization",
+  "source_checkpoint_sha256": "d46f64cdb805fcf7492ccfcbac37735d01caaa0fdfe074e1db844325c576e3a3",
+  "cohort_sample_ids_sha256": "3c8fee5cd13b8f4950cb8ebad50ecc64361a329ab3961a8e5b4869e632c9ba2d",
+  "seed": 7321,
+  "expected_samples": 32,
+  "completed_samples": 32,
+  "device": "cpu",
+  "decay": 0.96,
+  "diagonal_loading": 0.01,
+  "input_mics": 8,
+  "reference_mic": 0,
+  "frontend": {
+    "sample_rate": 16000,
+    "n_fft": 512,
+    "hop_length": 160,
+    "win_length": 320,
+    "power": 0.5
+  },
+  "gain_clipping_or_alignment": false,
+  "clean_reference_used_for_projection": false,
+  "prototype_registered_for_production": false,
+  "cuda_cost_and_full600_quality_unverified": true,
+  "elapsed_seconds": 115.73223730921745,
+  "mean": {
+    "neural": {
+      "pesq": 2.9593029879033566,
+      "stoi": 0.9695438263043328,
+      "estoi": 0.9275942637325354,
+      "si_snr_db": 15.5245978357924,
+      "sdr_db": 16.77242588479702
+    },
+    "projection": {
+      "pesq": 2.155296143144369,
+      "stoi": 0.9534753177956947,
+      "estoi": 0.8755495186516697,
+      "si_snr_db": 14.107705794392029,
+      "sdr_db": 15.52723639762696
+    }
+  },
+  "improved_samples": 0
+}
