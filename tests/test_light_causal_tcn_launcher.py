@@ -14,7 +14,33 @@ import torch
 ROOT = Path(__file__).resolve().parents[1]
 
 
-@pytest.mark.parametrize('launcher,source_id,target_id', [('run_light_causal_tcn.sh','causal_recurrent_unet65_v1','causal_recurrent_tcn_v1'),('run_light_causal_fourier.sh','causal_recurrent_tcn_v1','causal_frequency_fourier_v1'),('run_light_causal_pmsqe.sh','causal_recurrent_tcn_v1','causal_recurrent_tcn_v1'),('run_light_causal_pmsqe.sh','causal_recurrent_tcn_v1','causal_frequency_fourier_v1'),('run_light_causal_frequency_attention.sh','causal_recurrent_tcn_v1','causal_frequency_attention_v1'),('run_light_causal_pooled_attention.sh','causal_recurrent_tcn_v1','causal_frequency_attention_kv129_v1')])
+@pytest.mark.parametrize('selected', ['plain', 'compiled', 'retention'])
+@pytest.mark.parametrize('measured', ['plain', 'compiled', 'retention'])
+def test_attention_preflight_cannot_reuse_a_different_training_mode(monkeypatch, selected, measured):
+    entries = dict(plain='train_light_causal_frequency_attention.py',
+        compiled='train_light_causal_compiled_attention.py', retention='train_light_causal_retention.py')
+    candidate = lambda mode: 'causal_frequency_attention_retention_v1' if mode == 'retention' else 'causal_frequency_attention_v1'
+    files = {entries['plain']: 'base', entries[measured]: 'entry'}
+    if measured != 'plain':
+        files['experiments/compiled_training_norm.py'] = 'compiled'
+    state = dict(args=dict(causal_training_objective='spectral_mrstft_waveform_pmsqe_v1',
+                           pmsqe_weight=.1, causal_training_implementation_sha256=files))
+    def read_checkpoint(path, expected):
+        assert expected == candidate(measured)
+        return state, expected
+    script = (ROOT / 'run_light_causal_frequency_attention.sh').read_text()
+    marker = 'state,_=read_candidate_checkpoint(p,sys.argv[4])'
+    code = marker + script.split(marker, 1)[1].split('\nwarm=', 1)[0]
+    monkeypatch.setattr(sys, 'argv', ['-', 'preflight', 'dataset', entries[selected], candidate(selected)])
+    namespace = dict(read_candidate_checkpoint=read_checkpoint, p=Path('checkpoint.pt'), sys=sys)
+    if selected == measured:
+        exec(compile(code, 'training-mode binding', 'exec'), namespace)
+    else:
+        with pytest.raises(AssertionError):
+            exec(compile(code, 'training-mode binding', 'exec'), namespace)
+
+
+@pytest.mark.parametrize('launcher,source_id,target_id', [('run_light_causal_tcn.sh','causal_recurrent_unet65_v1','causal_recurrent_tcn_v1'),('run_light_causal_fourier.sh','causal_recurrent_tcn_v1','causal_frequency_fourier_v1'),('run_light_causal_pmsqe.sh','causal_recurrent_tcn_v1','causal_recurrent_tcn_v1'),('run_light_causal_pmsqe.sh','causal_recurrent_tcn_v1','causal_frequency_fourier_v1'),('run_light_causal_frequency_attention.sh','causal_recurrent_tcn_v1','causal_frequency_attention_v1'),('run_light_causal_pooled_attention.sh','causal_recurrent_tcn_v1','causal_frequency_attention_kv129_v1'),('run_light_causal_frequency_attention.sh','causal_frequency_attention_v1','causal_frequency_attention_retention_v1')])
 @pytest.mark.parametrize('fault', [None, 'partial', 'gain', 'baseline_changed', 'wrong_source'])
 def test_tcn_launcher_requires_full600_and_exact_warm_source(tmp_path, monkeypatch, fault, launcher, source_id, target_id):
     source = tmp_path / 'source.pt'; source_logs = tmp_path / 'source_logs'
@@ -96,6 +122,7 @@ def test_tcn_resume_rejects_incomplete_boundaries(tmp_path, monkeypatch, fault, 
     code=script.split("<<'PY_RESUME'\n",1)[1].split('\nPY_RESUME',1)[0]
     arguments=['-',str(root),str(checkpoints),str(best),str(warm)]
     if launcher=='run_light_causal_pmsqe.sh':arguments.append('causal_recurrent_tcn_v1')
+    if launcher=='run_light_causal_frequency_attention.sh':arguments.append('causal_frequency_attention_v1')
     monkeypatch.setattr(sys,'argv',arguments)
     if fault:
         with pytest.raises(AssertionError): exec(compile(code,'TCN resume boundary','exec'),{})

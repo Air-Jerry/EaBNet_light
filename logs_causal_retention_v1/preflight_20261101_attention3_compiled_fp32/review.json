@@ -1,0 +1,103 @@
+{
+  "status": "real_preflight_passed_formal_training_launched",
+  "candidate": "causal_frequency_attention_retention_v1",
+  "candidate_schema": 13,
+  "author_confirmed": false,
+  "parameters": 2579698,
+  "source_completed_epoch": 3,
+  "source_full600_pesq": 2.844684433142344,
+  "source_checkpoint_sha256": "6e6866898a9c26ee0a9ce13b0826e093e774979c397f301621cf15cb15df56e3",
+  "purpose": "Add bounded per-frequency causal matrix memory before the full-resolution mapping TCN",
+  "training_precision": "BF16 network activations except FP32 GRUs and retention; FP32 master parameters, frontend, loss and inference",
+  "inference_implementation_unchanged_by_training_compilation": true,
+  "local_tests_passed": 61,
+  "existing_candidate_identities_unchanged_locally": 16,
+  "rejected_modes": {
+    "uncompiled_retention_projected_whole_epoch_seconds": 3739.348303635971,
+    "compiled_bf16_retention_max_relative_gradient_error": 0.10713966190814972,
+    "numerical_tolerance_unchanged": 0.005
+  },
+  "selected_cuda_numerics": {
+    "shape": [
+      4,
+      32,
+      601,
+      257
+    ],
+    "max_output_relative_l2": 4.733357855002396e-06,
+    "max_any_gradient_relative_l2": 9.024884093378205e-06,
+    "future_frame_gradient_max_abs": 0.0,
+    "original_fp32_inference_bitwise_equal": true
+  },
+  "single_gpu_profile": {
+    "scope": "Four real fixed training records; single-GPU pipeline profiling only, not quality or complete epoch evidence",
+    "eager_fp32_retention_mean_step_ms": 453.01500875502825,
+    "compiled_fp32_retention_mean_step_ms": 402.51247021369636,
+    "reduction_pct": 11.148093896518464,
+    "full_epoch_speed_not_proved_by_profile": true
+  },
+  "real_dual_cuda": {
+    "training_records": 256,
+    "epochs": 2,
+    "adam_updates": 64,
+    "effective_global_batch": 8,
+    "all_weights_and_adam_finite": true,
+    "changed_state_tensors": 266,
+    "state_tensors": 267,
+    "checkpoint_sha256": "29f5db462fef1b6707a6f8eba9028a43a4d029377628838af0fe30293c1c4159"
+  },
+  "trained_weight_streaming": {
+    "checkpoint_sha256": "29f5db462fef1b6707a6f8eba9028a43a4d029377628838af0fe30293c1c4159",
+    "measured_hops": 600,
+    "future_perturbation_max_error": 0.0,
+    "full_vs_stream_waveform_max_error": 3.5762786865234375e-07,
+    "bounded_model_cache_bytes": 6085392,
+    "all_hops_below_10ms": true,
+    "all_hop_ms": {
+      "mean": 4.3959569636111455,
+      "p99": 4.616561846341938,
+      "max": 4.9258689396083355
+    }
+  },
+  "timing_projection": {
+    "status": "measured",
+    "training_samples": 53600,
+    "validation_samples": 600,
+    "metric_samples": 600,
+    "cuda_checkpoint_sha256": "29f5db462fef1b6707a6f8eba9028a43a4d029377628838af0fe30293c1c4159",
+    "evaluation_checkpoint_sha256": "b12c62a40e4af191526ead38a3bea8c1c738db8e914e36ff14c6a3779bdf75df",
+    "training_samples_per_second": 17.3,
+    "validation_samples_per_second": 28.8,
+    "full600_evaluation_seconds": 200.00589390401728,
+    "overhead_reserve_seconds": 60,
+    "projected_complete_epoch_seconds": 3379.105123191108
+  },
+  "baseline_full600_pesq": 2.844684433142344,
+  "formal_launch": {
+    "status": "launched",
+    "pid": 2471459,
+    "start_cookie": "143712091",
+    "run": "retention_20261101_072312_2471459",
+    "log": "/home/nis/jinrui.yang/EaBNet_light/logs_causal_retention_v1/full_train_launch_20261101.log",
+    "launched_unix": 1793488992.4605699,
+    "source_checkpoint": "/home/nis/jinrui.yang/EaBNet_light/checkpoints_causal_compiled_attention_v1_compiled_attention_20261101_042437_2424407/model_epoch_3.pt",
+    "source_checkpoint_sha256": "6e6866898a9c26ee0a9ce13b0826e093e774979c397f301621cf15cb15df56e3",
+    "source_full600_pesq": 2.844684433142344,
+    "training_samples": 53600,
+    "validation_samples": 600,
+    "metric_samples": 600,
+    "global_batch_size": 8,
+    "optimizer_updates_per_epoch": 6700,
+    "whole_epoch_limit_seconds": 3600,
+    "target_pesq": 3.4,
+    "pesq_mode": "wb",
+    "training_entry": "train_light_causal_retention.py",
+    "source_entry_sha256": "68fb78a4d262c171aca3ce0b8c48861abecfa998217d3b30e3769a9fa5cf3cb8",
+    "real_dual_cuda_64_updates_and_streaming_verified": true,
+    "final_full600_waveform_streaming_audit_still_required": true
+  },
+  "full_training_quality_gain_unverified": true,
+  "actual_complete_epoch_time_unverified": true,
+  "final_full600_waveform_streaming_audit_still_required": true,
+  "evaluator_sha256": "0c3ada1425b33e16688e8424daba23681ac9ded4d8bee931ed24c69e59e5730b"
+}

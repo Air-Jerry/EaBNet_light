@@ -8,22 +8,28 @@ fi
 train_py="${TRAIN_PY:-$HOME/miniconda3/envs/EaBNet/bin/python}"
 export CUDA_VISIBLE_DEVICES="${CUDA_VISIBLE_DEVICES:-0,1}"
 entry="${CAUSAL_FREQUENCY_ATTENTION_ENTRY:-train_light_causal_frequency_attention.py}"
+candidate=causal_frequency_attention_v1
 case "$entry" in
     train_light_causal_frequency_attention.py)
         output_tag=causal_frequency_attention_v1; run_prefix=attention ;;
     train_light_causal_compiled_attention.py)
-        output_tag=causal_compiled_attention_v1; run_prefix=compiled_attention
-        export TORCHINDUCTOR_CACHE_DIR="$PWD/tmp/inductor_causal_norm_v1"
-        export TORCHINDUCTOR_COMPILE_THREADS=2 ;;
+        output_tag=causal_compiled_attention_v1; run_prefix=compiled_attention ;;
+    train_light_causal_retention.py)
+        output_tag=causal_retention_v1; run_prefix=retention
+        candidate=causal_frequency_attention_retention_v1 ;;
     *) printf 'Unsupported frequency-attention training entry.\n' >&2; exit 2 ;;
 esac
+if [[ "$entry" != train_light_causal_frequency_attention.py ]]; then
+    export TORCHINDUCTOR_CACHE_DIR="$PWD/tmp/inductor_causal_norm_v1"
+    export TORCHINDUCTOR_COMPILE_THREADS=2
+fi
 preflight="$1"
 train_dir="/data/ssd1/jinrui.yang/training_set"
 val_dir="/data/ssd1/jinrui.yang/newset_rt60_005-015_on_NOISEX92/babble/training_set"
 mkdir -p "logs_${output_tag}"
 exec 9>"logs_${output_tag}/.launcher.lock"
 flock -n 9 || { printf 'Another causal launcher is running.\n' >&2; exit 1; }
-warm=$("$train_py" - "$preflight" "$val_dir" "$entry" <<'PY_PREFLIGHT'
+warm=$("$train_py" - "$preflight" "$val_dir" "$entry" "$candidate" <<'PY_PREFLIGHT'
 import hashlib,json,math,os,re,sys
 from pathlib import Path
 import torch
@@ -54,12 +60,11 @@ assert check['batch_size_per_gpu'] in (1,2,4) and check['batch_size_per_gpu']*ch
 print(f'Projected complete epoch {predicted_complete_seconds:.1f}s, including measured full600 metrics and60s reserve',file=sys.stderr,flush=True)
 p=root/'cuda_final/checkpoints/model_epoch_2.pt'
 assert hashlib.sha256(p.read_bytes()).hexdigest()==check['checkpoint_sha256']==bench['checkpoint_sha256']
-state,_=read_candidate_checkpoint(p,'causal_frequency_attention_v1')
+state,_=read_candidate_checkpoint(p,sys.argv[4])
 assert state['args']['causal_training_objective']=='spectral_mrstft_waveform_pmsqe_v1'
 assert state['args']['pmsqe_weight']==0.1
 assert sys.argv[3] in state['args']['causal_training_implementation_sha256']
-if sys.argv[3]=='train_light_causal_compiled_attention.py':
-    assert 'experiments/compiled_training_norm.py' in state['args']['causal_training_implementation_sha256']
+assert ('experiments/compiled_training_norm.py' in state['args']['causal_training_implementation_sha256'])==(sys.argv[3]!='train_light_causal_frequency_attention.py')
 warm=Path(state['args']['attention_warmstart_checkpoint']).expanduser().resolve()
 assert str(warm)==state['args']['attention_warmstart_checkpoint']
 assert hashlib.sha256(warm.read_bytes()).hexdigest()==state['args']['attention_warmstart_sha256']
@@ -75,6 +80,7 @@ names={'run_light_quality.sh','continue_light_quality.sh','run_light_metric.sh',
        'train_light_causal.py','train_light_causal_frequency_attention.py','check_light_causal_cuda.py','benchmark_light_causal.py'}
 names.update({'run_light_causal_pmsqe.sh','train_light_causal_pmsqe.py','run_light_causal_fourier.sh','train_light_causal_fourier.py','run_light_causal_tcn.sh','train_light_causal_tcn.py','run_light_causal_frequency_attention.sh','train_light_causal_fast.py','train_light_causal_recurrent65.py','train_light_causal_recurrent.py','run_light_causal_global.sh'})
 names.update({'train_light_causal_compiled_attention.py','train_light_causal_pooled_attention.py','run_light_causal_compiled_attention.sh','run_light_causal_pooled_attention.sh'})
+names.update({'train_light_causal_retention.py','run_light_causal_retention.sh'})
 ancestors=set();cursor=os.getpid()
 while cursor>1:
     ancestors.add(cursor)
@@ -130,14 +136,14 @@ evaluate_epoch() {
     local epoch="$1"
     local result="$logs/pesq_selection/model_epoch_${epoch}"
     timeout --kill-after=15s "${2:-3600}s" "$train_py" -u evaluate_light.py --checkpoint "$checkpoints/model_epoch_${epoch}.pt" \
-        --candidate causal_frequency_attention_v1 --val-dir "$val_dir" --device cuda \
+        --candidate "$candidate" --val-dir "$val_dir" --device cuda \
         --max-samples 0 --save-samples no --match-estimate-level no \
         --estimate-dir "$result" --save-json "$result/summary.json" \
         2>&1 | tee "$logs/evaluation_epoch_${epoch}.log"
 }
 
 check_results() {
-    "$train_py" - "$logs" "$warm" <<'PY_RESULTS'
+    "$train_py" - "$logs" "$warm" "$candidate" <<'PY_RESULTS'
 import json,math,sys
 from pathlib import Path
 root=Path(sys.argv[1])/'pesq_selection';baseline=json.loads((root/'model_epoch_0/summary.json').read_text())
@@ -147,7 +153,7 @@ source=torch.load(warm,map_location='cpu',weights_only=False)
 old=json.loads((Path(source['args']['log_dir'])/'pesq_selection'/f"model_epoch_{source['epoch']}"/'summary.json').read_text())
 assert old['status']=='complete' and old['completed_samples']==old['expected_samples']==600
 assert old['checkpoint_sha256']==hashlib.sha256(warm.read_bytes()).hexdigest()
-assert old['structure_candidate']=='causal_recurrent_tcn_v1'
+assert old['structure_candidate']==('causal_frequency_attention_v1' if sys.argv[3]=='causal_frequency_attention_retention_v1' else 'causal_recurrent_tcn_v1')
 keys=('frontend','frontend_protocol','num_mics','selected_pairs_sha256','metadata_sha256','metric_protocol')
 for key in keys:assert baseline[key]==old[key],key
 for name,value in old['mean']['noisy'].items():assert abs(baseline['mean']['noisy'][name]-value)<1e-10,name
@@ -156,7 +162,7 @@ rows=[]
 for p in root.glob('model_epoch_*/summary.json'):
     r=json.loads(p.read_text());epoch=int(p.parent.name.rsplit('_',1)[1])
     assert r['status']=='complete' and r['completed_samples']==r['expected_samples']==600
-    assert r['structure_candidate']=='causal_frequency_attention_v1'
+    assert r['structure_candidate']==sys.argv[3]
     assert r['candidate_evidence']['model_causal'] is True and r['candidate_evidence']['future_frames']==0
     assert r['candidate_implementation_sha256']==baseline['candidate_implementation_sha256']
     for key in keys:assert r[key]==baseline[key],key
@@ -176,15 +182,15 @@ PY_RESULTS
 }
 
 if [[ -n "${CAUSAL_FREQUENCY_ATTENTION_RESUME_RUN:-}" ]]; then
-    resume_settings=$("$train_py" - "$logs" "$checkpoints" "$best" "$warm" <<'PY_RESUME'
+    resume_settings=$("$train_py" - "$logs" "$checkpoints" "$best" "$warm" "$candidate" <<'PY_RESUME'
 import json,math,sys,torch
 from pathlib import Path
 from light_candidate_runtime import read_candidate_checkpoint
-root,checkpoints,best,warm=[Path(p).resolve() for p in sys.argv[1:]]
-state,_=read_candidate_checkpoint(checkpoints/'checkpoint_latest.pt','causal_frequency_attention_v1')
+root,checkpoints,best,warm=[Path(p).resolve() for p in sys.argv[1:5]]
+state,_=read_candidate_checkpoint(checkpoints/'checkpoint_latest.pt',sys.argv[5])
 epoch=int(state['epoch']);saved=state['args']
 assert {int(v['step']) for v in state['optimizer_state_dict']['state'].values()}=={epoch*6700}
-immutable,_=read_candidate_checkpoint(checkpoints/f'model_epoch_{epoch}.pt','causal_frequency_attention_v1')
+immutable,_=read_candidate_checkpoint(checkpoints/f'model_epoch_{epoch}.pt',sys.argv[5])
 assert state['model_state_dict'].keys()==immutable['model_state_dict'].keys()
 assert all(torch.equal(value,immutable['model_state_dict'][key]) and torch.isfinite(value).all() for key,value in state['model_state_dict'].items())
 assert all(torch.isfinite(v).all() for values in state['optimizer_state_dict']['state'].values() for v in values.values() if torch.is_tensor(v))

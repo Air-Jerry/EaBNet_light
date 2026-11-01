@@ -30,16 +30,20 @@ TCN_CANDIDATE = "causal_recurrent_tcn_v1"
 FOURIER_CANDIDATE = "causal_frequency_fourier_v1"
 FREQUENCY_ATTENTION_CANDIDATE = "causal_frequency_attention_v1"
 POOLED_FREQUENCY_ATTENTION_CANDIDATE = "causal_frequency_attention_kv129_v1"
+RETENTION_CANDIDATE = "causal_frequency_attention_retention_v1"
 IDENTITY_FIELDS = ("sample_rate", "n_fft", "hop_length", "win_length", "power", "target_ref_mic",
                    "channels", "num_mics", "embed_dim", "cd1", "dfsmn_layers", "dfsmn_memory_size",
                    "norm_type", "bf_type", "topo_type", "is_causal")
 
 
 def all_model_candidates():
-    return (*all_reference_candidates(), QUALITY_CANDIDATE, SPATIAL_CANDIDATE, CAUSAL_CANDIDATE, FAST_CANDIDATE, GLOBAL_CANDIDATE, RECURRENT_CANDIDATE, RECURRENT65_CANDIDATE, TCN_CANDIDATE, FOURIER_CANDIDATE, FREQUENCY_ATTENTION_CANDIDATE, POOLED_FREQUENCY_ATTENTION_CANDIDATE)
+    return (*all_reference_candidates(), QUALITY_CANDIDATE, SPATIAL_CANDIDATE, CAUSAL_CANDIDATE, FAST_CANDIDATE, GLOBAL_CANDIDATE, RECURRENT_CANDIDATE, RECURRENT65_CANDIDATE, TCN_CANDIDATE, FOURIER_CANDIDATE, FREQUENCY_ATTENTION_CANDIDATE, POOLED_FREQUENCY_ATTENTION_CANDIDATE, RETENTION_CANDIDATE)
 
 
 def build_model_candidate(candidate_id, **model_kwargs):
+    if candidate_id == RETENTION_CANDIDATE:
+        from experiments.causal_retention_mapping import CausalAttentionRetentionTCN
+        return CausalAttentionRetentionTCN(**model_kwargs)
     if candidate_id == POOLED_FREQUENCY_ATTENTION_CANDIDATE:
         from experiments.causal_pooled_frequency_attention import CausalPooledFrequencyAttentionTCN
         return CausalPooledFrequencyAttentionTCN(**model_kwargs)
@@ -77,6 +81,22 @@ def build_model_candidate(candidate_id, **model_kwargs):
 
 
 def candidate_metadata(candidate_id):
+    if candidate_id == RETENTION_CANDIDATE:
+        metadata = candidate_metadata(FREQUENCY_ATTENTION_CANDIDATE)
+        files = (*metadata['candidate_implementation_sha256'], 'experiments/causal_retention_mapping.py')
+        metadata.update(structure_candidate=candidate_id, candidate_schema=13,
+                        candidate_implementation_sha256=source_hashes(files))
+        evidence = metadata['candidate_evidence']
+        evidence.update(candidate_id=candidate_id,
+            purpose='Full257-frequency causal mapping with current-frame frequency attention and per-frequency matrix memory',
+            initialization='Complete full-data frequency-attention checkpoint; zero new retention output; fresh Adam')
+        evidence['model_config']['mapping']['retention'] = dict(channels=32, heads=4, head_dim=8,
+            chunk_size=64, decay_powers=[4,5,9,10], state='Canonical decayed FP32 key-value sums and counts',
+            normalization='Current-frame channel LayerNorm; per-head RMS of causal retained output',
+            extra_parameters=5344, extra_cache_bytes_per_stream=263184,
+            upstream_source_incorporated=False,
+            design_evidence='Own canonical recurrence; no author equivalence or guaranteed WB-PESQ claim')
+        return metadata
     if candidate_id == POOLED_FREQUENCY_ATTENTION_CANDIDATE:
         metadata = candidate_metadata(FREQUENCY_ATTENTION_CANDIDATE)
         files = (*metadata['candidate_implementation_sha256'], 'experiments/causal_pooled_frequency_attention.py')

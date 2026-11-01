@@ -8,7 +8,7 @@ import torch
 
 import train_light_causal as causal
 from train_light_causal_pmsqe import FrontendPMSQE
-from light_candidate_runtime import (TCN_CANDIDATE, FREQUENCY_ATTENTION_CANDIDATE,
+from light_candidate_runtime import (TCN_CANDIDATE, FREQUENCY_ATTENTION_CANDIDATE, RETENTION_CANDIDATE,
     candidate_metadata, read_candidate_checkpoint, select_model_factory)
 
 
@@ -37,6 +37,8 @@ def parse_args(argv=None, candidate_id=FREQUENCY_ATTENTION_CANDIDATE, entry_file
         raise ValueError('Keep internal BF16 activations and FP32 frontend/loss/inference')
     args.causal_training_objective = 'spectral_mrstft_waveform_pmsqe_v1'
     args.causal_training_precision = 'CUDA bfloat16 activations; FP32 parameters, frontend, loss and inference; CPU FP32'
+    if candidate == RETENTION_CANDIDATE:
+        args.causal_training_precision = 'CUDA bfloat16 activations except FP32 retention; FP32 parameters, frontend, loss and inference; CPU FP32'
     files = ('train_light_causal_frequency_attention.py','train_light_causal_pmsqe.py', 'train_light_causal.py', 'train_light.py',
         'light_quality_loss.py', 'experiments/causal_pmsqe_objective.py',
         'third_party/asteroid_pmsqe/pmsqe.py', 'third_party/asteroid_pmsqe/bark_matrix_16k.mat',
@@ -59,13 +61,15 @@ def parse_args(argv=None, candidate_id=FREQUENCY_ATTENTION_CANDIDATE, entry_file
             raise ValueError('Frequency-attention warm-start differs from saved run')
     else:
         if not selected.warmstart:
-            raise ValueError('A new Frequency-attention run requires a completed full-data causal TCN --warmstart')
+            raise ValueError('A new run requires a completed full-data compatible causal --warmstart')
         source_name = selected.warmstart
     source_path = Path(source_name).expanduser().resolve()
-    source, _ = read_candidate_checkpoint(source_path, TCN_CANDIDATE)
-    offset = source['args'].get('perceptual_sample_epoch_offset', source['args'].get('tcn_sample_epoch_offset'))
+    warm_candidate = FREQUENCY_ATTENTION_CANDIDATE if candidate == RETENTION_CANDIDATE else TCN_CANDIDATE
+    source, _ = read_candidate_checkpoint(source_path, warm_candidate)
+    offset = source['args'].get('attention_sample_epoch_offset',
+        source['args'].get('perceptual_sample_epoch_offset', source['args'].get('tcn_sample_epoch_offset')))
     if int(source['epoch']) < 1 or isinstance(offset, bool) or not isinstance(offset, int) or offset < 0:
-        raise ValueError('Source TCN must contain completed training and a valid cumulative sampler offset')
+        raise ValueError('Source checkpoint must contain completed training and a valid cumulative sampler offset')
     for name in causal.quality.SOURCE_FIELDS:
         if getattr(args, name) != source['args'][name]:
             raise ValueError(f'PMSQE frontend/model setting differs from source: {name}')
@@ -100,7 +104,8 @@ def main(argv=None, candidate_id=FREQUENCY_ATTENTION_CANDIDATE, entry_file=None,
             model = causal.trainer.create_model(settings, torch.device('cpu'))
         target, warm = model.state_dict(), source['model_state_dict']
         extra = set(target) - set(warm)
-        assert len(extra) == 7 and all(name.startswith('mapping_input.frequency_') for name in extra), extra
+        prefix, count = ('retention.', 9) if settings.structure_candidate == RETENTION_CANDIDATE else ('mapping_input.frequency_', 7)
+        assert len(extra) == count and all(name.startswith(prefix) for name in extra), extra
         assert not set(warm) - set(target)
         for name, value in warm.items():
             assert target[name].shape == value.shape and torch.isfinite(value).all(), name
