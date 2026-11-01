@@ -1,0 +1,21 @@
+{
+  "status": "passed",
+  "scope": "Synthetic CPU checks; no actual data quality or target GPU speed claim",
+  "prototype_sha256": "7419e586d86d37ec3f6514a6a4a9ed0c3e5d3c2c0c8cb962d97b90b1416af605",
+  "total_parameters": 405266,
+  "trainable_parameters": 405266,
+  "fixed_parameters": 0,
+  "current_frames_and_past_only_in_train_and_eval": true,
+  "trained_mic7_gradient_nonzero": true,
+  "temporal_and_frequency_recurrent_gradients_nonzero": true,
+  "all_gradients_and_adam_finite": true,
+  "fixed_statistics_buffers_unchanged": true,
+  "initial_mic0_identity_exact": true,
+  "future_gradient_nonzero_count": 0,
+  "owned_model_cache_bytes": 600576,
+  "waveform_hops": 600,
+  "full_vs_stream_waveform_max_error": 1.4901161193847656e-08,
+  "uses_external_pretrained_weights": false,
+  "inherits_previous_backbone": false,
+  "formal_goal_achieved": false
+}

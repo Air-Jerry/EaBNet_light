@@ -1,0 +1,20 @@
+{
+  "status": "passed",
+  "scope": "Synthetic CPU model checks, no speech quality or target-device speed claim",
+  "prototype_sha256": "3521fd3020c64cbd37af3e462aabd95000dc21106a8ad1820f7467509a2ef82c",
+  "original_source_unchanged": true,
+  "all_parameters_trainable": true,
+  "energy_cache_bytes_per_stream": 16,
+  "extra_early_convolution_cache_bytes": 4112,
+  "added_parameters_test_model": 976,
+  "warm_source_max_error": 0.0,
+  "ema_recurrence_and_partition_equivalent": true,
+  "all_trainable_gradients_and_adam_finite": true,
+  "energy_projection_gradients_nonzero": true,
+  "future_nonzero_gradients": 0,
+  "stream_state_owned_and_bounded": true,
+  "waveform_hops": 600,
+  "full_vs_stream_waveform_max_error": 1.4901161193847656e-08,
+  "quality_evaluated": false,
+  "formal_goal_achieved": false
+}

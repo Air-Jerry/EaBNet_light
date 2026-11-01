@@ -1,0 +1,71 @@
+{
+  "status": "complete",
+  "scope": "256 training records, matched whole-model128 updates and full600 comparison; not formal53600 training",
+  "source_checkpoint_sha256": "5d6f0df91ab9fe51e62deedfe87a5a59b5fcbce22b4e39993102b037f1f2e1d8",
+  "prototype_sha256": "3521fd3020c64cbd37af3e462aabd95000dc21106a8ad1820f7467509a2ef82c",
+  "profile_helper_sha256": "d6d75a48d2f1a4ece526229b1ff0aae87ac6a7188ccae2f49f5a1982548602ed",
+  "device": "cuda",
+  "seed": 1234,
+  "total_parameters": 3370984,
+  "trainable_parameters": 3370984,
+  "fixed_parameters": 0,
+  "reference_used_by_model": false,
+  "target_gain_matching": false,
+  "external_normalization_clipping_or_alignment": false,
+  "comparison_records_used_for_updates": false,
+  "fitted_weights_saved_or_deployed": false,
+  "original_training_and_evaluation_code_modified": false,
+  "formal_goal_achieved": false,
+  "training_samples": 256,
+  "validation_samples": 600,
+  "global_batch": 8,
+  "microbatch": 2,
+  "grad_accum_steps": 4,
+  "updates_per_variant": 128,
+  "learning_rate": 0.0003,
+  "initial_source_full600_wb_pesq": 2.9585716579357784,
+  "results": {
+    "zero_energy_control": {
+      "full600_wb_pesq": 2.9367599268754323,
+      "gain_from_initial": -0.02181173106034597,
+      "completed_updates": 128,
+      "training_presentations": 1024,
+      "per_record_presentations": 4,
+      "first20_loss": 0.46207308024168015,
+      "last20_loss": 0.44989791736006735,
+      "elapsed_seconds": 239.15847170189954,
+      "peak_allocated_bytes": 6910872576,
+      "all_trainable_weights_gradients_and_adam_finite": true
+    },
+    "causal_relative_energy": {
+      "full600_wb_pesq": 2.931518731514613,
+      "gain_from_initial": -0.027052926421165465,
+      "completed_updates": 128,
+      "training_presentations": 1024,
+      "per_record_presentations": 4,
+      "first20_loss": 0.4622726283967495,
+      "last20_loss": 0.45033859089016914,
+      "elapsed_seconds": 206.86948119895533,
+      "peak_allocated_bytes": 6913040384,
+      "all_trainable_weights_gradients_and_adam_finite": true
+    }
+  },
+  "paired_energy_minus_zero_control": -0.005241195360819499,
+  "selected_runtime_variant": "zero_energy_control",
+  "matched_initial_parameters_data_order_losses_and_update_counts": true,
+  "actual_full_model_runtime": {
+    "future_perturbation_max_error": 0.0,
+    "full_vs_stream_waveform_max_error": 3.5762786865234375e-07,
+    "measured_hops": 600,
+    "all_hop_ms": {
+      "mean": 5.206239555263892,
+      "p99": 8.289166500326244,
+      "max": 9.015126852318645
+    },
+    "all_hops_below_10ms": true,
+    "bounded_model_cache_bytes": 6122928,
+    "warmup_state_discarded": true
+  },
+  "production_source_evaluator_and_checkpoint_unchanged": true,
+  "elapsed_seconds": 623.7245736741461
+}

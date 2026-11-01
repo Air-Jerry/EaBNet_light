@@ -1,0 +1,31 @@
+{
+  "status": "actual_source3_relative_energy_two_update_cpu_checks_passed",
+  "scope": "256 training records, matched whole-model128 updates and full600 comparison; not formal53600 training",
+  "source_checkpoint_sha256": "5d6f0df91ab9fe51e62deedfe87a5a59b5fcbce22b4e39993102b037f1f2e1d8",
+  "prototype_sha256": "3521fd3020c64cbd37af3e462aabd95000dc21106a8ad1820f7467509a2ef82c",
+  "profile_helper_sha256": "d6d75a48d2f1a4ece526229b1ff0aae87ac6a7188ccae2f49f5a1982548602ed",
+  "device": "cpu",
+  "seed": 1234,
+  "total_parameters": 3370984,
+  "trainable_parameters": 3370984,
+  "fixed_parameters": 0,
+  "reference_used_by_model": false,
+  "target_gain_matching": false,
+  "external_normalization_clipping_or_alignment": false,
+  "comparison_records_used_for_updates": false,
+  "fitted_weights_saved_or_deployed": false,
+  "original_training_and_evaluation_code_modified": false,
+  "formal_goal_achieved": false,
+  "training_samples": 1,
+  "validation_samples": 0,
+  "updates_per_variant": 2,
+  "global_batch": 1,
+  "initialized_source_max_errors": {
+    "zero_energy_control": 0.0,
+    "causal_relative_energy": 0.0
+  },
+  "all_trainable_gradients_and_adam_finite": true,
+  "quality_evaluated": false,
+  "production_source_evaluator_and_checkpoint_unchanged": true,
+  "elapsed_seconds": 27.92016158811748
+}

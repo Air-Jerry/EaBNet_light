@@ -1,0 +1,34 @@
+{
+  "status": "passed",
+  "repository": "https://github.com/Xiaobin-Rong/gtcrn",
+  "commit": "502ebfab64da7c4a9af78dcb9c6ceef1ebb01c73",
+  "results": [
+    {
+      "checkpoint": "dns3",
+      "total_parameters": 48245,
+      "trainable_parameters": 23669,
+      "fixed_erb_parameters": 24576,
+      "future_perturbation_max_error": 0.0,
+      "future_gradient_nonzero_count": 0,
+      "dataset_quality_evaluated": false,
+      "stream_cache_and_waveform_equivalence_not_yet_tested": true
+    },
+    {
+      "checkpoint": "vctk",
+      "total_parameters": 48245,
+      "trainable_parameters": 23669,
+      "fixed_erb_parameters": 24576,
+      "future_perturbation_max_error": 0.0,
+      "future_gradient_nonzero_count": 0,
+      "dataset_quality_evaluated": false,
+      "stream_cache_and_waveform_equivalence_not_yet_tested": true
+    }
+  ],
+  "dependency_adaptation": "Remove optional einops import; replace the single contiguous B,C,2,T,F rearrange with flatten(1,2), identical element order",
+  "required_frontend_unchanged": true,
+  "author_frontend_differs": true,
+  "pretrained_weights_are_external_training_data_not_same_dataset_control": true,
+  "deployed": false,
+  "quality_evaluated": false,
+  "formal_goal_achieved": false
+}

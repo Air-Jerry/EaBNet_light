@@ -1,0 +1,100 @@
+{
+  "status": "complete",
+  "scope": "Counterfactual compressed-STFT frame gains and input sensitivity; not realizable-waveform quality or a causality failure",
+  "trained_checkpoint_sha256": "2392ea165f292dcdfec98a7801fc18cda6ac7db346092c6c8cc0f98f6d2c2bde",
+  "frames_per_record": 129,
+  "original_frame_offset": 80,
+  "compressed_frame_gains_compensated_at_output": true,
+  "results": [
+    {
+      "record_counterfactual": 0,
+      "network": "retention_backbone",
+      "mode": "constant2",
+      "relative_rms_change": 0.0,
+      "max_absolute_change": 0.0,
+      "compressed_gain_min": 2.0,
+      "compressed_gain_max": 2.0
+    },
+    {
+      "record_counterfactual": 0,
+      "network": "retention_backbone",
+      "mode": "varying_half_to_two",
+      "relative_rms_change": 8.717758532839071e-07,
+      "max_absolute_change": 1.6316771507263184e-05,
+      "compressed_gain_min": 0.5,
+      "compressed_gain_max": 2.0
+    },
+    {
+      "record_counterfactual": 0,
+      "network": "complete_spatial_model",
+      "mode": "constant2",
+      "relative_rms_change": 5.549714501285052e-07,
+      "max_absolute_change": 4.887580871582031e-06,
+      "compressed_gain_min": 2.0,
+      "compressed_gain_max": 2.0
+    },
+    {
+      "record_counterfactual": 0,
+      "network": "complete_spatial_model",
+      "mode": "varying_half_to_two",
+      "relative_rms_change": 9.847714181887568e-07,
+      "max_absolute_change": 1.4685094356536865e-05,
+      "compressed_gain_min": 0.5,
+      "compressed_gain_max": 2.0
+    },
+    {
+      "record_counterfactual": 0,
+      "network": "complete_spatial_model",
+      "mode": "past_log_gain_gradient",
+      "relative_past_gain_sensitivity": 6.543345421050617e-07,
+      "past_gradient_max_abs": 3.6612618714571e-08
+    },
+    {
+      "record_counterfactual": 300,
+      "network": "retention_backbone",
+      "mode": "constant2",
+      "relative_rms_change": 0.0,
+      "max_absolute_change": 0.0,
+      "compressed_gain_min": 2.0,
+      "compressed_gain_max": 2.0
+    },
+    {
+      "record_counterfactual": 300,
+      "network": "retention_backbone",
+      "mode": "varying_half_to_two",
+      "relative_rms_change": 1.4045044736121781e-06,
+      "max_absolute_change": 5.013123154640198e-05,
+      "compressed_gain_min": 0.5,
+      "compressed_gain_max": 2.0
+    },
+    {
+      "record_counterfactual": 300,
+      "network": "complete_spatial_model",
+      "mode": "constant2",
+      "relative_rms_change": 6.987788196965994e-07,
+      "max_absolute_change": 1.055002212524414e-05,
+      "compressed_gain_min": 2.0,
+      "compressed_gain_max": 2.0
+    },
+    {
+      "record_counterfactual": 300,
+      "network": "complete_spatial_model",
+      "mode": "varying_half_to_two",
+      "relative_rms_change": 1.3618158618555753e-06,
+      "max_absolute_change": 2.8617680072784424e-05,
+      "compressed_gain_min": 0.5,
+      "compressed_gain_max": 2.0
+    },
+    {
+      "record_counterfactual": 300,
+      "network": "complete_spatial_model",
+      "mode": "past_log_gain_gradient",
+      "relative_past_gain_sensitivity": 1.533260274300119e-06,
+      "past_gradient_max_abs": 1.1548399925231934e-07
+    }
+  ],
+  "production_code_and_source_checkpoint_unchanged": true,
+  "gpu_used": false,
+  "model_quality_evaluated": false,
+  "formal_goal_achieved": false
+}

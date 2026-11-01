@@ -1,0 +1,19 @@
+{
+  "status": "passed",
+  "scope": "CPU loss/gradient equivalence and original variable-length feature/loss contract; no model or quality change",
+  "torch_version": "2.5.1+cu121",
+  "synthetic_full_length_records": 2,
+  "synthetic_full_length_samples": 96000,
+  "screen_loss_abs_difference": 0.0,
+  "screen_gradient_max_abs_difference": 5.820766091346741e-11,
+  "padded_values_do_not_change_loss": true,
+  "invalid_frame_gradient_nonzero_count": 0,
+  "invalid_frame_counts_rejected": true,
+  "component_statistics_and_reset_verified": true,
+  "objective_source_sha256": "218c2cb2560afb12304509fb83bce6fbc58366085d8391718677556623ab9bd2",
+  "screen_helper_sha256": "1aff850b9e0bf3b07c6be278a07ba053f2c1732f9ad67a3b9e034da3241ee5b7",
+  "gpu_used": false,
+  "production_training_modified": false,
+  "quality_evaluated": false,
+  "formal_goal_achieved": false
+}

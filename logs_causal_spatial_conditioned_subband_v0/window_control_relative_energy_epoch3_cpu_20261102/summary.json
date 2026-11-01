@@ -1,0 +1,40 @@
+{
+  "status": "passed",
+  "exact_guard_cleanup_ast_exercised": true,
+  "cases": [
+    {
+      "case": "busy_gpu",
+      "passed": true,
+      "owned_disposable_dispatcher_resumed": true,
+      "profile_children_terminal": true,
+      "real_gpu_queries": 0,
+      "real_training_signals": 0
+    },
+    {
+      "case": "phase_race",
+      "passed": true,
+      "owned_disposable_dispatcher_resumed": true,
+      "profile_children_terminal": true,
+      "real_gpu_queries": 0,
+      "real_training_signals": 0
+    },
+    {
+      "case": "profile_exit1",
+      "passed": true,
+      "owned_disposable_dispatcher_resumed": true,
+      "profile_children_terminal": true,
+      "real_gpu_queries": 0,
+      "real_training_signals": 0
+    },
+    {
+      "case": "profile_timeout",
+      "passed": true,
+      "owned_disposable_dispatcher_resumed": true,
+      "profile_children_terminal": true,
+      "real_gpu_queries": 0,
+      "real_training_signals": 0
+    }
+  ],
+  "gpu_used": false,
+  "production_processes_touched": false
+}

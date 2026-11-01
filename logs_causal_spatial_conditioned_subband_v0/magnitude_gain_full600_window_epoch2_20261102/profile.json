@@ -1,0 +1,72 @@
+{
+  "status": "complete",
+  "source_checkpoint_sha256": "5d6f0df91ab9fe51e62deedfe87a5a59b5fcbce22b4e39993102b037f1f2e1d8",
+  "prototype_sha256": "b48e5f05a725cb2a40d5572bdfd62d7b4b2365a8c7351f49b1638dda63a68d65",
+  "scope": "Matched additional positive-gain heads on256 training records and full600 comparison; not full53600 training or goal completion",
+  "device": "cuda",
+  "seed": 1234,
+  "reference_used_by_model": false,
+  "target_gain_matching": false,
+  "external_normalization_clipping_or_alignment": false,
+  "fitted_weights_saved_or_deployed": false,
+  "audio_paths_features_and_audio_hashes_exported": false,
+  "trainable_gain_head_parameters": 789701,
+  "profile_helper_sha256": "1aff850b9e0bf3b07c6be278a07ba053f2c1732f9ad67a3b9e034da3241ee5b7",
+  "comparison_records_used_for_updates": false,
+  "formal_goal_target": 3.4,
+  "formal_goal_achieved": false,
+  "training_samples": 256,
+  "validation_samples": 600,
+  "global_batch": 8,
+  "microbatch": 4,
+  "grad_accum_steps": 2,
+  "updates_per_variant": 256,
+  "learning_rate": 0.001,
+  "initial_source_full600_wb_pesq": 2.9585721387465793,
+  "cached_minus_formal_raw_source_pesq": -0.00026718616485599256,
+  "results": {
+    "physical": {
+      "full600_wb_pesq": 2.9573222156365713,
+      "gain_from_initial": -0.0012499231100082397,
+      "completed_updates": 256,
+      "training_presentations": 2048,
+      "per_record_presentations": 8,
+      "source_phase_sine_error": 1.1134655863997978e-07,
+      "first20_loss": 0.47916273176670077,
+      "last20_loss": 0.446158404648304,
+      "elapsed_seconds": 67.08549537998624,
+      "all_trainable_weights_gradients_and_adam_finite": true
+    },
+    "magnitude": {
+      "full600_wb_pesq": 2.9362465965747835,
+      "gain_from_initial": -0.022325542171796164,
+      "completed_updates": 256,
+      "training_presentations": 2048,
+      "per_record_presentations": 8,
+      "source_phase_sine_error": 1.0647031700727894e-07,
+      "first20_loss": 0.31458015367388725,
+      "last20_loss": 0.29015254229307175,
+      "elapsed_seconds": 62.290471124928445,
+      "all_trainable_weights_gradients_and_adam_finite": true
+    }
+  },
+  "selected_runtime_variant": "physical",
+  "paired_magnitude_minus_physical_mean": -0.021075619061787922,
+  "actual_full_model_runtime": {
+    "parameters": 4159661,
+    "future_perturbation_max_error": 0.0,
+    "full_vs_stream_waveform_max_error": 7.450580596923828e-07,
+    "measured_hops": 600,
+    "all_hop_ms": {
+      "mean": 5.35877094254829,
+      "p99": 5.428426736034453,
+      "max": 5.541396792978048
+    },
+    "all_hops_below_10ms": true,
+    "added_cache_bytes": 33408,
+    "bounded_model_cache_bytes": 6152208,
+    "warmup_state_discarded": true
+  },
+  "production_source_evaluator_and_checkpoint_unchanged": true,
+  "elapsed_seconds": 268.5060373090673
+}
