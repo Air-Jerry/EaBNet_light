@@ -13,11 +13,12 @@ from test_light_quality_workflow import run_cli
 
 def test_fullband_default_model_train_resume_and_saved_inference(argv):
     torch.set_num_threads(2)
-    parser, objective = causal.parse_args, causal.QualityObjective
+    parser, objective, epoch = causal.parse_args, causal.QualityObjective, causal.trainer.run_epoch
     entry = 'train_light_causal_fullband.py'
     directory = Path(argv[argv.index('--checkpoint-dir')+1])
     run_cli(entry,[*argv,'--num-epochs','1'])
     assert causal.parse_args is parser and causal.QualityObjective is objective
+    assert causal.trainer.run_epoch is epoch
     first,_ = read_candidate_checkpoint(directory/'checkpoint_latest.pt',FULLBAND_TCN_CANDIDATE)
     assert first['epoch'] == 1
     assert first['args']['candidate_schema'] == 14 and first['args']['pmsqe_weight'] == .1

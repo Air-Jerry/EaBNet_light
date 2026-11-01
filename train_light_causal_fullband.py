@@ -1,7 +1,9 @@
 """Train the dense full-band causal TCN from scratch through the existing data/loop."""
 
 from pathlib import Path
+import json
 import sys
+import time
 
 import train_light_causal as causal
 from light_candidate_runtime import FULLBAND_TCN_CANDIDATE, candidate_metadata, read_candidate_checkpoint
@@ -56,12 +58,26 @@ def parse_args(argv=None, *unused, **kwargs):
 
 
 def main(argv=None):
-    parser,objective = causal.parse_args,causal.QualityObjective
+    parser,objective,epoch = causal.parse_args,causal.QualityObjective,causal.trainer.run_epoch
+
+    def synchronized_epoch(*epoch_args, **epoch_kwargs):
+        if causal.trainer.is_distributed():
+            start=time.perf_counter()
+            # Rank0 may still be saving; count that wait once in whole-epoch time.
+            causal.trainer.dist.barrier()
+            settings=epoch_args[6]
+            record=dict(phase='train' if epoch_kwargs.get('training',False) else 'val',
+                waiting_outside_batch_timer_seconds=time.perf_counter()-start)
+            path=Path(settings.log_dir)/f'ddp_phase_start_rank_{causal.trainer.dist.get_rank()}.jsonl'
+            with path.open('a') as handle:handle.write(json.dumps(record)+'\n')
+        return epoch(*epoch_args,**epoch_kwargs)
+
     causal.parse_args,causal.QualityObjective = parse_args,FrontendPMSQE
+    causal.trainer.run_epoch = synchronized_epoch
     try:
         return causal.main(argv,candidate_id=FULLBAND_TCN_CANDIDATE,entry_file=__file__)
     finally:
-        causal.parse_args,causal.QualityObjective = parser,objective
+        causal.parse_args,causal.QualityObjective,causal.trainer.run_epoch = parser,objective,epoch
 
 
 if __name__ == '__main__':

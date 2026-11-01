@@ -1,0 +1,66 @@
+{
+  "status": "formal_launched",
+  "old_pid": 2471459,
+  "old_cookie": "143712091",
+  "target_pesq": 3.4,
+  "full600_comparison_unchanged": true,
+  "retention_epoch3_pesq": 2.896308812499046,
+  "retention_epoch3_seconds": 3138.4730303287506,
+  "previous_candidate_identities_preserved": 16,
+  "single_gpu_step_ms": 62.13922557071783,
+  "initial_trained_all_hop_ms": {
+    "mean": 3.1470488236906626,
+    "p99": 3.1809588195756078,
+    "max": 3.21937701664865
+  },
+  "projection": {
+    "status": "measured",
+    "training_samples": 53600,
+    "validation_samples": 600,
+    "metric_samples": 600,
+    "cuda_checkpoint_sha256": "0f56dad815e2a0a8c80b44693d16161ec445059efeafa9ad8d7ef248c329bd13",
+    "evaluation_checkpoint_sha256": "8a5099a4844e0c117d92750e273a2915da376e827deee0e880046494f4adf3ff",
+    "training_samples_per_second": 72.4,
+    "validation_samples_per_second": 198.1,
+    "full600_evaluation_seconds": 185.61693802895024,
+    "overhead_reserve_seconds": 60,
+    "projected_complete_epoch_seconds": 988.9772030884519
+  },
+  "trained_all_hop_ms": {
+    "mean": 3.1738070181260505,
+    "p99": 3.2043453119695187,
+    "max": 3.2477020286023617
+  },
+  "formal_pid": 2514108,
+  "formal_cookie": "144758707",
+  "formal_log": "/home/nis/jinrui.yang/EaBNet_light/logs_causal_fullband_tcn_v1/full_train_launch_20261101.log",
+  "launched_unix": 1793499456.6246083,
+  "formal_run": "fullband_20261101_101738_2514108",
+  "target_achieved": false,
+  "final_full600_waveform_streaming_audit_still_required": true,
+  "protected_files_unchanged": {
+    "evaluate_light.py": "0c3ada1425b33e16688e8424daba23681ac9ded4d8bee931ed24c69e59e5730b",
+    "train_light.py": "dbe303d9bd66495c226afee90fbae9f5c0bc8cf87f9e61f35431ce90b8d15b81",
+    "train_light_causal.py": "3b48d702de8c45b6d2766705c42465ddbbf12088b04226eaa1f607a8699c7379",
+    "train_light_causal_pmsqe.py": "93ec48d74c537ae343f6e9dfeaab81f0839c046dc474ad74ab8cbf5defaf1fde",
+    "train_light_causal_retention.py": "68fb78a4d262c171aca3ce0b8c48861abecfa998217d3b30e3769a9fa5cf3cb8",
+    "light_quality_loss.py": "d39581a21efd17823049385f09399e07bf63660d688192467bdd4c5c99ab88db",
+    "experiments/causal_pmsqe_objective.py": "1625c9774f9676f663060c4a00effc490d33107f451ab9cdb4bf1bf7b1cf7737",
+    "experiments/causal_retention_mapping.py": "12ab7f2ab6584ce2f53ca93f972b952ba971a26606b7d9bb138630971c6a963c",
+    "experiments/compiled_training_norm.py": "22288b6ddd64c30c9644c895f4976a4ad6b887881cb0ee964bfbe366b5962cfe",
+    "experiments/compiled_training_retention.py": "74d1bc1e90aed35fca6e862f1ae1ae4f74ca321d59834aedb8daf4237246f8e6",
+    "light_causal_fast_model.py": "5d3f8153815e6a202b735ec3705c1f45a667557906bd299728c6cba7a5e126b9",
+    "light_causal_stream.py": "86c266e39fd89227b99b1b6f46b943cff8b32a17c2c29f01234c3fcd18ebd42d"
+  },
+  "deployed_implementation_sha256": {
+    "light_candidate_runtime.py": "69eb988c9387cb3c2928ce1f77089d1e34d1ac2a9e6a644a18197c7310d1c410",
+    "benchmark_light_causal.py": "faf0ae6b52592aac63c41d3b2a5446936a49f306d92ab325776a49e135773775",
+    "check_light_causal_cuda.py": "87f2ce42d57d71b03a536e9fede869dc623be1e2cdd681da8d031f6c1ee3d6ca",
+    "evaluate_light_streaming.py": "8f56f43d3590ba6274d9f504ba0a1cd4b1290549c70b8e658f70af1d53f6be7e",
+    "run_light_causal.sh": "2b44b4b2e34159a942eb50b7adacea9824329b0498f9ed1faa1d10d05a9734c7",
+    "experiments/causal_fullband_tcn.py": "d0a627624895b4e43484f74274cb63954cf4e517b956d5b670aeebec65403ed9",
+    "train_light_causal_fullband.py": "d18821e6c8f6883ede17b9a9f3a001669e168e6664ca9e6ff61e1b23a80597e7",
+    "run_light_causal_fullband.sh": "ad5dfbbd196d8c850a5c4747b5d80be9ddf7fc8e8fca96e68333cf0997722261"
+  },
+  "full_training_quality_and_complete_epoch_time_unverified": true
+}

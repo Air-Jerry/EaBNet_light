@@ -1,0 +1,19 @@
+{
+  "status": "failed_trial_previous_source_restored",
+  "old_pid": 2471459,
+  "old_cookie": "143712091",
+  "target_pesq": 3.4,
+  "full600_comparison_unchanged": true,
+  "detailed_observation_not_before_unix": 1793498558.78646,
+  "retention_epoch3_pesq": 2.896308812499046,
+  "retention_epoch3_seconds": 3138.4730303287506,
+  "previous_candidate_identities_preserved": 16,
+  "single_gpu_step_ms": 62.13922557071783,
+  "initial_trained_all_hop_ms": {
+    "mean": 3.1470488236906626,
+    "p99": 3.1809588195756078,
+    "max": 3.21937701664865
+  },
+  "error": "AssertionError: ",
+  "previous_completed_checkpoints_preserved": true
+}
