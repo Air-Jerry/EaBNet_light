@@ -13,13 +13,21 @@
       "checkpoint_sha256": "ce4347b3daebbf7e5c1d31f7cf30c452e5e4735b50ac6276da25a375d55ee3ef",
       "all_weights_and_adam_finite": true,
       "complete53600_600_600_and6700_updates_verified": true
+    },
+    {
+      "epoch": 2,
+      "full600_wb_pesq": 3.0774879499276477,
+      "total_seconds": 3051.1904017925262,
+      "checkpoint_sha256": "effb5660d11991e4efdec02eb8c4a310f1dfbf00a5403e7fea5ec0edba129f83",
+      "all_weights_and_adam_finite": true,
+      "complete53600_600_600_and6700_updates_verified": true
     }
   ],
   "formal_goal_achieved": false,
   "run": "monaural_spectral_20261103_031210_3146100",
   "baseline_full600_wb_pesq": 3.0431378700335823,
-  "next_epoch": 2,
-  "observation_not_before_unix": 1793653159.9827337,
-  "expected_observation_utc": "2026-11-02T20:59:19.982734+00:00",
-  "last_completed_epoch": 1
+  "next_epoch": 3,
+  "observation_not_before_unix": 1793656158.3808036,
+  "expected_observation_utc": "2026-11-02T21:49:18.380804+00:00",
+  "last_completed_epoch": 2
 }

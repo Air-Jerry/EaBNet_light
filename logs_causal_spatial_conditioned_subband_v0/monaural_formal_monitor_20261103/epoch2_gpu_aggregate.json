@@ -1,0 +1,36 @@
+{
+  "status": "historical_complete_epoch_sampler_aggregate",
+  "epoch": 2,
+  "gpu": {
+    "phase=train epoch=2": {
+      "0": {
+        "samples": 283,
+        "mean_utilization_percent": 96.2756183745583,
+        "peak_whole_card_memory_mib": 7721.0,
+        "mean_power_w": 144.05233215547696
+      },
+      "1": {
+        "samples": 283,
+        "mean_utilization_percent": 95.73498233215548,
+        "peak_whole_card_memory_mib": 7703.0,
+        "mean_power_w": 144.10035335689048
+      }
+    },
+    "phase=evaluation epoch=2": {
+      "0": {
+        "samples": 22,
+        "mean_utilization_percent": 18.136363636363637,
+        "peak_whole_card_memory_mib": 2213.0,
+        "mean_power_w": 51.77409090909091
+      },
+      "1": {
+        "samples": 22,
+        "mean_utilization_percent": 0.0,
+        "peak_whole_card_memory_mib": 18.0,
+        "mean_power_w": 12.089090909090908
+      }
+    }
+  },
+  "scope": "Existing10s samples, complete epoch2 phases only; train includes startup and validation, not hot-only occupancy.",
+  "gpu_queries": 0
+}
