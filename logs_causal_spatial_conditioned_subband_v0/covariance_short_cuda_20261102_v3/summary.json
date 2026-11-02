@@ -1,0 +1,26 @@
+{
+  "status": "failed",
+  "checked_at_utc": "2026-11-02T16:24:50.264525+00:00",
+  "registered_candidate": false,
+  "source_checkpoint_sha256": "1f37aa6f43ef2f9d36cff80cf1c74bd9b2e425cd12dc0f9ca9207a7d957b9f99",
+  "prototype_sha256": "f22ac02bb572492ebb391c3ddfeebcbae754b57d1433cd31968e3693f02e407b",
+  "shared_gpu_functional_only": true,
+  "cuda_memory_fraction_limit": 0.15,
+  "selected_frontend_frames": [
+    100,
+    165
+  ],
+  "adam_updates": 2,
+  "scope": "65 frames of original16k/512/160/320/power.5 training frontend;2 normalized-spectral Adam updates; not PESQ,full6s cost or streaming deadline proof",
+  "test_training_precision": "FP32 parameters,GRUs,frontend,loss,inference; complex64 covariance",
+  "formal_goal_achieved": false,
+  "original_spectrum_rtol": 0.0002,
+  "original_spectrum_atol": 1e-05,
+  "original_spectrum_tolerance_passed": false,
+  "source_only_batch_stream_spectrum_max_abs_error": 8.785724639892578e-05,
+  "source_only_reconstructed_waveform_max_abs_error": 4.079192876815796e-07,
+  "prototype_reconstructed_waveform_max_abs_error": 4.116445779800415e-07,
+  "waveform_scope": "Same original ISTFT on batch and concatenated stream spectra; not actual waveform frontend/synthesis streaming or latency proof",
+  "error": "OutOfMemoryError: CUDA out of memory. Tried to allocate 1.26 GiB. GPU 0 has a total capacity of 11.60 GiB of which 4.35 GiB is free. Process 3095039 has 6.47 GiB memory in use. Including non-PyTorch memory, this process has 770.00 MiB memory in use. 1.74 GiB allowed; Of the allocated memory 486.20 MiB is allocated by PyTorch, and 73.80 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)",
+  "active_source_and_checkpoint_unchanged": true
+}

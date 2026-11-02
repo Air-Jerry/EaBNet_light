@@ -1,0 +1,24 @@
+{
+  "status": "complete",
+  "checked_at_utc": "2026-11-02T16:37:39.301819+00:00",
+  "scope": "Actual completed checkpoint resume guards only; no status writes, optimizer updates or launcher execution",
+  "candidate": "causal_wide_conditioned_subband_v1",
+  "candidate_schema": 25,
+  "validated_completed_epoch": 1,
+  "next_epoch": 2,
+  "optimizer_steps": 6700,
+  "optimizer_learning_rates": [
+    0.001
+  ],
+  "lr_reducer_state": {
+    "best_plateau_loss_for_lr": 0.34953024963537854,
+    "stale_train_epochs": 0,
+    "metric": "val"
+  },
+  "full600_wb_pesq": 3.0103787422180175,
+  "checkpoint_sha256": "1f37aa6f43ef2f9d36cff80cf1c74bd9b2e425cd12dc0f9ca9207a7d957b9f99",
+  "tested_launcher_sha256": "113c637b19674a7ad7f710f8ba925fdca530dea7a4f4270a2b858f9f3a020f59",
+  "source_root_active_and_status_unchanged": true,
+  "current_training_not_stopped_or_resumed": true,
+  "formal_goal_achieved": false
+}

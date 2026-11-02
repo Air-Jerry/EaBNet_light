@@ -54,3 +54,4 @@ run_light_causal_spatial_conditioned_subband.sh text eol=lf
 run_light_causal_folded_retention.sh text eol=lf
 # Retain the exact entry bytes already pinned by the isolated training preflight.
 train_light_causal_folded_retention.py -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+train_light_causal_covariance.py text eol=lf

@@ -193,7 +193,7 @@ PY_WARM
 fi
 run="${run_prefix}_$(date +%Y%m%d_%H%M%S)_$$"
 if [[ -n "${CAUSAL_RESUME_RUN:-}" ]]; then
-    [[ "$candidate" == causal_fullchannel_dualpath_crn_v1 || "$candidate" == causal_folded_retention_v1 || "$candidate" == causal_joint_conditioned_subband_v1 ]] || { printf 'Resume is verified for the full-channel,folded-retention and joint-conditioned candidates only.\n' >&2; exit 2; }
+    [[ "$candidate" == causal_fullchannel_dualpath_crn_v1 || "$candidate" == causal_folded_retention_v1 || "$candidate" == causal_joint_conditioned_subband_v1 || "$candidate" == causal_wide_conditioned_subband_v1 ]] || { printf 'Resume is verified for the full-channel,folded-retention,joint-conditioned and wide-conditioned candidates only.\n' >&2; exit 2; }
     run="$(basename -- "$CAUSAL_RESUME_RUN")"
     [[ "$run" == "${run_prefix}_"* && -d "./logs_${candidate}/$run" ]] || { printf 'Invalid existing causal run.\n' >&2; exit 2; }
 fi
@@ -209,7 +209,7 @@ from light_candidate_runtime import read_candidate_checkpoint
 torch.set_num_threads(2)
 root,checkpoints,best=map(lambda value:Path(value).resolve(),sys.argv[1:4])
 state,_=read_candidate_checkpoint(checkpoints/'checkpoint_latest.pt',sys.argv[4])
-schemas={'causal_fullchannel_dualpath_crn_v1':21,'causal_folded_retention_v1':22,'causal_joint_conditioned_subband_v1':23}
+schemas={'causal_fullchannel_dualpath_crn_v1':21,'causal_folded_retention_v1':22,'causal_joint_conditioned_subband_v1':23,'causal_wide_conditioned_subband_v1':25}
 assert sys.argv[4] in schemas
 epoch=int(state['epoch']);assert 1<=epoch<30 and state['args']['candidate_schema']==schemas[sys.argv[4]]
 for key,path in (('log_dir',root),('checkpoint_dir',checkpoints),('best_dir',best),('train_dir',Path(sys.argv[5]).resolve()),('val_dir',Path(sys.argv[6]).resolve())):

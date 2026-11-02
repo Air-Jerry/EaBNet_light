@@ -1,0 +1,15 @@
+{
+  "epoch": 2,
+  "status": "complete",
+  "started_unix": 1793634943,
+  "finished_unix": 1793637892.473843,
+  "total_seconds": 2949.4738430976868,
+  "training_validation_checkpoint_seconds": 2737,
+  "evaluation_audit_seconds": 212.47384309768677,
+  "training_samples": 53600,
+  "validation_samples": 600,
+  "full_metric_samples": 600,
+  "optimizer_updates_this_epoch": 6700,
+  "global_batch_size": 8,
+  "limit_seconds": 3600
+}

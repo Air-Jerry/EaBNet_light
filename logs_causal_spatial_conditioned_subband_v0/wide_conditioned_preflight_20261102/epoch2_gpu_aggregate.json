@@ -1,0 +1,40 @@
+{
+  "status": "historical_complete_epoch_sampler_aggregate",
+  "epoch": 2,
+  "checked_at_utc": "2026-11-02T17:11:50.209336+00:00",
+  "gpu": {
+    "phase=train epoch=2": {
+      "0": {
+        "samples": 274,
+        "mean_utilization_percent": 96.83211678832117,
+        "peak_whole_card_memory_mib": 7679.0,
+        "mean_power_w": 144.8100364963504
+      },
+      "1": {
+        "samples": 274,
+        "mean_utilization_percent": 96.86861313868613,
+        "peak_whole_card_memory_mib": 8790.0,
+        "mean_power_w": 144.94492700729933
+      }
+    },
+    "phase=evaluation epoch=2": {
+      "0": {
+        "samples": 21,
+        "mean_utilization_percent": 19.19047619047619,
+        "peak_whole_card_memory_mib": 2211.0,
+        "mean_power_w": 52.98285714285715
+      },
+      "1": {
+        "samples": 21,
+        "mean_utilization_percent": 0.0,
+        "peak_whole_card_memory_mib": 18.0,
+        "mean_power_w": 10.884285714285717
+      }
+    }
+  },
+  "scope": "Existing10s physical-card sampler; train phase includes startup,validation and brief shared-GPU prototype functional tests. Not pure per-process or hot-kernel occupancy.",
+  "gpu_queries": 0,
+  "batch_progress_queries": 0,
+  "formal_job_intentionally_terminal": true,
+  "formal_goal_achieved": false
+}

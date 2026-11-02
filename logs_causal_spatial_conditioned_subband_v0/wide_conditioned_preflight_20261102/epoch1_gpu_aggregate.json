@@ -1,0 +1,45 @@
+{
+  "status": "measured",
+  "epoch": 1,
+  "checked_at_utc": "2026-11-02T16:03:19.459095+00:00",
+  "scope": "Existing10s sampler phase averages; train phase includes process startup and validation, not hot-kernel occupancy",
+  "gpu_queries": 0,
+  "batch_progress_queries": 0,
+  "gpu": {
+    "phase=train epoch=1": {
+      "0": {
+        "samples": 274,
+        "mean_utilization_percent": 97.15693430656934,
+        "peak_memory_mib": 8057.0,
+        "mean_power_w": 144.5829562043795
+      },
+      "1": {
+        "samples": 274,
+        "mean_utilization_percent": 97.44160583941606,
+        "peak_memory_mib": 7901.0,
+        "mean_power_w": 144.6426277372263
+      }
+    },
+    "phase=evaluation epoch=1": {
+      "0": {
+        "samples": 22,
+        "mean_utilization_percent": 30.454545454545453,
+        "peak_memory_mib": 2211.0,
+        "mean_power_w": 52.56136363636363
+      },
+      "1": {
+        "samples": 22,
+        "mean_utilization_percent": 0.0,
+        "peak_memory_mib": 18.0,
+        "mean_power_w": 11.858181818181817
+      }
+    }
+  },
+  "total_seconds": 2964.091157913208,
+  "full600_wb_pesq": 3.0103787422180175,
+  "owned_launcher_live": true,
+  "launcher_pid": 3081879,
+  "launcher_cookie": "157988550",
+  "root_and_stage_sources_and_user_evaluator_unchanged": true,
+  "formal_goal_achieved": false
+}

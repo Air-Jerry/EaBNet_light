@@ -1,0 +1,69 @@
+{
+  "status": "complete",
+  "mode": "covariance",
+  "registered_candidate": false,
+  "prototype_sha256": "f22ac02bb572492ebb391c3ddfeebcbae754b57d1433cd31968e3693f02e407b",
+  "source_checkpoint_sha256": "a17154d308894eaec8229d11d2d798fb8b1414445b2a274f03ccc998db76040e",
+  "global_batch_size": 8,
+  "batch_size_per_gpu": 2,
+  "grad_accum_steps": 2,
+  "distinct_training_records": 8,
+  "seconds_per_record": 6,
+  "recurrent_training_precision": "FP32 GRUs,parameters,frontend,loss,inference; complex64 covariance",
+  "frozen_causal_backbone": true,
+  "batched_equal_length_original_quality_loss": true,
+  "scope": "Repeated8 real6s records with8 warm and64 hot updates by default; not complete53600,quality or streaming deadline proof",
+  "full_epoch_budget_verified": false,
+  "formal_goal_achieved": false,
+  "initial_real6s_warm_max_error": 0.0,
+  "trainable_parameters": 8850,
+  "unregistered_profile_checkpoint_sha256": "f4cf6277f1ca1c0abfcc85a592634d2a55f76918267d9f4305eb1f866d7b8832",
+  "ranks": [
+    {
+      "rank": 0,
+      "warm8_updates_seconds": 7.070431991945952,
+      "hot_updates_seconds": 30.672289832960814,
+      "hot_global_samples_per_second": 16.69259135161792,
+      "validation16_global_records_seconds": 0.7618210539221764,
+      "cold_peak_allocated_bytes": 3791352320,
+      "hot_peak_allocated_bytes": 3790116352,
+      "optimizer_steps": 72,
+      "all_weights_and_adam_finite": true,
+      "frozen_backbone_unchanged": true,
+      "train_loss": 0.44922465656418353,
+      "validation_loss": 0.4481370374560356
+    },
+    {
+      "rank": 1,
+      "warm8_updates_seconds": 7.070436490001157,
+      "hot_updates_seconds": 30.672285438049585,
+      "hot_global_samples_per_second": 16.69259374343373,
+      "validation16_global_records_seconds": 0.7618132419884205,
+      "cold_peak_allocated_bytes": 3791352320,
+      "hot_peak_allocated_bytes": 3790116352,
+      "optimizer_steps": 72,
+      "all_weights_and_adam_finite": true,
+      "frozen_backbone_unchanged": true,
+      "train_loss": 0.44922465656418353,
+      "validation_loss": 0.4481370374560356
+    }
+  ],
+  "source_and_active_training_unchanged": true,
+  "gpu_existing10s_phase_aggregate": {
+    "scope": "Entire diagnostic including startup,warmup,training,validation; not hot-only or per-process utilization",
+    "devices": {
+      "0": {
+        "samples": 5,
+        "mean_utilization_percent": 58.6,
+        "peak_whole_card_memory_mib": 4197.0,
+        "mean_power_w": 102.69000000000001
+      },
+      "1": {
+        "samples": 5,
+        "mean_utilization_percent": 58.2,
+        "peak_whole_card_memory_mib": 4179.0,
+        "mean_power_w": 102.256
+      }
+    }
+  }
+}

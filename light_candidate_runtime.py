@@ -43,16 +43,20 @@ FOLDED_RETENTION_CANDIDATE = "causal_folded_retention_v1"
 JOINT_CONDITIONED_CANDIDATE = "causal_joint_conditioned_subband_v1"
 JOINT_FIXED_CONDITIONED_CANDIDATE = "causal_joint_fixed_conditioned_subband_v1"
 WIDE_CONDITIONED_CANDIDATE = "causal_wide_conditioned_subband_v1"
+COVARIANCE_CANDIDATE = "causal_covariance_refiner_v1"
 IDENTITY_FIELDS = ("sample_rate", "n_fft", "hop_length", "win_length", "power", "target_ref_mic",
                    "channels", "num_mics", "embed_dim", "cd1", "dfsmn_layers", "dfsmn_memory_size",
                    "norm_type", "bf_type", "topo_type", "is_causal")
 
 
 def all_model_candidates():
-    return (*all_reference_candidates(), QUALITY_CANDIDATE, SPATIAL_CANDIDATE, CAUSAL_CANDIDATE, FAST_CANDIDATE, GLOBAL_CANDIDATE, RECURRENT_CANDIDATE, RECURRENT65_CANDIDATE, TCN_CANDIDATE, FOURIER_CANDIDATE, FREQUENCY_ATTENTION_CANDIDATE, POOLED_FREQUENCY_ATTENTION_CANDIDATE, RETENTION_CANDIDATE, FULLBAND_TCN_CANDIDATE, FULLBAND_SPATIAL_CANDIDATE, SUBBAND_GRU_CANDIDATE, CONDITIONED_SUBBAND_CANDIDATE, FROZEN_CONDITIONED_CANDIDATE, SPATIAL_CONDITIONED_CANDIDATE, GATED_MULTICHANNEL_CANDIDATE, FULLCHANNEL_DUALPATH_CANDIDATE, FOLDED_RETENTION_CANDIDATE, JOINT_CONDITIONED_CANDIDATE, JOINT_FIXED_CONDITIONED_CANDIDATE, WIDE_CONDITIONED_CANDIDATE)
+    return (*all_reference_candidates(), QUALITY_CANDIDATE, SPATIAL_CANDIDATE, CAUSAL_CANDIDATE, FAST_CANDIDATE, GLOBAL_CANDIDATE, RECURRENT_CANDIDATE, RECURRENT65_CANDIDATE, TCN_CANDIDATE, FOURIER_CANDIDATE, FREQUENCY_ATTENTION_CANDIDATE, POOLED_FREQUENCY_ATTENTION_CANDIDATE, RETENTION_CANDIDATE, FULLBAND_TCN_CANDIDATE, FULLBAND_SPATIAL_CANDIDATE, SUBBAND_GRU_CANDIDATE, CONDITIONED_SUBBAND_CANDIDATE, FROZEN_CONDITIONED_CANDIDATE, SPATIAL_CONDITIONED_CANDIDATE, GATED_MULTICHANNEL_CANDIDATE, FULLCHANNEL_DUALPATH_CANDIDATE, FOLDED_RETENTION_CANDIDATE, JOINT_CONDITIONED_CANDIDATE, JOINT_FIXED_CONDITIONED_CANDIDATE, WIDE_CONDITIONED_CANDIDATE, COVARIANCE_CANDIDATE)
 
 
 def build_model_candidate(candidate_id, **model_kwargs):
+    if candidate_id == COVARIANCE_CANDIDATE:
+        from experiments.causal_covariance_refiner import CausalCovarianceRefiner
+        return CausalCovarianceRefiner(build_model_candidate(WIDE_CONDITIONED_CANDIDATE, **model_kwargs))
     if candidate_id == WIDE_CONDITIONED_CANDIDATE:
         from experiments.causal_wide_conditioned_subband import CausalWideConditionedSubband
         return CausalWideConditionedSubband(build_model_candidate(RETENTION_CANDIDATE, **model_kwargs))
@@ -139,6 +143,24 @@ def build_model_candidate(candidate_id, **model_kwargs):
 
 
 def candidate_metadata(candidate_id):
+    if candidate_id == COVARIANCE_CANDIDATE:
+        metadata=candidate_metadata(WIDE_CONDITIONED_CANDIDATE)
+        files=(*metadata['candidate_implementation_sha256'],'experiments/causal_covariance_refiner.py')
+        metadata.update(structure_candidate=candidate_id,candidate_schema=26,
+            candidate_implementation_sha256=source_hashes(files))
+        evidence=metadata['candidate_evidence']
+        evidence.update(candidate_id=candidate_id,warm_start_candidate=WIDE_CONDITIONED_CANDIDATE,
+            purpose='Learned causal prefix-covariance Souden refinement of a complete frozen causal source',
+            initialization='Complete wide-conditioned checkpoint; zero gate preserves source output; fresh head Adam',
+            frozen_backbone=True,frozen_backbone_is_causal=True,reference_audio_used_at_inference=False)
+        evidence['model_config'].update(parameters=5175434,trainable_parameters=8850,
+            frozen_causal_parameters=5166584,stream_state_bytes_per_stream_fp32=6514576,
+            frozen_base_mode='Complete wide-conditioned source in FP32 eval',
+            covariance_branch=dict(features=24,mask_gru_hidden=32,ema_decay=.98,prefix_block_frames=64,
+                covariance_dtype='complex64',reference_mic=0,trace_normalized_diagonal_loading=.01,
+                spatial_output='Souden weights conjugate-transposed times current mixture',
+                extra_parameters=8850,extra_state_bytes=296064,future_frames=0))
+        return metadata
     if candidate_id in (JOINT_FIXED_CONDITIONED_CANDIDATE,WIDE_CONDITIONED_CANDIDATE):
         metadata=candidate_metadata(SPATIAL_CONDITIONED_CANDIDATE)
         wide=candidate_id==WIDE_CONDITIONED_CANDIDATE

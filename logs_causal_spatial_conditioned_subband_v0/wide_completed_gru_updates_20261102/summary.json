@@ -1,0 +1,82 @@
+{
+  "status": "complete",
+  "scope": "Immutable completed CUDA64 weights only; no active checkpoint or batch inspection",
+  "checkpoint_sha256": "746f3aef8705ef5969b4d8f84cfc91867efd167b30144794541f43ce6c495852",
+  "all_examined_gru_tensors_changed": true,
+  "loss_uses_frame_weight_before_backward_and_parameter_normalization_after_backward": true,
+  "recurrent_updates": {
+    "recurrent.weight_ih_l0": {
+      "elements": 49152,
+      "changed_fraction": 1.0,
+      "max_abs_update": 0.031133636832237244,
+      "mean_abs_update": 0.0053277392871677876
+    },
+    "recurrent.weight_hh_l0": {
+      "elements": 49152,
+      "changed_fraction": 1.0,
+      "max_abs_update": 0.03218020871281624,
+      "mean_abs_update": 0.006022291723638773
+    },
+    "recurrent.bias_ih_l0": {
+      "elements": 384,
+      "changed_fraction": 1.0,
+      "max_abs_update": 0.026937685906887054,
+      "mean_abs_update": 0.006425092462450266
+    },
+    "recurrent.bias_hh_l0": {
+      "elements": 384,
+      "changed_fraction": 1.0,
+      "max_abs_update": 0.0269376952201128,
+      "mean_abs_update": 0.006390921771526337
+    },
+    "fullband_rnn.weight_ih_l0": {
+      "elements": 197376,
+      "changed_fraction": 1.0,
+      "max_abs_update": 0.04257388412952423,
+      "mean_abs_update": 0.00759278517216444
+    },
+    "fullband_rnn.weight_hh_l0": {
+      "elements": 49152,
+      "changed_fraction": 0.999755859375,
+      "max_abs_update": 0.03915693238377571,
+      "mean_abs_update": 0.007518858183175325
+    },
+    "fullband_rnn.bias_ih_l0": {
+      "elements": 384,
+      "changed_fraction": 1.0,
+      "max_abs_update": 0.023203164339065552,
+      "mean_abs_update": 0.0066841659136116505
+    },
+    "fullband_rnn.bias_hh_l0": {
+      "elements": 384,
+      "changed_fraction": 1.0,
+      "max_abs_update": 0.022634092718362808,
+      "mean_abs_update": 0.006781550589948893
+    },
+    "spatial_recurrent.weight_ih_l0": {
+      "elements": 417792,
+      "changed_fraction": 1.0,
+      "max_abs_update": 0.04157896339893341,
+      "mean_abs_update": 0.007740257307887077
+    },
+    "spatial_recurrent.weight_hh_l0": {
+      "elements": 196608,
+      "changed_fraction": 1.0,
+      "max_abs_update": 0.04359035938978195,
+      "mean_abs_update": 0.007748324424028397
+    },
+    "spatial_recurrent.bias_ih_l0": {
+      "elements": 768,
+      "changed_fraction": 1.0,
+      "max_abs_update": 0.030201196670532227,
+      "mean_abs_update": 0.006035856902599335
+    },
+    "spatial_recurrent.bias_hh_l0": {
+      "elements": 768,
+      "changed_fraction": 1.0,
+      "max_abs_update": 0.030201196670532227,
+      "mean_abs_update": 0.006081388797610998
+    }
+  },
+  "formal_goal_achieved": false
+}

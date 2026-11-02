@@ -1,0 +1,85 @@
+{
+  "status": "owned_job_terminal_epoch2_preserved_and_relocated_resume_guard_passed",
+  "checked_at_utc": "2026-11-02T16:56:48.413322+00:00",
+  "reason": "Epoch2 full600 still improving by0.02272744; preserve exact recovery for a brief idle-GPU covariance feasibility test, without claiming convergence ceiling",
+  "completed_epoch": 2,
+  "checkpoint_sha256": "a17154d308894eaec8229d11d2d798fb8b1414445b2a274f03ccc998db76040e",
+  "full600_wb_pesq": 3.0331061846017837,
+  "owned_processes": [
+    {
+      "pid": 3108545,
+      "cookie": "158602382"
+    },
+    {
+      "pid": 3108546,
+      "cookie": "158602382"
+    },
+    {
+      "pid": 3081879,
+      "cookie": "157988550"
+    },
+    {
+      "pid": 3108642,
+      "cookie": "158603122"
+    },
+    {
+      "pid": 3108643,
+      "cookie": "158603122"
+    },
+    {
+      "pid": 3108646,
+      "cookie": "158603123"
+    },
+    {
+      "pid": 3108647,
+      "cookie": "158603123"
+    },
+    {
+      "pid": 3108650,
+      "cookie": "158603123"
+    },
+    {
+      "pid": 3108651,
+      "cookie": "158603123"
+    },
+    {
+      "pid": 3108654,
+      "cookie": "158603124"
+    },
+    {
+      "pid": 3108655,
+      "cookie": "158603124"
+    },
+    {
+      "pid": 3081905,
+      "cookie": "157988817"
+    },
+    {
+      "pid": 3108540,
+      "cookie": "158602305"
+    },
+    {
+      "pid": 3108541,
+      "cookie": "158602305"
+    },
+    {
+      "pid": 3108542,
+      "cookie": "158602305"
+    }
+  ],
+  "unfinished_epoch3_updates_not_counted_or_resumed": true,
+  "formal_goal_achieved": false,
+  "cloned_resume_stage": "/home/nis/jinrui.yang/EaBNet_light/tmp/wide_conditioned_resume_stage_20261103",
+  "source_and_cloned_checkpoint_identical": true,
+  "actual_launcher_resume_not_yet_executed": true,
+  "active_source_and_root_unchanged": true,
+  "optimizer_steps": 13400,
+  "optimizer_learning_rates": [
+    0.001
+  ],
+  "lr_reducer_state": {
+    "best_plateau_loss_for_lr": 0.34373221596082054,
+    "stale_train_epochs": 0,
+    "metric": "val"
+  }
+}

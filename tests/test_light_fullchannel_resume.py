@@ -13,7 +13,8 @@ import torch
 ROOT=Path(__file__).resolve().parents[1]
 CANDIDATES=[('causal_fullchannel_dualpath_crn_v1',21,'fullchannel'),
             ('causal_folded_retention_v1',22,'folded_retention'),
-            ('causal_joint_conditioned_subband_v1',23,'joint_conditioned')]
+            ('causal_joint_conditioned_subband_v1',23,'joint_conditioned'),
+            ('causal_wide_conditioned_subband_v1',25,'wide_conditioned')]
 
 
 @pytest.mark.parametrize('candidate,schema,preflight',CANDIDATES)
@@ -77,7 +78,7 @@ def test_resume_requires_same_evaluated_state_and_complete_budget(tmp_path,monke
     monkeypatch.setattr(sys,'argv',['-',str(root),str(checkpoints),str(best),candidate,str(train),str(validation)])
     shell=(ROOT/'run_light_causal.sh').read_text()
     code=shell.split("<<'PY_RESUME'\n",1)[1].split('\nPY_RESUME',1)[0]
-    if fault and not (schema in (22,23) and fault=='no_quality_gain'):
+    if fault and not (schema in (22,23,25) and fault=='no_quality_gain'):
         with pytest.raises((AssertionError,ValueError)):
             exec(compile(code,'causal completed-boundary resume','exec'),{})
         assert status.read_text()=='original complete status'
@@ -94,6 +95,8 @@ def test_resume_requires_same_evaluated_state_and_complete_budget(tmp_path,monke
     ('causal_folded_retention_v1','folded_retention','folded_retention_123',True),
     ('causal_joint_conditioned_subband_v1','joint_conditioned','joint_conditioned_123',True),
     ('causal_joint_conditioned_subband_v1','joint_conditioned','folded_retention_123',False),
+    ('causal_wide_conditioned_subband_v1','wide_conditioned','wide_conditioned_123',True),
+    ('causal_wide_conditioned_subband_v1','wide_conditioned','joint_conditioned_123',False),
     ('causal_folded_retention_v1','folded_retention','fullchannel_dualpath_123',False),
     ('causal_fullchannel_dualpath_crn_v1','fullchannel_dualpath','folded_retention_123',False),
     ('causal_spatial_conditioned_subband_v1','spatial_conditioned','spatial_conditioned_123',False),

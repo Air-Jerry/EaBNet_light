@@ -1,15 +1,35 @@
 {
-  "status": "baseline_verified_waiting_epoch_eta",
+  "status": "needs_existing_job_inspection",
   "formal_pid": 3081879,
   "formal_cookie": "157988550",
   "maximum_epochs": 30,
   "scope": "Real complete53600/600/600 epochs; check actual Adam and timing at measured ETAs",
   "gpu_queries_while_training": 0,
-  "epoch_history": [],
+  "epoch_history": [
+    {
+      "epoch": 1,
+      "full600_wb_pesq": 3.0103787422180175,
+      "total_seconds": 2964.091157913208,
+      "checkpoint_sha256": "1f37aa6f43ef2f9d36cff80cf1c74bd9b2e425cd12dc0f9ca9207a7d957b9f99",
+      "all_weights_and_adam_finite": true,
+      "complete53600_600_600_and6700_updates_verified": true
+    },
+    {
+      "epoch": 2,
+      "full600_wb_pesq": 3.0331061846017837,
+      "total_seconds": 2949.4738430976868,
+      "checkpoint_sha256": "a17154d308894eaec8229d11d2d798fb8b1414445b2a274f03ccc998db76040e",
+      "all_weights_and_adam_finite": true,
+      "complete53600_600_600_and6700_updates_verified": true
+    }
+  ],
   "formal_goal_achieved": false,
   "run": "wide_conditioned_20261102_230237_3081879",
   "baseline_full600_wb_pesq": 2.9932476991415022,
-  "next_epoch": 1,
-  "observation_not_before_unix": 1793634944.0970402,
-  "expected_observation_utc": "2026-11-02T15:55:44.097040+00:00"
+  "next_epoch": 3,
+  "observation_not_before_unix": 1793640858.1578834,
+  "expected_observation_utc": "2026-11-02T17:34:18.157883+00:00",
+  "last_completed_epoch": 2,
+  "error": "AssertionError: Existing launcher ended before next complete epoch; inspect it, never restart from observation timeout",
+  "launcher_live_now": false
 }
