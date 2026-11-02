@@ -1,0 +1,75 @@
+{"status": "training", "mode": "physical", "updates": 2, "loss": 0.4391007721424103, "mean_update_seconds": 4.0695558415027335, "estimated_training_seconds_remaining": 2075.473479166394, "elapsed_seconds": 40.39580899011344}
+{"status": "training", "mode": "physical", "updates": 16, "loss": 0.4084885075688362, "mean_update_seconds": 0.13335168870010725, "estimated_training_seconds_remaining": 66.1424375952532, "elapsed_seconds": 42.26882138219662}
+{"status": "training", "mode": "physical", "updates": 128, "loss": 0.40364956483244896, "mean_update_seconds": 0.13313620372660337, "estimated_training_seconds_remaining": 51.12430223101569, "elapsed_seconds": 57.185519175138324}
+{"status": "training", "mode": "physical", "updates": 256, "loss": 0.38264568373560903, "mean_update_seconds": 0.13333570362818944, "estimated_training_seconds_remaining": 34.1339401288165, "elapsed_seconds": 74.28628598502837}
+{"status": "training", "mode": "physical", "updates": 512, "loss": 0.4050361640751362, "mean_update_seconds": 0.13362268631220026, "estimated_training_seconds_remaining": 0.0, "elapsed_seconds": 108.58410863019526}
+{
+  "status": "complete",
+  "mode": "physical",
+  "scope": "256 fixed training records,512 head Adam updates; complete actual causal model on fixed600; not full53600 training",
+  "source_checkpoint_sha256": "21705e5325fb244e4243602d6f8cf02d71db1e5a3c939d4b86214358e8aa69b3",
+  "helper_sha256": "4047476ab5a96bb220b59ef197763282fbc281b7270cc923e3ed4413af720004",
+  "initial_head_sha256": "eff374643faa3b8344bab302eac9a2f968816cdec149f63b53cdac6feea051e0",
+  "total_actual_parameters": 5058680,
+  "trainable_parameters": 2478982,
+  "frozen_base_parameters": 2579698,
+  "seed": 1234,
+  "learning_rate": 0.0001,
+  "global_batch": 8,
+  "microbatch": 4,
+  "grad_accum_steps": 2,
+  "objective": "QualityObjective",
+  "both_variants_omit_pmsqe": true,
+  "source_pretraining_used_pmsqe": true,
+  "baseline_actual_full600_wb_pesq": 2.964756427804629,
+  "baseline_cached_full600_wb_pesq": 2.9646163938442864,
+  "cpu_affinity": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "gpu_index": 0,
+  "external_normalization_clipping_gain_or_alignment": false,
+  "reference_used_by_model": false,
+  "comparison_records_used_for_updates": false,
+  "fitted_weights_are_diagnostic_only": true,
+  "formal_goal_achieved": false,
+  "advance_gate": {
+    "metric_min_gain_over_actual_source": 0.03,
+    "metric_min_gain_over_physical_control": 0.02,
+    "finite_generator_adam_updates": 512,
+    "complete600": true,
+    "actual_hops_below_10ms": true
+  },
+  "training_started_unix": 1793577158.1169744,
+  "training_finished_unix": 1793577234.4449742,
+  "optimizer_updates": 512,
+  "training_samples": 256,
+  "per_record_presentations": 16,
+  "all_trainable_gradients_and_adam_finite": true,
+  "metric_stats": null,
+  "first20_loss": 0.41121266782283783,
+  "last20_loss": 0.4050361640751362,
+  "warm_update_seconds": 0.13366261045351469,
+  "peak_allocated_bytes": 3159619072,
+  "validation_samples": 600,
+  "full600_wb_pesq": 2.95990502734979,
+  "gain_over_actual_source": -0.0048514004548390055,
+  "complete_actual_frozen_base_in_quality_evaluation": true,
+  "diagnostic_head_sha256": "35fbf543b1d2c9be6fca2f7a664dc283cd5c446adc2f880179b5214c53fff0e8",
+  "actual_waveform_runtime": {
+    "hops": 600,
+    "mean_ms": 4.796738657945146,
+    "p99_ms": 5.1016585901379585,
+    "max_ms": 5.238875048235059,
+    "all_hops_below_10ms": true,
+    "future_perturbation_max_error": 0.0,
+    "full_vs_stream_waveform_max_error": 7.003545761108398e-07,
+    "complete_actual_frozen_base_included": true,
+    "warmup_state_discarded": true
+  },
+  "individual_source_gain_and_runtime_gate": false,
+  "production_sources_and_evaluator_unchanged": true,
+  "elapsed_seconds": 256.1933158989996
+}

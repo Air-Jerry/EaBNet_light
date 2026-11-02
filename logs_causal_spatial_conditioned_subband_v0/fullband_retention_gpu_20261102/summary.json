@@ -1,0 +1,28 @@
+{
+  "status": "failed",
+  "scope": "Eight real6s training records,8 Adam updates; trained actual model600 hops, not full-data quality or measured epoch",
+  "prototype_sha256": "713245868cbdb9ef49e0539b5ffc63794f367b5ae292a931080555751a52b063",
+  "helper_sha256": "06f8c7e9932941aed46918a9bb6175d765ece45f2da94b296314704ea10aca1d",
+  "frozen_parameters": 0,
+  "frequency_bins": 257,
+  "layers": 8,
+  "hidden": 96,
+  "ffn": 192,
+  "heads": 4,
+  "frontend": {
+    "sample_rate": 16000,
+    "n_fft": 512,
+    "hop_length": 160,
+    "win_length": 320,
+    "power": 0.5
+  },
+  "first8_mics_original_order_reference0": true,
+  "external_normalization_clipping_gain_or_alignment": false,
+  "reference_used_by_model": false,
+  "comparison_records_used_for_updates": false,
+  "formal_goal_achieved": false,
+  "parameters": 1663602,
+  "error": "OutOfMemoryError: CUDA out of memory. Tried to allocate 30.00 MiB. GPU 0 has a total capacity of 11.60 GiB of which 17.06 MiB is free. Including non-PyTorch memory, this process has 11.54 GiB memory in use. Of the allocated memory 10.86 GiB is allocated by PyTorch, and 501.46 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)",
+  "production_sources_and_user_evaluator_unchanged": true,
+  "elapsed_seconds": 19.09727962897159
+}

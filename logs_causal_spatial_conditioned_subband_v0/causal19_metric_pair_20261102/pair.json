@@ -1,0 +1,99 @@
+{
+  "status": "complete",
+  "scope": "Matched256 training records,512 head G updates; actual complete models on fixed600",
+  "helper_sha256": "4047476ab5a96bb220b59ef197763282fbc281b7270cc923e3ed4413af720004",
+  "controller_sha256": "e334e734e2d673d1521dd26f2da68b8c69670743e429454cb346e73878b9400d",
+  "advance_gate": {
+    "metric_min_gain_over_actual_source": 0.03,
+    "metric_min_gain_over_physical_control": 0.02,
+    "finite_generator_adam_updates": 512,
+    "complete600": true,
+    "actual_hops_below_10ms": true
+  },
+  "both_variants_omit_pmsqe": true,
+  "formal_goal_achieved": false,
+  "children": [
+    {
+      "mode": "physical",
+      "pid": 2844852,
+      "cookie": "152525397"
+    },
+    {
+      "mode": "metric",
+      "pid": 2844853,
+      "cookie": "152525397"
+    }
+  ],
+  "exit_codes": {
+    "physical": 0,
+    "metric": 0
+  },
+  "matched_initial_weights_records_crops_seed_and_generator_updates": true,
+  "results": {
+    "physical": {
+      "full600_wb_pesq": 2.95990502734979,
+      "gain_over_actual_source": -0.0048514004548390055,
+      "first20_loss": 0.41121266782283783,
+      "last20_loss": 0.4050361640751362,
+      "warm_update_seconds": 0.13366261045351469,
+      "actual_waveform_runtime": {
+        "hops": 600,
+        "mean_ms": 4.796738657945146,
+        "p99_ms": 5.1016585901379585,
+        "max_ms": 5.238875048235059,
+        "all_hops_below_10ms": true,
+        "future_perturbation_max_error": 0.0,
+        "full_vs_stream_waveform_max_error": 7.003545761108398e-07,
+        "complete_actual_frozen_base_included": true,
+        "warmup_state_discarded": true
+      },
+      "metric_stats": null,
+      "diagnostic_head_sha256": "35fbf543b1d2c9be6fca2f7a664dc283cd5c446adc2f880179b5214c53fff0e8"
+    },
+    "metric": {
+      "full600_wb_pesq": 2.9133152182896933,
+      "gain_over_actual_source": -0.05144120951493569,
+      "first20_loss": 0.4138068497180939,
+      "last20_loss": 0.42073654383420944,
+      "warm_update_seconds": 0.3478966251859674,
+      "actual_waveform_runtime": {
+        "hops": 600,
+        "mean_ms": 4.974412667409827,
+        "p99_ms": 5.0857341778464615,
+        "max_ms": 5.397553090006113,
+        "all_hops_below_10ms": true,
+        "future_perturbation_max_error": 0.0,
+        "full_vs_stream_waveform_max_error": 7.599592208862305e-07,
+        "complete_actual_frozen_base_included": true,
+        "warmup_state_discarded": true
+      },
+      "metric_stats": {
+        "valid_pesq_labels": 4096,
+        "invalid_pesq_labels": 0,
+        "mean_training_pesq": 2.763972489221487,
+        "discriminator_calibration_rmse": 0.2197672464564523,
+        "generator_metric_term": 0.23607360019632675,
+        "discriminator_updates_per_rank": 4096
+      },
+      "diagnostic_head_sha256": "2a186e1edd71515cb5de28899d66b039125e80c71fcedb28fdf1c7a038f5324a"
+    }
+  },
+  "metric_minus_physical_wb_pesq": -0.04658980906009669,
+  "advancement_gate_passed": false,
+  "gpu_training_observations": [
+    {
+      "index": 0,
+      "samples": 16,
+      "mean_utilization_pct": 72.0,
+      "peak_memory_mib": 4967.0
+    },
+    {
+      "index": 1,
+      "samples": 38,
+      "mean_utilization_pct": 36.36842105263158,
+      "peak_memory_mib": 4987.0
+    }
+  ],
+  "all_owned_children_terminal": true,
+  "elapsed_seconds": 314.12369593814947
+}

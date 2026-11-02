@@ -1,0 +1,62 @@
+{
+  "status": "complete",
+  "scope": "Eight real6s training records,8 Adam updates; trained actual model600 hops, not full-data quality or measured epoch",
+  "prototype_sha256": "16855cf670b2fc5e07a7c67c62e8c70a4e276f760823b27992aea63ab721d997",
+  "helper_sha256": "8757ebb8acbc625bdb1fbfe2a26ff9dda4dc81f58ce762eb7501e90cdf7da337",
+  "frozen_parameters": 0,
+  "frequency_bins": 257,
+  "layers": 8,
+  "hidden": 96,
+  "ffn": 192,
+  "heads": 4,
+  "frontend": {
+    "sample_rate": 16000,
+    "n_fft": 512,
+    "hop_length": 160,
+    "win_length": 320,
+    "power": 0.5
+  },
+  "first8_mics_original_order_reference0": true,
+  "external_normalization_clipping_gain_or_alignment": false,
+  "reference_used_by_model": false,
+  "comparison_records_used_for_updates": false,
+  "formal_goal_achieved": false,
+  "activation_checkpointing": true,
+  "parameters": 1663602,
+  "optimizer_updates": 8,
+  "training_samples": 8,
+  "all_gradients_weights_and_adam_finite": true,
+  "training_microbatch1_seconds": 0.8495987818265954,
+  "training_compile_warmup_seconds": [
+    12.959777401061729,
+    0.8633109191432595
+  ],
+  "optimistic_two_gpu_train_only_seconds": 22769.247352952756,
+  "peak_training_allocated_bytes": 2233194496,
+  "losses": [
+    1.8816611766815186,
+    1.335959553718567,
+    4.033167839050293,
+    1.7363603115081787,
+    1.7152974605560303,
+    1.746736764907837,
+    1.5891797542572021,
+    1.551016092300415
+  ],
+  "actual_waveform_runtime": {
+    "hops": 600,
+    "mean_ms": 6.710524458515768,
+    "p99_ms": 6.782481961417943,
+    "max_ms": 6.934009026736021,
+    "all_hops_below_10ms": true,
+    "future_perturbation_max_error": 0.0,
+    "full_vs_stream_waveform_max_error": 1.1175870895385742e-08,
+    "model_state_bytes": 28488064,
+    "measured_model_is_actual_nonzero_8update_model": true,
+    "waveform_is_synthetic_timing_input": true,
+    "real_training_records_used_for_gradient_updates": true
+  },
+  "diagnostic_checkpoint_sha256": "37dbc2f4b767a73d9c0f37cb79bbca05f395b4dadfa2f94d18ddc931e9dc81f5",
+  "production_sources_and_user_evaluator_unchanged": true,
+  "elapsed_seconds": 26.09545521112159
+}

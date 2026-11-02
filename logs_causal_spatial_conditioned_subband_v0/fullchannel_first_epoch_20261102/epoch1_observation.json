@@ -1,0 +1,43 @@
+{
+  "status": "complete_fullchannel_first_epoch_verified",
+  "checkpoint_sha256": "74c574c5c079c23c44e188759074bb6ad87a1348c144469a9a432ba8cbafd55d",
+  "timing": {
+    "epoch": 1,
+    "status": "complete",
+    "started_unix": 1793572222,
+    "finished_unix": 1793575380.4819603,
+    "total_seconds": 3158.481960296631,
+    "training_validation_checkpoint_seconds": 2957,
+    "evaluation_audit_seconds": 201.48196029663086,
+    "training_samples": 53600,
+    "validation_samples": 600,
+    "full_metric_samples": 600,
+    "optimizer_updates_this_epoch": 6700,
+    "global_batch_size": 8,
+    "limit_seconds": 3600
+  },
+  "full600_wb_pesq": 1.2201150560379028,
+  "baseline_full600_wb_pesq": 1.088074848453204,
+  "first_epoch_quality_gate_passed": false,
+  "all_weights_and_adam_finite": true,
+  "all6700_updates_and53600_records_verified": true,
+  "full600_protocol_preserved": true,
+  "gpu_training_and_validation": [
+    {
+      "index": 0,
+      "samples": 296,
+      "mean_utilization_pct": 92.9358108108108,
+      "sampled_peak_memory_mib": 7149.0
+    },
+    {
+      "index": 1,
+      "samples": 296,
+      "mean_utilization_pct": 94.11824324324324,
+      "sampled_peak_memory_mib": 7131.0
+    }
+  ],
+  "target_pesq": 3.4,
+  "target_reached_pending_final_streaming_audit": false,
+  "final_full600_trained_waveform_streaming_audit_still_required": true,
+  "formal_goal_achieved": false
+}

@@ -1,0 +1,22 @@
+{
+  "status": "complete",
+  "upstream_commit": "cc42fc8ad2e6642c09b8f4169a85b4766dc22b7e",
+  "source_files_sha256": {
+    "LICENSE": "645f351f0b7855a4e71b0d2644ef924bd8944163fd1f3b4315e3172ef433ce16",
+    "models/arch/OnlineSpatialNet.py": "9fbe358d7bdd5d21cd5b800e220b1d5cdcbb666b378bb42206d31f9367746a30",
+    "models/arch/base/linear_group.py": "e6e0403b5dbdd787d511f0de9cef4335aa25ae46feee211554346c0a00cf2a43",
+    "models/arch/base/non_linear.py": "a985a7f81c8ebfbbd408ea753d7e9b81324d523c01afa1faca4285049640e79d",
+    "models/arch/base/norm.py": "4c42f48a6d34dc82f25462782ba57e84dddfbfebb56b940f73a28b5ec41055cc",
+    "models/arch/base/retention.py": "92feb404a0ddb2f574f46ce73f0e873be80a1a75e7eeeb0cb26c9bb44e3468b2"
+  },
+  "scope": "CPU random original-author operators; no trained model, real audio, GPU or quality claim",
+  "author_sources_modified": false,
+  "production_or_environment_modified": false,
+  "formal_goal_achieved": false,
+  "optional_mamba_import_shim_for_retention_only": true,
+  "future_perturbation_prefix_max_error": 0.0,
+  "original_chunked_vs_recurrent_max_error": 0.19981801509857178,
+  "original_chunked_vs_recurrent_relative_rms_error": 0.07374631613492966,
+  "original_explicit_conv_cache_error": "TypeError: bad operand type for unary -: 'tuple'",
+  "elapsed_seconds": 0.2933169000316411
+}

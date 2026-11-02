@@ -1,0 +1,27 @@
+{
+  "status": "complete",
+  "upstream": "https://github.com/lmfcanet/LMFCA-Net",
+  "commit": "375093e3d0671f0fc9ca4c2649d22204a76bbecb",
+  "source_files_sha256": {
+    "LICENSE": "40cf195af9eac8ac2e3292037d67c2c170e603a034ad15ca8e1bdf1ef7dca831",
+    "README.md": "0d9ec0040ec703fc7911b6db63e1769cc88b148418af927ecede0bf7be48a419",
+    "source/lmfca_net.py": "94a490c3be8cb41cb7d570411b2f9962d3e02c2cc71f0311fdf3332243ae1da4",
+    "source/online_demo.py": "4e257a2aa75e3f44aa83751af4ce1a0b152d3e905b87c871a3a7559baceccdc2"
+  },
+  "scope": "Untouched official randomly initialized model in CPU eval; synthetic input only, not trained quality",
+  "input_shape": [
+    1,
+    16,
+    64,
+    32
+  ],
+  "future_boundary_frame": 16,
+  "past_output_perturbation_max_error": 2.0,
+  "frame15_output_gradient_to_future_frames_abs_sum": 96383.6640625,
+  "strict_zero_future_frame_inference": false,
+  "author_sources_modified": false,
+  "pretrained_weights_downloaded": false,
+  "production_or_environment_modified": false,
+  "registered_or_deployed": false,
+  "formal_goal_achieved": false
+}

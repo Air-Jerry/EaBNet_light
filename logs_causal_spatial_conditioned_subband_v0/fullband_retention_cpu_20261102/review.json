@@ -1,0 +1,16 @@
+{
+  "status": "passed",
+  "scope": "CPU synthetic contracts only; no CUDA or PESQ claim",
+  "tests": 6,
+  "elapsed_seconds": 10.13,
+  "command": ".venv/Scripts/python.exe -m pytest tests/test_light_fullband_retention.py -q",
+  "prototype_sha256": "16855cf670b2fc5e07a7c67c62e8c70a4e276f760823b27992aea63ab721d997",
+  "tests_sha256": "bf66a294bb04ea5add9792ce411800e8570cf42013a089647c5052b75b7d4424",
+  "activation_checkpointing_output_and_gradients_exactly_match": true,
+  "default_eight_layers_actual_adam_updates": 3,
+  "future_gradient_zero": true,
+  "owned_fixed_size_state": true,
+  "waveform_frontend_consistency": true,
+  "registered_or_deployed": false,
+  "formal_goal_achieved": false
+}

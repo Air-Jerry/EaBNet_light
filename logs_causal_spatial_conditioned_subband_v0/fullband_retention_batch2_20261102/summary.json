@@ -1,0 +1,25 @@
+{
+  "status": "complete",
+  "scope": "Six throughput-check updates on first8 fixed real6s training records; no quality or measured full-DDP-epoch claim",
+  "source_checkpoint_sha256": "37dbc2f4b767a73d9c0f37cb79bbca05f395b4dadfa2f94d18ddc931e9dc81f5",
+  "prototype_sha256": "16855cf670b2fc5e07a7c67c62e8c70a4e276f760823b27992aea63ab721d997",
+  "batch_size": 2,
+  "gpu_index": 0,
+  "eight_layers_hidden96_ffn192_full257_bins": true,
+  "activation_checkpointing": true,
+  "production_sources_and_evaluator_unchanged": true,
+  "formal_goal_achieved": false,
+  "additional_adam_updates": 6,
+  "source_adam_steps": 8,
+  "final_adam_steps": 14,
+  "all_gradients_finite": true,
+  "warm_update_seconds": 1.4684985614730977,
+  "local_training_samples_per_second": 1.3619352803408513,
+  "optimistic_two_gpu_train_only_seconds": 19677.88072373951,
+  "peak_allocated_bytes": 4599666688,
+  "initial_compile_warmup_seconds": [
+    25.586399047868326,
+    1.4648962079081684
+  ],
+  "elapsed_seconds": 33.95390472817235
+}
