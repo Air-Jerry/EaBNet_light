@@ -1,0 +1,13 @@
+{
+  "status": "measured",
+  "training_samples": 53600,
+  "validation_samples": 600,
+  "metric_samples": 600,
+  "cuda_checkpoint_sha256": "746f3aef8705ef5969b4d8f84cfc91867efd167b30144794541f43ce6c495852",
+  "evaluation_checkpoint_sha256": "3de62eef1871fe66b3b77ab3b4c82b4b50ef450338f24075bdd4934a68afc71c",
+  "full600_evaluation_seconds": 213.59364477382042,
+  "projected_complete_epoch_seconds": 2965.684040254046,
+  "training_samples_per_second": 20.1,
+  "validation_samples_per_second": 23.6,
+  "actual_full_epoch_verified": false
+}

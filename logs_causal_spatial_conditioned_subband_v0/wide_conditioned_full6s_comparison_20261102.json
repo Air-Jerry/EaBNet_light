@@ -1,0 +1,89 @@
+{
+  "wide_conditioned_full6s_micro2_20261102": {
+    "status": "measured",
+    "source_checkpoint_sha256": "d634392cbf3fbf82b1da3af68c24f7eb040cc69e8d3b1afd91c00e0bb0391f8f",
+    "mode": "wide128",
+    "batch_size_per_gpu": 2,
+    "global_batch_size": 8,
+    "warm_updates": 8,
+    "hot_updates": 64,
+    "distinct_real6s_training_records": 8,
+    "hot_global_samples_per_second": 19.143025285416588,
+    "peak_process_allocated_bytes": 3236125696,
+    "all_weights_and_adam_finite": true,
+    "existing_10s_sampler_whole_job": {
+      "0": {
+        "samples": 7,
+        "mean_utilization_percent": 42.57142857142857,
+        "peak_whole_gpu_memory_mib": 3529.0
+      },
+      "1": {
+        "samples": 7,
+        "mean_utilization_percent": 41.714285714285715,
+        "peak_whole_gpu_memory_mib": 3511.0
+      }
+    },
+    "utilization_scope": "Whole short process includes startup,compilation,validation; not hot-kernel-only",
+    "actual_complete_epoch_verified": false,
+    "quality_or_generalization_verified": false,
+    "formal_goal_achieved": false
+  },
+  "wide_conditioned_full6s_micro4_20261102": {
+    "status": "measured",
+    "source_checkpoint_sha256": "d634392cbf3fbf82b1da3af68c24f7eb040cc69e8d3b1afd91c00e0bb0391f8f",
+    "mode": "wide128",
+    "batch_size_per_gpu": 4,
+    "global_batch_size": 8,
+    "warm_updates": 8,
+    "hot_updates": 64,
+    "distinct_real6s_training_records": 8,
+    "hot_global_samples_per_second": 19.927286257948293,
+    "peak_process_allocated_bytes": 6368837632,
+    "all_weights_and_adam_finite": true,
+    "existing_10s_sampler_whole_job": {
+      "0": {
+        "samples": 5,
+        "mean_utilization_percent": 57.6,
+        "peak_whole_gpu_memory_mib": 6787.0
+      },
+      "1": {
+        "samples": 5,
+        "mean_utilization_percent": 57.0,
+        "peak_whole_gpu_memory_mib": 6769.0
+      }
+    },
+    "utilization_scope": "Whole short process includes startup,compilation,validation; not hot-kernel-only",
+    "actual_complete_epoch_verified": false,
+    "quality_or_generalization_verified": false,
+    "formal_goal_achieved": false
+  },
+  "control32_joint_source_full6s_micro4_20261102": {
+    "status": "measured",
+    "source_checkpoint_sha256": "d634392cbf3fbf82b1da3af68c24f7eb040cc69e8d3b1afd91c00e0bb0391f8f",
+    "mode": "control32",
+    "batch_size_per_gpu": 4,
+    "global_batch_size": 8,
+    "warm_updates": 8,
+    "hot_updates": 64,
+    "distinct_real6s_training_records": 8,
+    "hot_global_samples_per_second": 23.939120638127232,
+    "peak_process_allocated_bytes": 2079481856,
+    "all_weights_and_adam_finite": true,
+    "existing_10s_sampler_whole_job": {
+      "0": {
+        "samples": 4,
+        "mean_utilization_percent": 46.75,
+        "peak_whole_gpu_memory_mib": 2405.0
+      },
+      "1": {
+        "samples": 4,
+        "mean_utilization_percent": 49.75,
+        "peak_whole_gpu_memory_mib": 2387.0
+      }
+    },
+    "utilization_scope": "Whole short process includes startup,compilation,validation; not hot-kernel-only",
+    "actual_complete_epoch_verified": false,
+    "quality_or_generalization_verified": false,
+    "formal_goal_achieved": false
+  }
+}

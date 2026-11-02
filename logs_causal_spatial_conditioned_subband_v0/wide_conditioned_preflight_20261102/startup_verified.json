@@ -1,0 +1,25 @@
+{
+  "status": "owned_launcher_two_actual_ddp_ranks_and_source_bytes_verified",
+  "checked_at_utc": "2026-11-02T15:09:36.553801+00:00",
+  "formal_pid": 3081879,
+  "formal_cookie": "157988550",
+  "torchrun_pid": 3082900,
+  "ddp_ranks": [
+    {
+      "pid": 3082903,
+      "cookie": "158011123",
+      "local_rank": 0
+    },
+    {
+      "pid": 3082904,
+      "cookie": "158011123",
+      "local_rank": 1
+    }
+  ],
+  "initial_full600_wb_pesq": 2.9932476991415022,
+  "expected_observation_utc": "2026-11-02T15:55:44.097040+00:00",
+  "gpu_queries": 0,
+  "batch_progress_queries": 0,
+  "root_stage_and_user_evaluator_unchanged": true,
+  "formal_goal_achieved": false
+}

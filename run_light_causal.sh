@@ -24,6 +24,7 @@ case "$candidate" in
     causal_fullchannel_dualpath_crn_v1) entry=train_light_causal_fullchannel_dualpath.py; run_prefix=fullchannel_dualpath; learning_rate=0.001 ;;
     causal_folded_retention_v1) entry=train_light_causal_folded_retention.py; run_prefix=folded_retention; learning_rate=0.001 ;;
     causal_joint_conditioned_subband_v1) entry=train_light_causal_joint_conditioned_subband.py; run_prefix=joint_conditioned; learning_rate=0.0001 ;;
+    causal_wide_conditioned_subband_v1) entry=train_light_causal_wide_conditioned_subband.py; run_prefix=wide_conditioned; learning_rate=0.001 ;;
     *) printf 'Unsupported cold-start causal candidate: %s\n' "$candidate" >&2; exit 2 ;;
 esac
 train_dir="/data/ssd1/jinrui.yang/training_set"
@@ -52,9 +53,9 @@ assert bench['all_hops_below_10ms'],'Investigate startup/live deadlines before f
 assert bench['full_vs_stream_waveform_max_error']<1e-5
 speeds=re.findall(r'\[PERF\]\[train\].*?samples/s\(local/global\)=[\d.]+/([\d.]+)',(root/'cuda_final/training.log').read_text())
 assert speeds and float(speeds[-1])>0
-if sys.argv[3] not in ('causal_retention_subband_gru_v1','causal_fullband_conditioned_subband_v1','causal_frozen_conditioned_subband_v1','causal_spatial_conditioned_subband_v1','causal_fullchannel_dualpath_crn_v1','causal_folded_retention_v1','causal_joint_conditioned_subband_v1'):
+if sys.argv[3] not in ('causal_retention_subband_gru_v1','causal_fullband_conditioned_subband_v1','causal_frozen_conditioned_subband_v1','causal_spatial_conditioned_subband_v1','causal_fullchannel_dualpath_crn_v1','causal_folded_retention_v1','causal_joint_conditioned_subband_v1','causal_wide_conditioned_subband_v1'):
     assert float(speeds[-1])>=20,'Hot global throughput is insufficient for the one-hour budget'
-if sys.argv[3] in ('causal_fullband_tcn_v1','causal_fullband_spatial_tcn_v1','causal_retention_subband_gru_v1','causal_fullband_conditioned_subband_v1','causal_frozen_conditioned_subband_v1','causal_spatial_conditioned_subband_v1','causal_gated_multichannel_crn_v1','causal_fullchannel_dualpath_crn_v1','causal_folded_retention_v1','causal_joint_conditioned_subband_v1'):
+if sys.argv[3] in ('causal_fullband_tcn_v1','causal_fullband_spatial_tcn_v1','causal_retention_subband_gru_v1','causal_fullband_conditioned_subband_v1','causal_frozen_conditioned_subband_v1','causal_spatial_conditioned_subband_v1','causal_gated_multichannel_crn_v1','causal_fullchannel_dualpath_crn_v1','causal_folded_retention_v1','causal_joint_conditioned_subband_v1','causal_wide_conditioned_subband_v1'):
     assert state['args']['causal_training_objective']=='spectral_mrstft_waveform_pmsqe_v1'
     assert state['args']['pmsqe_weight']==.1
     expected_entry={'causal_fullband_spatial_tcn_v1':'train_light_causal_fullband_spatial.py',
@@ -65,7 +66,8 @@ if sys.argv[3] in ('causal_fullband_tcn_v1','causal_fullband_spatial_tcn_v1','ca
         'causal_gated_multichannel_crn_v1':'train_light_causal_gated_multichannel.py',
         'causal_fullchannel_dualpath_crn_v1':'train_light_causal_fullchannel_dualpath.py',
         'causal_folded_retention_v1':'train_light_causal_folded_retention.py',
-        'causal_joint_conditioned_subband_v1':'train_light_causal_joint_conditioned_subband.py'}.get(sys.argv[3],'train_light_causal_fullband.py')
+        'causal_joint_conditioned_subband_v1':'train_light_causal_joint_conditioned_subband.py',
+        'causal_wide_conditioned_subband_v1':'train_light_causal_wide_conditioned_subband.py'}.get(sys.argv[3],'train_light_causal_fullband.py')
     assert expected_entry in state['args']['causal_training_implementation_sha256']
     if sys.argv[3]=='causal_fullband_spatial_tcn_v1':
         warm=Path(state['args']['spatial_fullband_warmstart_checkpoint'])
@@ -111,6 +113,15 @@ if sys.argv[3] in ('causal_fullband_tcn_v1','causal_fullband_spatial_tcn_v1','ca
         assert source['args']['spatial_conditioned_sample_epoch_offset']+int(source['epoch'])==state['args']['joint_conditioned_sample_epoch_offset']
         assert state['args']['gru_training_precision']=='fp16'
         assert state['args']['candidate_evidence']['frozen_backbone'] is False
+    if sys.argv[3]=='causal_wide_conditioned_subband_v1':
+        warm=Path(state['args']['capacity_warmstart_checkpoint'])
+        assert warm.is_absolute() and hashlib.sha256(warm.read_bytes()).hexdigest()==state['args']['capacity_warmstart_sha256']
+        source,_=read_candidate_checkpoint(warm,'causal_joint_conditioned_subband_v1')
+        assert int(source['epoch'])>=1
+        assert source['args']['joint_conditioned_sample_epoch_offset']+int(source['epoch'])==state['args']['capacity_sample_epoch_offset']
+        assert state['args']['capacity_head_width']==128 and state['args']['gru_training_precision']=='fp16'
+        assert state['args']['candidate_evidence']['frozen_backbone_is_causal'] is True
+        assert check['frozen_causal_weights_unchanged'] is True
     projection=json.loads((root/'timing_projection.json').read_text())
     baseline=json.loads((root/'zero_mapping_full600/summary.json').read_text())
     assert projection['status']=='measured'
@@ -140,6 +151,7 @@ names.update({'run_light_causal_gated_multichannel.sh','train_light_causal_gated
 names.update({'run_light_causal_fullchannel_dualpath.sh','train_light_causal_fullchannel_dualpath.py'})
 names.update({'run_light_causal_folded_retention.sh','train_light_causal_folded_retention.py'})
 names.update({'run_light_causal_joint_conditioned_subband.sh','train_light_causal_joint_conditioned_subband.py'})
+names.update({'run_light_causal_wide_conditioned_subband.sh','train_light_causal_wide_conditioned_subband.py'})
 ancestors=set();cursor=os.getpid()
 while cursor>1:
     ancestors.add(cursor)
@@ -164,7 +176,7 @@ PY_BATCH
 )
 warm=''
 warm_args=()
-if [[ "$candidate" == causal_fullband_spatial_tcn_v1 || "$candidate" == causal_retention_subband_gru_v1 || "$candidate" == causal_fullband_conditioned_subband_v1 || "$candidate" == causal_frozen_conditioned_subband_v1 || "$candidate" == causal_spatial_conditioned_subband_v1 || "$candidate" == causal_joint_conditioned_subband_v1 ]]; then
+if [[ "$candidate" == causal_fullband_spatial_tcn_v1 || "$candidate" == causal_retention_subband_gru_v1 || "$candidate" == causal_fullband_conditioned_subband_v1 || "$candidate" == causal_frozen_conditioned_subband_v1 || "$candidate" == causal_spatial_conditioned_subband_v1 || "$candidate" == causal_joint_conditioned_subband_v1 || "$candidate" == causal_wide_conditioned_subband_v1 ]]; then
     warm=$("$train_py" - "$preflight/cuda_final/checkpoints/model_epoch_2.pt" "$candidate" <<'PY_WARM'
 import sys,torch
 state=torch.load(sys.argv[1],map_location='cpu',weights_only=False)
@@ -172,7 +184,8 @@ key={'causal_retention_subband_gru_v1':'subband_warmstart_checkpoint',
      'causal_fullband_conditioned_subband_v1':'conditioned_subband_warmstart_checkpoint',
      'causal_frozen_conditioned_subband_v1':'frozen_subband_warmstart_checkpoint',
       'causal_spatial_conditioned_subband_v1':'spatial_conditioned_warmstart_checkpoint',
-      'causal_joint_conditioned_subband_v1':'joint_conditioned_warmstart_checkpoint'}.get(sys.argv[2],'spatial_fullband_warmstart_checkpoint')
+      'causal_joint_conditioned_subband_v1':'joint_conditioned_warmstart_checkpoint',
+      'causal_wide_conditioned_subband_v1':'capacity_warmstart_checkpoint'}.get(sys.argv[2],'spatial_fullband_warmstart_checkpoint')
 print(state['args'][key])
 PY_WARM
 )
@@ -280,7 +293,7 @@ import json,math,sys
 from pathlib import Path
 root=Path(sys.argv[1])/'pesq_selection';baseline=json.loads((root/'model_epoch_0/summary.json').read_text())
 candidate=sys.argv[2] if len(sys.argv)>2 else 'causal_unet_spatial_v1'
-if candidate in ('causal_fullband_spatial_tcn_v1','causal_retention_subband_gru_v1','causal_fullband_conditioned_subband_v1','causal_frozen_conditioned_subband_v1','causal_spatial_conditioned_subband_v1','causal_joint_conditioned_subband_v1'):
+if candidate in ('causal_fullband_spatial_tcn_v1','causal_retention_subband_gru_v1','causal_fullband_conditioned_subband_v1','causal_frozen_conditioned_subband_v1','causal_spatial_conditioned_subband_v1','causal_joint_conditioned_subband_v1','causal_wide_conditioned_subband_v1'):
     import hashlib,torch
     warm=Path(sys.argv[3]).resolve();source=torch.load(warm,map_location='cpu',weights_only=False)
     old=json.loads((Path(source['args']['log_dir'])/'pesq_selection'/f"model_epoch_{source['epoch']}"/'summary.json').read_text())
@@ -290,7 +303,8 @@ if candidate in ('causal_fullband_spatial_tcn_v1','causal_retention_subband_gru_
         'causal_fullband_conditioned_subband_v1':'causal_retention_subband_gru_v1',
         'causal_frozen_conditioned_subband_v1':'causal_retention_subband_gru_v1',
         'causal_spatial_conditioned_subband_v1':'causal_frozen_conditioned_subband_v1',
-        'causal_joint_conditioned_subband_v1':'causal_spatial_conditioned_subband_v1'}.get(candidate,'causal_fullband_tcn_v1')
+        'causal_joint_conditioned_subband_v1':'causal_spatial_conditioned_subband_v1',
+        'causal_wide_conditioned_subband_v1':'causal_joint_conditioned_subband_v1'}.get(candidate,'causal_fullband_tcn_v1')
     if candidate=='causal_frozen_conditioned_subband_v1':
         expected_source=source['args'].get('structure_candidate')
         assert expected_source in ('causal_retention_subband_gru_v1','causal_fullband_conditioned_subband_v1')
@@ -300,7 +314,7 @@ else:
 keys=('frontend','frontend_protocol','num_mics','selected_pairs_sha256','metadata_sha256','metric_protocol')
 for key in keys:assert baseline[key]==old[key],key
 for name,value in old['mean']['noisy'].items():assert abs(baseline['mean']['noisy'][name]-value)<1e-10,name
-warm_candidate=candidate in ('causal_fullband_spatial_tcn_v1','causal_retention_subband_gru_v1','causal_fullband_conditioned_subband_v1','causal_frozen_conditioned_subband_v1','causal_spatial_conditioned_subband_v1','causal_joint_conditioned_subband_v1')
+warm_candidate=candidate in ('causal_fullband_spatial_tcn_v1','causal_retention_subband_gru_v1','causal_fullband_conditioned_subband_v1','causal_frozen_conditioned_subband_v1','causal_spatial_conditioned_subband_v1','causal_joint_conditioned_subband_v1','causal_wide_conditioned_subband_v1')
 expected=old['mean']['enhanced'] if warm_candidate else baseline['mean']['noisy']
 tolerance=1e-4 if warm_candidate else 1e-3
 for name,value in expected.items():assert abs(baseline['mean']['enhanced'][name]-value)<tolerance,name

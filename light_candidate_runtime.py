@@ -41,16 +41,24 @@ GATED_MULTICHANNEL_CANDIDATE = "causal_gated_multichannel_crn_v1"
 FULLCHANNEL_DUALPATH_CANDIDATE = "causal_fullchannel_dualpath_crn_v1"
 FOLDED_RETENTION_CANDIDATE = "causal_folded_retention_v1"
 JOINT_CONDITIONED_CANDIDATE = "causal_joint_conditioned_subband_v1"
+JOINT_FIXED_CONDITIONED_CANDIDATE = "causal_joint_fixed_conditioned_subband_v1"
+WIDE_CONDITIONED_CANDIDATE = "causal_wide_conditioned_subband_v1"
 IDENTITY_FIELDS = ("sample_rate", "n_fft", "hop_length", "win_length", "power", "target_ref_mic",
                    "channels", "num_mics", "embed_dim", "cd1", "dfsmn_layers", "dfsmn_memory_size",
                    "norm_type", "bf_type", "topo_type", "is_causal")
 
 
 def all_model_candidates():
-    return (*all_reference_candidates(), QUALITY_CANDIDATE, SPATIAL_CANDIDATE, CAUSAL_CANDIDATE, FAST_CANDIDATE, GLOBAL_CANDIDATE, RECURRENT_CANDIDATE, RECURRENT65_CANDIDATE, TCN_CANDIDATE, FOURIER_CANDIDATE, FREQUENCY_ATTENTION_CANDIDATE, POOLED_FREQUENCY_ATTENTION_CANDIDATE, RETENTION_CANDIDATE, FULLBAND_TCN_CANDIDATE, FULLBAND_SPATIAL_CANDIDATE, SUBBAND_GRU_CANDIDATE, CONDITIONED_SUBBAND_CANDIDATE, FROZEN_CONDITIONED_CANDIDATE, SPATIAL_CONDITIONED_CANDIDATE, GATED_MULTICHANNEL_CANDIDATE, FULLCHANNEL_DUALPATH_CANDIDATE, FOLDED_RETENTION_CANDIDATE, JOINT_CONDITIONED_CANDIDATE)
+    return (*all_reference_candidates(), QUALITY_CANDIDATE, SPATIAL_CANDIDATE, CAUSAL_CANDIDATE, FAST_CANDIDATE, GLOBAL_CANDIDATE, RECURRENT_CANDIDATE, RECURRENT65_CANDIDATE, TCN_CANDIDATE, FOURIER_CANDIDATE, FREQUENCY_ATTENTION_CANDIDATE, POOLED_FREQUENCY_ATTENTION_CANDIDATE, RETENTION_CANDIDATE, FULLBAND_TCN_CANDIDATE, FULLBAND_SPATIAL_CANDIDATE, SUBBAND_GRU_CANDIDATE, CONDITIONED_SUBBAND_CANDIDATE, FROZEN_CONDITIONED_CANDIDATE, SPATIAL_CONDITIONED_CANDIDATE, GATED_MULTICHANNEL_CANDIDATE, FULLCHANNEL_DUALPATH_CANDIDATE, FOLDED_RETENTION_CANDIDATE, JOINT_CONDITIONED_CANDIDATE, JOINT_FIXED_CONDITIONED_CANDIDATE, WIDE_CONDITIONED_CANDIDATE)
 
 
 def build_model_candidate(candidate_id, **model_kwargs):
+    if candidate_id == WIDE_CONDITIONED_CANDIDATE:
+        from experiments.causal_wide_conditioned_subband import CausalWideConditionedSubband
+        return CausalWideConditionedSubband(build_model_candidate(RETENTION_CANDIDATE, **model_kwargs))
+    if candidate_id == JOINT_FIXED_CONDITIONED_CANDIDATE:
+        from experiments.causal_spatial_conditioned_subband import CausalSpatialConditionedSubband
+        return CausalSpatialConditionedSubband(build_model_candidate(RETENTION_CANDIDATE, **model_kwargs))
     if candidate_id == JOINT_CONDITIONED_CANDIDATE:
         from experiments.causal_joint_conditioned_subband import CausalJointConditionedSubband
         return CausalJointConditionedSubband(build_model_candidate(RETENTION_CANDIDATE, **model_kwargs))
@@ -131,6 +139,27 @@ def build_model_candidate(candidate_id, **model_kwargs):
 
 
 def candidate_metadata(candidate_id):
+    if candidate_id in (JOINT_FIXED_CONDITIONED_CANDIDATE,WIDE_CONDITIONED_CANDIDATE):
+        metadata=candidate_metadata(SPATIAL_CONDITIONED_CANDIDATE)
+        wide=candidate_id==WIDE_CONDITIONED_CANDIDATE
+        files=tuple(metadata['candidate_implementation_sha256'])
+        if wide:files=(*files,'experiments/causal_wide_conditioned_subband.py')
+        metadata.update(structure_candidate=candidate_id,candidate_schema=25 if wide else 24,
+            candidate_implementation_sha256=source_hashes(files))
+        evidence=metadata['candidate_evidence']
+        evidence.update(candidate_id=candidate_id,warm_start_candidate=JOINT_CONDITIONED_CANDIDATE,
+            purpose='128-state causal refinement capacity experiment' if wide else 'Matched frozen32-state control from a completed joint model',
+            initialization='Complete joint checkpoint; preserve original32-state output; fixed causal backbone; fresh head Adam')
+        config=evidence['model_config']
+        config.update(parameters=5166584 if wide else 5058680,
+            trainable_parameters=2586886 if wide else 2478982,
+            stream_state_bytes_per_stream_fp32=6218512 if wide else 6119824)
+        if wide:
+            config['subband_gru'].update(hidden=128,extra_parameters=117218,
+                extra_cache_bytes_per_stream_fp32=131584,
+                normalization='Four independent current-frame32-channel LayerNorm groups; reference-mixture frame scale only')
+            config['fullband_condition'].update(output='128-channel current-frequency condition before the local temporal GRU',extra_parameters=780948)
+        return metadata
     if candidate_id == JOINT_CONDITIONED_CANDIDATE:
         metadata=candidate_metadata(SPATIAL_CONDITIONED_CANDIDATE)
         files=(*metadata['candidate_implementation_sha256'],'experiments/causal_joint_conditioned_subband.py')

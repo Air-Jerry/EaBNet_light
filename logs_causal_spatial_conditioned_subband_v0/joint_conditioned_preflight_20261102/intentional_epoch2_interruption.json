@@ -1,0 +1,85 @@
+{
+  "status": "owned_job_terminal_epoch2_preserved_and_relocated_resume_guard_passed",
+  "checked_at_utc": "2026-11-02T14:14:02.031743+00:00",
+  "reason": "Epoch2 full600 gain only0.00234343; preserve exact recovery before idle-GPU wide-head feasibility and controlled quality tests",
+  "completed_epoch": 2,
+  "checkpoint_sha256": "d634392cbf3fbf82b1da3af68c24f7eb040cc69e8d3b1afd91c00e0bb0391f8f",
+  "full600_wb_pesq": 2.9932473212480546,
+  "owned_processes": [
+    {
+      "pid": 3066944,
+      "cookie": "157661002"
+    },
+    {
+      "pid": 3066945,
+      "cookie": "157661002"
+    },
+    {
+      "pid": 3066946,
+      "cookie": "157661002"
+    },
+    {
+      "pid": 3066949,
+      "cookie": "157661093"
+    },
+    {
+      "pid": 3066950,
+      "cookie": "157661093"
+    },
+    {
+      "pid": 3067040,
+      "cookie": "157661840"
+    },
+    {
+      "pid": 3067041,
+      "cookie": "157661840"
+    },
+    {
+      "pid": 3067044,
+      "cookie": "157661840"
+    },
+    {
+      "pid": 3067045,
+      "cookie": "157661840"
+    },
+    {
+      "pid": 3038440,
+      "cookie": "156942544"
+    },
+    {
+      "pid": 3067048,
+      "cookie": "157661841"
+    },
+    {
+      "pid": 3067049,
+      "cookie": "157661841"
+    },
+    {
+      "pid": 3067052,
+      "cookie": "157661842"
+    },
+    {
+      "pid": 3067053,
+      "cookie": "157661842"
+    },
+    {
+      "pid": 3038399,
+      "cookie": "156941438"
+    }
+  ],
+  "unfinished_epoch3_updates_not_counted_or_resumed": true,
+  "formal_goal_achieved": false,
+  "cloned_resume_stage": "/home/nis/jinrui.yang/EaBNet_light/tmp/joint_conditioned_resume_stage_20261102",
+  "source_and_cloned_checkpoint_identical": true,
+  "actual_launcher_resume_not_yet_executed": true,
+  "active_source_and_root_unchanged": true,
+  "optimizer_steps": 13400,
+  "optimizer_learning_rates": [
+    0.0001
+  ],
+  "lr_reducer_state": {
+    "best_plateau_loss_for_lr": 0.35185955102245015,
+    "stale_train_epochs": 0,
+    "metric": "val"
+  }
+}
