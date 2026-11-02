@@ -1,0 +1,179 @@
+{
+  "status": "complete",
+  "checked_at_utc": "2026-11-02T20:10:30.089728+00:00",
+  "scope": "Paired complete600 CSV analysis, unchanged cohort and protocol; no audio or GPU access. Geometry is descriptive only, not causal proof.",
+  "metadata_sha256": "8d0b4d229ebc42cd9892e6d0e0d36416007ded01fbc0b753df4bf7e6b734eb02",
+  "selected_pairs_sha256": "18233928bdcb499f4e65e3b66a1f8c39387675d09f1621ae6ac94881d7444cfb",
+  "models": {
+    "source": {
+      "checkpoint_sha256": "f14ec7e7425ba5a8862d2d258bc63a44f14eacf765930e9bbc95465f1e773904",
+      "csv_sha256": "33d42e062c63ccce62eb5b3a8b32c073ea90f9c2c890612d70a803e3aec0c30d",
+      "full600_wb_pesq": 3.0431378700335823
+    },
+    "epoch1": {
+      "checkpoint_sha256": "ce4347b3daebbf7e5c1d31f7cf30c452e5e4735b50ac6276da25a375d55ee3ef",
+      "csv_sha256": "29823a11b2edb2947417d3e063d5365a59824c1285224379d63f272bf1720b57",
+      "full600_wb_pesq": 3.0506950970490774
+    },
+    "control256": {
+      "checkpoint_sha256": "d9d39e998af971a3fad64a04fe71d38e36bd696214b37ddc6cf9953871d2d409",
+      "csv_sha256": "99fe0d27bfe895ea7edfe66abc2f9cd093fe834b420b5e1f694a080c93f4231a",
+      "full600_wb_pesq": 3.0432874445120492
+    },
+    "monaural256": {
+      "checkpoint_sha256": "42d86ca56057b4a15ecae15cff24b29fa7373bd6297089ce491fed54b8544060",
+      "csv_sha256": "da878d3388bfde4b3a2bc72262abc0cde43693aa2790b03550265584d41c333a",
+      "full600_wb_pesq": 3.044561735590299
+    }
+  },
+  "all600": {
+    "count": 600,
+    "mean_pesq": {
+      "source": 3.0431378700335823,
+      "epoch1": 3.0506950970490774,
+      "control256": 3.0432874445120492,
+      "monaural256": 3.044561735590299
+    },
+    "epoch1_minus_source_mean": 0.0075572270154953,
+    "epoch1_gain_median": 0.008355796337127686,
+    "epoch1_improved_samples": 375,
+    "improved_over0_1": 4,
+    "degraded_over0_1": 3,
+    "monaural256_minus_control256_mean": 0.0012742910782496135
+  },
+  "by_geometry_coherence1000": {
+    "below0_8": {
+      "count": 409,
+      "mean_pesq": {
+        "source": 3.486885354396475,
+        "epoch1": 3.4941366030709378,
+        "control256": 3.487116002220396,
+        "monaural256": 3.4886060081659145
+      },
+      "epoch1_minus_source_mean": 0.007251248674462652,
+      "epoch1_gain_median": 0.006325721740722656,
+      "epoch1_improved_samples": 239,
+      "improved_over0_1": 4,
+      "degraded_over0_1": 1,
+      "monaural256_minus_control256_mean": 0.0014900059455181392
+    },
+    "0_8_to0_95": {
+      "count": 88,
+      "mean_pesq": {
+        "source": 2.6134011244232003,
+        "epoch1": 2.6306212652813303,
+        "control256": 2.6169195649298755,
+        "monaural256": 2.617353477261283
+      },
+      "epoch1_minus_source_mean": 0.01722014085813002,
+      "epoch1_gain_median": 0.021187186241149902,
+      "epoch1_improved_samples": 70,
+      "improved_over0_1": 0,
+      "degraded_over0_1": 1,
+      "monaural256_minus_control256_mean": 0.0004339123314077204
+    },
+    "at_least0_95": {
+      "count": 103,
+      "mean_pesq": {
+        "source": 1.6482263409975664,
+        "epoch1": 1.6487428760065617,
+        "control256": 1.6451757289830922,
+        "monaural256": 1.6463114370420142
+      },
+      "epoch1_minus_source_mean": 0.0005165350089952784,
+      "epoch1_gain_median": 0.007808804512023926,
+      "epoch1_improved_samples": 66,
+      "improved_over0_1": 0,
+      "degraded_over0_1": 1,
+      "monaural256_minus_control256_mean": 0.0011357080589220361
+    }
+  },
+  "by_snr": {
+    "-5.0": {
+      "count": 140,
+      "mean_pesq": {
+        "source": 2.693972250393459,
+        "epoch1": 2.7007530987262727,
+        "control256": 2.6966323946203503,
+        "monaural256": 2.698078909942082
+      },
+      "epoch1_minus_source_mean": 0.006780848332813808,
+      "epoch1_gain_median": 0.007101476192474365,
+      "epoch1_improved_samples": 86,
+      "improved_over0_1": 2,
+      "degraded_over0_1": 0,
+      "monaural256_minus_control256_mean": 0.0014465153217315674
+    },
+    "-2.0": {
+      "count": 161,
+      "mean_pesq": {
+        "source": 2.8967097701493256,
+        "epoch1": 2.906460779053824,
+        "control256": 2.8968520105255315,
+        "monaural256": 2.896076962814568
+      },
+      "epoch1_minus_source_mean": 0.009751008904498556,
+      "epoch1_gain_median": 0.013117432594299316,
+      "epoch1_improved_samples": 108,
+      "improved_over0_1": 2,
+      "degraded_over0_1": 1,
+      "monaural256_minus_control256_mean": -0.0007750477109636579
+    },
+    "0.0": {
+      "count": 149,
+      "mean_pesq": {
+        "source": 3.284712490619429,
+        "epoch1": 3.291465723274538,
+        "control256": 3.282152380719281,
+        "monaural256": 3.282766416568884
+      },
+      "epoch1_minus_source_mean": 0.006753232655109175,
+      "epoch1_gain_median": 0.008147716522216797,
+      "epoch1_improved_samples": 86,
+      "improved_over0_1": 0,
+      "degraded_over0_1": 1,
+      "monaural256_minus_control256_mean": 0.0006140358496032305
+    },
+    "2.0": {
+      "count": 150,
+      "mean_pesq": {
+        "source": 3.2862278191248575,
+        "epoch1": 3.2929536414146425,
+        "control256": 3.2867336869239807,
+        "monaural256": 3.2907027125358583
+      },
+      "epoch1_minus_source_mean": 0.006725822289784749,
+      "epoch1_gain_median": 0.007802009582519531,
+      "epoch1_improved_samples": 95,
+      "improved_over0_1": 0,
+      "degraded_over0_1": 1,
+      "monaural256_minus_control256_mean": 0.003969025611877441
+    }
+  },
+  "source_pesq_below2": {
+    "count": 108,
+    "mean_pesq": {
+      "source": 1.5129292287208416,
+      "epoch1": 1.5150422034440216,
+      "control256": 1.5103323525852628,
+      "monaural256": 1.509581509563658
+    },
+    "epoch1_minus_source_mean": 0.0021129747231801352,
+    "epoch1_gain_median": 0.007363319396972656,
+    "epoch1_improved_samples": 74,
+    "improved_over0_1": 0,
+    "degraded_over0_1": 1,
+    "monaural256_minus_control256_mean": -0.0007508430216047498
+  },
+  "geometric_proxy": {
+    "mics": "First8 of original9 x-axis linear4cm array",
+    "frequency_hz": 1000,
+    "speed_assumed_m_per_s": 343,
+    "definition": "Normalized complex inner product of spherical free-field exp(-j*2*pi*f*d/c)/d steering vectors",
+    "limitations": "Metadata rounded1mm; ignores real RIR, reflections and source spectra; no causal attribution or sample filtering."
+  },
+  "gpu_queries": 0,
+  "batch_progress_queries": 0,
+  "data_and_source_files_unchanged": true,
+  "formal_goal_achieved": false
+}

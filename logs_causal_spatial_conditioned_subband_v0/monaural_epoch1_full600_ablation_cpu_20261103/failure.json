@@ -1,0 +1,33 @@
+{
+  "status": "failed_cpu_gpu_mean_agreement",
+  "candidate": "causal_monaural_spectral_v1",
+  "epoch": 1,
+  "checkpoint_sha256": "ce4347b3daebbf7e5c1d31f7cf30c452e5e4735b50ac6276da25a375d55ee3ef",
+  "helper_source_sha256": "e032f2c9a1e12548557eaaa1559078143d5fd9b4fc8bf66eb7673df53b90890e",
+  "native_session": 55523,
+  "exit_code": 1,
+  "completed_inference_samples": 600,
+  "expected_samples": 600,
+  "elapsed_until600_seconds": 871.3636049288325,
+  "gpu_used": false,
+  "weights_updated": false,
+  "formal_training_interrupted": false,
+  "actual6s_worker_smoke_passed": true,
+  "actual_capture_hook_equality_verified": true,
+  "mean_agreement_required_absolute_tolerance": 0.0001,
+  "assertion": "abs(cpu_full_mean - original_formal_gpu_mean) < 1e-4",
+  "mean_difference": null,
+  "aggregate_scores_and_individual_scores_not_persisted": true,
+  "limitation": "The existing helper asserted backend agreement before saving the aggregate report. Neither the precise difference nor a branch contribution can be recovered from its stdout.",
+  "no_branch_contribution_or_new_goal_score_claim": true,
+  "immediate_rerun": false,
+  "next_action": "Continue the actual full GPU training. Any later ablation must save its complete measurements before checking cross-backend agreement; preserve the final goal gates.",
+  "progress_events": [
+    100,
+    200,
+    300,
+    400,
+    500,
+    600
+  ]
+}
