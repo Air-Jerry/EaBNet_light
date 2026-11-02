@@ -1,0 +1,22 @@
+{
+  "status": "complete",
+  "checked_at_utc": "2026-11-02T13:27:19.241161+00:00",
+  "registered_candidate": false,
+  "source_checkpoint_sha256": "f75dd80a8aee744d6ce0e8a6f1f2510b9d1121c93d98e128e3eb700b73fb3184",
+  "prototype_sha256": "1d3b762acef8374be13675f40822998c2ec132d68a99c02e24f5e9bb54eaa53f",
+  "shared_gpu_functional_only": true,
+  "cuda_memory_fraction_limit": 0.25,
+  "scope": "Synthetic65-frame warm-output,2 Adam updates and spectrum causality/state checks; not real6s memory,speed,latency or PESQ",
+  "formal_goal_achieved": false,
+  "parameters": 5166584,
+  "trainable_parameters": 2586886,
+  "source_fp32_warm_max_abs_error": 0.0,
+  "adam_updates": 2,
+  "all_gradients_and_adam_finite": true,
+  "frozen_causal_backbone_unchanged": true,
+  "new_readout_channels_received_gradient": true,
+  "future_perturbation_max_error": 0.0,
+  "batch_stream_spectrum_max_abs_error": 1.6852281987667084e-06,
+  "short_check_peak_allocated_bytes": 276255744,
+  "active_source_and_checkpoint_unchanged": true
+}
