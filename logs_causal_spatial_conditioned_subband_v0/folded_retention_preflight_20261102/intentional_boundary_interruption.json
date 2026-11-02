@@ -1,0 +1,103 @@
+{
+  "status": "owned_job_terminal_epoch8_preserved_and_relocated_resume_guard_passed",
+  "reason": "Idle-GPU full6s joint-finetuning feasibility profile; completed epoch8 preserved",
+  "checked_at_utc": "2026-11-02T10:30:21.865958+00:00",
+  "completed_epoch": 8,
+  "checkpoint_sha256": "f2948b3832b9b564aadb1af172e4569017ba92bbc72f6a995dfc495ee48475a4",
+  "full600_wb_pesq": 2.5280794723828635,
+  "owned_processes": [
+    {
+      "pid": 2898567,
+      "cookie": "153486985"
+    },
+    {
+      "pid": 3011723,
+      "cookie": "156346196"
+    },
+    {
+      "pid": 3011725,
+      "cookie": "156346197"
+    },
+    {
+      "pid": 3011731,
+      "cookie": "156346330"
+    },
+    {
+      "pid": 3011732,
+      "cookie": "156346330"
+    },
+    {
+      "pid": 3011735,
+      "cookie": "156346330"
+    },
+    {
+      "pid": 3011736,
+      "cookie": "156346330"
+    },
+    {
+      "pid": 2898591,
+      "cookie": "153487142"
+    },
+    {
+      "pid": 3011680,
+      "cookie": "156345973"
+    },
+    {
+      "pid": 3011681,
+      "cookie": "156345973"
+    },
+    {
+      "pid": 3011684,
+      "cookie": "156345974"
+    },
+    {
+      "pid": 3011685,
+      "cookie": "156345974"
+    },
+    {
+      "pid": 3011688,
+      "cookie": "156345975"
+    },
+    {
+      "pid": 3011689,
+      "cookie": "156345975"
+    },
+    {
+      "pid": 3011692,
+      "cookie": "156345975"
+    },
+    {
+      "pid": 3011693,
+      "cookie": "156345975"
+    },
+    {
+      "pid": 3011442,
+      "cookie": "156345142"
+    },
+    {
+      "pid": 3011443,
+      "cookie": "156345142"
+    },
+    {
+      "pid": 3011444,
+      "cookie": "156345142"
+    },
+    {
+      "pid": 3011447,
+      "cookie": "156345240"
+    },
+    {
+      "pid": 3011448,
+      "cookie": "156345240"
+    },
+    {
+      "pid": 2898682,
+      "cookie": "153487612"
+    }
+  ],
+  "formal_goal_achieved": false,
+  "cloned_resume_stage": "/home/nis/jinrui.yang/EaBNet_light/tmp/folded_retention_resume_stage_20261102",
+  "source_and_cloned_checkpoint_identical": true,
+  "actual_launcher_resume_not_yet_executed": true,
+  "active_source_and_root_unchanged": true
+}

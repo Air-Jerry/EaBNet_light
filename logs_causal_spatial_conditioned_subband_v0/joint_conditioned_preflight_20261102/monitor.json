@@ -1,0 +1,15 @@
+{
+  "status": "baseline_verified_waiting_epoch_eta",
+  "formal_pid": 3038399,
+  "formal_cookie": "156941438",
+  "maximum_epochs": 30,
+  "scope": "Real complete53600/600/600 epochs; check actual Adam and timing at measured ETAs",
+  "gpu_queries_while_training": 0,
+  "epoch_history": [],
+  "formal_goal_achieved": false,
+  "run": "joint_conditioned_20261102_200814_3038399",
+  "baseline_full600_wb_pesq": 2.964756427804629,
+  "next_epoch": 1,
+  "observation_not_before_unix": 1793624970.9500854,
+  "expected_observation_utc": "2026-11-02T13:09:30.950085+00:00"
+}

@@ -18,6 +18,8 @@ from test_light_quality_workflow import run_cli
 @pytest.mark.parametrize('candidate,train_seconds,metric_seconds,accepted',[
     (FOLDED_RETENTION_CANDIDATE,3310,240,True),
     (FOLDED_RETENTION_CANDIDATE,3500,240,False),
+    ('causal_joint_conditioned_subband_v1',3310,240,True),
+    ('causal_joint_conditioned_subband_v1',3500,240,False),
     ('causal_fullchannel_dualpath_crn_v1',3310,240,False),
 ])
 def test_actual_remaining_budget_preserves_completed_training(candidate,train_seconds,metric_seconds,accepted):

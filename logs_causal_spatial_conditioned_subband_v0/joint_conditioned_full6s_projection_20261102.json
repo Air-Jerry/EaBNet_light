@@ -1,0 +1,68 @@
+{
+  "status": "measured_components_projection_only",
+  "scope": "Short72-update profiles; actual complete formal epoch not verified",
+  "source_full600_wb_pesq": 2.964756427804629,
+  "rows": [
+    {
+      "configuration": "joint_conditioned_full6s_joint_batchedloss_fp16gru_micro2_20261102",
+      "global_batch": 8,
+      "global_training_samples": 53600,
+      "validation_samples": 600,
+      "full_metric_samples": 600,
+      "hot_global_samples_per_second": 16.347488667162484,
+      "hot_adam_seconds": 0.4893718027815339,
+      "max_cuda_allocated_bytes": 5976249856,
+      "projected_complete_seconds_including_60s_reserve": 3575.3190024750365,
+      "actual_full600_source_evaluation_seconds": 204.0679395799525
+    },
+    {
+      "configuration": "joint_conditioned_full6s_joint_batchedloss_micro2_20261102",
+      "global_batch": 8,
+      "global_training_samples": 53600,
+      "validation_samples": 600,
+      "full_metric_samples": 600,
+      "hot_global_samples_per_second": 15.988091196809757,
+      "hot_adam_seconds": 0.5003724272974068,
+      "max_cuda_allocated_bytes": 7005051392,
+      "projected_complete_seconds_including_60s_reserve": 3646.6385198889184,
+      "actual_full600_source_evaluation_seconds": 204.0679395799525
+    },
+    {
+      "configuration": "joint_conditioned_full6s_joint_fp16gru_micro2_20261102",
+      "global_batch": 8,
+      "global_training_samples": 53600,
+      "validation_samples": 600,
+      "full_metric_samples": 600,
+      "hot_global_samples_per_second": 16.25218451170684,
+      "hot_adam_seconds": 0.49224151954695117,
+      "max_cuda_allocated_bytes": 5976249856,
+      "projected_complete_seconds_including_60s_reserve": 3596.8691336266347,
+      "actual_full600_source_evaluation_seconds": 204.0679395799525
+    },
+    {
+      "configuration": "joint_conditioned_full6s_joint_fp16gru_micro4_20261102",
+      "global_batch": 8,
+      "global_training_samples": 53600,
+      "validation_samples": 600,
+      "full_metric_samples": 600,
+      "hot_global_samples_per_second": 16.14764082546036,
+      "hot_adam_seconds": 0.49542840879803407,
+      "max_cuda_allocated_bytes": 11798108160,
+      "projected_complete_seconds_including_60s_reserve": 3633.3335286089423,
+      "actual_full600_source_evaluation_seconds": 204.0679395799525
+    },
+    {
+      "configuration": "joint_conditioned_full6s_joint_micro2_20261102",
+      "global_batch": 8,
+      "global_training_samples": 53600,
+      "validation_samples": 600,
+      "full_metric_samples": 600,
+      "hot_global_samples_per_second": 15.817492521819839,
+      "hot_adam_seconds": 0.5057691659385455,
+      "max_cuda_allocated_bytes": 7005051392,
+      "projected_complete_seconds_including_60s_reserve": 3683.4614429709327,
+      "actual_full600_source_evaluation_seconds": 204.0679395799525
+    }
+  ],
+  "formal_goal_achieved": false
+}

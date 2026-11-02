@@ -40,16 +40,20 @@ SPATIAL_CONDITIONED_CANDIDATE = "causal_spatial_conditioned_subband_v1"
 GATED_MULTICHANNEL_CANDIDATE = "causal_gated_multichannel_crn_v1"
 FULLCHANNEL_DUALPATH_CANDIDATE = "causal_fullchannel_dualpath_crn_v1"
 FOLDED_RETENTION_CANDIDATE = "causal_folded_retention_v1"
+JOINT_CONDITIONED_CANDIDATE = "causal_joint_conditioned_subband_v1"
 IDENTITY_FIELDS = ("sample_rate", "n_fft", "hop_length", "win_length", "power", "target_ref_mic",
                    "channels", "num_mics", "embed_dim", "cd1", "dfsmn_layers", "dfsmn_memory_size",
                    "norm_type", "bf_type", "topo_type", "is_causal")
 
 
 def all_model_candidates():
-    return (*all_reference_candidates(), QUALITY_CANDIDATE, SPATIAL_CANDIDATE, CAUSAL_CANDIDATE, FAST_CANDIDATE, GLOBAL_CANDIDATE, RECURRENT_CANDIDATE, RECURRENT65_CANDIDATE, TCN_CANDIDATE, FOURIER_CANDIDATE, FREQUENCY_ATTENTION_CANDIDATE, POOLED_FREQUENCY_ATTENTION_CANDIDATE, RETENTION_CANDIDATE, FULLBAND_TCN_CANDIDATE, FULLBAND_SPATIAL_CANDIDATE, SUBBAND_GRU_CANDIDATE, CONDITIONED_SUBBAND_CANDIDATE, FROZEN_CONDITIONED_CANDIDATE, SPATIAL_CONDITIONED_CANDIDATE, GATED_MULTICHANNEL_CANDIDATE, FULLCHANNEL_DUALPATH_CANDIDATE, FOLDED_RETENTION_CANDIDATE)
+    return (*all_reference_candidates(), QUALITY_CANDIDATE, SPATIAL_CANDIDATE, CAUSAL_CANDIDATE, FAST_CANDIDATE, GLOBAL_CANDIDATE, RECURRENT_CANDIDATE, RECURRENT65_CANDIDATE, TCN_CANDIDATE, FOURIER_CANDIDATE, FREQUENCY_ATTENTION_CANDIDATE, POOLED_FREQUENCY_ATTENTION_CANDIDATE, RETENTION_CANDIDATE, FULLBAND_TCN_CANDIDATE, FULLBAND_SPATIAL_CANDIDATE, SUBBAND_GRU_CANDIDATE, CONDITIONED_SUBBAND_CANDIDATE, FROZEN_CONDITIONED_CANDIDATE, SPATIAL_CONDITIONED_CANDIDATE, GATED_MULTICHANNEL_CANDIDATE, FULLCHANNEL_DUALPATH_CANDIDATE, FOLDED_RETENTION_CANDIDATE, JOINT_CONDITIONED_CANDIDATE)
 
 
 def build_model_candidate(candidate_id, **model_kwargs):
+    if candidate_id == JOINT_CONDITIONED_CANDIDATE:
+        from experiments.causal_joint_conditioned_subband import CausalJointConditionedSubband
+        return CausalJointConditionedSubband(build_model_candidate(RETENTION_CANDIDATE, **model_kwargs))
     if candidate_id == FOLDED_RETENTION_CANDIDATE:
         from experiments.causal_folded_retention import CausalFoldedRetention
         fixed=dict(fold=4,hidden=96,ffn=192,layers=8,heads=4,context=64,c=64,channels=64)
@@ -127,6 +131,21 @@ def build_model_candidate(candidate_id, **model_kwargs):
 
 
 def candidate_metadata(candidate_id):
+    if candidate_id == JOINT_CONDITIONED_CANDIDATE:
+        metadata=candidate_metadata(SPATIAL_CONDITIONED_CANDIDATE)
+        files=(*metadata['candidate_implementation_sha256'],'experiments/causal_joint_conditioned_subband.py')
+        metadata.update(structure_candidate=candidate_id,candidate_schema=23,
+            candidate_implementation_sha256=source_hashes(files))
+        evidence=metadata['candidate_evidence']
+        evidence.pop('frozen_backbone_is_causal',None)
+        evidence.update(candidate_id=candidate_id,frozen_backbone=False,backbone_is_causal=True,
+            warm_start_candidate=SPATIAL_CONDITIONED_CANDIDATE,
+            purpose='Joint causal backbone and spatial-conditioned subband refinement',
+            initialization='Complete trained spatial-conditioned checkpoint; all weights preserved; fresh joint Adam')
+        evidence['model_config'].update(trainable_parameters=5058680,frozen_causal_parameters=0,
+            base_training_mode='Trainable; precision declared by the protected training entry; FP32 inference')
+        evidence['model_config'].pop('frozen_base_mode',None)
+        return metadata
     if candidate_id == FOLDED_RETENTION_CANDIDATE:
         return dict(structure_candidate=candidate_id,candidate_schema=22,
             candidate_implementation_sha256=source_hashes((*CAUSAL_IMPLEMENTATION_FILES,

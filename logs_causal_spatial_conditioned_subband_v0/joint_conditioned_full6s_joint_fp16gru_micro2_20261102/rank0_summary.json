@@ -1,0 +1,50 @@
+{
+  "status": "complete",
+  "started_at_utc": "2026-11-02T10:56:15.827994+00:00",
+  "mode": "joint",
+  "source_checkpoint_sha256": "21705e5325fb244e4243602d6f8cf02d71db1e5a3c939d4b86214358e8aa69b3",
+  "batch_size_per_gpu": 2,
+  "grad_accum_steps": 2,
+  "global_batch_size": 8,
+  "seconds_per_record": 6,
+  "distinct_training_records": 8,
+  "scope": "Short DDP speed/memory diagnostic on repeated8 real6s records; not a complete epoch or quality/generalization test",
+  "recurrent_training_precision": "FP16 CUDA training with FP32 parameters/interfaces; FP32 inference",
+  "batched_equal_length_quality_loss": false,
+  "fp16_gru_fp32_parameters_and_interfaces": true,
+  "full_epoch_budget_verified": false,
+  "formal_goal_achieved": false,
+  "trainable_parameters": 5058680,
+  "observed_training_gru_output_dtypes": [
+    "torch.float16"
+  ],
+  "ranks": [
+    {
+      "rank": 0,
+      "warm8_updates_seconds": 14.844999416032806,
+      "hot_updates_seconds": 31.503457251004875,
+      "hot_global_samples_per_second": 16.25218451170684,
+      "validation16_global_records_seconds": 0.6366917409468442,
+      "cold_peak_allocated_bytes": 5976249856,
+      "hot_peak_allocated_bytes": 5976249856,
+      "optimizer_steps": 72,
+      "all_weights_and_adam_finite": true,
+      "train_loss": 0.4236627572681755,
+      "validation_loss": 0.40933679789304733
+    },
+    {
+      "rank": 1,
+      "warm8_updates_seconds": 14.845004952978343,
+      "hot_updates_seconds": 31.503439937951043,
+      "hot_global_samples_per_second": 16.252193443269423,
+      "validation16_global_records_seconds": 0.6366875269450247,
+      "cold_peak_allocated_bytes": 5976249856,
+      "hot_peak_allocated_bytes": 5976249856,
+      "optimizer_steps": 72,
+      "all_weights_and_adam_finite": true,
+      "train_loss": 0.4236627572681755,
+      "validation_loss": 0.40933679789304733
+    }
+  ],
+  "original_source_checkpoint_unchanged": true
+}

@@ -1,0 +1,51 @@
+{
+  "status": "complete",
+  "checked_at_utc": "2026-11-02T09:44:01.872833+00:00",
+  "completed_epochs": 7,
+  "scope": "Completed epoch train/validation/LR summary lines only; no partial batch progress or GPU queries",
+  "rows": [
+    {
+      "epoch": 1,
+      "train_loss": 0.937334,
+      "val_loss": 1.307862,
+      "learning_rate": 0.001
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.76783,
+      "val_loss": 0.866142,
+      "learning_rate": 0.001
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.657669,
+      "val_loss": 0.743773,
+      "learning_rate": 0.001
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.613451,
+      "val_loss": 0.604127,
+      "learning_rate": 0.001
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.593521,
+      "val_loss": 0.551516,
+      "learning_rate": 0.001
+    },
+    {
+      "epoch": 6,
+      "train_loss": 0.579589,
+      "val_loss": 0.52083,
+      "learning_rate": 0.001
+    },
+    {
+      "epoch": 7,
+      "train_loss": 0.568648,
+      "val_loss": 0.504867,
+      "learning_rate": 0.001
+    }
+  ],
+  "formal_goal_achieved": false
+}
