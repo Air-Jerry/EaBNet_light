@@ -39,16 +39,23 @@ FROZEN_CONDITIONED_CANDIDATE = "causal_frozen_conditioned_subband_v1"
 SPATIAL_CONDITIONED_CANDIDATE = "causal_spatial_conditioned_subband_v1"
 GATED_MULTICHANNEL_CANDIDATE = "causal_gated_multichannel_crn_v1"
 FULLCHANNEL_DUALPATH_CANDIDATE = "causal_fullchannel_dualpath_crn_v1"
+FOLDED_RETENTION_CANDIDATE = "causal_folded_retention_v1"
 IDENTITY_FIELDS = ("sample_rate", "n_fft", "hop_length", "win_length", "power", "target_ref_mic",
                    "channels", "num_mics", "embed_dim", "cd1", "dfsmn_layers", "dfsmn_memory_size",
                    "norm_type", "bf_type", "topo_type", "is_causal")
 
 
 def all_model_candidates():
-    return (*all_reference_candidates(), QUALITY_CANDIDATE, SPATIAL_CANDIDATE, CAUSAL_CANDIDATE, FAST_CANDIDATE, GLOBAL_CANDIDATE, RECURRENT_CANDIDATE, RECURRENT65_CANDIDATE, TCN_CANDIDATE, FOURIER_CANDIDATE, FREQUENCY_ATTENTION_CANDIDATE, POOLED_FREQUENCY_ATTENTION_CANDIDATE, RETENTION_CANDIDATE, FULLBAND_TCN_CANDIDATE, FULLBAND_SPATIAL_CANDIDATE, SUBBAND_GRU_CANDIDATE, CONDITIONED_SUBBAND_CANDIDATE, FROZEN_CONDITIONED_CANDIDATE, SPATIAL_CONDITIONED_CANDIDATE, GATED_MULTICHANNEL_CANDIDATE, FULLCHANNEL_DUALPATH_CANDIDATE)
+    return (*all_reference_candidates(), QUALITY_CANDIDATE, SPATIAL_CANDIDATE, CAUSAL_CANDIDATE, FAST_CANDIDATE, GLOBAL_CANDIDATE, RECURRENT_CANDIDATE, RECURRENT65_CANDIDATE, TCN_CANDIDATE, FOURIER_CANDIDATE, FREQUENCY_ATTENTION_CANDIDATE, POOLED_FREQUENCY_ATTENTION_CANDIDATE, RETENTION_CANDIDATE, FULLBAND_TCN_CANDIDATE, FULLBAND_SPATIAL_CANDIDATE, SUBBAND_GRU_CANDIDATE, CONDITIONED_SUBBAND_CANDIDATE, FROZEN_CONDITIONED_CANDIDATE, SPATIAL_CONDITIONED_CANDIDATE, GATED_MULTICHANNEL_CANDIDATE, FULLCHANNEL_DUALPATH_CANDIDATE, FOLDED_RETENTION_CANDIDATE)
 
 
 def build_model_candidate(candidate_id, **model_kwargs):
+    if candidate_id == FOLDED_RETENTION_CANDIDATE:
+        from experiments.causal_folded_retention import CausalFoldedRetention
+        fixed=dict(fold=4,hidden=96,ffn=192,layers=8,heads=4,context=64,c=64,channels=64)
+        if any(model_kwargs.get(name,value)!=value for name,value in fixed.items()):
+            raise ValueError('Registered folded architecture requires fold4,hidden96,FFN192,eight layers,four heads')
+        return CausalFoldedRetention(**model_kwargs)
     if candidate_id == FULLCHANNEL_DUALPATH_CANDIDATE:
         from experiments.causal_fullchannel_dualpath_crn import CausalFullChannelDualPathCRN
         if (model_kwargs.get('c', 64) != 64 or model_kwargs.get('channels', 64) != 64
@@ -120,6 +127,25 @@ def build_model_candidate(candidate_id, **model_kwargs):
 
 
 def candidate_metadata(candidate_id):
+    if candidate_id == FOLDED_RETENTION_CANDIDATE:
+        return dict(structure_candidate=candidate_id,candidate_schema=22,
+            candidate_implementation_sha256=source_hashes((*CAUSAL_IMPLEMENTATION_FILES,
+                'light_causal_fast_model.py','experiments/causal_retention_mapping.py',
+                'experiments/causal_fullband_retention.py','experiments/causal_folded_retention.py')),
+            candidate_evidence=dict(candidate_id=candidate_id,author_confirmed=False,
+                exact_reproduction_verified=False,model_causal=True,future_frames=0,
+                purpose='Independent lossless-frequency-packed spatial retention backbone',
+                model_config=dict(microphones=8,frequencies=257,lossless_frequency_fold=4,
+                    latent_frequency_groups=65,packed_input_channels=64,hidden=96,ffn=192,
+                    layers=8,heads=4,parameters=1191096,trainable_parameters=1191096,
+                    frozen_parameters=0,cache_bytes_per_stream_fp32=7255168),
+                initialization='From scratch; zero output; exactly reference0 mixture',
+                normalization='Current-frame reference scale and feature LayerNorm; no temporal statistics',
+                output='Independent physical RI residual for every original257 frequency bins',
+                frozen_backbone=False,external_pretrained_weights=False,upstream_source_incorporated=True,
+                upstream_attribution='Existing MIT SpatialNet frequency modules; independent causal retention adaptation',
+                reference_audio_used_at_inference=False,
+                waveform_streaming='512/160/320,16kHz,power0.5;320-sample buffering plus compute/I-O'))
     if candidate_id == FULLCHANNEL_DUALPATH_CANDIDATE:
         return dict(structure_candidate=candidate_id, candidate_schema=21,
             candidate_implementation_sha256=source_hashes((*CAUSAL_IMPLEMENTATION_FILES,

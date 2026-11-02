@@ -1,0 +1,31 @@
+{
+  "status": "owned_launcher_and_two_ddp_ranks_live",
+  "checked_at_utc": "2026-11-02T01:28:21.416751+00:00",
+  "formal_run": "folded_retention_20261102_091347_2873668",
+  "formal_pid": 2873668,
+  "formal_cookie": "153015675",
+  "actual_live_ddp_ranks": [
+    {
+      "pid": 2874758,
+      "cookie": "153039238",
+      "torchrun_parent_pid": 2874755
+    },
+    {
+      "pid": 2874759,
+      "cookie": "153039238",
+      "torchrun_parent_pid": 2874755
+    }
+  ],
+  "actual_live_monitor": {
+    "pid": 2874293,
+    "cookie": "153027897",
+    "cwd": "/home/nis/jinrui.yang/EaBNet_light"
+  },
+  "monitor_status": "baseline_verified_waiting_epoch_eta",
+  "expected_observation_utc": "2026-11-02T02:16:45.887384+00:00",
+  "gpu_queries": 0,
+  "baseline_full600_wb_pesq": 1.088074848453204,
+  "production_sources_user_evaluator_and_active_isolated_sources_unchanged": true,
+  "actual_complete_epoch_time_and_trained_quality_unverified": true,
+  "formal_goal_achieved": false
+}

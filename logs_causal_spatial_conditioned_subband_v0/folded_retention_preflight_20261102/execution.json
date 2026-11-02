@@ -1,0 +1,42 @@
+{
+  "status": "passed_staged_dual_cuda_streaming_and_full600_initialization",
+  "candidate": "causal_folded_retention_v1",
+  "parameters": 1191096,
+  "trainable_parameters": 1191096,
+  "fixed_parameters": 0,
+  "scope": "Real original DataLoader/DDP correctness, speed and complete600 initialization; not trained quality",
+  "formal_training_plan": {
+    "training_samples": 53600,
+    "validation_samples": 600,
+    "metric_samples": 600,
+    "finite_updates_per_epoch": 6700,
+    "max_epochs": 30,
+    "target_full600_wb_pesq": 3.4,
+    "max_complete_epoch_seconds": 3600
+  },
+  "formal_goal_achieved": false,
+  "children": [
+    {
+      "phase": "cuda_launch.log",
+      "pid": 2867679,
+      "cookie": "152924749"
+    },
+    {
+      "phase": "streaming_launch.log",
+      "pid": 2870797,
+      "cookie": "152938739"
+    },
+    {
+      "phase": "zero_full600.log",
+      "pid": 2870834,
+      "cookie": "152939483"
+    }
+  ],
+  "cuda_adam_updates": 64,
+  "all_weights_and_adam_finite": true,
+  "initial_full600_wb_pesq": 1.088074848453204,
+  "projected_complete_epoch_seconds": 3545.3027602382,
+  "external_pretrained_weights": false,
+  "formal_training_quality_and_actual_epoch_time_unverified": true,
+  "elapsed_seconds": 380.52143574296497
+}

@@ -1,0 +1,43 @@
+{
+  "status": "measured",
+  "scope": "Causality, bounded state and real CUDA waveform streaming; no quality claim",
+  "checkpoint_sha256": "8055c4c81a47b1eed70a474e70f8ddc620a6e5144f0f4f5983420932a734278e",
+  "device": "NVIDIA GeForce RTX 4070",
+  "torch_version": "2.5.1+cu121",
+  "evaluated_samples": 96000,
+  "parameters": 1191096,
+  "future_frames": 0,
+  "buffering_delay_samples": 320,
+  "buffering_delay_ms": 20,
+  "latency_scope": "CPU float32 input transfer + streaming frontend/model/synthesis + CPU output transfer; excludes audio driver",
+  "future_perturbation_max_error": 0.0,
+  "full_vs_stream_waveform_max_error": 7.152557373046875e-07,
+  "bounded_model_cache_bytes": 7255168,
+  "measured_hops": 600,
+  "excluded_startup_hops": 64,
+  "warmup_hops": 65,
+  "warmup_state_discarded": true,
+  "all_hop_ms": {
+    "mean": 7.021863852084304,
+    "p99": 7.133377462159842,
+    "max": 7.249902933835983
+  },
+  "all_hops_below_10ms": true,
+  "steady_hop_ms": {
+    "mean": 7.022564585664685,
+    "p50": 7.0205285446718335,
+    "p95": 7.0751155144535005,
+    "p99": 7.118642330169678,
+    "max": 7.169634103775024
+  },
+  "steady_rtf": 0.7022564585664685,
+  "deadline_miss_fraction": 0.0,
+  "mean_rtf_below_one": true,
+  "p99_below_10ms": true,
+  "cuda_peak_allocated_bytes": 40798720,
+  "removed_private_fields": [
+    "mixture_path",
+    "hop_ms",
+    "sample_id"
+  ]
+}

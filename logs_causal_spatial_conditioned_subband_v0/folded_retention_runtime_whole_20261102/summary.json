@@ -1,0 +1,34 @@
+{
+  "status": "complete",
+  "scope": "Twelve throughput-check updates on first8 real6s training records; no quality or measured full-DDP-epoch claim",
+  "source_checkpoint_sha256": "a4068cbc1aebb3d2ce26d4b2a4a9dfb2173f2c59c20e60fc055eade07a25b5c9",
+  "prototype_sha256": "57a59209a3ee1e9e65a40e86684214171c0902ec200320cd2f5fe05b144bde8d",
+  "batch_size": 2,
+  "gpu_index": 1,
+  "runtime": "whole",
+  "eight_layers_hidden96_ffn192_full257_input_output_bins": true,
+  "lossless_fold": 4,
+  "activation_checkpointing": false,
+  "production_sources_and_evaluator_unchanged": true,
+  "formal_goal_achieved": false,
+  "warm_training_started_unix": 1793580227.82021,
+  "training_finished_unix": 1793580230.1254177,
+  "additional_adam_updates": 12,
+  "source_adam_steps": 8,
+  "final_adam_steps": 20,
+  "all_gradients_finite": true,
+  "warm_update_seconds": 0.23049022213090212,
+  "local_training_samples_per_second": 8.677157675105809,
+  "optimistic_two_gpu_train_only_seconds": 3088.5689765540883,
+  "peak_allocated_bytes": 6670214144,
+  "initial_compile_warmup_seconds": [
+    90.96429544803686,
+    0.2285067979246378
+  ],
+  "warm_training_utilization": {
+    "samples": 2,
+    "mean_percent": 94.0,
+    "short_window_only": true
+  },
+  "elapsed_seconds": 95.12388994405046
+}

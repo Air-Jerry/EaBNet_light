@@ -1,0 +1,63 @@
+{
+  "status": "complete",
+  "scope": "Eight real6s training records,8 Adam updates; trained actual model600 hops, not full-data quality or measured epoch",
+  "prototype_sha256": "57a59209a3ee1e9e65a40e86684214171c0902ec200320cd2f5fe05b144bde8d",
+  "helper_sha256": "c32b35a122f1924e9cc5705b6d0a333a268d8bad790a3497bf18daa5d4074941",
+  "frozen_parameters": 0,
+  "frequency_bins": 257,
+  "lossless_fold": 4,
+  "latent_frequency_groups": 65,
+  "layers": 8,
+  "hidden": 96,
+  "ffn": 192,
+  "heads": 4,
+  "frontend": {
+    "sample_rate": 16000,
+    "n_fft": 512,
+    "hop_length": 160,
+    "win_length": 320,
+    "power": 0.5
+  },
+  "first8_mics_original_order_reference0": true,
+  "external_normalization_clipping_gain_or_alignment": false,
+  "reference_used_by_model": false,
+  "comparison_records_used_for_updates": false,
+  "formal_goal_achieved": false,
+  "parameters": 1191096,
+  "optimizer_updates": 8,
+  "training_samples": 8,
+  "all_gradients_weights_and_adam_finite": true,
+  "training_microbatch1_seconds": 0.13530581397935748,
+  "training_compile_warmup_seconds": [
+    20.515411325963214,
+    0.13518904685042799
+  ],
+  "optimistic_two_gpu_train_only_seconds": 3626.1958146467805,
+  "peak_training_allocated_bytes": 3551958016,
+  "losses": [
+    1.8816611766815186,
+    1.4216889142990112,
+    3.9973175525665283,
+    1.7311357259750366,
+    1.7264480590820312,
+    1.7471553087234497,
+    1.701478362083435,
+    1.5785983800888062
+  ],
+  "actual_waveform_runtime": {
+    "hops": 600,
+    "mean_ms": 6.419313111109659,
+    "p99_ms": 6.496162156108767,
+    "max_ms": 6.650331197306514,
+    "all_hops_below_10ms": true,
+    "future_perturbation_max_error": 0.0,
+    "full_vs_stream_waveform_max_error": 7.450580596923828e-09,
+    "model_state_bytes": 7255168,
+    "measured_model_is_actual_nonzero_8update_model": true,
+    "waveform_is_synthetic_timing_input": true,
+    "real_training_records_used_for_gradient_updates": true
+  },
+  "diagnostic_checkpoint_sha256": "a4068cbc1aebb3d2ce26d4b2a4a9dfb2173f2c59c20e60fc055eade07a25b5c9",
+  "production_sources_and_user_evaluator_unchanged": true,
+  "elapsed_seconds": 28.076817739056423
+}

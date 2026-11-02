@@ -1,0 +1,18 @@
+{
+  "status": "passed",
+  "scope": "CPU contracts and actual CPU train/save/load/resume; no CUDA or trained quality claim",
+  "new_model_contract_tests": 8,
+  "new_and_previous_model_tests": 14,
+  "model_pair_elapsed_seconds": 11.97,
+  "related_workflow_and_final_audit_tests": 99,
+  "related_test_elapsed_seconds": 30.98,
+  "actual_cpu_train_save_load_resume_rechecked_after_runtime_field": true,
+  "actual_cpu_recheck_elapsed_seconds": 18.57,
+  "existing_candidate_identities_unchanged": 25,
+  "registered_candidates_now": 26,
+  "candidate_schema": 22,
+  "prototype_sha256": "57a59209a3ee1e9e65a40e86684214171c0902ec200320cd2f5fe05b144bde8d",
+  "compiled_runtime_sha256": "9540e7b6db458eaa95b2af0ae10d4d523888d1bf1560b4415971fed76e1602f3",
+  "entry_sha256": "7a758851d20aab96401e8eb425a666977d548f84a4c260f5825665aff1f0e43b",
+  "formal_goal_achieved": false
+}
