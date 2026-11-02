@@ -1,0 +1,17 @@
+{
+  "status": "passed_monaural_dual_cuda_streaming_and_full600_initialization",
+  "started_at_utc": "2026-11-02T19:03:09.439646+00:00",
+  "expected_observation_utc": "2026-11-02T19:11:09.439646+00:00",
+  "candidate": "causal_monaural_spectral_v1",
+  "scope": "Actual64-update registered entry; trained FP32 streaming; original full600 initialization",
+  "formal_goal_achieved": false,
+  "phase": "original_full600_warm_initialization",
+  "child_pid": 3144263,
+  "child_cookie": "159439439",
+  "cuda_adam_updates": 64,
+  "parameters": 5686130,
+  "all_weights_and_adam_finite": true,
+  "projected_complete_epoch_seconds": 3033.824222303704,
+  "initial_full600_wb_pesq": 3.0431378700335823,
+  "actual_full_epoch_verified": false
+}

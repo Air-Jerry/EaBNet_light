@@ -1,0 +1,39 @@
+{
+  "status": "historical_completed_epoch_sampler_aggregate",
+  "epoch": 3,
+  "gpu": {
+    "phase=train epoch=3": {
+      "0": {
+        "samples": 276,
+        "mean_utilization_percent": 98.26811594202898,
+        "peak_whole_card_memory_mib": 7679.0,
+        "mean_power_w": 144.78155797101445
+      },
+      "1": {
+        "samples": 276,
+        "mean_utilization_percent": 97.06159420289855,
+        "peak_whole_card_memory_mib": 7661.0,
+        "mean_power_w": 144.6753623188405
+      }
+    },
+    "phase=evaluation epoch=3": {
+      "0": {
+        "samples": 22,
+        "mean_utilization_percent": 20.09090909090909,
+        "peak_whole_card_memory_mib": 2135.0,
+        "mean_power_w": 50.98772727272728
+      },
+      "1": {
+        "samples": 22,
+        "mean_utilization_percent": 0.0,
+        "peak_whole_card_memory_mib": 18.0,
+        "mean_power_w": 11.806363636363637
+      }
+    }
+  },
+  "scope": "Last matching phase blocks only; discarded pre-resume epoch3 excluded. Physical-card train phase includes startup and validation, not hot-only occupancy.",
+  "gpu_queries": 0,
+  "batch_progress_queries": 0,
+  "formal_job_intentionally_terminal": true,
+  "formal_goal_achieved": false
+}

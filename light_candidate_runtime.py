@@ -44,16 +44,20 @@ JOINT_CONDITIONED_CANDIDATE = "causal_joint_conditioned_subband_v1"
 JOINT_FIXED_CONDITIONED_CANDIDATE = "causal_joint_fixed_conditioned_subband_v1"
 WIDE_CONDITIONED_CANDIDATE = "causal_wide_conditioned_subband_v1"
 COVARIANCE_CANDIDATE = "causal_covariance_refiner_v1"
+MONAURAL_SPECTRAL_CANDIDATE = "causal_monaural_spectral_v1"
 IDENTITY_FIELDS = ("sample_rate", "n_fft", "hop_length", "win_length", "power", "target_ref_mic",
                    "channels", "num_mics", "embed_dim", "cd1", "dfsmn_layers", "dfsmn_memory_size",
                    "norm_type", "bf_type", "topo_type", "is_causal")
 
 
 def all_model_candidates():
-    return (*all_reference_candidates(), QUALITY_CANDIDATE, SPATIAL_CANDIDATE, CAUSAL_CANDIDATE, FAST_CANDIDATE, GLOBAL_CANDIDATE, RECURRENT_CANDIDATE, RECURRENT65_CANDIDATE, TCN_CANDIDATE, FOURIER_CANDIDATE, FREQUENCY_ATTENTION_CANDIDATE, POOLED_FREQUENCY_ATTENTION_CANDIDATE, RETENTION_CANDIDATE, FULLBAND_TCN_CANDIDATE, FULLBAND_SPATIAL_CANDIDATE, SUBBAND_GRU_CANDIDATE, CONDITIONED_SUBBAND_CANDIDATE, FROZEN_CONDITIONED_CANDIDATE, SPATIAL_CONDITIONED_CANDIDATE, GATED_MULTICHANNEL_CANDIDATE, FULLCHANNEL_DUALPATH_CANDIDATE, FOLDED_RETENTION_CANDIDATE, JOINT_CONDITIONED_CANDIDATE, JOINT_FIXED_CONDITIONED_CANDIDATE, WIDE_CONDITIONED_CANDIDATE, COVARIANCE_CANDIDATE)
+    return (*all_reference_candidates(), QUALITY_CANDIDATE, SPATIAL_CANDIDATE, CAUSAL_CANDIDATE, FAST_CANDIDATE, GLOBAL_CANDIDATE, RECURRENT_CANDIDATE, RECURRENT65_CANDIDATE, TCN_CANDIDATE, FOURIER_CANDIDATE, FREQUENCY_ATTENTION_CANDIDATE, POOLED_FREQUENCY_ATTENTION_CANDIDATE, RETENTION_CANDIDATE, FULLBAND_TCN_CANDIDATE, FULLBAND_SPATIAL_CANDIDATE, SUBBAND_GRU_CANDIDATE, CONDITIONED_SUBBAND_CANDIDATE, FROZEN_CONDITIONED_CANDIDATE, SPATIAL_CONDITIONED_CANDIDATE, GATED_MULTICHANNEL_CANDIDATE, FULLCHANNEL_DUALPATH_CANDIDATE, FOLDED_RETENTION_CANDIDATE, JOINT_CONDITIONED_CANDIDATE, JOINT_FIXED_CONDITIONED_CANDIDATE, WIDE_CONDITIONED_CANDIDATE, COVARIANCE_CANDIDATE, MONAURAL_SPECTRAL_CANDIDATE)
 
 
 def build_model_candidate(candidate_id, **model_kwargs):
+    if candidate_id == MONAURAL_SPECTRAL_CANDIDATE:
+        from experiments.causal_monaural_spectral_branch import CausalMonauralSpectralBranch
+        return CausalMonauralSpectralBranch(build_model_candidate(WIDE_CONDITIONED_CANDIDATE, **model_kwargs))
     if candidate_id == COVARIANCE_CANDIDATE:
         from experiments.causal_covariance_refiner import CausalCovarianceRefiner
         return CausalCovarianceRefiner(build_model_candidate(WIDE_CONDITIONED_CANDIDATE, **model_kwargs))
@@ -143,6 +147,28 @@ def build_model_candidate(candidate_id, **model_kwargs):
 
 
 def candidate_metadata(candidate_id):
+    if candidate_id == MONAURAL_SPECTRAL_CANDIDATE:
+        metadata=candidate_metadata(WIDE_CONDITIONED_CANDIDATE)
+        files=(*metadata['candidate_implementation_sha256'],'experiments/causal_monaural_spectral_branch.py')
+        metadata.update(structure_candidate=candidate_id,candidate_schema=27,
+            candidate_implementation_sha256=source_hashes(files))
+        evidence=metadata['candidate_evidence']
+        evidence.update(candidate_id=candidate_id,base_candidate=WIDE_CONDITIONED_CANDIDATE,
+            warm_start_candidate=WIDE_CONDITIONED_CANDIDATE,
+            purpose='Reference spectral U-Net and causal full-band GRU alongside the trainable wide head',
+            initialization='Complete wide checkpoint; zero new readout preserves output; fresh head Adam',
+            frozen_backbone=True,frozen_backbone_is_causal=True,frozen_parameter_prefix='base.base.',
+            source_head_trainable=True,reference_audio_used_at_inference=False)
+        evidence['model_config'].update(parameters=5686130,trainable_parameters=3106432,
+            frozen_causal_parameters=2579698,stream_state_bytes_per_stream_fp32=6219024,
+            frozen_base_mode='Nested causal root only in FP32 eval; existing wide head remains trainable',
+            monaural_branch=dict(input='Reference0 compressed RI plus current multichannel estimate RI',
+                widths=[16,24,32,48],frequency_bins=[257,129,65,33,17],convolution_time_kernel=1,
+                fullband_gru_input=816,fullband_gru_hidden=128,bidirectional=False,
+                new_parameters=519546,new_state_bytes_fp32=512,
+                normalization='Current-frame reference scale and channel LayerNorm; no time statistics',
+                output='Current-reference-scaled compressed RI correction',future_frames=0))
+        return metadata
     if candidate_id == COVARIANCE_CANDIDATE:
         metadata=candidate_metadata(WIDE_CONDITIONED_CANDIDATE)
         files=(*metadata['candidate_implementation_sha256'],'experiments/causal_covariance_refiner.py')

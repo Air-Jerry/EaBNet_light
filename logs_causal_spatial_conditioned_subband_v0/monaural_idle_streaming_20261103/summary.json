@@ -1,0 +1,53 @@
+{
+  "status": "passed",
+  "checked_at_utc": "2026-11-02T18:25:18.525156+00:00",
+  "registered_candidate": false,
+  "source_checkpoint_sha256": "302e25df9c0e249b71e4049090f19314c3207e024afd2ba2924b2106e17e832e",
+  "profile_checkpoint_sha256": "ed59579eeb2eb0d3954285305517ed34f31006e5f8200fcfd6d0008edcce6526",
+  "profile_training_updates": 72,
+  "formal_epochs_completed": 0,
+  "prototype_sha256": "d175416094e5cad1ed4279d74a2d71736e00fa5a35303e82a212dffa336f3463",
+  "original_benchmark_sha256": "d2b1dcaeab944672e57e674db79a2b6b0c9e4f7880436539d32f77c6561639b5",
+  "original_evaluator_sha256": "0c3ada1425b33e16688e8424daba23681ac9ded4d8bee931ed24c69e59e5730b",
+  "protected_sources_and_checkpoint_unchanged": true,
+  "formal_goal_achieved": false,
+  "scope": "Idle actual real6s waveform600hops after72 finite updates on8 repeated training records; no full600 quality or final audit claim",
+  "streaming": {
+    "status": "measured",
+    "scope": "Causality, bounded state and real CUDA waveform streaming; no quality claim",
+    "checkpoint_sha256": "ed59579eeb2eb0d3954285305517ed34f31006e5f8200fcfd6d0008edcce6526",
+    "device": "NVIDIA GeForce RTX 4070",
+    "torch_version": "2.5.1+cu121",
+    "evaluated_samples": 96000,
+    "parameters": 5686130,
+    "future_frames": 0,
+    "buffering_delay_samples": 320,
+    "buffering_delay_ms": 20,
+    "latency_scope": "CPU float32 input transfer + streaming frontend/model/synthesis + CPU output transfer; excludes audio driver",
+    "future_perturbation_max_error": 1.1920928955078125e-07,
+    "full_vs_stream_waveform_max_error": 6.780028343200684e-07,
+    "bounded_model_cache_bytes": 6219024,
+    "measured_hops": 600,
+    "excluded_startup_hops": 128,
+    "warmup_hops": 129,
+    "warmup_state_discarded": true,
+    "all_hop_ms": {
+      "mean": 5.9791072058336185,
+      "p99": 6.194659939501434,
+      "max": 6.6593189258128405
+    },
+    "all_hops_below_10ms": true,
+    "steady_hop_ms": {
+      "mean": 5.97232959521303,
+      "p50": 5.97052148077637,
+      "p95": 6.0056213405914605,
+      "p99": 6.046998661477119,
+      "max": 6.137905875220895
+    },
+    "steady_rtf": 0.5972329595213031,
+    "deadline_miss_fraction": 0.0,
+    "mean_rtf_below_one": true,
+    "p99_below_10ms": true,
+    "cuda_peak_allocated_bytes": 67639808
+  }
+}

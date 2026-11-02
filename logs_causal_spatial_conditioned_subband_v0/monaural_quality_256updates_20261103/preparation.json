@@ -1,0 +1,9 @@
+{
+  "status": "new_schema27_tree_and_real53600_600_cpu_entry_passed",
+  "stage": "/home/nis/jinrui.yang/EaBNet_light/tmp/monaural_quality_stage_20261103",
+  "old30_candidate_identities_and_availability_unchanged": true,
+  "original_evaluator_unchanged": true,
+  "source_root_original_and_recovery_trees_unchanged": true,
+  "source_checkpoint_sha256": "302e25df9c0e249b71e4049090f19314c3207e024afd2ba2924b2106e17e832e",
+  "formal_goal_achieved": false
+}

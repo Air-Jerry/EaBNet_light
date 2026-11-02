@@ -1,5 +1,5 @@
 {
-  "status": "baseline_verified_waiting_epoch_eta",
+  "status": "needs_existing_job_inspection",
   "formal_pid": 3118633,
   "formal_cookie": "158833130",
   "maximum_epochs": 30,
@@ -21,13 +21,23 @@
       "checkpoint_sha256": "a17154d308894eaec8229d11d2d798fb8b1414445b2a274f03ccc998db76040e",
       "all_weights_and_adam_finite": true,
       "complete53600_600_600_and6700_updates_verified": true
+    },
+    {
+      "epoch": 3,
+      "full600_wb_pesq": 3.0431378700335823,
+      "total_seconds": 2983.7026286125183,
+      "checkpoint_sha256": "302e25df9c0e249b71e4049090f19314c3207e024afd2ba2924b2106e17e832e",
+      "all_weights_and_adam_finite": true,
+      "complete53600_600_600_and6700_updates_verified": true
     }
   ],
   "formal_goal_achieved": false,
   "run": "wide_conditioned_20261102_230237_3081879",
   "baseline_full600_wb_pesq": 2.9932476991415022,
-  "next_epoch": 3,
-  "observation_not_before_unix": 1793643196.5321658,
-  "expected_observation_utc": "2026-11-02T18:13:16.532166+00:00",
-  "last_completed_epoch": 2
+  "next_epoch": 4,
+  "observation_not_before_unix": 1793646173.4052572,
+  "expected_observation_utc": "2026-11-02T19:02:53.405257+00:00",
+  "last_completed_epoch": 3,
+  "error": "AssertionError: Existing launcher ended before next complete epoch; inspect it, never restart from observation timeout",
+  "launcher_live_now": false
 }

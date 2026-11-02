@@ -1,0 +1,72 @@
+{
+  "status": "complete",
+  "mode": "monaural",
+  "registered_candidate": false,
+  "prototype_sha256": "d175416094e5cad1ed4279d74a2d71736e00fa5a35303e82a212dffa336f3463",
+  "source_checkpoint_sha256": "302e25df9c0e249b71e4049090f19314c3207e024afd2ba2924b2106e17e832e",
+  "global_batch_size": 8,
+  "batch_size_per_gpu": 2,
+  "grad_accum_steps": 2,
+  "distinct_training_records": 8,
+  "seconds_per_record": 6,
+  "recurrent_training_precision": "FP32 parameters,frontend,loss,inference; internal BF16 conv and FP16 train-mode GRUs; fixed causal root FP32 eval",
+  "frozen_causal_root": true,
+  "source_head_remains_trainable": true,
+  "batched_equal_length_original_quality_loss": true,
+  "scope": "Repeated8 real6s records with8 warm and64 hot updates by default; not complete53600,quality or streaming deadline proof",
+  "full_epoch_budget_verified": false,
+  "formal_goal_achieved": false,
+  "initial_real6s_warm_max_error": 0.0,
+  "trainable_parameters": 3106432,
+  "unregistered_profile_checkpoint_sha256": "7dbd269866ab751adb45d89665287c39217beaef10f4be37b2a700e5d4bf3812",
+  "ranks": [
+    {
+      "rank": 0,
+      "warm8_updates_seconds": 10.704748776042834,
+      "hot_updates_seconds": 27.564761225832626,
+      "hot_global_samples_per_second": 18.574439872897337,
+      "validation16_global_records_seconds": 0.7148084379732609,
+      "cold_peak_allocated_bytes": 3247833600,
+      "hot_peak_allocated_bytes": 3246597632,
+      "optimizer_steps": 72,
+      "all_weights_and_adam_finite": true,
+      "frozen_root_unchanged": true,
+      "changed_source_head_tensors": 50,
+      "train_loss": 0.38744074280839413,
+      "validation_loss": 0.3478242978453636
+    },
+    {
+      "rank": 1,
+      "warm8_updates_seconds": 10.70475534698926,
+      "hot_updates_seconds": 27.564760284032673,
+      "hot_global_samples_per_second": 18.574440507526713,
+      "validation16_global_records_seconds": 0.7148006667848676,
+      "cold_peak_allocated_bytes": 3247833600,
+      "hot_peak_allocated_bytes": 3246597632,
+      "optimizer_steps": 72,
+      "all_weights_and_adam_finite": true,
+      "frozen_root_unchanged": true,
+      "changed_source_head_tensors": 50,
+      "train_loss": 0.38744074280839413,
+      "validation_loss": 0.3478242978453636
+    }
+  ],
+  "source_and_active_training_unchanged": true,
+  "existing10s_gpu_aggregate": {
+    "scope": "Entire idle diagnostic including startup,warmup,training,validation; not hot-only occupancy",
+    "devices": {
+      "0": {
+        "samples": 5,
+        "mean_utilization_percent": 58.8,
+        "peak_whole_card_memory_mib": 5037.0,
+        "mean_power_w": 97.33
+      },
+      "1": {
+        "samples": 5,
+        "mean_utilization_percent": 58.2,
+        "peak_whole_card_memory_mib": 5019.0,
+        "mean_power_w": 98.52000000000001
+      }
+    }
+  }
+}

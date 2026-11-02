@@ -1,0 +1,85 @@
+{
+  "status": "owned_job_terminal_epoch3_preserved_and_relocated_resume_guard_passed",
+  "checked_at_utc": "2026-11-02T18:14:50.709252+00:00",
+  "reason": "Previous complete600 paired analysis motivates direct spectral modeling; preserve actual epoch3 and Adam for a brief idle-GPU monaural feasibility test, without claiming convergence ceiling",
+  "completed_epoch": 3,
+  "checkpoint_sha256": "302e25df9c0e249b71e4049090f19314c3207e024afd2ba2924b2106e17e832e",
+  "full600_wb_pesq": 3.0431378700335823,
+  "owned_processes": [
+    {
+      "pid": 3130900,
+      "cookie": "159132980"
+    },
+    {
+      "pid": 3130901,
+      "cookie": "159132980"
+    },
+    {
+      "pid": 3130904,
+      "cookie": "159132981"
+    },
+    {
+      "pid": 3130905,
+      "cookie": "159132981"
+    },
+    {
+      "pid": 3130908,
+      "cookie": "159132981"
+    },
+    {
+      "pid": 3130910,
+      "cookie": "159132981"
+    },
+    {
+      "pid": 3130912,
+      "cookie": "159132982"
+    },
+    {
+      "pid": 3130915,
+      "cookie": "159132982"
+    },
+    {
+      "pid": 3118633,
+      "cookie": "158833130"
+    },
+    {
+      "pid": 3118702,
+      "cookie": "158833564"
+    },
+    {
+      "pid": 3130806,
+      "cookie": "159132028"
+    },
+    {
+      "pid": 3130807,
+      "cookie": "159132028"
+    },
+    {
+      "pid": 3130808,
+      "cookie": "159132028"
+    },
+    {
+      "pid": 3130811,
+      "cookie": "159132107"
+    },
+    {
+      "pid": 3130812,
+      "cookie": "159132107"
+    }
+  ],
+  "unfinished_epoch4_updates_not_counted_or_resumed": true,
+  "formal_goal_achieved": false,
+  "cloned_resume_stage": "/home/nis/jinrui.yang/EaBNet_light/tmp/wide_conditioned_resume_epoch3_stage_20261103",
+  "source_and_cloned_checkpoint_identical": true,
+  "actual_launcher_resume_not_yet_executed": true,
+  "active_source_and_root_unchanged": true,
+  "optimizer_steps": 20100,
+  "optimizer_learning_rates": [
+    0.001
+  ],
+  "lr_reducer_state": {
+    "best_plateau_loss_for_lr": 0.34117983261744184,
+    "stale_train_epochs": 0,
+    "metric": "val"
+  }
+}

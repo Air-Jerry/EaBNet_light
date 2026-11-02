@@ -1,0 +1,16 @@
+{
+  "status": "complete",
+  "pid": 3131967,
+  "cookie": "159157201",
+  "uid": 1169,
+  "cwd": "/home/nis/jinrui.yang/EaBNet_light",
+  "started_at_utc": "2026-11-02T18:17:21.560447+00:00",
+  "mode": "monaural",
+  "micro": 2,
+  "source_checkpoint_sha256": "302e25df9c0e249b71e4049090f19314c3207e024afd2ba2924b2106e17e832e",
+  "registered_candidate": false,
+  "formal_goal_achieved": false,
+  "exit_code": 0,
+  "elapsed_seconds": 50.055891880067065,
+  "protected_sources_and_checkpoint_unchanged": true
+}

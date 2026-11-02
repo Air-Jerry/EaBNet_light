@@ -1,0 +1,331 @@
+{
+  "status": "complete",
+  "started_at_utc": "2026-11-02T18:41:43.497176+00:00",
+  "expected_observation_utc": "2026-11-02T18:58:43.497176+00:00",
+  "scope": "Same2048 distinct real records,6s,seed1234,global8,LR1e-3,256 fresh-Adam updates; old wide head versus added spectral branch; shared frozen causal root; original full600 evaluations",
+  "source_full600_wb_pesq": 3.0431378700335823,
+  "source_checkpoint_sha256": "302e25df9c0e249b71e4049090f19314c3207e024afd2ba2924b2106e17e832e",
+  "model_causal": true,
+  "formal_goal_achieved": false,
+  "formal_full_epoch_and_final_streaming_audit_still_required": true,
+  "branches": {
+    "control": {
+      "training": [
+        {
+          "status": "complete",
+          "branch": "control",
+          "rank": 0,
+          "candidate": "causal_wide_conditioned_subband_v1",
+          "checked_at_utc": "2026-11-02T18:47:09.028597+00:00",
+          "scope": "Matched2048 distinct real records,256 fresh-Adam updates; zero formal epochs",
+          "source_checkpoint_sha256": "302e25df9c0e249b71e4049090f19314c3207e024afd2ba2924b2106e17e832e",
+          "source_epoch": 3,
+          "seed": 1234,
+          "sampler_epoch": 47,
+          "selected_train_indices_rank_sha256": "f1cd26809c3b77458cf26b77b3e3c6ddab3823feb8a363c2998d79f4897c13cf",
+          "training_metadata_sha256": "d3854b3717979c398d403143342508db8335c2e613b279e3317c5192f5ef952b",
+          "global_training_records": 2048,
+          "global_batch_size": 8,
+          "seconds_per_record": 6,
+          "optimizer_updates": 256,
+          "learning_rate": 0.001,
+          "trainable_parameters": 2586886,
+          "all_weights_and_adam_finite": true,
+          "fp32_master_parameters": true,
+          "frozen_causal_root_unchanged": true,
+          "source_head_remains_trainable": true,
+          "actual_training_seconds": 105.31837026402354,
+          "loss": 0.4503840290417429,
+          "loss_components": {
+            "samples": 1024,
+            "batches": 256,
+            "spectral": 0.3053053915500641,
+            "mrstft": 0.7716100215911865,
+            "waveform": 0.14838477969169617,
+            "total": 0.3973046839237213,
+            "pmsqe": 0.6351261138916016,
+            "combined_total": 0.46081729531288146
+          },
+          "formal_goal_achieved": false,
+          "checkpoint_sha256": "d9d39e998af971a3fad64a04fe71d38e36bd696214b37ddc6cf9953871d2d409"
+        },
+        {
+          "status": "complete",
+          "branch": "control",
+          "rank": 1,
+          "candidate": "causal_wide_conditioned_subband_v1",
+          "checked_at_utc": "2026-11-02T18:47:09.028437+00:00",
+          "scope": "Matched2048 distinct real records,256 fresh-Adam updates; zero formal epochs",
+          "source_checkpoint_sha256": "302e25df9c0e249b71e4049090f19314c3207e024afd2ba2924b2106e17e832e",
+          "source_epoch": 3,
+          "seed": 1234,
+          "sampler_epoch": 47,
+          "selected_train_indices_rank_sha256": "cb0a28e245551d5ae61730496dff54c7a1ac7fffd471a92e72d3b325df915192",
+          "training_metadata_sha256": "d3854b3717979c398d403143342508db8335c2e613b279e3317c5192f5ef952b",
+          "global_training_records": 2048,
+          "global_batch_size": 8,
+          "seconds_per_record": 6,
+          "optimizer_updates": 256,
+          "learning_rate": 0.001,
+          "trainable_parameters": 2586886,
+          "all_weights_and_adam_finite": true,
+          "fp32_master_parameters": true,
+          "frozen_causal_root_unchanged": true,
+          "source_head_remains_trainable": true,
+          "actual_training_seconds": 105.31837663892657,
+          "loss": 0.4503840290417429,
+          "loss_components": {
+            "samples": 1024,
+            "batches": 256,
+            "spectral": 0.2913561463356018,
+            "mrstft": 0.7436449527740479,
+            "waveform": 0.14288951456546783,
+            "total": 0.3800094425678253,
+            "pmsqe": 0.5994112491607666,
+            "combined_total": 0.439950567483902
+          },
+          "formal_goal_achieved": false
+        }
+      ],
+      "checkpoint_sha256": "d9d39e998af971a3fad64a04fe71d38e36bd696214b37ddc6cf9953871d2d409",
+      "full600_enhanced": {
+        "pesq": 3.0432874445120492,
+        "stoi": 0.9616745169459046,
+        "estoi": 0.9165801789149924,
+        "si_snr_db": 15.577701131716555,
+        "sdr_db": 16.803472433860417
+      },
+      "full600_noisy": {
+        "pesq": 1.0880955342451732,
+        "stoi": 0.6510592990906214,
+        "estoi": 0.3667556529781415,
+        "si_snr_db": -1.2095493301340101,
+        "sdr_db": -1.1495106109218791
+      },
+      "selected_pairs_sha256": "18233928bdcb499f4e65e3b66a1f8c39387675d09f1621ae6ac94881d7444cfb",
+      "metadata_sha256": "8d0b4d229ebc42cd9892e6d0e0d36416007ded01fbc0b753df4bf7e6b734eb02",
+      "candidate": "causal_wide_conditioned_subband_v1",
+      "protocol_matched_source": true,
+      "all600_complete_utterances": true,
+      "actual_full600_seconds": 212.52317269495688
+    },
+    "monaural": {
+      "training": [
+        {
+          "status": "complete",
+          "branch": "monaural",
+          "rank": 0,
+          "candidate": "causal_monaural_spectral_v1",
+          "checked_at_utc": "2026-11-02T18:52:41.505656+00:00",
+          "scope": "Matched2048 distinct real records,256 fresh-Adam updates; zero formal epochs",
+          "source_checkpoint_sha256": "302e25df9c0e249b71e4049090f19314c3207e024afd2ba2924b2106e17e832e",
+          "source_epoch": 3,
+          "seed": 1234,
+          "sampler_epoch": 47,
+          "selected_train_indices_rank_sha256": "f1cd26809c3b77458cf26b77b3e3c6ddab3823feb8a363c2998d79f4897c13cf",
+          "training_metadata_sha256": "d3854b3717979c398d403143342508db8335c2e613b279e3317c5192f5ef952b",
+          "global_training_records": 2048,
+          "global_batch_size": 8,
+          "seconds_per_record": 6,
+          "optimizer_updates": 256,
+          "learning_rate": 0.001,
+          "trainable_parameters": 3106432,
+          "all_weights_and_adam_finite": true,
+          "fp32_master_parameters": true,
+          "frozen_causal_root_unchanged": true,
+          "source_head_remains_trainable": true,
+          "actual_training_seconds": 109.4437100510113,
+          "loss": 0.45054697326850146,
+          "loss_components": {
+            "samples": 1024,
+            "batches": 256,
+            "spectral": 0.3054008483886719,
+            "mrstft": 0.7718079090118408,
+            "waveform": 0.14840953052043915,
+            "total": 0.39742255210876465,
+            "pmsqe": 0.6358550786972046,
+            "combined_total": 0.4610080599784851
+          },
+          "formal_goal_achieved": false,
+          "checkpoint_sha256": "42d86ca56057b4a15ecae15cff24b29fa7373bd6297089ce491fed54b8544060"
+        },
+        {
+          "status": "complete",
+          "branch": "monaural",
+          "rank": 1,
+          "candidate": "causal_monaural_spectral_v1",
+          "checked_at_utc": "2026-11-02T18:52:41.505843+00:00",
+          "scope": "Matched2048 distinct real records,256 fresh-Adam updates; zero formal epochs",
+          "source_checkpoint_sha256": "302e25df9c0e249b71e4049090f19314c3207e024afd2ba2924b2106e17e832e",
+          "source_epoch": 3,
+          "seed": 1234,
+          "sampler_epoch": 47,
+          "selected_train_indices_rank_sha256": "cb0a28e245551d5ae61730496dff54c7a1ac7fffd471a92e72d3b325df915192",
+          "training_metadata_sha256": "d3854b3717979c398d403143342508db8335c2e613b279e3317c5192f5ef952b",
+          "global_training_records": 2048,
+          "global_batch_size": 8,
+          "seconds_per_record": 6,
+          "optimizer_updates": 256,
+          "learning_rate": 0.001,
+          "trainable_parameters": 3106432,
+          "all_weights_and_adam_finite": true,
+          "fp32_master_parameters": true,
+          "frozen_causal_root_unchanged": true,
+          "source_head_remains_trainable": true,
+          "actual_training_seconds": 109.44370673899539,
+          "loss": 0.45054697326850146,
+          "loss_components": {
+            "samples": 1024,
+            "batches": 256,
+            "spectral": 0.29142656922340393,
+            "mrstft": 0.7437084317207336,
+            "waveform": 0.1429155468940735,
+            "total": 0.3800888955593109,
+            "pmsqe": 0.5999690890312195,
+            "combined_total": 0.44008580446243284
+          },
+          "formal_goal_achieved": false
+        }
+      ],
+      "checkpoint_sha256": "42d86ca56057b4a15ecae15cff24b29fa7373bd6297089ce491fed54b8544060",
+      "full600_enhanced": {
+        "pesq": 3.044561735590299,
+        "stoi": 0.9616920609730882,
+        "estoi": 0.9166222076049823,
+        "si_snr_db": 15.581258686542787,
+        "sdr_db": 16.8062275994114
+      },
+      "full600_noisy": {
+        "pesq": 1.0880955342451732,
+        "stoi": 0.6510592990906214,
+        "estoi": 0.3667556529781415,
+        "si_snr_db": -1.2095493301340101,
+        "sdr_db": -1.1495106109218791
+      },
+      "selected_pairs_sha256": "18233928bdcb499f4e65e3b66a1f8c39387675d09f1621ae6ac94881d7444cfb",
+      "metadata_sha256": "8d0b4d229ebc42cd9892e6d0e0d36416007ded01fbc0b753df4bf7e6b734eb02",
+      "candidate": "causal_monaural_spectral_v1",
+      "protocol_matched_source": true,
+      "all600_complete_utterances": true,
+      "actual_full600_seconds": 214.78947195014916
+    }
+  },
+  "phase": "trained_actual10ms_waveform_streaming",
+  "child_pid": 3142058,
+  "child_cookie": "159390875",
+  "child_cwd": "/home/nis/jinrui.yang/EaBNet_light/tmp/monaural_quality_stage_20261103",
+  "initial_monaural_full600_enhanced": {
+    "pesq": 3.0431378700335823,
+    "stoi": 0.9616736119660472,
+    "estoi": 0.916349825605242,
+    "si_snr_db": 15.564915140406733,
+    "sdr_db": 16.798104375965686
+  },
+  "initial_monaural_full600_seconds": 211.7110546019394,
+  "complete600_warm_output_matched_source": true,
+  "monaural_minus_control_wb_pesq": 0.001274291078249945,
+  "monaural_minus_source_wb_pesq": 0.001423865556716919,
+  "matched_training_manifest_verified": true,
+  "trained_streaming": {
+    "status": "measured",
+    "scope": "Causality, bounded state and real CUDA waveform streaming; no quality claim",
+    "checkpoint_sha256": "42d86ca56057b4a15ecae15cff24b29fa7373bd6297089ce491fed54b8544060",
+    "device": "NVIDIA GeForce RTX 4070",
+    "torch_version": "2.5.1+cu121",
+    "evaluated_samples": 96000,
+    "parameters": 5686130,
+    "future_frames": 0,
+    "buffering_delay_samples": 320,
+    "buffering_delay_ms": 20,
+    "latency_scope": "CPU float32 input transfer + streaming frontend/model/synthesis + CPU output transfer; excludes audio driver",
+    "future_perturbation_max_error": 2.9802322387695312e-08,
+    "full_vs_stream_waveform_max_error": 3.5762786865234375e-07,
+    "bounded_model_cache_bytes": 6219024,
+    "measured_hops": 600,
+    "excluded_startup_hops": 128,
+    "warmup_hops": 129,
+    "warmup_state_discarded": true,
+    "all_hop_ms": {
+      "mean": 5.927087362700452,
+      "p99": 6.215049363672733,
+      "max": 6.396728102117777
+    },
+    "all_hops_below_10ms": true,
+    "steady_hop_ms": {
+      "mean": 5.937512758310285,
+      "p50": 5.903581972233951,
+      "p95": 6.059259525500238,
+      "p99": 6.230537393130363,
+      "max": 6.396728102117777
+    },
+    "steady_rtf": 0.5937512758310285,
+    "deadline_miss_fraction": 0.0,
+    "mean_rtf_below_one": true,
+    "p99_below_10ms": true,
+    "cuda_peak_allocated_bytes": 67639808
+  },
+  "finished_at_utc": "2026-11-02T18:56:25.384899+00:00",
+  "existing10s_gpu_phase_aggregate": {
+    "phase=warm_full600": {
+      "0": {
+        "samples": 22,
+        "mean_utilization_percent": 40.27272727272727,
+        "peak_whole_card_memory_mib": 2213.0
+      },
+      "1": {
+        "samples": 22,
+        "mean_utilization_percent": 0.0,
+        "peak_whole_card_memory_mib": 15.0
+      }
+    },
+    "phase=train branch=control": {
+      "0": {
+        "samples": 11,
+        "mean_utilization_percent": 90.63636363636364,
+        "peak_whole_card_memory_mib": 6787.0
+      },
+      "1": {
+        "samples": 11,
+        "mean_utilization_percent": 90.45454545454545,
+        "peak_whole_card_memory_mib": 6769.0
+      }
+    },
+    "phase=evaluation branch=control": {
+      "0": {
+        "samples": 21,
+        "mean_utilization_percent": 11.761904761904763,
+        "peak_whole_card_memory_mib": 2211.0
+      },
+      "1": {
+        "samples": 21,
+        "mean_utilization_percent": 0.0,
+        "peak_whole_card_memory_mib": 15.0
+      }
+    },
+    "phase=train branch=monaural": {
+      "0": {
+        "samples": 12,
+        "mean_utilization_percent": 82.83333333333333,
+        "peak_whole_card_memory_mib": 6675.0
+      },
+      "1": {
+        "samples": 12,
+        "mean_utilization_percent": 81.83333333333333,
+        "peak_whole_card_memory_mib": 6657.0
+      }
+    },
+    "phase=evaluation branch=monaural": {
+      "0": {
+        "samples": 23,
+        "mean_utilization_percent": 28.08695652173913,
+        "peak_whole_card_memory_mib": 2213.0
+      },
+      "1": {
+        "samples": 23,
+        "mean_utilization_percent": 0.9130434782608695,
+        "peak_whole_card_memory_mib": 15.0
+      }
+    }
+  },
+  "gpu_aggregate_scope": "Physical-card phase averages include startup/loading/validation; not hot-only occupancy; no new GPU query"
+}
