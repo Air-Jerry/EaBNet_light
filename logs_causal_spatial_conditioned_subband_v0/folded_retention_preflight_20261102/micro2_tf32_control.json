@@ -1,0 +1,40 @@
+{
+  "status": "complete",
+  "scope": "Same first8 real6s records;12 local4 Adam updates; no DDP or complete-epoch quality claim",
+  "microbatch": 2,
+  "accumulation": 2,
+  "source_checkpoint_sha256": "a4068cbc1aebb3d2ce26d4b2a4a9dfb2173f2c59c20e60fc055eade07a25b5c9",
+  "unchanged_active_model_source_sha256": "57a59209a3ee1e9e65a40e86684214171c0902ec200320cd2f5fe05b144bde8d",
+  "activation_checkpointed_layers": 0,
+  "training_forward_tf32": "no",
+  "loss_frontend_and_inference_tf32": false,
+  "gpu_index": 0,
+  "formal_goal_achieved": false,
+  "warm_started_unix": 1793586276.3129454,
+  "warm_finished_unix": 1793586280.75758,
+  "final_adam_steps": 20,
+  "all_gradients_and_adam_finite": true,
+  "first_two_update_seconds": [
+    22.518320922972634,
+    0.4428334808908403
+  ],
+  "warm_local4_update_seconds": 0.44445546276401726,
+  "local_training_samples_per_second": 8.999776884559955,
+  "optimistic_two_gpu_train_only_seconds": 2977.8516005189153,
+  "peak_allocated_bytes": 6572673536,
+  "losses": [
+    2.1986353397369385,
+    1.611569344997406,
+    2.2041760087013245,
+    1.66228449344635,
+    2.172139048576355,
+    1.6235972046852112,
+    2.169459104537964,
+    1.5904744863510132,
+    2.1688366532325745,
+    1.6132968068122864,
+    2.1511067748069763,
+    1.5998151898384094
+  ],
+  "elapsed_seconds": 29.038969463901594
+}

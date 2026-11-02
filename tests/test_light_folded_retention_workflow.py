@@ -15,6 +15,27 @@ from test_light_causal_workflow import argv
 from test_light_quality_workflow import run_cli
 
 
+@pytest.mark.parametrize('candidate,train_seconds,metric_seconds,accepted',[
+    (FOLDED_RETENTION_CANDIDATE,3310,240,True),
+    (FOLDED_RETENTION_CANDIDATE,3500,240,False),
+    ('causal_fullchannel_dualpath_crn_v1',3310,240,False),
+])
+def test_actual_remaining_budget_preserves_completed_training(candidate,train_seconds,metric_seconds,accepted):
+    import os
+    import shutil
+    import subprocess
+    shell=Path('C:/Program Files/Git/bin/bash.exe') if os.name=='nt' else shutil.which('bash')
+    if not shell or not Path(shell).exists():pytest.skip('Bash is required for launcher scheduling')
+    script=(Path(__file__).resolve().parents[1]/'run_light_causal.sh').read_text()
+    budget='    train_budget='+script.split('    train_budget=',1)[1].split("    printf 'phase=train",1)[0]
+    remaining=next(line.strip() for line in script.splitlines() if line.strip().startswith('remaining=$(( 3600'))
+    command=(f'candidate={candidate}; evaluation_reserve=300; epoch_start=0; evaluation_start={train_seconds};\n'
+        +budget+'\n'+remaining+f'\n(( {train_seconds} <= train_budget && {metric_seconds} <= remaining ))')
+    result=subprocess.run([str(shell),'--noprofile','--norc','-c',command],capture_output=True,text=True)
+    assert result.returncode in (0,1),result.stderr
+    assert (result.returncode==0) is accepted
+
+
 @pytest.mark.parametrize('rate,metric_seconds,accepted',[(18.7,217.46282980497926,True),(18.7,700,False),(14.,10,False)])
 def test_complete_budget_replaces_only_the_folded_hot_rate_heuristic(tmp_path,rate,metric_seconds,accepted):
     import math

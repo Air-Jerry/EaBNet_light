@@ -1,0 +1,58 @@
+{
+  "status": "owned_launcher_and_actual_phase_verified",
+  "checked_at_utc": "2026-11-02T03:32:45.572017+00:00",
+  "formal_pid": 2898567,
+  "formal_cookie": "153486985",
+  "run": "folded_retention_20261102_103220_2898567",
+  "actual_owned_processes": [
+    {
+      "pid": 2898682,
+      "cookie": "153487612",
+      "cwd": "/home/nis/jinrui.yang",
+      "args": [
+        "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/bin/python",
+        "-u",
+        "/home/nis/jinrui.yang/EaBNet_light/tmp/observe_folded_budget_formal_20261102.py",
+        ""
+      ]
+    },
+    {
+      "pid": 2912390,
+      "cookie": "153841148",
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light/tmp/folded_retention_budget_stage_20261102",
+      "args": [
+        "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/bin/python",
+        "-u",
+        "evaluate_light.py",
+        "--checkpoint",
+        "./checkpoints_causal_folded_retention_v1_folded_retention_20261102_103220_2898567/model_epoch_1.pt",
+        "--candidate",
+        "causal_folded_retention_v1",
+        "--val-dir",
+        "/data/ssd1/jinrui.yang/newset_rt60_005-015_on_NOISEX92/babble/training_set",
+        "--device",
+        "cuda",
+        "--max-samples",
+        "0",
+        "--save-samples",
+        "no",
+        "--match-estimate-level",
+        "no",
+        "--estimate-dir",
+        "./logs_causal_folded_retention_v1/folded_retention_20261102_103220_2898567/pesq_selection/model_epoch_1",
+        "--save-json",
+        "./logs_causal_folded_retention_v1/folded_retention_20261102_103220_2898567/pesq_selection/model_epoch_1/summary.json",
+        ""
+      ]
+    }
+  ],
+  "saved_epoch_checkpoints": [
+    "model_epoch_0.pt",
+    "model_epoch_1.pt"
+  ],
+  "monitor_status": "baseline_verified_waiting_epoch_eta",
+  "expected_observation_utc": "2026-11-02T03:35:22.746699+00:00",
+  "gpu_or_batch_progress_queries": 0,
+  "root_and_isolated_sources_and_user_evaluator_unchanged": true,
+  "formal_goal_achieved": false
+}

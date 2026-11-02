@@ -329,6 +329,10 @@ for ((epoch=start_epoch; epoch<=30; epoch++)); do
     phase="training_epoch_${epoch}"
     epoch_start=$(date +%s)
     train_budget=$(( 3600 - evaluation_reserve ))
+    if [[ "$candidate" == causal_folded_retention_v1 ]]; then
+        # Allocate evaluation from actual elapsed time; retain the final3600s audit.
+        train_budget=3590
+    fi
     printf 'phase=train epoch=%s\n' "$epoch" >> "$logs/gpu_utilization.log"
     timeout --kill-after=15s "${train_budget}s" "$train_py" -u -m torch.distributed.run --standalone --nproc_per_node=2 \
         "$entry" --train-dir "$train_dir" --val-dir "$val_dir" \

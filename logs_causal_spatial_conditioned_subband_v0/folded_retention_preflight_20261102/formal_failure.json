@@ -1,0 +1,156 @@
+{
+  "checked_at_utc": "2026-11-02T02:15:00.362431+00:00",
+  "launch": {
+    "status": "running",
+    "candidate": "causal_folded_retention_v1",
+    "candidate_schema": 22,
+    "formal_pid": 2873668,
+    "formal_cookie": "153015675",
+    "formal_cwd": "/home/nis/jinrui.yang/EaBNet_light/tmp/folded_retention_stage_20261102",
+    "formal_log": "/home/nis/jinrui.yang/EaBNet_light/tmp/folded_retention_stage_20261102/formal_launcher_20261102.log",
+    "launched_unix": 1793582026.2981873,
+    "source_tree_overlay_sha256": {
+      "light_candidate_runtime.py": "31026cc2af51e8ec404bb4e8b4a544bf2bcc2800c736cc1a239aa9b7f87a81df",
+      "run_light_causal.sh": "4591813961ef2bdd3421897e2328fe6c959ecb6f82c1d9e30684a2678bfa9a55",
+      "check_light_causal_cuda.py": "34e0738269dfcdcd9aad5610c5336f2c27b28aab5daca1428eeeb76a8b555174",
+      "benchmark_light_causal.py": "6f26ce40b67ea979df6d7a2fa389c2bdc747f44c43e0579b7d714a56c3ea9c53",
+      "evaluate_light_streaming.py": "e60a888c5ca91bbd809a0a3827564abac60925439f559c8a08a912018fc57193",
+      "experiments/causal_fullband_retention.py": "16855cf670b2fc5e07a7c67c62e8c70a4e276f760823b27992aea63ab721d997",
+      "experiments/causal_folded_retention.py": "57a59209a3ee1e9e65a40e86684214171c0902ec200320cd2f5fe05b144bde8d",
+      "experiments/compiled_folded_training.py": "9540e7b6db458eaa95b2af0ae10d4d523888d1bf1560b4415971fed76e1602f3",
+      "train_light_causal_folded_retention.py": "7a758851d20aab96401e8eb425a666977d548f84a4c260f5825665aff1f0e43b",
+      "run_light_causal_folded_retention.sh": "c5d53598068a5b69c753b0600fab612c7d6f9a41e119ecc56d30a626c2bf6eee"
+    },
+    "shared_launcher_sha256": "4591813961ef2bdd3421897e2328fe6c959ecb6f82c1d9e30684a2678bfa9a55",
+    "maximum_epochs": 30,
+    "training_samples_per_epoch": 53600,
+    "validation_samples": 600,
+    "metric_samples": 600,
+    "global_batch": 8,
+    "expected_adam_updates_per_epoch": 6700,
+    "target_wb_pesq": 3.4,
+    "projected_complete_epoch_seconds": 3545.3027602382,
+    "detailed_observation_not_before_unix": 1793585805.8873837,
+    "expected_observation_utc": "2026-11-02T02:16:45.887384+00:00",
+    "first_complete_epoch_actual_time_and_quality_unverified": true,
+    "formal_goal_achieved": false,
+    "production_directory_and_user_evaluator_untouched": true,
+    "formal_run": "folded_retention_20261102_091347_2873668",
+    "formal_checkpoint_dir": "/home/nis/jinrui.yang/EaBNet_light/tmp/folded_retention_stage_20261102/checkpoints_causal_folded_retention_v1_folded_retention_20261102_091347_2873668",
+    "formal_log_dir": "/home/nis/jinrui.yang/EaBNet_light/tmp/folded_retention_stage_20261102/logs_causal_folded_retention_v1/folded_retention_20261102_091347_2873668",
+    "actual_formal_baseline_full600_wb_pesq": 1.088074848453204
+  },
+  "processes": {
+    "2873668": {
+      "exists": false
+    },
+    "2874755": {
+      "exists": false
+    },
+    "2874758": {
+      "exists": false
+    },
+    "2874759": {
+      "exists": false
+    },
+    "2874293": {
+      "exists": false
+    }
+  },
+  "run_status.json": {
+    "status": "failed",
+    "final_phase": "training_epoch_1",
+    "exit_code": 124,
+    "finished_unix": 1793585576.3705928
+  },
+  "latest_epoch_timing.json": null,
+  "launcher_important_lines": [
+    "Device: cuda:0",
+    "DataLoader config: workers=0, pin_memory=False, persistent_workers=False, prefetch_factor=N/A, strict_memory=yes, segment_samples=96000, parallel_mode=none",
+    "Resumed from checkpoints_causal_folded_retention_v1_folded_retention_20261102_091347_2873668/checkpoint_latest.pt at epoch 0, best_val_loss=inf",
+    "Training samples: 53600",
+    "Validation samples: 600",
+    "Device: cuda; candidate: causal_folded_retention_v1; samples: 600",
+    "Device: cuda:0",
+    "DataLoader config: workers=4, pin_memory=True, persistent_workers=False, prefetch_factor=2, strict_memory=no, segment_samples=96000, parallel_mode=ddp",
+    "Resumed from checkpoints_causal_folded_retention_v1_folded_retention_20261102_091347_2873668/checkpoint_latest.pt at epoch 0, best_val_loss=inf",
+    "Training samples: 53600",
+    "Validation samples: 600",
+    "Epoch 1/1",
+    "Resumed from checkpoints_causal_folded_retention_v1_folded_retention_20261102_091347_2873668/checkpoint_latest.pt at epoch 0, best_val_loss=inf",
+    "[PERF][train] samples(local/global)=26800/53600, batches(local/global)=13400/26800, samples/s(local/global)=8.2/16.3, ms/batch(local)=245.3, data_wait=0.8%, compute=99.2%, non_finite_skips(local)=0",
+    "val:  84%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258d | 126/150 [00:19<00:03,  6.52it/s, loss=1.3714]W1102 10:12:55.940000 2874755 site-packages/torch/distributed/elastic/agent/server/api.py:704] Received Signals.SIGTERM death signal, shutting down workers",
+    "W1102 10:12:55.942000 2874755 site-packages/torch/distributed/elastic/multiprocessing/api.py:897] Sending process 2874758 closing signal SIGTERM",
+    "W1102 10:12:55.943000 2874755 site-packages/torch/distributed/elastic/multiprocessing/api.py:897] Sending process 2874759 closing signal SIGTERM",
+    "Traceback (most recent call last):"
+  ],
+  "launcher_last_progress": [
+    "val:  83%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258e | 125/150 [00:19<00:03,  6.52it/s, loss=1.1911]",
+    "val:  83%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258e | 125/150 [00:19<00:03,  6.52it/s, loss=1.3714]",
+    "val:  84%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258d | 126/150 [00:19<00:03,  6.52it/s, loss=1.3714]W1102 10:12:55.940000 2874755 site-packages/torch/distributed/elastic/agent/server/api.py:704] Received Signals.SIGTERM death signal, shutting down workers"
+  ],
+  "training_important_lines": [
+    "Device: cuda:0",
+    "DataLoader config: workers=4, pin_memory=True, persistent_workers=False, prefetch_factor=2, strict_memory=no, segment_samples=96000, parallel_mode=ddp",
+    "Resumed from checkpoints_causal_folded_retention_v1_folded_retention_20261102_091347_2873668/checkpoint_latest.pt at epoch 0, best_val_loss=inf",
+    "Training samples: 53600",
+    "Validation samples: 600",
+    "Epoch 1/1",
+    "Resumed from checkpoints_causal_folded_retention_v1_folded_retention_20261102_091347_2873668/checkpoint_latest.pt at epoch 0, best_val_loss=inf",
+    "[PERF][train] samples(local/global)=26800/53600, batches(local/global)=13400/26800, samples/s(local/global)=8.2/16.3, ms/batch(local)=245.3, data_wait=0.8%, compute=99.2%, non_finite_skips(local)=0",
+    "val:  84%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258d | 126/150 [00:19<00:03,  6.52it/s, loss=1.3714]W1102 10:12:55.940000 2874755 site-packages/torch/distributed/elastic/agent/server/api.py:704] Received Signals.SIGTERM death signal, shutting down workers",
+    "W1102 10:12:55.942000 2874755 site-packages/torch/distributed/elastic/multiprocessing/api.py:897] Sending process 2874758 closing signal SIGTERM",
+    "W1102 10:12:55.943000 2874755 site-packages/torch/distributed/elastic/multiprocessing/api.py:897] Sending process 2874759 closing signal SIGTERM",
+    "Traceback (most recent call last):"
+  ],
+  "training_last_progress": [
+    "val:  83%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258e | 125/150 [00:19<00:03,  6.52it/s, loss=1.1911]",
+    "val:  83%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258e | 125/150 [00:19<00:03,  6.52it/s, loss=1.3714]",
+    "val:  84%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258d | 126/150 [00:19<00:03,  6.52it/s, loss=1.3714]W1102 10:12:55.940000 2874755 site-packages/torch/distributed/elastic/agent/server/api.py:704] Received Signals.SIGTERM death signal, shutting down workers"
+  ],
+  "checkpoints": [
+    {
+      "name": "checkpoint_latest.pt",
+      "bytes": 4883786,
+      "mtime_unix": 1793582029.6365566
+    },
+    {
+      "name": "model_epoch_0.pt",
+      "bytes": 4882498,
+      "mtime_unix": 1793582029.5765543
+    }
+  ],
+  "gpu_aggregates": {
+    "startup": {
+      "0": {
+        "samples": 24,
+        "mean_utilization_percent": 16.125,
+        "peak_memory_mib": 577.0,
+        "mean_power_w": 46.06333333333334
+      },
+      "1": {
+        "samples": 24,
+        "mean_utilization_percent": 0.16666666666666666,
+        "peak_memory_mib": 18.0,
+        "mean_power_w": 11.040000000000001
+      }
+    },
+    "phase=train epoch=1": {
+      "0": {
+        "samples": 331,
+        "mean_utilization_percent": 93.93957703927492,
+        "peak_memory_mib": 6525.0,
+        "mean_power_w": 144.902658610272
+      },
+      "1": {
+        "samples": 331,
+        "mean_utilization_percent": 92.91238670694864,
+        "peak_memory_mib": 6507.0,
+        "mean_power_w": 146.005589123867
+      }
+    }
+  },
+  "current_gpu_processes": "",
+  "root_source_files_unchanged": true,
+  "stage_overlay_files_unchanged": true
+}

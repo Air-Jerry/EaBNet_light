@@ -1,0 +1,43 @@
+{
+  "status": "complete",
+  "scope": "Two fixed training records; compare savedE1 FP32, eagerBF16 and compiledBF16; no optimizer updates",
+  "checkpoint_sha256": "28658281e8c069c73ac1190bb0bac430e8508786419475f88607bd7af55c9dba",
+  "shared_gpu_accuracy_check_only": true,
+  "latency_not_measured": true,
+  "memory_fraction_limit": 0.3,
+  "grad_enabled": false,
+  "compiled_check_excludes_backward": true,
+  "formal_goal_achieved": false,
+  "samples": 2,
+  "mean_metrics": {
+    "fp32_eval": {
+      "pesq": 1.7428212761878967,
+      "stoi": 0.8601390580094934,
+      "estoi": 0.723157843716216,
+      "si_snr_db": 12.647622450167356,
+      "sdr_db": 13.397390111533184
+    },
+    "bf16_eager": {
+      "pesq": 1.743516445159912,
+      "stoi": 0.8598513401331005,
+      "estoi": 0.7228917872947707,
+      "si_snr_db": 12.656276796430715,
+      "sdr_db": 13.407218311590565
+    },
+    "bf16_compiled": {
+      "pesq": 1.7414056062698364,
+      "stoi": 0.8598224403934109,
+      "estoi": 0.722894468488526,
+      "si_snr_db": 12.66396379016597,
+      "sdr_db": 13.411709792421508
+    }
+  },
+  "max_numerical_differences": {
+    "fp32_vs_bf16_relative_rms": 0.030953748151659966,
+    "eager_vs_compiled_relative_rms": 0.02433839812874794,
+    "eager_vs_compiled_max_abs": 0.2806178331375122
+  },
+  "all_parameters_unchanged": true,
+  "optimizer_updates": 0,
+  "elapsed_seconds_not_latency_benchmark": 99.5055625939276
+}
