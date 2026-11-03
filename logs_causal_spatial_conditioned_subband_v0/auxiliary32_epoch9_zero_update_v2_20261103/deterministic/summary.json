@@ -1,0 +1,120 @@
+{
+  "status": "same_weights_measured_checks_failed",
+  "backend": "deterministic",
+  "new_optimizer_updates": 0,
+  "formal_goal_achieved": false,
+  "scope": "Same exact saved32-update weights; actual source included; backend diagnostics only, no full600 quality claim",
+  "thresholds": {
+    "future": 1e-06,
+    "waveform": 1e-05,
+    "each_hop_ms": 10.0
+  },
+  "checkpoint_sha256": "9fabec9f12b8b1386f93664debc1120dafe17b645edeb86b5bf754ed42d42d73",
+  "prototype_sha256": "fde70517d5a605ea28bc49c8f2e8e5fa400e09a0843eabe02fde17e8135358e5",
+  "source_checkpoint_sha256": "915db91398f62ca6c51ae8f129ee5eb3c923d6c218ad2ac34efa82ef82faee42",
+  "cudnn_allow_tf32": true,
+  "matmul_allow_tf32": false,
+  "cudnn_deterministic": true,
+  "deterministic_algorithms": true,
+  "cublas_workspace_config": ":4096:8",
+  "torch_version": "2.5.1+cu121",
+  "device": "NVIDIA GeForce RTX 4070",
+  "complete_source_in_every_forward": true,
+  "prefix_checks": [
+    {
+      "cutoff": 17,
+      "network_future": 0.0,
+      "network_repeat": 0.0,
+      "components": {
+        "source": {
+          "future": 0.0,
+          "repeat": 0.0
+        },
+        "mono": {
+          "future": 0.0,
+          "repeat": 0.0
+        },
+        "gate_logit": {
+          "future": 0.0,
+          "repeat": 0.0
+        }
+      }
+    },
+    {
+      "cutoff": 150,
+      "network_future": 0.0,
+      "network_repeat": 0.0,
+      "components": {
+        "source": {
+          "future": 0.0,
+          "repeat": 0.0
+        },
+        "mono": {
+          "future": 0.0,
+          "repeat": 0.0
+        },
+        "gate_logit": {
+          "future": 0.0,
+          "repeat": 0.0
+        }
+      }
+    },
+    {
+      "cutoff": 300,
+      "network_future": 0.0,
+      "network_repeat": 0.0,
+      "components": {
+        "source": {
+          "future": 0.0,
+          "repeat": 0.0
+        },
+        "mono": {
+          "future": 0.0,
+          "repeat": 0.0
+        },
+        "gate_logit": {
+          "future": 0.0,
+          "repeat": 0.0
+        }
+      }
+    },
+    {
+      "cutoff": 500,
+      "network_future": 0.0,
+      "network_repeat": 0.0,
+      "components": {
+        "source": {
+          "future": 0.0,
+          "repeat": 0.0
+        },
+        "mono": {
+          "future": 0.0,
+          "repeat": 0.0
+        },
+        "gate_logit": {
+          "future": 0.0,
+          "repeat": 0.0
+        }
+      }
+    }
+  ],
+  "measured_hops": 600,
+  "max_hop_ms": 10.494952090084553,
+  "mean_hop_ms": 9.807328776223585,
+  "p99_hop_ms": 10.40742966113612,
+  "waveform_max_error": 0.00019425898790359497,
+  "future_max_error": 0.0,
+  "model_state_logical_bytes": 6236432,
+  "model_state_unique_storage_bytes": 6236432,
+  "independent_stream_storage_disjoint": true,
+  "input_state_unchanged": true,
+  "warmup_state_discarded": true,
+  "cuda_peak_allocated_bytes": 110601216,
+  "gates": {
+    "future": true,
+    "waveform": false,
+    "all600_hops": false,
+    "cache": true,
+    "weights_unchanged": true
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "status": "actual_graph_screen_terminal",
+  "guard_pid": 3408757,
+  "guard_cookie": "165673136",
+  "main_pid": 3356594,
+  "main_cookie": "164514460",
+  "gpu_queries": 2,
+  "training_signals_sent": 0,
+  "new_optimizer_updates": 0,
+  "formal_goal_achieved": false,
+  "not_before_unix": 1793708905.9646633,
+  "prior_status": "both_zero_update_backend_checks_terminal",
+  "evaluation_pid": 3410980,
+  "evaluation_cookie": "165716075",
+  "evaluation_age_seconds": 20.649999999906868,
+  "child": {
+    "status": "helper_terminal",
+    "training_signals_sent": 0,
+    "child_pid": 3411170,
+    "child_cookie": "165718145",
+    "helper_exit_code": 1,
+    "helper_terminal": true
+  },
+  "result": {
+    "status": "failed",
+    "new_optimizer_updates": 0,
+    "formal_goal_achieved": false,
+    "scope": "Actual saved32 weights, inference adapter only; complete source; one real6s waveform, no full600 quality claim",
+    "thresholds": {
+      "future": 1e-06,
+      "waveform": 1e-05,
+      "each_hop_ms": 10.0
+    },
+    "checkpoint_sha256": "9fabec9f12b8b1386f93664debc1120dafe17b645edeb86b5bf754ed42d42d73",
+    "adapter_sha256": "3174fe761a909be47a627787db58e5bc76ec50543829a2de4b504f5b421b53be",
+    "source_epoch": 7,
+    "diagnostic_saved_updates": 32,
+    "torch_version": "2.5.1+cu121",
+    "device": "NVIDIA GeForce RTX 4070",
+    "cudnn_allow_tf32": true,
+    "matmul_allow_tf32": false,
+    "cudnn_deterministic": false,
+    "complete_source_in_every_frame": true,
+    "error": "RuntimeError: CUDA error: an illegal memory access was encountered\nCUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.\nFor debugging consider passing CUDA_LAUNCH_BLOCKING=1\nCompile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.\n"
+  },
+  "active_source_unchanged": true
+}

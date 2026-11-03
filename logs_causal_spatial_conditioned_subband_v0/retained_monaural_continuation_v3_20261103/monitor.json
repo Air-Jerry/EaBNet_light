@@ -26,12 +26,28 @@
       "checkpoint_sha256": "907c0fd1bda2d36063dadf7bee71078b51185fb7ea188eda9a5e0b8fd7005802",
       "all_weights_and_adam_finite": true,
       "full53600_600_600_and6700_updates_verified": true
+    },
+    {
+      "epoch": 9,
+      "pesq": 3.0968996487061182,
+      "seconds": 3028.404573202133,
+      "checkpoint_sha256": "b1fb2d09da4cda6014f4856689e0a5ddff78ce5476d58ad2c461ae3208044503",
+      "all_weights_and_adam_finite": true,
+      "full53600_600_600_and6700_updates_verified": true
+    },
+    {
+      "epoch": 10,
+      "pesq": 3.0992198634147643,
+      "seconds": 3082.9919984340668,
+      "checkpoint_sha256": "bbfde05025fd283e00395bfb0c4d7a12b7f5c813ab9f1fd20a84e552317148f4",
+      "all_weights_and_adam_finite": true,
+      "full53600_600_600_and6700_updates_verified": true
     }
   ],
   "gpu_queries_while_training": 0,
   "formal_goal_achieved": false,
-  "observation_not_before_unix": 1793709320.9646633,
-  "expected_observation_utc": "2026-11-03T12:35:20.964663+00:00",
-  "last_completed_epoch": 8,
-  "next_epoch": 9
+  "observation_not_before_unix": 1793715431.9919984,
+  "expected_observation_utc": "2026-11-03T14:17:11.991998+00:00",
+  "last_completed_epoch": 10,
+  "next_epoch": 11
 }

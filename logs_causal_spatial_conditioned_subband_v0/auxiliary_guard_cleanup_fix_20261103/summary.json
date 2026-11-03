@@ -1,0 +1,42 @@
+{
+  "status": "failed",
+  "reason": "AST-extracted bounded_helper requires signal in both guard global namespaces",
+  "main_pid": 3356594,
+  "main_cookie": "164514460",
+  "training_signals_sent": 0,
+  "gpu_queries": 0,
+  "tests": [
+    {
+      "test": "actual_owned_child_timeout",
+      "status": "helper_terminal",
+      "training_signals_sent": 0,
+      "child_pid": 3408632,
+      "child_cookie": "165670606",
+      "stop_reason": "bounded_helper_timeout",
+      "helper_exit_code": -15,
+      "helper_terminal": true
+    },
+    {
+      "test": "actual_owned_child_window_end",
+      "status": "helper_terminal",
+      "training_signals_sent": 0,
+      "child_pid": 3408633,
+      "child_cookie": "165670626",
+      "stop_reason": "evaluation_window_ended",
+      "helper_exit_code": -15,
+      "helper_terminal": true
+    },
+    {
+      "test": "actual_nonzero_child_preserved",
+      "status": "helper_terminal",
+      "training_signals_sent": 0,
+      "child_pid": 3408634,
+      "child_cookie": "165670667",
+      "helper_exit_code": 7,
+      "helper_terminal": true
+    }
+  ],
+  "replacements": [],
+  "formal_goal_achieved": false,
+  "error": "AssertionError: "
+}

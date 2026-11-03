@@ -1,0 +1,12 @@
+{
+  "status": "waiting_epoch11_evaluation",
+  "guard_pid": 3438247,
+  "guard_cookie": "166300586",
+  "main_pid": 3356594,
+  "main_cookie": "164514460",
+  "gpu_queries": 0,
+  "training_signals_sent": 0,
+  "formal_goal_achieved": false,
+  "checks": {},
+  "not_before_unix": 1793715016.9919984
+}

@@ -1,0 +1,42 @@
+{
+  "status": "complete",
+  "epoch": 9,
+  "mean": {
+    "enhanced": {
+      "pesq": 3.0968996487061182,
+      "stoi": 0.9633260603822626,
+      "estoi": 0.9200608742512727,
+      "si_snr_db": 15.78822986597859,
+      "sdr_db": 16.89263091396494
+    },
+    "noisy": {
+      "pesq": 1.0880955342451732,
+      "stoi": 0.6510592990906214,
+      "estoi": 0.3667556529781415,
+      "si_snr_db": -1.2095493301340101,
+      "sdr_db": -1.1495106109218791
+    }
+  },
+  "timing": {
+    "epoch": 9,
+    "status": "complete",
+    "started_unix": 1793706217,
+    "finished_unix": 1793709245.4045732,
+    "total_seconds": 3028.404573202133,
+    "training_validation_checkpoint_seconds": 2813,
+    "evaluation_audit_seconds": 215.40457320213318,
+    "training_samples": 53600,
+    "validation_samples": 600,
+    "full_metric_samples": 600,
+    "optimizer_updates_this_epoch": 6700,
+    "global_batch_size": 8,
+    "limit_seconds": 3600
+  },
+  "checkpoint_sha256": "b1fb2d09da4cda6014f4856689e0a5ddff78ce5476d58ad2c461ae3208044503",
+  "all_weights_and_adam_finite": true,
+  "all267_causal_root_states_unchanged": true,
+  "full53600_600_600_and6700_updates_verified": true,
+  "adam_steps": 60300,
+  "protected_server_evaluator_unchanged": true,
+  "formal_goal_achieved": false
+}

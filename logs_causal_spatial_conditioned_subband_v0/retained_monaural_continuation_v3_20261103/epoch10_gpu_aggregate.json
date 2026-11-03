@@ -1,0 +1,34 @@
+{
+  "scope": "Existing10second whole-card samples; training includes startup and validation; original singleGPU evaluation; no new auxiliary job was scheduled in epoch10",
+  "gpu": {
+    "phase=train epoch=10": {
+      "0": {
+        "samples": 287,
+        "mean_utilization_percent": 97.15679442508711,
+        "peak_memory_mib": 7721.0,
+        "mean_power_w": 142.72853658536573
+      },
+      "1": {
+        "samples": 287,
+        "mean_utilization_percent": 96.1951219512195,
+        "peak_memory_mib": 7703.0,
+        "mean_power_w": 142.7070383275261
+      }
+    },
+    "phase=evaluation epoch=10": {
+      "0": {
+        "samples": 21,
+        "mean_utilization_percent": 23.761904761904763,
+        "peak_memory_mib": 2213.0,
+        "mean_power_w": 54.86904761904762
+      },
+      "1": {
+        "samples": 21,
+        "mean_utilization_percent": 0.0,
+        "peak_memory_mib": 18.0,
+        "mean_power_w": 11.060952380952381
+      }
+    }
+  },
+  "gpu_queries": 0
+}
