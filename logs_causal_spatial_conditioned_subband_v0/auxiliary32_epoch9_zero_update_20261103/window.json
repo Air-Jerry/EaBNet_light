@@ -1,0 +1,16 @@
+{
+  "status": "waiting_epoch9_evaluation_window",
+  "guard_pid": 3396604,
+  "guard_cookie": "165470200",
+  "main_pid": 3356594,
+  "main_cookie": "164514460",
+  "source_epoch": 7,
+  "saved_diagnostic_updates": 32,
+  "new_optimizer_updates": 0,
+  "gpu_queries": 0,
+  "training_signals_sent": 0,
+  "formal_goal_achieved": false,
+  "checks": {},
+  "not_before_unix": 1793708905.9646633,
+  "scope": "Saved32 weights, zero new updates; component errors and complete600-hop timing in default/deterministic policies"
+}

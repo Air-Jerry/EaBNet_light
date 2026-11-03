@@ -1,10 +1,37 @@
 {
-  "status": "waiting_actual_epoch6_eta",
+  "status": "waiting_next_epoch_eta",
   "formal_pid": 3356594,
   "formal_cookie": "164514460",
-  "epoch_history": [],
+  "epoch_history": [
+    {
+      "epoch": 6,
+      "pesq": 3.0891442851225537,
+      "seconds": 3055.2810502052307,
+      "checkpoint_sha256": "f1abdb75895b357ffb355d7861326be05ae627e5eb19ca2b1950e4109606d0e1",
+      "all_weights_and_adam_finite": true,
+      "full53600_600_600_and6700_updates_verified": true
+    },
+    {
+      "epoch": 7,
+      "pesq": 3.099043610493342,
+      "seconds": 3090.987114429474,
+      "checkpoint_sha256": "915db91398f62ca6c51ae8f129ee5eb3c923d6c218ad2ac34efa82ef82faee42",
+      "all_weights_and_adam_finite": true,
+      "full53600_600_600_and6700_updates_verified": true
+    },
+    {
+      "epoch": 8,
+      "pesq": 3.1071733788649243,
+      "seconds": 3052.9646632671356,
+      "checkpoint_sha256": "907c0fd1bda2d36063dadf7bee71078b51185fb7ea188eda9a5e0b8fd7005802",
+      "all_weights_and_adam_finite": true,
+      "full53600_600_600_and6700_updates_verified": true
+    }
+  ],
   "gpu_queries_while_training": 0,
   "formal_goal_achieved": false,
-  "observation_not_before_unix": 1793700179.147475,
-  "expected_observation_utc": "2026-11-03T10:02:59.147475+00:00"
+  "observation_not_before_unix": 1793709320.9646633,
+  "expected_observation_utc": "2026-11-03T12:35:20.964663+00:00",
+  "last_completed_epoch": 8,
+  "next_epoch": 9
 }

@@ -1,0 +1,27 @@
+{
+  "status": "diagnostic_child_terminal",
+  "guard_pid": 3385328,
+  "guard_cookie": "165246738",
+  "main_pid": 3356594,
+  "main_cookie": "164514460",
+  "target_epoch": 8,
+  "gpu_queries": 2,
+  "training_signals_sent": 0,
+  "source_epoch": 7,
+  "prototype_sha256": "fde70517d5a605ea28bc49c8f2e8e5fa400e09a0843eabe02fde17e8135358e5",
+  "formal_goal_achieved": false,
+  "not_before_unix": 1793705852.9871144,
+  "schedule": "Global-minimum completed train/val/save duration minus120s; no GPU polling",
+  "evaluation_pid": 3393426,
+  "evaluation_cookie": "165413086",
+  "free_mib": 11861,
+  "child": {
+    "status": "helper_terminal",
+    "training_signals_sent": 0,
+    "child_pid": 3393433,
+    "child_cookie": "165413250",
+    "helper_exit_code": 1,
+    "helper_terminal": true
+  },
+  "active_and_prototype_sources_unchanged": true
+}

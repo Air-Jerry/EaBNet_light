@@ -1,0 +1,90 @@
+{
+  "status": "failed_or_window_ended",
+  "scope": "Same8 real train records,32 fresh Adam updates each; auxiliary0 versus0.3; fitting and complete-source streaming only, no full600/generalization claim",
+  "auxiliary_weights": [
+    0.0,
+    0.3
+  ],
+  "updates_per_branch": 32,
+  "gpu_physical_index": 1,
+  "optimizer_lr": 0.001,
+  "original_training_paused": false,
+  "training_signals_sent": 0,
+  "formal_goal_achieved": false,
+  "branches": {
+    "without_auxiliary": {
+      "status": "complete",
+      "auxiliary_weight": 0.0,
+      "initial": {
+        "fusion_mean_wb_pesq": 3.236634060740471,
+        "mono_mean_wb_pesq": 1.1346066743135452,
+        "primary_loss": 0.4371439702808857,
+        "auxiliary_loss": 2.1805788725614548
+      },
+      "completed_updates": 32,
+      "initial_new_parameters_sha256": "d57a08c6620408cce457e549d2a76909c334245d0e1dfcb2cb0a3750979d6437",
+      "parameters": 5884061,
+      "trainable_parameters": 197931,
+      "fixed_source_parameters": 5686130,
+      "last_combined_loss": 0.436610696837306,
+      "training_seconds": 29.383503230987117,
+      "after": {
+        "fusion_mean_wb_pesq": 3.2392138838768005,
+        "mono_mean_wb_pesq": 1.1320341676473618,
+        "primary_loss": 0.4364286884665489,
+        "auxiliary_loss": 2.3432911336421967
+      },
+      "source_all_weights_unchanged": true,
+      "all_weights_and_adam_finite": true,
+      "changed_new_state_tensors": 96
+    },
+    "with_auxiliary": {
+      "status": "complete",
+      "auxiliary_weight": 0.3,
+      "initial": {
+        "fusion_mean_wb_pesq": 3.236633539199829,
+        "mono_mean_wb_pesq": 1.1346066743135452,
+        "primary_loss": 0.43714395351707935,
+        "auxiliary_loss": 2.1805788725614548
+      },
+      "completed_updates": 32,
+      "initial_new_parameters_sha256": "d57a08c6620408cce457e549d2a76909c334245d0e1dfcb2cb0a3750979d6437",
+      "parameters": 5884061,
+      "trainable_parameters": 197931,
+      "fixed_source_parameters": 5686130,
+      "last_combined_loss": 0.9770149141550064,
+      "training_seconds": 24.694049222860485,
+      "after": {
+        "fusion_mean_wb_pesq": 3.236553817987442,
+        "mono_mean_wb_pesq": 1.1462597846984863,
+        "primary_loss": 0.43686007149517536,
+        "auxiliary_loss": 1.7870254814624786
+      },
+      "source_all_weights_unchanged": true,
+      "all_weights_and_adam_finite": true,
+      "changed_new_state_tensors": 96,
+      "diagnostic_weights_saved": true,
+      "diagnostic_checkpoint_sha256": "9fabec9f12b8b1386f93664debc1120dafe17b645edeb86b5bf754ed42d42d73",
+      "future_perturbation_max_error": 1.8924474716186523e-06,
+      "repeated_forward_max_error": 2.384185791015625e-07
+    }
+  },
+  "source_checkpoint_sha256": "915db91398f62ca6c51ae8f129ee5eb3c923d6c218ad2ac34efa82ef82faee42",
+  "source_epoch": 7,
+  "source_full600_wb_pesq": 3.099043610493342,
+  "training_metadata_sha256": "d3854b3717979c398d403143342508db8335c2e613b279e3317c5192f5ef952b",
+  "sample_ids_sha256": "e302bed96716a578b81967079b5b56869f04ca2038138a2a428dbea4a7288d1f",
+  "global_batch": 8,
+  "microbatch": 1,
+  "accumulation": 8,
+  "seed": 1234,
+  "complete_source_in_every_forward": true,
+  "training_cudnn_tf32": false,
+  "evaluation_cudnn_tf32": true,
+  "matmul_tf32": false,
+  "auxiliary_pmsqe_weight": 0.1,
+  "source_fully_frozen_in_fp32_eval": true,
+  "torch_version": "2.5.1+cu121",
+  "device": "NVIDIA GeForce RTX 4070",
+  "error": "AssertionError: "
+}
