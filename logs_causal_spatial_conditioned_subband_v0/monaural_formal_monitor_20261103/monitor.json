@@ -1,5 +1,5 @@
 {
-  "status": "waiting_next_epoch_eta",
+  "status": "needs_existing_job_inspection",
   "formal_pid": 3146100,
   "formal_cookie": "159485878",
   "maximum_epochs": 30,
@@ -21,13 +21,39 @@
       "checkpoint_sha256": "effb5660d11991e4efdec02eb8c4a310f1dfbf00a5403e7fea5ec0edba129f83",
       "all_weights_and_adam_finite": true,
       "complete53600_600_600_and6700_updates_verified": true
+    },
+    {
+      "epoch": 3,
+      "full600_wb_pesq": 3.062034293015798,
+      "total_seconds": 3024.8632376194,
+      "checkpoint_sha256": "8f573f9013f016bd268bc853a7613250ca88947fcfb07fd844b62ea46fe0ca74",
+      "all_weights_and_adam_finite": true,
+      "complete53600_600_600_and6700_updates_verified": true
+    },
+    {
+      "epoch": 4,
+      "full600_wb_pesq": 3.0605086501439414,
+      "total_seconds": 3028.3727056980133,
+      "checkpoint_sha256": "81d3f6aa02d70050062ca25ad26adfbc8259a02910bc75e3bfe997f8f3a619a1",
+      "all_weights_and_adam_finite": true,
+      "complete53600_600_600_and6700_updates_verified": true
+    },
+    {
+      "epoch": 5,
+      "full600_wb_pesq": 3.0893360312779743,
+      "total_seconds": 3027.399131298065,
+      "checkpoint_sha256": "f3ecaec2e5d11cd76f1dfa94ef8d90bbcb4538fd65d74a61dc0a393ee27217bf",
+      "all_weights_and_adam_finite": true,
+      "complete53600_600_600_and6700_updates_verified": true
     }
   ],
   "formal_goal_achieved": false,
   "run": "monaural_spectral_20261103_031210_3146100",
   "baseline_full600_wb_pesq": 3.0431378700335823,
-  "next_epoch": 3,
-  "observation_not_before_unix": 1793656158.3808036,
-  "expected_observation_utc": "2026-11-02T21:49:18.380804+00:00",
-  "last_completed_epoch": 2
+  "next_epoch": 6,
+  "observation_not_before_unix": 1793665220.2233536,
+  "expected_observation_utc": "2026-11-03T00:20:20.223354+00:00",
+  "last_completed_epoch": 5,
+  "error": "AssertionError: Existing launcher ended before next complete epoch; inspect it, never restart from observation timeout",
+  "launcher_live_now": false
 }

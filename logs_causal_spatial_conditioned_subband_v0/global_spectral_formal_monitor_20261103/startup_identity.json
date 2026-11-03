@@ -1,0 +1,15 @@
+{
+  "status": "owned_live_formal_phase_and_baseline_verified",
+  "checked_at_utc": "2026-11-03T00:09:08.428841+00:00",
+  "formal_pid": 3215653,
+  "formal_cookie": "161187963",
+  "torchrun_pid": null,
+  "ranks": [],
+  "phase": "phase=evaluation epoch=1",
+  "source_bytes_unchanged": true,
+  "gpu_queries": 0,
+  "live_batch_queries": 0,
+  "scope": "One current-phase snapshot; ranks may be absent during evaluation. Complete coverage is verified from actual timing and finite Adam, not process counts.",
+  "expected_observation_utc": "2026-11-03T00:10:21.388790+00:00",
+  "formal_goal_achieved": false
+}

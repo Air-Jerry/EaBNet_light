@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "cases": 3,
+  "scope": "Actual transition signal functions, disposable CPU child only",
+  "wrong_cookie_rejected": true,
+  "wrong_cwd_rejected": true,
+  "owned_stop_continue_terminate_passed": true,
+  "original_training_signals_sent": 0,
+  "gpu_queries": 0
+}

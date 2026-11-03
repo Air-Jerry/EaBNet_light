@@ -14,7 +14,8 @@ ROOT=Path(__file__).resolve().parents[1]
 CANDIDATES=[('causal_fullchannel_dualpath_crn_v1',21,'fullchannel'),
             ('causal_folded_retention_v1',22,'folded_retention'),
             ('causal_joint_conditioned_subband_v1',23,'joint_conditioned'),
-            ('causal_wide_conditioned_subband_v1',25,'wide_conditioned')]
+            ('causal_wide_conditioned_subband_v1',25,'wide_conditioned'),
+            ('causal_monaural_spectral_v1',27,'monaural')]
 
 
 @pytest.mark.parametrize('candidate,schema,preflight',CANDIDATES)
@@ -36,7 +37,9 @@ def test_resume_requires_same_evaluated_state_and_complete_budget(tmp_path,monke
             param_groups=[dict(lr=.0005,params=[0])]),lr_reducer_state=dict(best=.3,wait=2))
     evaluated=copy.deepcopy(state)
     checked=checkpoints/'model_epoch_3.pt';checked.write_bytes(b'evaluated checkpoint')
-    baseline=json.loads((ROOT/f'logs_causal_spatial_conditioned_subband_v0/{preflight}_preflight_20261102/zero_full600_summary.json').read_text())
+    baseline_path=(f'{preflight}_preflight_20261103/initial_full600_summary.json' if schema==27
+                   else f'{preflight}_preflight_20261102/zero_full600_summary.json')
+    baseline=json.loads((ROOT/'logs_causal_spatial_conditioned_subband_v0'/baseline_path).read_text())
     summary=copy.deepcopy(baseline);summary['mean']['enhanced']['pesq']=2.4
     summary['checkpoint_sha256']=hashlib.sha256(checked.read_bytes()).hexdigest()
     timing=dict(epoch=3,status='complete',training_samples=53600,validation_samples=600,full_metric_samples=600,
@@ -78,7 +81,7 @@ def test_resume_requires_same_evaluated_state_and_complete_budget(tmp_path,monke
     monkeypatch.setattr(sys,'argv',['-',str(root),str(checkpoints),str(best),candidate,str(train),str(validation)])
     shell=(ROOT/'run_light_causal.sh').read_text()
     code=shell.split("<<'PY_RESUME'\n",1)[1].split('\nPY_RESUME',1)[0]
-    if fault and not (schema in (22,23,25) and fault=='no_quality_gain'):
+    if fault and not (schema in (22,23,25,27) and fault=='no_quality_gain'):
         with pytest.raises((AssertionError,ValueError)):
             exec(compile(code,'causal completed-boundary resume','exec'),{})
         assert status.read_text()=='original complete status'
@@ -97,6 +100,8 @@ def test_resume_requires_same_evaluated_state_and_complete_budget(tmp_path,monke
     ('causal_joint_conditioned_subband_v1','joint_conditioned','folded_retention_123',False),
     ('causal_wide_conditioned_subband_v1','wide_conditioned','wide_conditioned_123',True),
     ('causal_wide_conditioned_subband_v1','wide_conditioned','joint_conditioned_123',False),
+    ('causal_monaural_spectral_v1','monaural_spectral','monaural_spectral_123',True),
+    ('causal_monaural_spectral_v1','monaural_spectral','wide_conditioned_123',False),
     ('causal_folded_retention_v1','folded_retention','fullchannel_dualpath_123',False),
     ('causal_fullchannel_dualpath_crn_v1','fullchannel_dualpath','folded_retention_123',False),
     ('causal_spatial_conditioned_subband_v1','spatial_conditioned','spatial_conditioned_123',False),

@@ -1,0 +1,98 @@
+{
+  "status": "owned_old_tree_terminal_all_complete_epochs_preserved",
+  "old_pid": 3146100,
+  "old_cookie": "159485878",
+  "retained_complete_epochs": 5,
+  "retained_best": {
+    "epoch": 5,
+    "pesq": 3.0893360312779743,
+    "checkpoint_sha256": "f3ecaec2e5d11cd76f1dfa94ef8d90bbcb4538fd65d74a61dc0a393ee27217bf"
+  },
+  "all_complete_scores": [
+    {
+      "epoch": 0,
+      "pesq": 3.0431378700335823,
+      "checkpoint_sha256": "f14ec7e7425ba5a8862d2d258bc63a44f14eacf765930e9bbc95465f1e773904"
+    },
+    {
+      "epoch": 1,
+      "pesq": 3.0506950970490774,
+      "checkpoint_sha256": "ce4347b3daebbf7e5c1d31f7cf30c452e5e4735b50ac6276da25a375d55ee3ef"
+    },
+    {
+      "epoch": 2,
+      "pesq": 3.0774879499276477,
+      "checkpoint_sha256": "effb5660d11991e4efdec02eb8c4a310f1dfbf00a5403e7fea5ec0edba129f83"
+    },
+    {
+      "epoch": 3,
+      "pesq": 3.062034293015798,
+      "checkpoint_sha256": "8f573f9013f016bd268bc853a7613250ca88947fcfb07fd844b62ea46fe0ca74"
+    },
+    {
+      "epoch": 4,
+      "pesq": 3.0605086501439414,
+      "checkpoint_sha256": "81d3f6aa02d70050062ca25ad26adfbc8259a02910bc75e3bfe997f8f3a619a1"
+    },
+    {
+      "epoch": 5,
+      "pesq": 3.0893360312779743,
+      "checkpoint_sha256": "f3ecaec2e5d11cd76f1dfa94ef8d90bbcb4538fd65d74a61dc0a393ee27217bf"
+    }
+  ],
+  "actual_recovery_verified": true,
+  "discarded_unsaved_partial_epoch": 6,
+  "next_candidate": "causal_global_spectral_unet_v1",
+  "next_model_cold_start": true,
+  "old_model_capacity_ceiling_proven": false,
+  "formal_goal_achieved": false,
+  "stopped_processes": [
+    {
+      "pid": 3146100,
+      "state": "T",
+      "ppid": 1,
+      "session": 3146100,
+      "cookie": "159485878",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light/tmp/monaural_formal_stage_20261103"
+    },
+    {
+      "pid": 3146294,
+      "state": "S",
+      "ppid": 3146100,
+      "session": 3146100,
+      "cookie": "159486109",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light/tmp/monaural_formal_stage_20261103"
+    },
+    {
+      "pid": 3207850,
+      "state": "S",
+      "ppid": 3146100,
+      "session": 3146100,
+      "cookie": "161031698",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light/tmp/monaural_formal_stage_20261103"
+    },
+    {
+      "pid": 3207851,
+      "state": "S",
+      "ppid": 3146100,
+      "session": 3146100,
+      "cookie": "161031698",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light/tmp/monaural_formal_stage_20261103"
+    },
+    {
+      "pid": 3207852,
+      "state": "S",
+      "ppid": 3207850,
+      "session": 3146100,
+      "cookie": "161031698",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light/tmp/monaural_formal_stage_20261103"
+    }
+  ],
+  "original_source_bytes_unchanged": true,
+  "new_gpu_work_started": false
+}

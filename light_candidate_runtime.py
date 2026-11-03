@@ -45,16 +45,20 @@ JOINT_FIXED_CONDITIONED_CANDIDATE = "causal_joint_fixed_conditioned_subband_v1"
 WIDE_CONDITIONED_CANDIDATE = "causal_wide_conditioned_subband_v1"
 COVARIANCE_CANDIDATE = "causal_covariance_refiner_v1"
 MONAURAL_SPECTRAL_CANDIDATE = "causal_monaural_spectral_v1"
+GLOBAL_SPECTRAL_CANDIDATE = "causal_global_spectral_unet_v1"
 IDENTITY_FIELDS = ("sample_rate", "n_fft", "hop_length", "win_length", "power", "target_ref_mic",
                    "channels", "num_mics", "embed_dim", "cd1", "dfsmn_layers", "dfsmn_memory_size",
                    "norm_type", "bf_type", "topo_type", "is_causal")
 
 
 def all_model_candidates():
-    return (*all_reference_candidates(), QUALITY_CANDIDATE, SPATIAL_CANDIDATE, CAUSAL_CANDIDATE, FAST_CANDIDATE, GLOBAL_CANDIDATE, RECURRENT_CANDIDATE, RECURRENT65_CANDIDATE, TCN_CANDIDATE, FOURIER_CANDIDATE, FREQUENCY_ATTENTION_CANDIDATE, POOLED_FREQUENCY_ATTENTION_CANDIDATE, RETENTION_CANDIDATE, FULLBAND_TCN_CANDIDATE, FULLBAND_SPATIAL_CANDIDATE, SUBBAND_GRU_CANDIDATE, CONDITIONED_SUBBAND_CANDIDATE, FROZEN_CONDITIONED_CANDIDATE, SPATIAL_CONDITIONED_CANDIDATE, GATED_MULTICHANNEL_CANDIDATE, FULLCHANNEL_DUALPATH_CANDIDATE, FOLDED_RETENTION_CANDIDATE, JOINT_CONDITIONED_CANDIDATE, JOINT_FIXED_CONDITIONED_CANDIDATE, WIDE_CONDITIONED_CANDIDATE, COVARIANCE_CANDIDATE, MONAURAL_SPECTRAL_CANDIDATE)
+    return (*all_reference_candidates(), QUALITY_CANDIDATE, SPATIAL_CANDIDATE, CAUSAL_CANDIDATE, FAST_CANDIDATE, GLOBAL_CANDIDATE, RECURRENT_CANDIDATE, RECURRENT65_CANDIDATE, TCN_CANDIDATE, FOURIER_CANDIDATE, FREQUENCY_ATTENTION_CANDIDATE, POOLED_FREQUENCY_ATTENTION_CANDIDATE, RETENTION_CANDIDATE, FULLBAND_TCN_CANDIDATE, FULLBAND_SPATIAL_CANDIDATE, SUBBAND_GRU_CANDIDATE, CONDITIONED_SUBBAND_CANDIDATE, FROZEN_CONDITIONED_CANDIDATE, SPATIAL_CONDITIONED_CANDIDATE, GATED_MULTICHANNEL_CANDIDATE, FULLCHANNEL_DUALPATH_CANDIDATE, FOLDED_RETENTION_CANDIDATE, JOINT_CONDITIONED_CANDIDATE, JOINT_FIXED_CONDITIONED_CANDIDATE, WIDE_CONDITIONED_CANDIDATE, COVARIANCE_CANDIDATE, MONAURAL_SPECTRAL_CANDIDATE, GLOBAL_SPECTRAL_CANDIDATE)
 
 
 def build_model_candidate(candidate_id, **model_kwargs):
+    if candidate_id == GLOBAL_SPECTRAL_CANDIDATE:
+        from experiments.causal_global_spectral_unet import CausalGlobalSpectralUNet
+        return CausalGlobalSpectralUNet()
     if candidate_id == MONAURAL_SPECTRAL_CANDIDATE:
         from experiments.causal_monaural_spectral_branch import CausalMonauralSpectralBranch
         return CausalMonauralSpectralBranch(build_model_candidate(WIDE_CONDITIONED_CANDIDATE, **model_kwargs))
@@ -147,6 +151,26 @@ def build_model_candidate(candidate_id, **model_kwargs):
 
 
 def candidate_metadata(candidate_id):
+    if candidate_id == GLOBAL_SPECTRAL_CANDIDATE:
+        return dict(structure_candidate=candidate_id, candidate_schema=28,
+            candidate_implementation_sha256=source_hashes((*CAUSAL_IMPLEMENTATION_FILES,
+                'light_causal_fast_model.py', 'experiments/causal_monaural_spectral_branch.py',
+                'experiments/causal_global_spectral_unet.py')),
+            candidate_evidence=dict(candidate_id=candidate_id, author_confirmed=False,
+                exact_reproduction_verified=False, model_causal=True, future_frames=0,
+                training_objective='spectral_mrstft_waveform_pmsqe_v1',
+                purpose='Independent multichannel spectral U-Net with three full-band causal GRU layers',
+                model_config=dict(microphones=8, reference_microphone=0, features=38,
+                    widths=[32,48,64,96], frequency_bins=[257,129,65,33,17], convolution_time_kernel=1,
+                    gru_input=1640, gru_hidden=384, gru_layers=3, bidirectional=False,
+                    parameters=4945266, trainable_parameters=4945266, frozen_parameters=0,
+                    stream_state_bytes_per_stream_fp32=4608),
+                initialization='From scratch; zero readout preserves reference0 mixture',
+                normalization='Current-frame reference scale and channel LayerNorm; no time statistics',
+                output='Reference0 compressed RI plus current-reference-scaled RI correction',
+                frozen_backbone=False, external_pretrained_weights=False, upstream_source_incorporated=False,
+                reference_audio_used_at_inference=False,
+                waveform_streaming='512/160/320,16kHz,power0.5;320-sample buffering plus compute/I-O'))
     if candidate_id == MONAURAL_SPECTRAL_CANDIDATE:
         metadata=candidate_metadata(WIDE_CONDITIONED_CANDIDATE)
         files=(*metadata['candidate_implementation_sha256'],'experiments/causal_monaural_spectral_branch.py')

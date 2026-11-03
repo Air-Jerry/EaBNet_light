@@ -1,0 +1,34 @@
+{
+  "status": "passed",
+  "cases": [
+    {
+      "case": "success",
+      "passed": true
+    },
+    {
+      "case": "exit1",
+      "passed": true
+    },
+    {
+      "case": "timeout",
+      "passed": true
+    },
+    {
+      "case": "window_closed",
+      "passed": true
+    },
+    {
+      "case": "closed_before_spawn",
+      "passed": true
+    },
+    {
+      "case": "spawn_failure",
+      "passed": true
+    }
+  ],
+  "gpu_queries": 0,
+  "gpu_used": false,
+  "real_training_signals": 0,
+  "real_disposable_child_processes": true,
+  "guard_sha256": "d4776c665ae9b9bbaca5bf54fba14df7b285753ef242632811eff4d5394e786d"
+}

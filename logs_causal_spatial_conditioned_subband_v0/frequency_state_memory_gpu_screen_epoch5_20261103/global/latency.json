@@ -1,0 +1,49 @@
+{
+  "status": "passed_untrained_full600_hop_latency_screen",
+  "scope": "Untrained nonzero-readout FP32 latency only, during owned GPU0 evaluation; no quality claim",
+  "registered_candidate": false,
+  "prototype_kind": "global",
+  "prototype_sha256": "1a646fb07d2c5b91be90254817c80eb67067c64af72b04e3b00ff0ce6109ccf8",
+  "gpu_physical_index": 1,
+  "optimizer_updates": 0,
+  "weights_randomized_for_nonzero_readout_only": true,
+  "inference_precision": "FP32",
+  "model_parameters_trainable_but_no_training_performed": true,
+  "original_training_paused": false,
+  "pesq_measured": false,
+  "full_epoch_budget_verified": false,
+  "formal_goal_achieved": false,
+  "device": "NVIDIA GeForce RTX 4070",
+  "torch_version": "2.5.1+cu121",
+  "cpu_affinity": [
+    12,
+    14
+  ],
+  "memory_fraction_limit": 0.1,
+  "parameters": 4945266,
+  "available_input_samples": 96000,
+  "frontend": {
+    "sample_rate": 16000,
+    "n_fft": 512,
+    "hop_length": 160,
+    "win_length": 320,
+    "power": 0.5,
+    "num_mics": 8,
+    "reference0": true
+  },
+  "latency_scope": "CPU input transfer, unchanged streaming frontend, model, synthesis and CPU output; excludes audio driver",
+  "warmup_hops": 33,
+  "warmup_state_discarded": true,
+  "measured_input_hops": 600,
+  "evaluated_input_samples": 96000,
+  "all_hop_ms": {
+    "mean": 1.1745277788334836,
+    "p99": 1.3024379080161452,
+    "max": 1.7712970729917288
+  },
+  "misses_at10ms": 0,
+  "all_hops_below10ms": true,
+  "complete600_hops_measured": true,
+  "cuda_peak_allocated_bytes": 44994048,
+  "cold_probe_weights_not_used_for_any_training": true
+}

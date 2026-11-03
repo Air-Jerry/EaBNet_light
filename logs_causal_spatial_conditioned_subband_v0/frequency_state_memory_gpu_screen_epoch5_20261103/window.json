@@ -1,0 +1,49 @@
+{
+  "status": "available_evaluation_window_screens_terminal",
+  "formal_pid": 3146100,
+  "formal_cookie": "159485878",
+  "not_before_unix": 1793661911.3727057,
+  "training_signals_sent": 0,
+  "gpu_queries": 2,
+  "guard_pid": 3202615,
+  "guard_cookie": "160904452",
+  "guard_cwd": "/home/nis/jinrui.yang/EaBNet_light",
+  "original_training_paused": false,
+  "formal_goal_achieved": false,
+  "selector_snapshot": [
+    {
+      "pid": 3206884,
+      "session": 3146100,
+      "argv0": "timeout"
+    },
+    {
+      "pid": 3206886,
+      "session": 3146100,
+      "argv0": "python"
+    }
+  ],
+  "evaluation_pid": 3206886,
+  "evaluation_cookie": "161010145",
+  "free_mib": 11861,
+  "screens": {
+    "frequency": {
+      "status": "helper_terminal",
+      "training_signals_sent": 0,
+      "child_pid": 3206891,
+      "child_cookie": "161010227",
+      "helper_exit_code": 0,
+      "helper_terminal": true,
+      "screen_status": "passed_untrained_full600_hop_latency_screen"
+    },
+    "global": {
+      "status": "helper_terminal",
+      "training_signals_sent": 0,
+      "child_pid": 3206935,
+      "child_cookie": "161010584",
+      "helper_exit_code": 0,
+      "helper_terminal": true,
+      "screen_status": "passed_untrained_full600_hop_latency_screen"
+    }
+  },
+  "original_sources_unchanged": true
+}

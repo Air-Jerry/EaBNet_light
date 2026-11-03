@@ -1,0 +1,124 @@
+{
+  "status": "complete_epochs2_through4_verified",
+  "scope": "Original complete600 quality and complete53600/600/600 timing; no partial results",
+  "source_bytes_unchanged": true,
+  "gpu_queries": 0,
+  "live_batch_queries": 0,
+  "formal_goal_achieved": false,
+  "results": [
+    {
+      "epoch": 2,
+      "mean": {
+        "enhanced": {
+          "pesq": 1.1114908236265182,
+          "stoi": 0.6607743176511823,
+          "estoi": 0.4475904387598117,
+          "si_snr_db": 0.27813704919398413,
+          "sdr_db": 0.7563485732005905
+        },
+        "noisy": {
+          "pesq": 1.0880955342451732,
+          "stoi": 0.6510592990906214,
+          "estoi": 0.3667556529781415,
+          "si_snr_db": -1.2095493301340101,
+          "sdr_db": -1.1495106109218791
+        }
+      },
+      "timing": {
+        "epoch": 2,
+        "status": "complete",
+        "started_unix": 1793664560,
+        "finished_unix": 1793665175.9568043,
+        "total_seconds": 615.9568042755127,
+        "training_validation_checkpoint_seconds": 434,
+        "evaluation_audit_seconds": 181.9568042755127,
+        "training_samples": 53600,
+        "validation_samples": 600,
+        "full_metric_samples": 600,
+        "optimizer_updates_this_epoch": 6700,
+        "global_batch_size": 8,
+        "limit_seconds": 3600
+      },
+      "loss_line": "Epoch 2: train_loss=1.079965, val_loss=1.227025, lr=0.00100000",
+      "checkpoint_sha256": "92a59cafbd09463a2482bc66632d309102b5472ba3c0ec45101ea10b2bb9e742",
+      "original_summary_sha256": "a76b8c67f57055aefb6effc9557b85118b1a7330dd95aaf97e40e06bb7047040",
+      "finite_adam_and_complete_budget_verified": true
+    },
+    {
+      "epoch": 3,
+      "mean": {
+        "enhanced": {
+          "pesq": 1.1201947349309922,
+          "stoi": 0.6822156976635888,
+          "estoi": 0.4563820467714445,
+          "si_snr_db": 0.5527041298726275,
+          "sdr_db": 0.8762185557600128
+        },
+        "noisy": {
+          "pesq": 1.0880955342451732,
+          "stoi": 0.6510592990906214,
+          "estoi": 0.3667556529781415,
+          "si_snr_db": -1.2095493301340101,
+          "sdr_db": -1.1495106109218791
+        }
+      },
+      "timing": {
+        "epoch": 3,
+        "status": "complete",
+        "started_unix": 1793665176,
+        "finished_unix": 1793666068.2165148,
+        "total_seconds": 892.2165148258209,
+        "training_validation_checkpoint_seconds": 710,
+        "evaluation_audit_seconds": 182.21651482582092,
+        "training_samples": 53600,
+        "validation_samples": 600,
+        "full_metric_samples": 600,
+        "optimizer_updates_this_epoch": 6700,
+        "global_batch_size": 8,
+        "limit_seconds": 3600
+      },
+      "loss_line": "Epoch 3: train_loss=1.044686, val_loss=1.256616, lr=0.00100000",
+      "checkpoint_sha256": "a05eb5568b17fad30a7011ff1d872c5c45e1a023bb85687d01a94b06610a3a3f",
+      "original_summary_sha256": "63ebe02bee0bc91c1850369ccd25a4fbe25e60e37414d0c73f87d622e973ea5d",
+      "finite_adam_and_complete_budget_verified": true
+    },
+    {
+      "epoch": 4,
+      "mean": {
+        "enhanced": {
+          "pesq": 1.1236686358849208,
+          "stoi": 0.6920896566389523,
+          "estoi": 0.4706690433799679,
+          "si_snr_db": 0.7514946668839074,
+          "sdr_db": 1.0448248651441254
+        },
+        "noisy": {
+          "pesq": 1.0880955342451732,
+          "stoi": 0.6510592990906214,
+          "estoi": 0.3667556529781415,
+          "si_snr_db": -1.2095493301340101,
+          "sdr_db": -1.1495106109218791
+        }
+      },
+      "timing": {
+        "epoch": 4,
+        "status": "complete",
+        "started_unix": 1793666068,
+        "finished_unix": 1793666862.5362322,
+        "total_seconds": 794.5362322330475,
+        "training_validation_checkpoint_seconds": 612,
+        "evaluation_audit_seconds": 182.53623223304749,
+        "training_samples": 53600,
+        "validation_samples": 600,
+        "full_metric_samples": 600,
+        "optimizer_updates_this_epoch": 6700,
+        "global_batch_size": 8,
+        "limit_seconds": 3600
+      },
+      "loss_line": "Epoch 4: train_loss=1.026302, val_loss=1.239054, lr=0.00100000",
+      "checkpoint_sha256": "2d6f9d167862ef05f8c13259e2d9bc6acd7297b6f70339707f4b560ecff4309f",
+      "original_summary_sha256": "8504350ed65a824d79a92c02f39357048a86f2d67458c0e96f9403d65fc659ac",
+      "finite_adam_and_complete_budget_verified": true
+    }
+  ]
+}

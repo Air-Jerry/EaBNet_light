@@ -1,0 +1,43 @@
+{
+  "scope": "Completed epoch1 only; no waveforms, GPU or live batches",
+  "epoch": 1,
+  "loss_line": "Epoch 1: train_loss=1.219703, val_loss=1.367433, lr=0.00100000",
+  "initial_mean": {
+    "enhanced": {
+      "pesq": 1.088074848453204,
+      "stoi": 0.651059299349094,
+      "estoi": 0.36675565316654857,
+      "si_snr_db": -1.2095493796378833,
+      "sdr_db": -1.1495106613214594
+    },
+    "noisy": {
+      "pesq": 1.0880955342451732,
+      "stoi": 0.6510592990906214,
+      "estoi": 0.3667556529781415,
+      "si_snr_db": -1.2095493301340101,
+      "sdr_db": -1.1495106109218791
+    }
+  },
+  "trained_mean": {
+    "enhanced": {
+      "pesq": 1.0993127091725667,
+      "stoi": 0.6247614086607831,
+      "estoi": 0.3859505595127054,
+      "si_snr_db": -0.25078968643124605,
+      "sdr_db": 0.10048084871263308
+    },
+    "noisy": {
+      "pesq": 1.0880955342451732,
+      "stoi": 0.6510592990906214,
+      "estoi": 0.3667556529781415,
+      "si_snr_db": -1.2095493301340101,
+      "sdr_db": -1.1495106109218791
+    }
+  },
+  "complete_epoch_performance": [
+    "[PERF][train] samples(local/global)=26800/53600, batches(local/global)=6700/13400, samples/s(local/global)=65.7/131.5, ms/batch(local)=60.9, data_wait=0.8%, compute=99.2%, non_finite_skips(local)=0",
+    "[PERF][val] samples(local/global)=300/600, batches(local/global)=75/150, samples/s(local/global)=56.5/112.8, ms/batch(local)=70.8, data_wait=2.7%, compute=96.9%, non_finite_skips(local)=0"
+  ],
+  "early_cold_start_not_capacity_ceiling_proof": true,
+  "formal_goal_achieved": false
+}

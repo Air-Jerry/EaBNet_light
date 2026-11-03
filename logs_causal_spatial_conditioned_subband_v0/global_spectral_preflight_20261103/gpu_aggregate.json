@@ -1,0 +1,18 @@
+{
+  "scope": "Existing5s sampler across fixed256-record diagnostic including startup,training,validation; not formal or hot-only occupancy",
+  "gpu_queries": 0,
+  "devices": {
+    "0": {
+      "samples": 6,
+      "mean_utilization_percent": 48.833333333333336,
+      "peak_whole_card_memory_mib": 1878.0,
+      "mean_power_w": 63.916666666666664
+    },
+    "1": {
+      "samples": 6,
+      "mean_utilization_percent": 36.0,
+      "peak_whole_card_memory_mib": 1860.0,
+      "mean_power_w": 65.42666666666666
+    }
+  }
+}

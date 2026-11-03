@@ -1,0 +1,36 @@
+{
+  "status": "historical_complete_epoch_sampler_aggregate",
+  "epoch": 5,
+  "gpu": {
+    "phase=train epoch=5": {
+      "0": {
+        "samples": 281,
+        "mean_utilization_percent": 97.1032028469751,
+        "peak_whole_card_memory_mib": 7721.0,
+        "mean_power_w": 144.47177935943046
+      },
+      "1": {
+        "samples": 281,
+        "mean_utilization_percent": 96.95017793594306,
+        "peak_whole_card_memory_mib": 7703.0,
+        "mean_power_w": 144.84690391459074
+      }
+    },
+    "phase=evaluation epoch=5": {
+      "0": {
+        "samples": 22,
+        "mean_utilization_percent": 29.136363636363637,
+        "peak_whole_card_memory_mib": 2213.0,
+        "mean_power_w": 52.39909090909091
+      },
+      "1": {
+        "samples": 22,
+        "mean_utilization_percent": 0.0,
+        "peak_whole_card_memory_mib": 18.0,
+        "mean_power_w": 12.218181818181817
+      }
+    }
+  },
+  "scope": "Existing10s samples, complete epoch5 phases only; train includes startup and validation, not hot-only occupancy. Evaluation GPU1 includes two independent untrained prototype latency screens; it is not original-model parallel evaluation.",
+  "gpu_queries": 0
+}

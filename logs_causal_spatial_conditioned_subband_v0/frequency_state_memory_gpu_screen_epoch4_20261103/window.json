@@ -1,0 +1,13 @@
+{
+  "status": "skipped_no_unique_epoch4_evaluator",
+  "formal_pid": 3146100,
+  "formal_cookie": "159485878",
+  "not_before_unix": 1793658880.8632376,
+  "training_signals_sent": 0,
+  "gpu_queries": 0,
+  "guard_pid": 3189196,
+  "guard_cookie": "160559592",
+  "guard_cwd": "/home/nis/jinrui.yang/EaBNet_light",
+  "original_training_paused": false,
+  "formal_goal_achieved": false
+}

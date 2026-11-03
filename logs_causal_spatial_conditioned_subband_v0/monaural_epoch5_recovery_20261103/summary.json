@@ -1,0 +1,19 @@
+{
+  "status": "actual_complete_epoch5_recovery_verified_without_training",
+  "candidate_schema": 27,
+  "completed_epoch": 5,
+  "adam_updates": 33500,
+  "evaluated_checkpoint_sha256": "f3ecaec2e5d11cd76f1dfa94ef8d90bbcb4538fd65d74a61dc0a393ee27217bf",
+  "latest_copy_byte_identical": true,
+  "all_completed_epochs_0_through5_copied": true,
+  "cpu_model_and_adam_restored_exactly": true,
+  "full_actual_resume_guard_passed": true,
+  "new_optimizer_updates": 0,
+  "gpu_queries": 0,
+  "training_signals_sent": 0,
+  "original_training_paused": false,
+  "production_and_active_source_bytes_unchanged": true,
+  "formal_goal_achieved": false,
+  "recovery_stage": "/home/nis/jinrui.yang/EaBNet_light/tmp/monaural_resume_epoch5_v2_stage_20261103",
+  "common_sha256": "a8a8ca5823ab9690e6bfa5535ffb8e3e7a16b1f5f12355e5a917f686fc022e09"
+}

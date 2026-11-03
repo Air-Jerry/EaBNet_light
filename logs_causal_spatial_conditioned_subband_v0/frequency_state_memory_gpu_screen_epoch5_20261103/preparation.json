@@ -1,0 +1,15 @@
+{
+  "status": "isolated_two_unregistered_prototypes_ready_for_latency_only",
+  "global_source_sha256": "1a646fb07d2c5b91be90254817c80eb67067c64af72b04e3b00ff0ce6109ccf8",
+  "schedule": {
+    "target_epoch": 5,
+    "not_before_unix": 1793661911.3727057,
+    "latest_window_unix": 1793662659.3727057,
+    "completed_epoch4_sha256": "81d3f6aa02d70050062ca25ad26adfbc8259a02910bc75e3bfe997f8f3a619a1",
+    "helper_timeout_seconds": 45,
+    "helpers_sequential": 2,
+    "original_training_paused": false,
+    "training_signals_sent": 0
+  },
+  "original_main_and_production_sources_unchanged": true
+}

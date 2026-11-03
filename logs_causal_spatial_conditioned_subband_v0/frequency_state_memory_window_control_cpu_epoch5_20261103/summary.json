@@ -1,0 +1,66 @@
+{
+  "status": "passed",
+  "cases": [
+    {
+      "case": "success",
+      "passed": true
+    },
+    {
+      "case": "exit1",
+      "passed": true
+    },
+    {
+      "case": "timeout",
+      "passed": true
+    },
+    {
+      "case": "window_closed",
+      "passed": true
+    },
+    {
+      "case": "closed_before_spawn",
+      "passed": true
+    },
+    {
+      "case": "spawn_failure",
+      "passed": true
+    },
+    {
+      "case": "wrapper_and_python",
+      "passed": true
+    },
+    {
+      "case": "wrapper_only",
+      "passed": true
+    },
+    {
+      "case": "wrong_epoch",
+      "passed": true
+    },
+    {
+      "case": "foreign_uid",
+      "passed": true
+    },
+    {
+      "case": "foreign_cwd",
+      "passed": true
+    },
+    {
+      "case": "foreign_session",
+      "passed": true
+    },
+    {
+      "case": "zombie",
+      "passed": true
+    },
+    {
+      "case": "two_real_evaluators",
+      "passed": true
+    }
+  ],
+  "gpu_queries": 0,
+  "gpu_used": false,
+  "real_training_signals": 0,
+  "real_disposable_child_processes": true,
+  "guard_sha256": "cbd434a5a2c8922d79c52f32754008bf52dde36c77a110c92115df36a0a51523"
+}

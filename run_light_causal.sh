@@ -26,6 +26,7 @@ case "$candidate" in
     causal_joint_conditioned_subband_v1) entry=train_light_causal_joint_conditioned_subband.py; run_prefix=joint_conditioned; learning_rate=0.0001 ;;
     causal_wide_conditioned_subband_v1) entry=train_light_causal_wide_conditioned_subband.py; run_prefix=wide_conditioned; learning_rate=0.001 ;;
     causal_monaural_spectral_v1) entry=train_light_causal_monaural.py; run_prefix=monaural_spectral; learning_rate=0.001 ;;
+    causal_global_spectral_unet_v1) entry=train_light_causal_global_spectral.py; run_prefix=global_spectral; learning_rate=0.001 ;;
     *) printf 'Unsupported cold-start causal candidate: %s\n' "$candidate" >&2; exit 2 ;;
 esac
 train_dir="/data/ssd1/jinrui.yang/training_set"
@@ -56,7 +57,7 @@ speeds=re.findall(r'\[PERF\]\[train\].*?samples/s\(local/global\)=[\d.]+/([\d.]+
 assert speeds and float(speeds[-1])>0
 if sys.argv[3] not in ('causal_retention_subband_gru_v1','causal_fullband_conditioned_subband_v1','causal_frozen_conditioned_subband_v1','causal_spatial_conditioned_subband_v1','causal_fullchannel_dualpath_crn_v1','causal_folded_retention_v1','causal_joint_conditioned_subband_v1','causal_wide_conditioned_subband_v1','causal_monaural_spectral_v1'):
     assert float(speeds[-1])>=20,'Hot global throughput is insufficient for the one-hour budget'
-if sys.argv[3] in ('causal_fullband_tcn_v1','causal_fullband_spatial_tcn_v1','causal_retention_subband_gru_v1','causal_fullband_conditioned_subband_v1','causal_frozen_conditioned_subband_v1','causal_spatial_conditioned_subband_v1','causal_gated_multichannel_crn_v1','causal_fullchannel_dualpath_crn_v1','causal_folded_retention_v1','causal_joint_conditioned_subband_v1','causal_wide_conditioned_subband_v1','causal_monaural_spectral_v1'):
+if sys.argv[3] in ('causal_fullband_tcn_v1','causal_fullband_spatial_tcn_v1','causal_retention_subband_gru_v1','causal_fullband_conditioned_subband_v1','causal_frozen_conditioned_subband_v1','causal_spatial_conditioned_subband_v1','causal_gated_multichannel_crn_v1','causal_fullchannel_dualpath_crn_v1','causal_folded_retention_v1','causal_joint_conditioned_subband_v1','causal_wide_conditioned_subband_v1','causal_monaural_spectral_v1','causal_global_spectral_unet_v1'):
     assert state['args']['causal_training_objective']=='spectral_mrstft_waveform_pmsqe_v1'
     assert state['args']['pmsqe_weight']==.1
     expected_entry={'causal_fullband_spatial_tcn_v1':'train_light_causal_fullband_spatial.py',
@@ -69,6 +70,7 @@ if sys.argv[3] in ('causal_fullband_tcn_v1','causal_fullband_spatial_tcn_v1','ca
         'causal_folded_retention_v1':'train_light_causal_folded_retention.py',
         'causal_joint_conditioned_subband_v1':'train_light_causal_joint_conditioned_subband.py',
         'causal_wide_conditioned_subband_v1':'train_light_causal_wide_conditioned_subband.py',
+        'causal_global_spectral_unet_v1':'train_light_causal_global_spectral.py',
         'causal_monaural_spectral_v1':'train_light_causal_monaural.py'}.get(sys.argv[3],'train_light_causal_fullband.py')
     assert expected_entry in state['args']['causal_training_implementation_sha256']
     if sys.argv[3]=='causal_fullband_spatial_tcn_v1':
@@ -208,7 +210,7 @@ PY_WARM
 fi
 run="${run_prefix}_$(date +%Y%m%d_%H%M%S)_$$"
 if [[ -n "${CAUSAL_RESUME_RUN:-}" ]]; then
-    [[ "$candidate" == causal_fullchannel_dualpath_crn_v1 || "$candidate" == causal_folded_retention_v1 || "$candidate" == causal_joint_conditioned_subband_v1 || "$candidate" == causal_wide_conditioned_subband_v1 ]] || { printf 'Resume is verified for the full-channel,folded-retention,joint-conditioned and wide-conditioned candidates only.\n' >&2; exit 2; }
+    [[ "$candidate" == causal_fullchannel_dualpath_crn_v1 || "$candidate" == causal_folded_retention_v1 || "$candidate" == causal_joint_conditioned_subband_v1 || "$candidate" == causal_wide_conditioned_subband_v1 || "$candidate" == causal_monaural_spectral_v1 ]] || { printf 'Resume is verified for the full-channel,folded-retention,joint-conditioned,wide-conditioned and monaural-spectral candidates only.\n' >&2; exit 2; }
     run="$(basename -- "$CAUSAL_RESUME_RUN")"
     [[ "$run" == "${run_prefix}_"* && -d "./logs_${candidate}/$run" ]] || { printf 'Invalid existing causal run.\n' >&2; exit 2; }
 fi
@@ -224,7 +226,7 @@ from light_candidate_runtime import read_candidate_checkpoint
 torch.set_num_threads(2)
 root,checkpoints,best=map(lambda value:Path(value).resolve(),sys.argv[1:4])
 state,_=read_candidate_checkpoint(checkpoints/'checkpoint_latest.pt',sys.argv[4])
-schemas={'causal_fullchannel_dualpath_crn_v1':21,'causal_folded_retention_v1':22,'causal_joint_conditioned_subband_v1':23,'causal_wide_conditioned_subband_v1':25}
+schemas={'causal_fullchannel_dualpath_crn_v1':21,'causal_folded_retention_v1':22,'causal_joint_conditioned_subband_v1':23,'causal_wide_conditioned_subband_v1':25,'causal_monaural_spectral_v1':27}
 assert sys.argv[4] in schemas
 epoch=int(state['epoch']);assert 1<=epoch<30 and state['args']['candidate_schema']==schemas[sys.argv[4]]
 for key,path in (('log_dir',root),('checkpoint_dir',checkpoints),('best_dir',best),('train_dir',Path(sys.argv[5]).resolve()),('val_dir',Path(sys.argv[6]).resolve())):

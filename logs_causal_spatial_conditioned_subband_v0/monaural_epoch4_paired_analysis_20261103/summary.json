@@ -1,0 +1,202 @@
+{
+  "status": "complete",
+  "checked_at_utc": "2026-11-02T22:57:30.324481+00:00",
+  "scope": "Paired complete600 CSV analysis, unchanged cohort and protocol; no audio or GPU access. Geometry is descriptive only, not causal proof.",
+  "metadata_sha256": "8d0b4d229ebc42cd9892e6d0e0d36416007ded01fbc0b753df4bf7e6b734eb02",
+  "selected_pairs_sha256": "18233928bdcb499f4e65e3b66a1f8c39387675d09f1621ae6ac94881d7444cfb",
+  "models": {
+    "source": {
+      "checkpoint_sha256": "f14ec7e7425ba5a8862d2d258bc63a44f14eacf765930e9bbc95465f1e773904",
+      "csv_sha256": "33d42e062c63ccce62eb5b3a8b32c073ea90f9c2c890612d70a803e3aec0c30d",
+      "full600_wb_pesq": 3.0431378700335823
+    },
+    "epoch4": {
+      "checkpoint_sha256": "81d3f6aa02d70050062ca25ad26adfbc8259a02910bc75e3bfe997f8f3a619a1",
+      "csv_sha256": "7a2e01f2fa5bae25232c3ebf6bddc41da9cfc92593875efd08b2c781499bd80e",
+      "full600_wb_pesq": 3.0605086501439414
+    },
+    "control256": {
+      "checkpoint_sha256": "d9d39e998af971a3fad64a04fe71d38e36bd696214b37ddc6cf9953871d2d409",
+      "csv_sha256": "99fe0d27bfe895ea7edfe66abc2f9cd093fe834b420b5e1f694a080c93f4231a",
+      "full600_wb_pesq": 3.0432874445120492
+    },
+    "monaural256": {
+      "checkpoint_sha256": "42d86ca56057b4a15ecae15cff24b29fa7373bd6297089ce491fed54b8544060",
+      "csv_sha256": "da878d3388bfde4b3a2bc72262abc0cde43693aa2790b03550265584d41c333a",
+      "full600_wb_pesq": 3.044561735590299
+    },
+    "previous": {
+      "checkpoint_sha256": "8f573f9013f016bd268bc853a7613250ca88947fcfb07fd844b62ea46fe0ca74",
+      "csv_sha256": "64938cf616fee84a09687511d0a4b973fc79581620ddd6e8620eb9449493b442",
+      "full600_wb_pesq": 3.062034293015798
+    }
+  },
+  "all600": {
+    "count": 600,
+    "mean_pesq": {
+      "source": 3.0431378700335823,
+      "epoch4": 3.0605086501439414,
+      "control256": 3.0432874445120492,
+      "monaural256": 3.044561735590299,
+      "previous": 3.062034293015798
+    },
+    "epoch4_minus_previous_mean": -0.0015256428718566895,
+    "epoch4_minus_source_mean": 0.017370780110359193,
+    "epoch4_gain_median": 0.016980886459350586,
+    "epoch4_improved_samples": 400,
+    "improved_over0_1": 43,
+    "degraded_over0_1": 26,
+    "monaural256_minus_control256_mean": 0.0012742910782496135
+  },
+  "by_geometry_coherence1000": {
+    "below0_8": {
+      "count": 409,
+      "mean_pesq": {
+        "source": 3.486885354396475,
+        "epoch4": 3.50195231530952,
+        "control256": 3.487116002220396,
+        "monaural256": 3.4886060081659145,
+        "previous": 3.507957198800551
+      },
+      "epoch4_minus_previous_mean": -0.006004883491031115,
+      "epoch4_minus_source_mean": 0.0150669609130449,
+      "epoch4_gain_median": 0.015261650085449219,
+      "epoch4_improved_samples": 242,
+      "improved_over0_1": 36,
+      "degraded_over0_1": 24,
+      "monaural256_minus_control256_mean": 0.0014900059455181392
+    },
+    "0_8_to0_95": {
+      "count": 88,
+      "mean_pesq": {
+        "source": 2.6134011244232003,
+        "epoch4": 2.647055146369067,
+        "control256": 2.6169195649298755,
+        "monaural256": 2.617353477261283,
+        "previous": 2.635953273285519
+      },
+      "epoch4_minus_previous_mean": 0.011101873083548113,
+      "epoch4_minus_source_mean": 0.03365402194586667,
+      "epoch4_gain_median": 0.037186622619628906,
+      "epoch4_improved_samples": 72,
+      "improved_over0_1": 5,
+      "degraded_over0_1": 1,
+      "monaural256_minus_control256_mean": 0.0004339123314077204
+    },
+    "at_least0_95": {
+      "count": 103,
+      "mean_pesq": {
+        "source": 1.6482263409975664,
+        "epoch4": 1.6608334004300311,
+        "control256": 1.6451757289830922,
+        "monaural256": 1.6463114370420142,
+        "previous": 1.6553611014653178
+      },
+      "epoch4_minus_previous_mean": 0.005472298964713383,
+      "epoch4_minus_source_mean": 0.012607059432464896,
+      "epoch4_gain_median": 0.01359546184539795,
+      "epoch4_improved_samples": 86,
+      "improved_over0_1": 2,
+      "degraded_over0_1": 1,
+      "monaural256_minus_control256_mean": 0.0011357080589220361
+    }
+  },
+  "by_snr": {
+    "-5.0": {
+      "count": 140,
+      "mean_pesq": {
+        "source": 2.693972250393459,
+        "epoch4": 2.710641211271286,
+        "control256": 2.6966323946203503,
+        "monaural256": 2.698078909942082,
+        "previous": 2.7139188987868175
+      },
+      "epoch4_minus_previous_mean": -0.0032776875155312675,
+      "epoch4_minus_source_mean": 0.016668960877827235,
+      "epoch4_gain_median": 0.012520372867584229,
+      "epoch4_improved_samples": 94,
+      "improved_over0_1": 13,
+      "degraded_over0_1": 12,
+      "monaural256_minus_control256_mean": 0.0014465153217315674
+    },
+    "-2.0": {
+      "count": 161,
+      "mean_pesq": {
+        "source": 2.8967097701493256,
+        "epoch4": 2.9172789132372934,
+        "control256": 2.8968520105255315,
+        "monaural256": 2.896076962814568,
+        "previous": 2.922623972715058
+      },
+      "epoch4_minus_previous_mean": -0.0053450594777646274,
+      "epoch4_minus_source_mean": 0.020569143087967583,
+      "epoch4_gain_median": 0.01785755157470703,
+      "epoch4_improved_samples": 110,
+      "improved_over0_1": 15,
+      "degraded_over0_1": 6,
+      "monaural256_minus_control256_mean": -0.0007750477109636579
+    },
+    "0.0": {
+      "count": 149,
+      "mean_pesq": {
+        "source": 3.284712490619429,
+        "epoch4": 3.2970698599847372,
+        "control256": 3.282152380719281,
+        "monaural256": 3.282766416568884,
+        "previous": 3.297808168718479
+      },
+      "epoch4_minus_previous_mean": -0.000738308733741709,
+      "epoch4_minus_source_mean": 0.012357369365308108,
+      "epoch4_gain_median": 0.016607999801635742,
+      "epoch4_improved_samples": 87,
+      "improved_over0_1": 7,
+      "degraded_over0_1": 3,
+      "monaural256_minus_control256_mean": 0.0006140358496032305
+    },
+    "2.0": {
+      "count": 150,
+      "mean_pesq": {
+        "source": 3.2862278191248575,
+        "epoch4": 3.3058007089296977,
+        "control256": 3.2867336869239807,
+        "monaural256": 3.2907027125358583,
+        "previous": 3.3023736882209778
+      },
+      "epoch4_minus_previous_mean": 0.0034270207087198894,
+      "epoch4_minus_source_mean": 0.019572889804840087,
+      "epoch4_gain_median": 0.02049887180328369,
+      "epoch4_improved_samples": 109,
+      "improved_over0_1": 8,
+      "degraded_over0_1": 5,
+      "monaural256_minus_control256_mean": 0.003969025611877441
+    }
+  },
+  "source_pesq_below2": {
+    "count": 108,
+    "mean_pesq": {
+      "source": 1.5129292287208416,
+      "epoch4": 1.5354796979162428,
+      "control256": 1.5103323525852628,
+      "monaural256": 1.509581509563658,
+      "previous": 1.532178262869517
+    },
+    "epoch4_minus_previous_mean": 0.003301435046725803,
+    "epoch4_minus_source_mean": 0.022550469195401227,
+    "epoch4_gain_median": 0.012945175170898438,
+    "epoch4_improved_samples": 91,
+    "improved_over0_1": 4,
+    "degraded_over0_1": 1,
+    "monaural256_minus_control256_mean": -0.0007508430216047498
+  },
+  "geometric_proxy": {
+    "mics": "First8 of original9 x-axis linear4cm array",
+    "frequency_hz": 1000,
+    "speed_assumed_m_per_s": 343,
+    "definition": "Normalized complex inner product of spherical free-field exp(-j*2*pi*f*d/c)/d steering vectors",
+    "limitations": "Metadata rounded1mm; ignores real RIR, reflections and source spectra; no causal attribution or sample filtering."
+  },
+  "gpu_queries": 0,
+  "batch_progress_queries": 0,
+  "data_and_source_files_unchanged": true,
+  "formal_goal_achieved": false
+}

@@ -78,6 +78,16 @@ def run(args):
         state = torch.load(checkpoints / "model_epoch_2.pt", map_location="cpu", weights_only=False)
         weights = state["model_state_dict"]
         assert state["epoch"] == 2
+        if state.get('args', {}).get('structure_candidate') == 'causal_global_spectral_unet_v1':
+            from light_candidate_runtime import build_model_candidate, read_candidate_checkpoint
+            read_candidate_checkpoint(checkpoints / 'model_epoch_2.pt', 'causal_global_spectral_unet_v1')
+            model = build_model_candidate('causal_global_spectral_unet_v1')
+            model.load_state_dict(weights, strict=True)
+            assert model.is_causal and all(p.requires_grad for p in model.parameters())
+            assert sum(p.numel() for p in model.parameters()) == 4945266
+            for name in ('encoders.0.0.weight', 'recurrent.weight_ih_l0', 'recurrent.weight_ih_l2'):
+                assert not torch.equal(weights[name], zero['model_state_dict'][name]), name
+            del model
         if state.get('args', {}).get('structure_candidate') == 'causal_monaural_spectral_v1':
             from light_candidate_runtime import build_model_candidate, read_candidate_checkpoint
             read_candidate_checkpoint(checkpoints / 'model_epoch_2.pt', 'causal_monaural_spectral_v1')
@@ -171,7 +181,7 @@ if __name__ == "__main__":
     parser.add_argument("--train-dir", default="/data/ssd1/jinrui.yang/training_set")
     parser.add_argument("--batch-size", type=int, choices=(1, 2, 4), default=1)
     parser.add_argument("--num-samples", type=int, default=32)
-    parser.add_argument("--entry", choices=("train_light_causal.py", "train_light_causal_fast.py", "train_light_causal_global.py", "train_light_causal_recurrent.py", "train_light_causal_recurrent65.py", "train_light_causal_tcn.py", "train_light_causal_fourier.py", "train_light_causal_pmsqe.py", "train_light_causal_frequency_attention.py", "train_light_causal_pooled_attention.py", "train_light_causal_compiled_attention.py", "train_light_causal_retention.py", "train_light_causal_fullband.py", "train_light_causal_fullband_spatial.py", "train_light_causal_subband.py", "train_light_causal_conditioned_subband.py", "train_light_causal_frozen_conditioned_subband.py", "train_light_causal_spatial_conditioned_subband.py", "train_light_causal_gated_multichannel.py", "train_light_causal_fullchannel_dualpath.py", "train_light_causal_folded_retention.py", "train_light_causal_joint_conditioned_subband.py", "train_light_causal_wide_conditioned_subband.py", "train_light_causal_monaural.py"), default="train_light_causal.py")
+    parser.add_argument("--entry", choices=("train_light_causal.py", "train_light_causal_fast.py", "train_light_causal_global.py", "train_light_causal_recurrent.py", "train_light_causal_recurrent65.py", "train_light_causal_tcn.py", "train_light_causal_fourier.py", "train_light_causal_pmsqe.py", "train_light_causal_frequency_attention.py", "train_light_causal_pooled_attention.py", "train_light_causal_compiled_attention.py", "train_light_causal_retention.py", "train_light_causal_fullband.py", "train_light_causal_fullband_spatial.py", "train_light_causal_subband.py", "train_light_causal_conditioned_subband.py", "train_light_causal_frozen_conditioned_subband.py", "train_light_causal_spatial_conditioned_subband.py", "train_light_causal_gated_multichannel.py", "train_light_causal_fullchannel_dualpath.py", "train_light_causal_folded_retention.py", "train_light_causal_joint_conditioned_subband.py", "train_light_causal_wide_conditioned_subband.py", "train_light_causal_monaural.py", "train_light_causal_global_spectral.py"), default="train_light_causal.py")
     parser.add_argument('--frequency-fourier', choices=('yes','no'), default='no')
     parser.add_argument("--warmstart")
     parser.add_argument("--output-dir", required=True)

@@ -1,0 +1,11 @@
+{
+  "status": "failed",
+  "candidate_schema": 28,
+  "candidate": "causal_global_spectral_unet_v1",
+  "cold_start": true,
+  "parameters": 4945266,
+  "scope": "Actual public entry64-update correctness/cost plus full600 untrained identity; not trained generalization",
+  "actual_full_epoch_verified": false,
+  "formal_goal_achieved": false,
+  "error": "ValueError: Streaming audit requires a supported causal checkpoint"
+}

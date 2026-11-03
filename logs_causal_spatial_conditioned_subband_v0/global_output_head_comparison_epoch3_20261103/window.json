@@ -1,0 +1,13 @@
+{
+  "status": "skipped_epoch3_window_missed",
+  "guard_pid": 3226972,
+  "guard_cookie": "161451400",
+  "formal_pid": 3215653,
+  "formal_cookie": "161187963",
+  "prototype_sha256": "f557860bfcf65a53cd522992ed277ba68354cfae3138c7eb0af85bad0f1d4eb4",
+  "gpu_queries": 0,
+  "training_signals_sent": 0,
+  "original_training_paused": false,
+  "formal_goal_achieved": false,
+  "not_before_unix": 1793665589.9568043
+}

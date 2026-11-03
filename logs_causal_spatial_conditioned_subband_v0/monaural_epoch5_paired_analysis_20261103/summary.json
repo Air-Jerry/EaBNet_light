@@ -1,0 +1,202 @@
+{
+  "status": "complete",
+  "checked_at_utc": "2026-11-02T23:40:11.535094+00:00",
+  "scope": "Paired complete600 CSV analysis, unchanged cohort and protocol; no audio or GPU access. Geometry is descriptive only, not causal proof.",
+  "metadata_sha256": "8d0b4d229ebc42cd9892e6d0e0d36416007ded01fbc0b753df4bf7e6b734eb02",
+  "selected_pairs_sha256": "18233928bdcb499f4e65e3b66a1f8c39387675d09f1621ae6ac94881d7444cfb",
+  "models": {
+    "source": {
+      "checkpoint_sha256": "f14ec7e7425ba5a8862d2d258bc63a44f14eacf765930e9bbc95465f1e773904",
+      "csv_sha256": "33d42e062c63ccce62eb5b3a8b32c073ea90f9c2c890612d70a803e3aec0c30d",
+      "full600_wb_pesq": 3.0431378700335823
+    },
+    "epoch5": {
+      "checkpoint_sha256": "f3ecaec2e5d11cd76f1dfa94ef8d90bbcb4538fd65d74a61dc0a393ee27217bf",
+      "csv_sha256": "24b5b4211deeec7db28b041b97c5e44025b463fe89587cb0f3a270b5be5fb58d",
+      "full600_wb_pesq": 3.0893360312779743
+    },
+    "control256": {
+      "checkpoint_sha256": "d9d39e998af971a3fad64a04fe71d38e36bd696214b37ddc6cf9953871d2d409",
+      "csv_sha256": "99fe0d27bfe895ea7edfe66abc2f9cd093fe834b420b5e1f694a080c93f4231a",
+      "full600_wb_pesq": 3.0432874445120492
+    },
+    "monaural256": {
+      "checkpoint_sha256": "42d86ca56057b4a15ecae15cff24b29fa7373bd6297089ce491fed54b8544060",
+      "csv_sha256": "da878d3388bfde4b3a2bc72262abc0cde43693aa2790b03550265584d41c333a",
+      "full600_wb_pesq": 3.044561735590299
+    },
+    "previous": {
+      "checkpoint_sha256": "81d3f6aa02d70050062ca25ad26adfbc8259a02910bc75e3bfe997f8f3a619a1",
+      "csv_sha256": "7a2e01f2fa5bae25232c3ebf6bddc41da9cfc92593875efd08b2c781499bd80e",
+      "full600_wb_pesq": 3.0605086501439414
+    }
+  },
+  "all600": {
+    "count": 600,
+    "mean_pesq": {
+      "source": 3.0431378700335823,
+      "epoch5": 3.0893360312779743,
+      "control256": 3.0432874445120492,
+      "monaural256": 3.044561735590299,
+      "previous": 3.0605086501439414
+    },
+    "epoch5_minus_previous_mean": 0.028827381134033204,
+    "epoch5_minus_source_mean": 0.0461981612443924,
+    "epoch5_gain_median": 0.043105125427246094,
+    "epoch5_improved_samples": 489,
+    "improved_over0_1": 109,
+    "degraded_over0_1": 6,
+    "monaural256_minus_control256_mean": 0.0012742910782496135
+  },
+  "by_geometry_coherence1000": {
+    "below0_8": {
+      "count": 409,
+      "mean_pesq": {
+        "source": 3.486885354396475,
+        "epoch5": 3.541859276137317,
+        "control256": 3.487116002220396,
+        "monaural256": 3.4886060081659145,
+        "previous": 3.50195231530952
+      },
+      "epoch5_minus_previous_mean": 0.03990696082779714,
+      "epoch5_minus_source_mean": 0.05497392174084204,
+      "epoch5_gain_median": 0.05003213882446289,
+      "epoch5_improved_samples": 339,
+      "improved_over0_1": 91,
+      "degraded_over0_1": 5,
+      "monaural256_minus_control256_mean": 0.0014900059455181392
+    },
+    "0_8_to0_95": {
+      "count": 88,
+      "mean_pesq": {
+        "source": 2.6134011244232003,
+        "epoch5": 2.663026517087763,
+        "control256": 2.6169195649298755,
+        "monaural256": 2.617353477261283,
+        "previous": 2.647055146369067
+      },
+      "epoch5_minus_previous_mean": 0.0159713707186959,
+      "epoch5_minus_source_mean": 0.04962539266456257,
+      "epoch5_gain_median": 0.04656398296356201,
+      "epoch5_improved_samples": 81,
+      "improved_over0_1": 14,
+      "degraded_over0_1": 0,
+      "monaural256_minus_control256_mean": 0.0004339123314077204
+    },
+    "at_least0_95": {
+      "count": 103,
+      "mean_pesq": {
+        "source": 1.6482263409975664,
+        "epoch5": 1.6566489448825132,
+        "control256": 1.6451757289830922,
+        "monaural256": 1.6463114370420142,
+        "previous": 1.6608334004300311
+      },
+      "epoch5_minus_previous_mean": -0.004184455547517943,
+      "epoch5_minus_source_mean": 0.008422603884946953,
+      "epoch5_gain_median": 0.007617592811584473,
+      "epoch5_improved_samples": 69,
+      "improved_over0_1": 4,
+      "degraded_over0_1": 1,
+      "monaural256_minus_control256_mean": 0.0011357080589220361
+    }
+  },
+  "by_snr": {
+    "-5.0": {
+      "count": 140,
+      "mean_pesq": {
+        "source": 2.693972250393459,
+        "epoch5": 2.744594751085554,
+        "control256": 2.6966323946203503,
+        "monaural256": 2.698078909942082,
+        "previous": 2.710641211271286
+      },
+      "epoch5_minus_previous_mean": 0.03395353981426784,
+      "epoch5_minus_source_mean": 0.050622500692095077,
+      "epoch5_gain_median": 0.044554710388183594,
+      "epoch5_improved_samples": 110,
+      "improved_over0_1": 31,
+      "degraded_over0_1": 3,
+      "monaural256_minus_control256_mean": 0.0014465153217315674
+    },
+    "-2.0": {
+      "count": 161,
+      "mean_pesq": {
+        "source": 2.8967097701493256,
+        "epoch5": 2.9405443623939655,
+        "control256": 2.8968520105255315,
+        "monaural256": 2.896076962814568,
+        "previous": 2.9172789132372934
+      },
+      "epoch5_minus_previous_mean": 0.023265449156672318,
+      "epoch5_minus_source_mean": 0.0438345922446399,
+      "epoch5_gain_median": 0.045439958572387695,
+      "epoch5_improved_samples": 133,
+      "improved_over0_1": 30,
+      "degraded_over0_1": 1,
+      "monaural256_minus_control256_mean": -0.0007750477109636579
+    },
+    "0.0": {
+      "count": 149,
+      "mean_pesq": {
+        "source": 3.284712490619429,
+        "epoch5": 3.3323080739718955,
+        "control256": 3.282152380719281,
+        "monaural256": 3.282766416568884,
+        "previous": 3.2970698599847372
+      },
+      "epoch5_minus_previous_mean": 0.03523821398715845,
+      "epoch5_minus_source_mean": 0.04759558335246656,
+      "epoch5_gain_median": 0.04465079307556152,
+      "epoch5_improved_samples": 117,
+      "improved_over0_1": 27,
+      "degraded_over0_1": 1,
+      "monaural256_minus_control256_mean": 0.0006140358496032305
+    },
+    "2.0": {
+      "count": 150,
+      "mean_pesq": {
+        "source": 3.2862278191248575,
+        "epoch5": 3.329445388317108,
+        "control256": 3.2867336869239807,
+        "monaural256": 3.2907027125358583,
+        "previous": 3.3058007089296977
+      },
+      "epoch5_minus_previous_mean": 0.02364467938741048,
+      "epoch5_minus_source_mean": 0.04321756919225057,
+      "epoch5_gain_median": 0.036504268646240234,
+      "epoch5_improved_samples": 129,
+      "improved_over0_1": 21,
+      "degraded_over0_1": 1,
+      "monaural256_minus_control256_mean": 0.003969025611877441
+    }
+  },
+  "source_pesq_below2": {
+    "count": 108,
+    "mean_pesq": {
+      "source": 1.5129292287208416,
+      "epoch5": 1.5238370917461537,
+      "control256": 1.5103323525852628,
+      "monaural256": 1.509581509563658,
+      "previous": 1.5354796979162428
+    },
+    "epoch5_minus_previous_mean": -0.011642606170089156,
+    "epoch5_minus_source_mean": 0.01090786302531207,
+    "epoch5_gain_median": 0.009961485862731934,
+    "epoch5_improved_samples": 78,
+    "improved_over0_1": 4,
+    "degraded_over0_1": 1,
+    "monaural256_minus_control256_mean": -0.0007508430216047498
+  },
+  "geometric_proxy": {
+    "mics": "First8 of original9 x-axis linear4cm array",
+    "frequency_hz": 1000,
+    "speed_assumed_m_per_s": 343,
+    "definition": "Normalized complex inner product of spherical free-field exp(-j*2*pi*f*d/c)/d steering vectors",
+    "limitations": "Metadata rounded1mm; ignores real RIR, reflections and source spectra; no causal attribution or sample filtering."
+  },
+  "gpu_queries": 0,
+  "batch_progress_queries": 0,
+  "data_and_source_files_unchanged": true,
+  "formal_goal_achieved": false
+}
