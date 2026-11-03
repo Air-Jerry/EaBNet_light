@@ -1,0 +1,15 @@
+{
+  "status": "actual_resume_and_results_guards_passed_with_complete_ancestor_evidence",
+  "copied_summary_sha256": "83a4cddb941eac1b4c762319a2ec3b33334eb1836f090ae01ab3a30589765aac",
+  "ancestor_checkpoint_sha256": "302e25df9c0e249b71e4049090f19314c3207e024afd2ba2924b2106e17e832e",
+  "relative_destination": "logs_causal_wide_conditioned_subband_v1/wide_conditioned_20261102_230237_3081879/pesq_selection/model_epoch_3/summary.json",
+  "retained_checkpoint_sha256": "f3ecaec2e5d11cd76f1dfa94ef8d90bbcb4538fd65d74a61dc0a393ee27217bf",
+  "formal_epoch": 5,
+  "adam_updates": 33500,
+  "new_optimizer_updates": 0,
+  "gpu_queries": 0,
+  "training_signals_sent": 0,
+  "original_evaluator_and_code_unchanged": true,
+  "no_partial_or_complete_epoch6_checkpoint_created": true,
+  "formal_goal_achieved": false
+}

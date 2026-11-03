@@ -1,0 +1,76 @@
+{
+  "scope": "Existing10-second whole-card samples for diagnostic phases; not a complete formal epoch",
+  "gpu": {
+    "baseline": {
+      "0": {
+        "samples": 16,
+        "mean_utilization_percent": 28.5625,
+        "peak_memory_mib": 2213.0,
+        "mean_power_w": 57.860625
+      },
+      "1": {
+        "samples": 16,
+        "mean_utilization_percent": 0.0,
+        "peak_memory_mib": 15.0,
+        "mean_power_w": 10.955000000000002
+      }
+    },
+    "phase=train branch=control": {
+      "0": {
+        "samples": 12,
+        "mean_utilization_percent": 82.75,
+        "peak_memory_mib": 6675.0,
+        "mean_power_w": 132.81333333333336
+      },
+      "1": {
+        "samples": 12,
+        "mean_utilization_percent": 89.91666666666667,
+        "peak_memory_mib": 6657.0,
+        "mean_power_w": 134.3041666666667
+      }
+    },
+    "phase=evaluation branch=control": {
+      "0": {
+        "samples": 15,
+        "mean_utilization_percent": 48.2,
+        "peak_memory_mib": 2213.0,
+        "mean_power_w": 64.98733333333332
+      },
+      "1": {
+        "samples": 15,
+        "mean_utilization_percent": 0.0,
+        "peak_memory_mib": 15.0,
+        "mean_power_w": 10.962666666666667
+      }
+    },
+    "phase=train branch=warm": {
+      "0": {
+        "samples": 14,
+        "mean_utilization_percent": 84.0,
+        "peak_memory_mib": 9723.0,
+        "mean_power_w": 127.46357142857143
+      },
+      "1": {
+        "samples": 14,
+        "mean_utilization_percent": 83.35714285714286,
+        "peak_memory_mib": 9705.0,
+        "mean_power_w": 128.06357142857146
+      }
+    },
+    "phase=evaluation branch=warm": {
+      "0": {
+        "samples": 15,
+        "mean_utilization_percent": 23.133333333333333,
+        "peak_memory_mib": 2229.0,
+        "mean_power_w": 79.94533333333332
+      },
+      "1": {
+        "samples": 15,
+        "mean_utilization_percent": 0.0,
+        "peak_memory_mib": 15.0,
+        "mean_power_w": 10.997333333333334
+      }
+    }
+  },
+  "gpu_queries": 0
+}

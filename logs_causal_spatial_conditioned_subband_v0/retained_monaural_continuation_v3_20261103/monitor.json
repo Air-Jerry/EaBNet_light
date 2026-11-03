@@ -1,0 +1,10 @@
+{
+  "status": "waiting_actual_epoch6_eta",
+  "formal_pid": 3356594,
+  "formal_cookie": "164514460",
+  "epoch_history": [],
+  "gpu_queries_while_training": 0,
+  "formal_goal_achieved": false,
+  "observation_not_before_unix": 1793700179.147475,
+  "expected_observation_utc": "2026-11-03T10:02:59.147475+00:00"
+}

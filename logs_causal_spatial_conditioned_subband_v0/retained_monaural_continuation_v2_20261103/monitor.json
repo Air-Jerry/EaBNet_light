@@ -1,0 +1,12 @@
+{
+  "status": "needs_existing_job_inspection",
+  "formal_pid": 3355626,
+  "formal_cookie": "164497947",
+  "epoch_history": [],
+  "gpu_queries_while_training": 0,
+  "formal_goal_achieved": false,
+  "observation_not_before_unix": 1793700014.024468,
+  "expected_observation_utc": "2026-11-03T10:00:14.024468+00:00",
+  "error": "AssertionError: Launcher ended before complete next epoch; inspect it without restarting",
+  "launcher_live_now": false
+}

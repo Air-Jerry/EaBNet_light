@@ -1,0 +1,39 @@
+{
+  "torchrun_pid": 3356679,
+  "direct_children": [
+    {
+      "pid": 3356682,
+      "ppid": 3356679,
+      "session": 3356682,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light/tmp/monaural_resume_epoch5_v2_stage_20261103",
+      "executable": "python"
+    },
+    {
+      "pid": 3356683,
+      "ppid": 3356679,
+      "session": 3356683,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light/tmp/monaural_resume_epoch5_v2_stage_20261103",
+      "executable": "python"
+    }
+  ],
+  "selected_ranks": [
+    {
+      "pid": 3356682,
+      "cookie": "164514988",
+      "nice": 0,
+      "CUDA_VISIBLE_DEVICES": "0,1",
+      "LOCAL_RANK": "0",
+      "RANK": "0",
+      "WORLD_SIZE": "2"
+    },
+    {
+      "pid": 3356683,
+      "cookie": "164514988",
+      "nice": 0,
+      "CUDA_VISIBLE_DEVICES": "0,1",
+      "LOCAL_RANK": "1",
+      "RANK": "1",
+      "WORLD_SIZE": "2"
+    }
+  ]
+}

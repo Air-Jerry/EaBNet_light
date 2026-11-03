@@ -1,0 +1,39 @@
+{
+  "status": "actual_resumed_epoch6_owner_two_ranks_and_observer_verified",
+  "formal_pid": 3356594,
+  "formal_cookie": "164514460",
+  "stage": "/home/nis/jinrui.yang/EaBNet_light/tmp/monaural_resume_epoch5_v2_stage_20261103",
+  "ranks": [
+    {
+      "pid": 3356682,
+      "cookie": "164514988",
+      "nice": 0,
+      "CUDA_VISIBLE_DEVICES": "0,1",
+      "LOCAL_RANK": "0",
+      "RANK": "0",
+      "WORLD_SIZE": "2"
+    },
+    {
+      "pid": 3356683,
+      "cookie": "164514988",
+      "nice": 0,
+      "CUDA_VISIBLE_DEVICES": "0,1",
+      "LOCAL_RANK": "1",
+      "RANK": "1",
+      "WORLD_SIZE": "2"
+    }
+  ],
+  "torchrun_pid": 3356679,
+  "torchrun_cookie": "164514908",
+  "rank_selection_excludes_dataloader_workers": true,
+  "observer_pid": 3356596,
+  "observer_cookie": "164514460",
+  "source_checkpoint_sha256": "f3ecaec2e5d11cd76f1dfa94ef8d90bbcb4538fd65d74a61dc0a393ee27217bf",
+  "resume_model_and_adam_not_reset": true,
+  "full53600_600_600_and6700_updates_still_required": true,
+  "original_evaluator_unchanged": true,
+  "gpu_queries": 0,
+  "live_batch_queries": 0,
+  "expected_first_complete_epoch_utc": "2026-11-03T10:02:59.147475+00:00",
+  "formal_goal_achieved": false
+}
