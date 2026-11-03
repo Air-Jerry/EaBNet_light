@@ -89,7 +89,7 @@ FLOAT WAV 允许幅值超出 ±1；比较集 170 条、训练抽样 299 条峰�
 - 再次执行从附件 AST 提取的原始 `polar_to_xy`、`inverse_sabine`、`rms` 函数：请求距离 3 米、方向 45°/60° 的目标和噪声仍会被截到同一点，实际距离 0.424264 米；不可行的吸声系数 3.01875 仍被截为 0.99；全零输入的 RMS 仍为 1e-6，因此 `noise_r == 0` 不会检测出全零噪声。
 - 再次执行原始 main 的受控恢复测试：第 3 条后中断，恢复后的 18 条随机参数均不同于连续生成。此测试替换了声学生成函数，只验证断点状态管理；不是新的真实房间仿真。
 - 当前 `train_light.py` / `evaluate_light.py` 的前 8 通道、原始顺序、target 第 0 通道与生成器保存逻辑对应。target 是经过完整 RIR 的目标分量；不是原始无混响 clean。
-- 本次新证据为 `tmp/generator_review_20261103_attachment/review.json` 和同目录 `resume_check.json`。实际 WAV 的 600 对比较集、560 对训练抽样结果仍来自 2026-10-31；本次未重新扫描服务器音频，也未运行真实 RIR 仿真。FLOAT WAV 超出 ±1 的往返保存检查通过，不能把峰值超过 1 直接认定为保存削波。
+- 本次新证据为 `tmp/generator_review_20261103_attachment/review.json` 和同目录 `resume_check.json`。01:46:55 UTC 再次读取附件并复测相同原始函数和 main，全部结论保持，最新记录为 `tmp/generator_review_20261103_current_goal/review.json`。实际 WAV 的 600 对比较集、560 对训练抽样结果仍来自 2026-10-31；本次未重新扫描服务器音频，也未运行真实 RIR 仿真。FLOAT WAV 超出 ±1 的往返保存检查通过，不能把峰值超过 1 直接认定为保存削波。
 - 再次核对 Pyroomacoustics 官方 Room Simulation 文档：`pra.inverse_sabine(rt60, room_dim)` 同时提供吸声系数和最大反射阶数，且 Sabine 只是近似，实际模拟的 RT60 可能偏离请求值。修复后仍需测量生成 RIR 的衰减，不能用请求参数代替实测值。
 
 优先修正声源位置采样和实际间隔校验，其次是可行房间/RT60、反射阶数与 RIR 验收，再处理输入有效性、源文件划分和断点状态。保持现有 600 条比较音频与评分协议固定；在独立目录验收新生成数据，不能通过移除困难样本解释或消除与同数据对照的性能差距。

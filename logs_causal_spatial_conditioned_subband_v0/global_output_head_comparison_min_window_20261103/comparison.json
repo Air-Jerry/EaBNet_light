@@ -1,0 +1,59 @@
+{
+  "status": "matched_head_fitting_complete_no_generalization_claim",
+  "scope": "Matched fixed8 training records,128 updates per head; fitting only, no full600/generalization claim",
+  "gpu_physical_index": 1,
+  "optimizer_updates_per_branch_target": 128,
+  "unique_training_samples": 8,
+  "original_training_paused": false,
+  "training_signals_sent": 0,
+  "formal_goal_achieved": false,
+  "precision": "FP32 parameters/frontend/loss/inference; original BF16 conv and FP16 train-mode GRU",
+  "original_frame_weighted_backward_preserved": true,
+  "diagnostic_weights_not_for_formal_training": true,
+  "branches": {
+    "direct_ri": {
+      "status": "complete",
+      "parameters": 4945266,
+      "initial": {
+        "mean_wb_pesq": 1.1346066743135452,
+        "mean_loss": 2.1805789470672607
+      },
+      "completed_updates": 128,
+      "shared_initial_backbone_exact": true,
+      "last_train_loss": 0.9075941145420074,
+      "training_seconds": 15.292742351070046,
+      "after": {
+        "mean_wb_pesq": 1.3785076141357422,
+        "mean_loss": 0.9062564522027969
+      },
+      "all_weights_and_adam_finite": true
+    },
+    "physical_beam": {
+      "status": "complete",
+      "parameters": 4945728,
+      "initial": {
+        "mean_wb_pesq": 1.134606659412384,
+        "mean_loss": 2.1805789321660995
+      },
+      "completed_updates": 128,
+      "shared_initial_backbone_exact": true,
+      "last_train_loss": 0.6213723421096802,
+      "training_seconds": 14.641794918105006,
+      "after": {
+        "mean_wb_pesq": 2.367385283112526,
+        "mean_loss": 0.6175223514437675
+      },
+      "all_weights_and_adam_finite": true
+    }
+  },
+  "source_initial_checkpoint_sha256": "4842d91b3095b517d144bb17d9890ca8878ec5eae8ea8869bf4349503c94932d",
+  "training_metadata_sha256": "d3854b3717979c398d403143342508db8335c2e613b279e3317c5192f5ef952b",
+  "sample_ids_sha256": "e302bed96716a578b81967079b5b56869f04ca2038138a2a428dbea4a7288d1f",
+  "global_batch": 8,
+  "microbatch": 4,
+  "accumulation": 2,
+  "learning_rate": 0.001,
+  "grad_clip": 5.0,
+  "device": "NVIDIA GeForce RTX 4070",
+  "torch_version": "2.5.1+cu121"
+}

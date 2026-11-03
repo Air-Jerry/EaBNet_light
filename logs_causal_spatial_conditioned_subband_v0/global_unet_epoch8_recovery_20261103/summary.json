@@ -1,0 +1,18 @@
+{
+  "status": "actual_complete_global_checkpoint_recovery_verified_without_training",
+  "candidate_schema": 28,
+  "completed_epoch": 8,
+  "adam_updates": 53600,
+  "evaluated_checkpoint_sha256": "1517ff0292a00c3a6d595a4e397f66fef466c8ee8ee695a69c770e7709d4d78c",
+  "all_complete_checkpoints_copied": true,
+  "actual_best_directory_preserved": true,
+  "model_and_adam_restored_exactly": true,
+  "full_actual_resume_guard_and_score_history_passed": true,
+  "new_optimizer_updates": 0,
+  "gpu_queries": 0,
+  "training_signals_sent": 0,
+  "original_training_paused": false,
+  "original_source_bytes_unchanged": true,
+  "recovery_stage": "/home/nis/jinrui.yang/EaBNet_light/tmp/global_unet_resume_epoch8_stage_20261103",
+  "formal_goal_achieved": false
+}

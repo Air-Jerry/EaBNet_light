@@ -1,0 +1,32 @@
+{
+  "status": "matched_head_window_terminal",
+  "guard_pid": 3229276,
+  "guard_cookie": "161500461",
+  "formal_pid": 3215653,
+  "formal_cookie": "161187963",
+  "target_epoch": 5,
+  "initial_phase": "phase=train epoch=5",
+  "prototype_sha256": "f557860bfcf65a53cd522992ed277ba68354cfae3138c7eb0af85bad0f1d4eb4",
+  "gpu_queries": 2,
+  "training_signals_sent": 0,
+  "original_training_paused": false,
+  "formal_goal_achieved": false,
+  "not_before_unix": 1793667266.5362322,
+  "recent_completed_training_seconds": [
+    434,
+    710,
+    612
+  ],
+  "prediction": "Wake before minimum recent completed train/val/save duration; wait for phase, not GPU polling",
+  "evaluation_pid": 3231314,
+  "evaluation_cookie": "161551308",
+  "child": {
+    "status": "helper_terminal",
+    "training_signals_sent": 0,
+    "child_pid": 3231319,
+    "child_cookie": "161551380",
+    "helper_exit_code": 0,
+    "helper_terminal": true
+  },
+  "original_sources_unchanged": true
+}

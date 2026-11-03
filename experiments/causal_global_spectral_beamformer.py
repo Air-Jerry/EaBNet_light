@@ -78,7 +78,11 @@ class CausalGlobalSpectralBeamformer(nn.Module):
             imaginary = (coefficients[..., 0]*physical[..., 1]-coefficients[..., 1]*physical[..., 0]).sum(-1)
             enhanced = physical[..., 0, :]+torch.stack((real, imaginary), -1)
             compressed = enhanced/torch.linalg.vector_norm(enhanced, dim=-1).clamp_min(1e-8).sqrt().unsqueeze(-1)
-        output = compressed.permute(0, 3, 1, 2).contiguous()
+            reference = physical[..., 0, :].contiguous()
+            baseline = reference/torch.linalg.vector_norm(reference, dim=-1).clamp_min(1e-8).sqrt().unsqueeze(-1)
+            # Preserve the input reference even below the stable compression floor.
+            corrected = inpt[..., 0, :]+(compressed-baseline)
+        output = corrected.permute(0, 3, 1, 2).contiguous()
         return output, dict(hidden=hidden.detach().clone()) if cache else None
 
     def forward(self, inpt, frame_lengths=None):

@@ -1,0 +1,15 @@
+{
+  "status": "passed_global_beam_dual_cuda_streaming_and_full600_initialization",
+  "candidate_schema": 29,
+  "candidate": "causal_global_spectral_beamformer_v1",
+  "cold_start": true,
+  "parameters": 4945728,
+  "scope": "Actual public entry64-update correctness/cost plus full600 untrained identity; not trained generalization",
+  "actual_full_epoch_verified": false,
+  "formal_goal_achieved": false,
+  "cuda_adam_updates": 64,
+  "all_weights_and_adam_finite": true,
+  "projected_complete_epoch_seconds": 703.7812149975573,
+  "initial_full600_wb_pesq": 1.088074848453204,
+  "trained64_max_hop_ms": 1.2723950203508139
+}

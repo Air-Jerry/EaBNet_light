@@ -1,0 +1,114 @@
+{
+  "status": "owned_old_tree_terminal_all_complete_epochs_preserved",
+  "old_pid": 3215653,
+  "old_cookie": "161187963",
+  "retained_complete_epochs": 8,
+  "retained_source_best": {
+    "epoch": 8,
+    "pesq": 1.1473766285181046,
+    "checkpoint_sha256": "1517ff0292a00c3a6d595a4e397f66fef466c8ee8ee695a69c770e7709d4d78c"
+  },
+  "all_complete_scores": [
+    {
+      "epoch": 0,
+      "pesq": 1.088074848453204,
+      "checkpoint_sha256": "4842d91b3095b517d144bb17d9890ca8878ec5eae8ea8869bf4349503c94932d"
+    },
+    {
+      "epoch": 1,
+      "pesq": 1.0993127091725667,
+      "checkpoint_sha256": "32c229ca93f65f4b91be0cfbc42085ddc9068c02907d3b806f456b5c6bf4a749"
+    },
+    {
+      "epoch": 2,
+      "pesq": 1.1114908236265182,
+      "checkpoint_sha256": "92a59cafbd09463a2482bc66632d309102b5472ba3c0ec45101ea10b2bb9e742"
+    },
+    {
+      "epoch": 3,
+      "pesq": 1.1201947349309922,
+      "checkpoint_sha256": "a05eb5568b17fad30a7011ff1d872c5c45e1a023bb85687d01a94b06610a3a3f"
+    },
+    {
+      "epoch": 4,
+      "pesq": 1.1236686358849208,
+      "checkpoint_sha256": "2d6f9d167862ef05f8c13259e2d9bc6acd7297b6f70339707f4b560ecff4309f"
+    },
+    {
+      "epoch": 5,
+      "pesq": 1.1432620674371718,
+      "checkpoint_sha256": "a406ac776f5f125c8e818954f4768b7a857d54c22146eb6570e193dff46cab1b"
+    },
+    {
+      "epoch": 6,
+      "pesq": 1.1341510874032974,
+      "checkpoint_sha256": "ef7be8fe062e8358c2c9a893b068329592187849fa2e77a3a5f4220c93bf8a18"
+    },
+    {
+      "epoch": 7,
+      "pesq": 1.1384289679924646,
+      "checkpoint_sha256": "59ff85a01048a1ed36d08b77ce84cc131c0b545043a080b359cda3bc951cad8a"
+    },
+    {
+      "epoch": 8,
+      "pesq": 1.1473766285181046,
+      "checkpoint_sha256": "1517ff0292a00c3a6d595a4e397f66fef466c8ee8ee695a69c770e7709d4d78c"
+    }
+  ],
+  "actual_recovery_verified": true,
+  "discarded_unsaved_partial_epoch": 9,
+  "overall_retained_other_model_best": 3.0893360312779743,
+  "next_candidate": "causal_global_spectral_beamformer_v1",
+  "next_model_cold_start": true,
+  "fitting_result_is_not_full600_generalization": true,
+  "formal_goal_achieved": false,
+  "stopped_processes": [
+    {
+      "pid": 3215653,
+      "state": "T",
+      "ppid": 1,
+      "session": 3215653,
+      "cookie": "161187963",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light/tmp/global_spectral_formal_v2_stage_20261103"
+    },
+    {
+      "pid": 3215677,
+      "state": "S",
+      "ppid": 3215653,
+      "session": 3215653,
+      "cookie": "161188162",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light/tmp/global_spectral_formal_v2_stage_20261103"
+    },
+    {
+      "pid": 3241195,
+      "state": "S",
+      "ppid": 3215653,
+      "session": 3215653,
+      "cookie": "161788732",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light/tmp/global_spectral_formal_v2_stage_20261103"
+    },
+    {
+      "pid": 3241196,
+      "state": "S",
+      "ppid": 3215653,
+      "session": 3215653,
+      "cookie": "161788732",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light/tmp/global_spectral_formal_v2_stage_20261103"
+    },
+    {
+      "pid": 3241197,
+      "state": "S",
+      "ppid": 3241195,
+      "session": 3215653,
+      "cookie": "161788732",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light/tmp/global_spectral_formal_v2_stage_20261103"
+    }
+  ],
+  "original_source_bytes_unchanged": true,
+  "new_gpu_work_started": false
+}

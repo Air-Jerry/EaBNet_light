@@ -20,6 +20,16 @@ def test_zero_physical_weights_preserve_reference(frames):
     assert sum(p.numel() for p in network.parameters())==4945728
 
 
+def test_zero_physical_weights_preserve_tiny_and_zero_inputs_with_finite_gradients():
+    network=model().eval();value=(torch.randn(1,9,257,8,2)*1e-6).requires_grad_()
+    value.data[:,0].zero_()
+    output=network(value)
+    assert torch.equal(output,value[...,0,:].permute(0,3,1,2))
+    output.square().sum().backward()
+    assert torch.isfinite(value.grad).all()
+    assert all(p.grad is not None and torch.isfinite(p.grad).all() for p in network.parameters())
+
+
 @pytest.mark.parametrize('case',['quarter_physical_gain','complex_phase','select_microphone1'])
 def test_physical_complex_coefficients_have_the_analytic_output(case):
     network=model().eval();value=torch.randn(1,9,257,8,2)*.1

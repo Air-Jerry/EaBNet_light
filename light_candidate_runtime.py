@@ -46,16 +46,20 @@ WIDE_CONDITIONED_CANDIDATE = "causal_wide_conditioned_subband_v1"
 COVARIANCE_CANDIDATE = "causal_covariance_refiner_v1"
 MONAURAL_SPECTRAL_CANDIDATE = "causal_monaural_spectral_v1"
 GLOBAL_SPECTRAL_CANDIDATE = "causal_global_spectral_unet_v1"
+GLOBAL_SPECTRAL_BEAM_CANDIDATE = "causal_global_spectral_beamformer_v1"
 IDENTITY_FIELDS = ("sample_rate", "n_fft", "hop_length", "win_length", "power", "target_ref_mic",
                    "channels", "num_mics", "embed_dim", "cd1", "dfsmn_layers", "dfsmn_memory_size",
                    "norm_type", "bf_type", "topo_type", "is_causal")
 
 
 def all_model_candidates():
-    return (*all_reference_candidates(), QUALITY_CANDIDATE, SPATIAL_CANDIDATE, CAUSAL_CANDIDATE, FAST_CANDIDATE, GLOBAL_CANDIDATE, RECURRENT_CANDIDATE, RECURRENT65_CANDIDATE, TCN_CANDIDATE, FOURIER_CANDIDATE, FREQUENCY_ATTENTION_CANDIDATE, POOLED_FREQUENCY_ATTENTION_CANDIDATE, RETENTION_CANDIDATE, FULLBAND_TCN_CANDIDATE, FULLBAND_SPATIAL_CANDIDATE, SUBBAND_GRU_CANDIDATE, CONDITIONED_SUBBAND_CANDIDATE, FROZEN_CONDITIONED_CANDIDATE, SPATIAL_CONDITIONED_CANDIDATE, GATED_MULTICHANNEL_CANDIDATE, FULLCHANNEL_DUALPATH_CANDIDATE, FOLDED_RETENTION_CANDIDATE, JOINT_CONDITIONED_CANDIDATE, JOINT_FIXED_CONDITIONED_CANDIDATE, WIDE_CONDITIONED_CANDIDATE, COVARIANCE_CANDIDATE, MONAURAL_SPECTRAL_CANDIDATE, GLOBAL_SPECTRAL_CANDIDATE)
+    return (*all_reference_candidates(), QUALITY_CANDIDATE, SPATIAL_CANDIDATE, CAUSAL_CANDIDATE, FAST_CANDIDATE, GLOBAL_CANDIDATE, RECURRENT_CANDIDATE, RECURRENT65_CANDIDATE, TCN_CANDIDATE, FOURIER_CANDIDATE, FREQUENCY_ATTENTION_CANDIDATE, POOLED_FREQUENCY_ATTENTION_CANDIDATE, RETENTION_CANDIDATE, FULLBAND_TCN_CANDIDATE, FULLBAND_SPATIAL_CANDIDATE, SUBBAND_GRU_CANDIDATE, CONDITIONED_SUBBAND_CANDIDATE, FROZEN_CONDITIONED_CANDIDATE, SPATIAL_CONDITIONED_CANDIDATE, GATED_MULTICHANNEL_CANDIDATE, FULLCHANNEL_DUALPATH_CANDIDATE, FOLDED_RETENTION_CANDIDATE, JOINT_CONDITIONED_CANDIDATE, JOINT_FIXED_CONDITIONED_CANDIDATE, WIDE_CONDITIONED_CANDIDATE, COVARIANCE_CANDIDATE, MONAURAL_SPECTRAL_CANDIDATE, GLOBAL_SPECTRAL_CANDIDATE, GLOBAL_SPECTRAL_BEAM_CANDIDATE)
 
 
 def build_model_candidate(candidate_id, **model_kwargs):
+    if candidate_id == GLOBAL_SPECTRAL_BEAM_CANDIDATE:
+        from experiments.causal_global_spectral_beamformer import CausalGlobalSpectralBeamformer
+        return CausalGlobalSpectralBeamformer()
     if candidate_id == GLOBAL_SPECTRAL_CANDIDATE:
         from experiments.causal_global_spectral_unet import CausalGlobalSpectralUNet
         return CausalGlobalSpectralUNet()
@@ -151,6 +155,20 @@ def build_model_candidate(candidate_id, **model_kwargs):
 
 
 def candidate_metadata(candidate_id):
+    if candidate_id == GLOBAL_SPECTRAL_BEAM_CANDIDATE:
+        metadata=candidate_metadata(GLOBAL_SPECTRAL_CANDIDATE)
+        files=tuple(name for name in metadata['candidate_implementation_sha256']
+                    if name!='experiments/causal_global_spectral_unet.py')
+        metadata.update(structure_candidate=candidate_id,candidate_schema=29,
+            candidate_implementation_sha256=source_hashes((*files,'experiments/causal_global_spectral_beamformer.py')))
+        evidence=metadata['candidate_evidence']
+        evidence.update(candidate_id=candidate_id,
+            purpose='Independent full-band causal GRU with current-frame physical complex8-microphone filtering',
+            output='Reference0 compressed RI plus stable compressed physical-filter correction; undo power0.5 before current8-microphone conjugate filtering',
+            initialization='From scratch; zero filter correction preserves reference0 within FP32 roundoff')
+        evidence['model_config'].update(parameters=4945728,trainable_parameters=4945728,
+            complex_filter_coefficients=8,physical_filtering_reference=0,compression_power=.5)
+        return metadata
     if candidate_id == GLOBAL_SPECTRAL_CANDIDATE:
         return dict(structure_candidate=candidate_id, candidate_schema=28,
             candidate_implementation_sha256=source_hashes((*CAUSAL_IMPLEMENTATION_FILES,
