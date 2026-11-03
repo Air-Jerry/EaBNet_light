@@ -1,0 +1,78 @@
+{
+  "status": "matched_architecture32_fitting_complete_no_generalization_claim",
+  "scope": "Matched fixed8 training records,32 updates per architecture; fitting only, no full600/generalization claim",
+  "gpu_physical_index": 1,
+  "optimizer_updates_per_branch_target": 32,
+  "unique_training_samples": 8,
+  "original_training_paused": false,
+  "training_signals_sent": 0,
+  "formal_goal_achieved": false,
+  "precision": "FP32 parameters/frontend/loss/inference; global BF16 conv+FP16 GRU; frequency-state FP32 conv+FP16 LSTM",
+  "original_frame_weighted_backward_preserved": true,
+  "diagnostic_weights_not_for_formal_training": true,
+  "branches": {
+    "global_physical": {
+      "status": "complete",
+      "parameters": 4945728,
+      "initial": {
+        "mean_wb_pesq": 1.1346066743135452,
+        "mean_loss": 2.1805789470672607
+      },
+      "completed_updates": 32,
+      "cold_seed": 1234,
+      "architecture_specific_initialization": true,
+      "last_train_loss": 1.3286508917808533,
+      "training_seconds": 11.382537621073425,
+      "after": {
+        "mean_wb_pesq": 1.4286447167396545,
+        "mean_loss": 1.3115328028798103
+      },
+      "all_weights_and_adam_finite": true,
+      "changed_state_tensors": 58,
+      "required_encoder_frequency_and_memory_changed": true
+    },
+    "frequency_state_physical": {
+      "status": "complete",
+      "parameters": 504080,
+      "initial": {
+        "mean_wb_pesq": 1.1346066743135452,
+        "mean_loss": 2.1805789470672607
+      },
+      "completed_updates": 32,
+      "cold_seed": 1234,
+      "architecture_specific_initialization": true,
+      "last_train_loss": 1.1509011834859848,
+      "training_seconds": 27.124701688997447,
+      "after": {
+        "mean_wb_pesq": 1.2980127483606339,
+        "mean_loss": 1.152482807636261
+      },
+      "all_weights_and_adam_finite": true,
+      "changed_state_tensors": 174,
+      "required_encoder_frequency_and_memory_changed": true,
+      "trained_real6s_stream": {
+        "complete_hops": 600,
+        "warmup_state_discarded": true,
+        "max_hop_ms": 3.0200069304555655,
+        "mean_hop_ms": 2.778394609922543,
+        "p99_hop_ms": 2.9187707300297916,
+        "all_hops_below10ms": true,
+        "full_vs_stream_waveform_max_error": 2.7567148208618164e-07,
+        "future_perturbation_max_error": 0.0,
+        "fixed_model_cache_bytes": 1086576,
+        "cuda_peak_allocated_bytes": 94059008,
+        "full600_quality_audit": false
+      }
+    }
+  },
+  "source_initial_checkpoint_sha256": "caf65753f06f9b95e88d723e91885495b7adba49217aeec2b8d55a5597760a56",
+  "training_metadata_sha256": "d3854b3717979c398d403143342508db8335c2e613b279e3317c5192f5ef952b",
+  "sample_ids_sha256": "e302bed96716a578b81967079b5b56869f04ca2038138a2a428dbea4a7288d1f",
+  "global_batch": 8,
+  "microbatch": 2,
+  "accumulation": 4,
+  "learning_rate": 0.001,
+  "grad_clip": 5.0,
+  "device": "NVIDIA GeForce RTX 4070",
+  "torch_version": "2.5.1+cu121"
+}

@@ -1,0 +1,49 @@
+{
+  "status": "waiting_next_epoch_eta",
+  "formal_pid": 3244986,
+  "formal_cookie": "161864021",
+  "maximum_epochs": 30,
+  "scope": "Real complete53600/600/600 epochs; check actual Adam and timing at measured ETAs",
+  "gpu_queries_while_training": 0,
+  "epoch_history": [
+    {
+      "epoch": 1,
+      "full600_wb_pesq": 1.1080291601022085,
+      "total_seconds": 641.8508996963501,
+      "checkpoint_sha256": "0683c9eadbf01531a47e291b007e5611bd9660971df47fd7e2b8f9ca77a408cf",
+      "all_weights_and_adam_finite": true,
+      "complete53600_600_600_and6700_updates_verified": true
+    },
+    {
+      "epoch": 2,
+      "full600_wb_pesq": 1.2430248773097992,
+      "total_seconds": 816.686371088028,
+      "checkpoint_sha256": "b4cd60fb704f99cc348500919689254b014b69b6c1890420a89ef9ab53d325c4",
+      "all_weights_and_adam_finite": true,
+      "complete53600_600_600_and6700_updates_verified": true
+    },
+    {
+      "epoch": 3,
+      "full600_wb_pesq": 1.3518183608849843,
+      "total_seconds": 632.5157604217529,
+      "checkpoint_sha256": "78cb7d6b658dbbff3ef33136fd74690749d67948c7f3ce07d5119d11815ae364",
+      "all_weights_and_adam_finite": true,
+      "complete53600_600_600_and6700_updates_verified": true
+    },
+    {
+      "epoch": 4,
+      "full600_wb_pesq": 1.5532944323619207,
+      "total_seconds": 821.4187121391296,
+      "checkpoint_sha256": "7ca5d904bebf2b7092c5568087ce433edb08c34441f5b1817a12e86eb622fdf1",
+      "all_weights_and_adam_finite": true,
+      "complete53600_600_600_and6700_updates_verified": true
+    }
+  ],
+  "formal_goal_achieved": false,
+  "run": "global_beam_20261103_094831_3244986",
+  "baseline_full600_wb_pesq": 1.088074848453204,
+  "next_epoch": 5,
+  "observation_not_before_unix": 1793674439.8374243,
+  "expected_observation_utc": "2026-11-03T02:53:59.837424+00:00",
+  "last_completed_epoch": 4
+}

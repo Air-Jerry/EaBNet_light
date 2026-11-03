@@ -1,0 +1,176 @@
+{
+  "status": "complete",
+  "checkpoint": "/home/nis/jinrui.yang/EaBNet_light/tmp/global_beam_formal_stage_20261103/checkpoints_causal_global_spectral_beamformer_v1_global_beam_20261103_094831_3244986/model_epoch_1.pt",
+  "checkpoint_sha256": "0683c9eadbf01531a47e291b007e5611bd9660971df47fd7e2b8f9ca77a408cf",
+  "dataset": "/data/ssd1/jinrui.yang/newset_rt60_005-015_on_NOISEX92/babble/training_set",
+  "metadata_sha256": "8d0b4d229ebc42cd9892e6d0e0d36416007ded01fbc0b753df4bf7e6b734eb02",
+  "input_source": {
+    "mode": "metadata",
+    "dataset": "/data/ssd1/jinrui.yang/newset_rt60_005-015_on_NOISEX92/babble/training_set",
+    "metadata_path": "/data/ssd1/jinrui.yang/newset_rt60_005-015_on_NOISEX92/babble/training_set/metadata.csv",
+    "metadata_sha256": "8d0b4d229ebc42cd9892e6d0e0d36416007ded01fbc0b753df4bf7e6b734eb02",
+    "pairing": "metadata.csv mixture_path/target_path rows in original order",
+    "resolved_pairs_sha256": "18233928bdcb499f4e65e3b66a1f8c39387675d09f1621ae6ac94881d7444cfb",
+    "resolved_pairs_sha256_scope": "ordered sample IDs and resolved paths; not audio contents"
+  },
+  "selected_pairs_sha256": "18233928bdcb499f4e65e3b66a1f8c39387675d09f1621ae6ac94881d7444cfb",
+  "selected_pairs_sha256_scope": "ordered sample IDs and resolved paths; not audio contents",
+  "frontend": {
+    "sample_rate": 16000,
+    "n_fft": 512,
+    "hop_length": 160,
+    "win_length": 320,
+    "power": 0.5,
+    "target_ref_mic": 0
+  },
+  "num_mics": 8,
+  "frontend_protocol": {
+    "window": "periodic Hann",
+    "center": true,
+    "pad_mode": "reflect",
+    "normalized": false,
+    "onesided": true,
+    "waveform_normalization": "none",
+    "compression": "Z * abs(Z).clamp_min(1e-8) ** (power - 1)",
+    "inverse_compression": "piecewise exact inverse including the epsilon region",
+    "mixture_channels": "first 8 channels, original order",
+    "evaluation_extent": "full common-length utterance; no training crop or batch padding",
+    "inference_precision": "float32"
+  },
+  "checkpoint_model_config": {
+    "channels": 64,
+    "num_mics": 8,
+    "embed_dim": 64,
+    "kd1": 5,
+    "cd1": 64,
+    "d_feat": 256,
+    "p": 6,
+    "q": 3,
+    "bf_type": "lstm",
+    "topo_type": "mimo",
+    "intra_connect": "cat",
+    "norm_type": "LN",
+    "dfsmn_layers": 3,
+    "dfsmn_memory_size": 20,
+    "is_causal": "yes",
+    "is_u2": "yes"
+  },
+  "model_parameters": 4945728,
+  "structure_candidate": "causal_global_spectral_beamformer_v1",
+  "candidate_implementation_sha256": {
+    "light_causal_spatial_model.py": "b911ac848c86ca6b4a95933ae90d33a200d44f00ccaa8b98dc4b2cb7cf907a14",
+    "light_causal_stream.py": "86c266e39fd89227b99b1b6f46b943cff8b32a17c2c29f01234c3fcd18ebd42d",
+    "third_party/spatialnet/SpatialNet.py": "3baaa7136c893eba9aee9dfcdb40478a5f87f819682286abbec89a5d71d972f6",
+    "third_party/spatialnet/norm.py": "4c42f48a6d34dc82f25462782ba57e84dddfbfebb56b940f73a28b5ec41055cc",
+    "third_party/spatialnet/non_linear.py": "a985a7f81c8ebfbbd408ea753d7e9b81324d523c01afa1faca4285049640e79d",
+    "third_party/spatialnet/linear_group.py": "e6e0403b5dbdd787d511f0de9cef4335aa25ae46feee211554346c0a00cf2a43",
+    "light_causal_fast_model.py": "5d3f8153815e6a202b735ec3705c1f45a667557906bd299728c6cba7a5e126b9",
+    "experiments/causal_monaural_spectral_branch.py": "d175416094e5cad1ed4279d74a2d71736e00fa5a35303e82a212dffa336f3463",
+    "experiments/causal_global_spectral_beamformer.py": "6c87cea87e9f8475594c3b844932e598ef10e8f1efef46a4deefe226b7e97624"
+  },
+  "candidate_evidence": {
+    "candidate_id": "causal_global_spectral_beamformer_v1",
+    "author_confirmed": false,
+    "exact_reproduction_verified": false,
+    "model_causal": true,
+    "future_frames": 0,
+    "training_objective": "spectral_mrstft_waveform_pmsqe_v1",
+    "purpose": "Independent full-band causal GRU with current-frame physical complex8-microphone filtering",
+    "model_config": {
+      "microphones": 8,
+      "reference_microphone": 0,
+      "features": 38,
+      "widths": [
+        32,
+        48,
+        64,
+        96
+      ],
+      "frequency_bins": [
+        257,
+        129,
+        65,
+        33,
+        17
+      ],
+      "convolution_time_kernel": 1,
+      "gru_input": 1640,
+      "gru_hidden": 384,
+      "gru_layers": 3,
+      "bidirectional": false,
+      "parameters": 4945728,
+      "trainable_parameters": 4945728,
+      "frozen_parameters": 0,
+      "stream_state_bytes_per_stream_fp32": 4608,
+      "complex_filter_coefficients": 8,
+      "physical_filtering_reference": 0,
+      "compression_power": 0.5
+    },
+    "initialization": "From scratch; zero filter correction preserves reference0 within FP32 roundoff",
+    "normalization": "Current-frame reference scale and channel LayerNorm; no time statistics",
+    "output": "Reference0 compressed RI plus stable compressed physical-filter correction; undo power0.5 before current8-microphone conjugate filtering",
+    "frozen_backbone": false,
+    "external_pretrained_weights": false,
+    "upstream_source_incorporated": false,
+    "reference_audio_used_at_inference": false,
+    "waveform_streaming": "512/160/320,16kHz,power0.5;320-sample buffering plus compute/I-O"
+  },
+  "exact_reproduction_verified": false,
+  "quality_training": {},
+  "mixture_ref_mic": 0,
+  "device": "cuda",
+  "expected_samples": 600,
+  "completed_samples": 600,
+  "versions": {
+    "torch": "2.5.1+cu121",
+    "numpy": "2.2.5",
+    "soundfile": "0.13.1",
+    "pesq": "0.0.4",
+    "pystoi": "0.4.1",
+    "mir_eval": "0.8.2"
+  },
+  "mean": {
+    "enhanced": {
+      "pesq": 1.1080291601022085,
+      "stoi": 0.646167711760291,
+      "estoi": 0.41174481265992996,
+      "si_snr_db": 0.09381165138525344,
+      "sdr_db": 0.45392760264830107
+    },
+    "noisy": {
+      "pesq": 1.0880955342451732,
+      "stoi": 0.6510592990906214,
+      "estoi": 0.3667556529781415,
+      "si_snr_db": -1.2095493301340101,
+      "sdr_db": -1.1495106109218791
+    }
+  },
+  "outputs": {
+    "metadata_csv": "/home/nis/jinrui.yang/EaBNet_light/tmp/global_beam_formal_stage_20261103/logs_causal_global_spectral_beamformer_v1/global_beam_20261103_094831_3244986/pesq_selection/model_epoch_1/metadata.csv",
+    "extra_csv": null,
+    "summary_json": "/home/nis/jinrui.yang/EaBNet_light/tmp/global_beam_formal_stage_20261103/logs_causal_global_spectral_beamformer_v1/global_beam_20261103_094831_3244986/pesq_selection/model_epoch_1/summary.json",
+    "estimate_dir": "/home/nis/jinrui.yang/EaBNet_light/tmp/global_beam_formal_stage_20261103/logs_causal_global_spectral_beamformer_v1/global_beam_20261103_094831_3244986/pesq_selection/model_epoch_1",
+    "save_samples": false,
+    "wav_subtype": "FLOAT",
+    "mixture_wav": "selected mixture_ref_mic (mono)",
+    "estimate_wav": "raw model estimate"
+  },
+  "metric_protocol": {
+    "pesq": "pesq wideband",
+    "estoi": "pystoi extended=True; JSON estoi=fraction, CSV estoi_pct=100*estoi",
+    "stoi": "pystoi extended=False, fraction",
+    "si_snr_db": "zero-mean projection SI-SNR",
+    "si_snr_epsilon": 1e-08,
+    "sdr_db": "mir_eval.separation.bss_eval_sources, single source, 512-tap distortion filter; not SI-SNR",
+    "target_gain_matching": false,
+    "max_level_gain_db": 20.0,
+    "gain_rule": "none",
+    "external_normalization_clipping_or_alignment": false,
+    "length_policy": "truncate mixture and target to common length as in training Dataset; no delay correction",
+    "aggregation": "paired arithmetic mean over every selected utterance; failures abort with no mean"
+  },
+  "limitations": [
+    "Dataset and target convention must match the intended benchmark.",
+    "Gain matching, when enabled, uses the clean reference after inference and changes the evaluation protocol."
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "status": "precision_window_terminal",
+  "target_epoch": 2,
+  "formal_pid": 3244986,
+  "formal_cookie": "161864021",
+  "guard_pid": 3249931,
+  "guard_cookie": "161976412",
+  "not_before_unix": 1793671772.8508997,
+  "gpu_queries": 2,
+  "training_signals_sent": 0,
+  "original_training_paused": false,
+  "formal_goal_achieved": false,
+  "evaluation_pid": 3251303,
+  "evaluation_cookie": "162011705",
+  "child": {
+    "status": "helper_terminal",
+    "training_signals_sent": 0,
+    "child_pid": 3251308,
+    "child_cookie": "162011872",
+    "helper_exit_code": 0,
+    "helper_terminal": true
+  },
+  "original_source_bytes_unchanged": true
+}

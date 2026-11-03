@@ -1,0 +1,91 @@
+{
+  "scope": "Existing10s samples; train phases include startup and validation, not hot-only kernels",
+  "gpu": {
+    "phase=train epoch=1": {
+      "0": {
+        "samples": 45,
+        "mean_utilization_percent": 89.8,
+        "peak_whole_card_memory_mib": 1757.0,
+        "mean_power_w": 118.51488888888889
+      },
+      "1": {
+        "samples": 45,
+        "mean_utilization_percent": 88.82222222222222,
+        "peak_whole_card_memory_mib": 1739.0,
+        "mean_power_w": 115.17288888888892
+      }
+    },
+    "phase=evaluation epoch=1": {
+      "0": {
+        "samples": 19,
+        "mean_utilization_percent": 2.6315789473684212,
+        "peak_whole_card_memory_mib": 535.0,
+        "mean_power_w": 33.60421052631578
+      },
+      "1": {
+        "samples": 19,
+        "mean_utilization_percent": 0.0,
+        "peak_whole_card_memory_mib": 18.0,
+        "mean_power_w": 12.276315789473685
+      }
+    },
+    "phase=train epoch=2": {
+      "0": {
+        "samples": 64,
+        "mean_utilization_percent": 78.5625,
+        "peak_whole_card_memory_mib": 1735.0,
+        "mean_power_w": 97.22406249999997
+      },
+      "1": {
+        "samples": 64,
+        "mean_utilization_percent": 65.09375,
+        "peak_whole_card_memory_mib": 1717.0,
+        "mean_power_w": 93.80718749999998
+      }
+    },
+    "phase=evaluation epoch=2": {
+      "0": {
+        "samples": 18,
+        "mean_utilization_percent": 6.111111111111111,
+        "peak_whole_card_memory_mib": 535.0,
+        "mean_power_w": 34.160555555555554
+      },
+      "1": {
+        "samples": 18,
+        "mean_utilization_percent": 0.0,
+        "peak_whole_card_memory_mib": 1087.0,
+        "mean_power_w": 13.453888888888889
+      }
+    },
+    "phase=train epoch=3": {
+      "0": {
+        "samples": 46,
+        "mean_utilization_percent": 89.71739130434783,
+        "peak_whole_card_memory_mib": 1735.0,
+        "mean_power_w": 117.57499999999997
+      },
+      "1": {
+        "samples": 46,
+        "mean_utilization_percent": 86.82608695652173,
+        "peak_whole_card_memory_mib": 1717.0,
+        "mean_power_w": 114.55760869565215
+      }
+    },
+    "phase=evaluation epoch=3": {
+      "0": {
+        "samples": 17,
+        "mean_utilization_percent": 5.411764705882353,
+        "peak_whole_card_memory_mib": 535.0,
+        "mean_power_w": 33.96235294117647
+      },
+      "1": {
+        "samples": 17,
+        "mean_utilization_percent": 0.0,
+        "peak_whole_card_memory_mib": 18.0,
+        "mean_power_w": 10.663529411764708
+      }
+    }
+  },
+  "evaluation_epoch2_gpu1_included_bounded_zero_update_precision_diagnostic": true,
+  "gpu_queries": 0
+}

@@ -1,0 +1,36 @@
+{
+  "status": "matched_head_window_terminal",
+  "guard_pid": 3259192,
+  "guard_cookie": "162189175",
+  "formal_pid": 3244986,
+  "formal_cookie": "161864021",
+  "target_epoch": 5,
+  "initial_phase": "phase=train epoch=5",
+  "prototype_sha256": {
+    "experiments/causal_frequency_state_memory.py": "08d48f400ec6db7b59e4b9bdb3a737a08ddfdae98ab4b5c188a70ae845e2abc3",
+    "experiments/causal_frequency_state_beamformer.py": "f49ace64d22706e1c5e4705b22ba2619e1991587963e386fd3a032f3236a3d86",
+    "experiments/fp16_lstm_training.py": "febe930914fc631fd472e3aa2ed0e3e3aa5d61b35af3b7e90bab6d6997016eb3"
+  },
+  "gpu_queries": 2,
+  "training_signals_sent": 0,
+  "original_training_paused": false,
+  "formal_goal_achieved": false,
+  "not_before_unix": 1793674045.4187121,
+  "recent_completed_training_seconds": [
+    637,
+    457,
+    646
+  ],
+  "prediction": "Wake before minimum recent completed train/val/save duration; wait for phase, not GPU polling",
+  "evaluation_pid": 3261305,
+  "evaluation_cookie": "162239091",
+  "child": {
+    "status": "helper_terminal",
+    "training_signals_sent": 0,
+    "child_pid": 3261310,
+    "child_cookie": "162239160",
+    "helper_exit_code": 0,
+    "helper_terminal": true
+  },
+  "original_sources_unchanged": true
+}

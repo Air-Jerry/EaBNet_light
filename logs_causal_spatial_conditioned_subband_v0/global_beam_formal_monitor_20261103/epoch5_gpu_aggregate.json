@@ -1,0 +1,35 @@
+{
+  "scope": "Existing10s samples; train phases include startup and validation, not hot-only kernels",
+  "gpu": {
+    "phase=train epoch=5": {
+      "0": {
+        "samples": 64,
+        "mean_utilization_percent": 72.8125,
+        "peak_whole_card_memory_mib": 1735.0,
+        "mean_power_w": 96.28640625000001
+      },
+      "1": {
+        "samples": 64,
+        "mean_utilization_percent": 82.265625,
+        "peak_whole_card_memory_mib": 1717.0,
+        "mean_power_w": 94.58921875000001
+      }
+    },
+    "phase=evaluation epoch=5": {
+      "0": {
+        "samples": 18,
+        "mean_utilization_percent": 4.055555555555555,
+        "peak_whole_card_memory_mib": 535.0,
+        "mean_power_w": 33.56388888888889
+      },
+      "1": {
+        "samples": 18,
+        "mean_utilization_percent": 45.888888888888886,
+        "peak_whole_card_memory_mib": 5051.0,
+        "mean_power_w": 75.18111111111112
+      }
+    }
+  },
+  "evaluation_epoch5_gpu1_included_bounded_frequency128_update_prototype_screen": true,
+  "gpu_queries": 0
+}

@@ -1,0 +1,29 @@
+{
+  "status": "actual_trained_precision_comparison_complete",
+  "scope": "Same real epoch1 weights and fixed8 training records; numerical diagnosis only",
+  "training_updates": 0,
+  "training_signals_sent": 0,
+  "original_training_paused": false,
+  "formal_goal_achieved": false,
+  "checkpoint_sha256": "0683c9eadbf01531a47e291b007e5611bd9660971df47fd7e2b8f9ca77a408cf",
+  "parameters": 4945728,
+  "unique_training_records": 8,
+  "sample_ids_sha256": "e302bed96716a578b81967079b5b56869f04ca2038138a2a428dbea4a7288d1f",
+  "training_metadata_sha256": "d3854b3717979c398d403143342508db8335c2e613b279e3317c5192f5ef952b",
+  "torch_version": "2.5.1+cu121",
+  "modes": {
+    "fp32_inference": {
+      "mean_wb_pesq": 1.262039452791214,
+      "mean_loss": 1.2234706282615662
+    },
+    "actual_training_precision": {
+      "mean_wb_pesq": 1.2622884809970856,
+      "mean_loss": 1.2235860228538513
+    }
+  },
+  "waveform_max_absolute_error": 0.02303844690322876,
+  "waveform_relative_l2": 0.005337551236152649,
+  "training_precision_minus_fp32_pesq": 0.00024902820587158203,
+  "original_weights_unchanged": true,
+  "all_waveforms_finite": true
+}
