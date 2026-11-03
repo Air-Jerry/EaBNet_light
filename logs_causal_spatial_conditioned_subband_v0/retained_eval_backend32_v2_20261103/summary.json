@@ -1,0 +1,40 @@
+{
+  "status": "complete",
+  "optimizer_updates": 0,
+  "default_backend": {
+    "cudnn_allow_tf32": true,
+    "matmul_allow_tf32": false
+  },
+  "same_state_tensors": true,
+  "scope": "First32 complete fixed comparison records; diagnosis only; unchanged source and evaluator",
+  "policies": {
+    "protected_cudnn_tf32_True": {
+      "count": 32,
+      "mean_wb_pesq": 3.0325779393315315,
+      "historical_mean": 3.032574400305748,
+      "mean_paired_difference": 3.5390257835388184e-06,
+      "maximum_absolute_score_difference": 5.793571472167969e-05
+    },
+    "protected_cudnn_tf32_False": {
+      "count": 32,
+      "mean_wb_pesq": 3.0325072295963764,
+      "historical_mean": 3.032574400305748,
+      "mean_paired_difference": -6.717070937156677e-05,
+      "maximum_absolute_score_difference": 0.0009129047393798828
+    },
+    "direct_cudnn_tf32_True": {
+      "count": 32,
+      "mean_wb_pesq": 3.0325747653841972,
+      "historical_mean": 3.032574400305748,
+      "mean_paired_difference": 3.650784492492676e-07,
+      "maximum_absolute_score_difference": 1.9550323486328125e-05
+    },
+    "direct_cudnn_tf32_False": {
+      "count": 32,
+      "mean_wb_pesq": 3.032505925744772,
+      "historical_mean": 3.032574400305748,
+      "mean_paired_difference": -6.847456097602844e-05,
+      "maximum_absolute_score_difference": 0.0009167194366455078
+    }
+  }
+}

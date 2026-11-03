@@ -1,0 +1,124 @@
+{
+  "status": "failed_or_window_ended",
+  "scope": "Matched fixed8 training records,64 updates for the same retained causal source control; fitting only, no full600/generalization claim",
+  "gpu_physical_index": 1,
+  "optimizer_updates_per_branch_target": 64,
+  "unique_training_samples": 8,
+  "original_training_paused": false,
+  "training_signals_sent": 0,
+  "formal_goal_achieved": false,
+  "precision": "FP32 parameters/frontend/loss/inference; BF16 train conv and FP16 train-mode GRUs; original nested causal root FP32 eval",
+  "original_frame_weighted_backward_preserved": true,
+  "diagnostic_weights_not_for_formal_training": true,
+  "branches": {
+    "retained_source_control": {
+      "status": "complete",
+      "parameters": 5686130,
+      "trainable_parameters": 3106432,
+      "frozen_causal_parameters": 2579698,
+      "initial": {
+        "mean_wb_pesq": 3.2243973165750504,
+        "mean_loss": 0.4410435985773802
+      },
+      "completed_updates": 64,
+      "construction_seed": 1234,
+      "source_epoch": 5,
+      "exact_initial_source_weights": true,
+      "last_train_loss": 0.3377928901463747,
+      "training_seconds": 54.64235811890103,
+      "after": {
+        "mean_wb_pesq": 3.831443578004837,
+        "mean_loss": 0.3366823345422745
+      },
+      "all_weights_and_adam_finite": true,
+      "changed_state_tensors": 100,
+      "required_encoder_frequency_and_memory_changed": true,
+      "diagnostic_only_weights_saved": true,
+      "diagnostic_checkpoint": "/home/nis/jinrui.yang/EaBNet_light/logs_causal_spatial_conditioned_subband_v0/warm_source_control64_v2_20261103/diagnostic_model64.pt",
+      "diagnostic_checkpoint_sha256": "67e9f4f44367bb31d9310a776fbabc61cd3fc960264d0a06af92ac14e32517f7",
+      "trained_forward_finiteness": {
+        "original": {
+          "full": true,
+          "prefix": true
+        },
+        "repeat": {
+          "full": true,
+          "prefix": true
+        },
+        "modified_future": {
+          "full": true,
+          "prefix": true
+        }
+      },
+      "trained_causality_diagnostics": {
+        "input_frames": 601,
+        "prefix_frames": 300,
+        "network_future_max_error": 4.76837158203125e-07,
+        "network_repeat_max_error": 4.76837158203125e-07,
+        "source_future_max_error": 4.76837158203125e-07,
+        "source_repeat_max_error": 4.76837158203125e-07,
+        "normalized_source_condition_future_max_error": 5.237381515144079e-07,
+        "minimum_reference_scale": 0.6338412761688232,
+        "layer_errors": {
+          "first_encoder": {
+            "future_error": 0.0,
+            "repeat_error": 0.0
+          },
+          "last_encoder": {
+            "future_error": 0.0,
+            "repeat_error": 0.0
+          },
+          "global_normalization": {
+            "future_error": 0.0,
+            "repeat_error": 0.0
+          },
+          "global_gru": {
+            "future_error": 0.0,
+            "repeat_error": 0.0
+          },
+          "global_projection": {
+            "future_error": 0.0,
+            "repeat_error": 0.0
+          },
+          "physical_readout": {
+            "future_error": 2.682209014892578e-07,
+            "repeat_error": 2.980232238769531e-07
+          }
+        },
+        "unchanged_threshold": 1e-06,
+        "passed": true,
+        "backend": {
+          "cudnn_enabled": true,
+          "cudnn_deterministic": false,
+          "cudnn_benchmark": false,
+          "matmul_allow_tf32": false,
+          "cudnn_allow_tf32": false
+        }
+      },
+      "trained_real6s_stream": {
+        "complete_hops": 600,
+        "warmup_state_discarded": true,
+        "max_hop_ms": 6.673417054116726,
+        "mean_hop_ms": 6.150023346223558,
+        "p99_hop_ms": 6.590055723208934,
+        "all_hops_below10ms": true,
+        "full_vs_stream_waveform_max_error": 1.1026859283447266e-06,
+        "future_perturbation_max_error": 4.76837158203125e-07,
+        "fixed_model_cache_bytes": 429712,
+        "cuda_peak_allocated_bytes": 175335424,
+        "full600_quality_audit": false
+      }
+    }
+  },
+  "source_initial_checkpoint_sha256": "f3ecaec2e5d11cd76f1dfa94ef8d90bbcb4538fd65d74a61dc0a393ee27217bf",
+  "training_metadata_sha256": "d3854b3717979c398d403143342508db8335c2e613b279e3317c5192f5ef952b",
+  "sample_ids_sha256": "e302bed96716a578b81967079b5b56869f04ca2038138a2a428dbea4a7288d1f",
+  "global_batch": 8,
+  "microbatch": 1,
+  "accumulation": 8,
+  "learning_rate": 0.001,
+  "grad_clip": 5.0,
+  "device": "NVIDIA GeForce RTX 4070",
+  "torch_version": "2.5.1+cu121",
+  "error": "AssertionError: "
+}

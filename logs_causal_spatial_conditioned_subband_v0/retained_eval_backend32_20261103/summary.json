@@ -1,0 +1,12 @@
+{
+  "status": "failed",
+  "optimizer_updates": 0,
+  "default_backend": {
+    "cudnn_allow_tf32": true,
+    "matmul_allow_tf32": false
+  },
+  "same_state_tensors": true,
+  "scope": "First32 complete fixed comparison records; diagnosis only; unchanged source and evaluator",
+  "policies": {},
+  "error": "KeyError: 0"
+}

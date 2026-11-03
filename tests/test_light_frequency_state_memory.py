@@ -18,7 +18,7 @@ def tensors(value):
         return [value]
     if isinstance(value, dict):
         return [tensor for item in value.values() for tensor in tensors(item)]
-    if isinstance(value, tuple):
+    if isinstance(value, (tuple, list)):
         return [tensor for item in value for tensor in tensors(item)]
     return []
 

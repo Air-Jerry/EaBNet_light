@@ -1,0 +1,12 @@
+{
+  "status": "failed_requires_existing_job_inspection",
+  "quality_pid": 3347101,
+  "quality_cookie": "164316767",
+  "guard_pid": 3349648,
+  "guard_cookie": "164366527",
+  "decision_rule": "Qualify new branch if full600 warm exceeds matched control by more than0.02 and original source by more than0.01; otherwise resume retained epoch5 with exact Adam",
+  "diagnostic_weights_used_for_formal_training": false,
+  "training_signals_sent": 0,
+  "formal_goal_achieved": false,
+  "error": "AssertionError: "
+}

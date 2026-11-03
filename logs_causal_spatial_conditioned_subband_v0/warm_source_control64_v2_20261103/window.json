@@ -1,0 +1,42 @@
+{
+  "status": "matched_head_window_terminal",
+  "guard_pid": 3282864,
+  "guard_cookie": "162749886",
+  "formal_pid": 3244986,
+  "formal_cookie": "161864021",
+  "target_epoch": 12,
+  "initial_phase": "phase=evaluation epoch=11",
+  "prototype_sha256": {
+    "experiments/causal_warm_conditioned_global_beamformer.py": "c4ca717b172dda5d299654d176495c9532aa256c7be52d462b8a67b5bbe0e24e"
+  },
+  "gpu_queries": 2,
+  "training_signals_sent": 0,
+  "original_training_paused": false,
+  "formal_goal_achieved": false,
+  "not_before_unix": 1793679845.561618,
+  "recent_completed_training_seconds": [
+    453,
+    637,
+    457,
+    646,
+    642,
+    642,
+    554,
+    1014,
+    457,
+    645,
+    734
+  ],
+  "prediction": "Wake120s before global minimum completed train/val/save duration; wait for phase, not GPU polling",
+  "evaluation_pid": 3285814,
+  "evaluation_cookie": "162819412",
+  "child": {
+    "status": "helper_terminal",
+    "training_signals_sent": 0,
+    "child_pid": 3285819,
+    "child_cookie": "162819548",
+    "helper_exit_code": 1,
+    "helper_terminal": true
+  },
+  "original_sources_unchanged": true
+}

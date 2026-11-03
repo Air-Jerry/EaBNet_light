@@ -1,0 +1,19 @@
+{
+  "status": "running",
+  "rescreen_guard": 3346270,
+  "rescreen_cookie": "164298062",
+  "guard_pid": 3352210,
+  "guard_cookie": "164424610",
+  "original_baseline_attempt_failed_before_training": true,
+  "backend_fix": "Inference now matches protected evaluator cuDNN TF32 default; training precision unchanged",
+  "scope": "Same source,2048 distinct real train records,6s,seed1234,global8,256 fresh Adam updates; control versus conditioned-global branch",
+  "training_signals_sent": 0,
+  "formal_goal_achieved": false,
+  "branches": {},
+  "gpu_claim_queries": 1,
+  "started_at_utc": "2026-11-03T08:55:15.763692+00:00",
+  "expected_observation_utc": "2026-11-03T09:13:15.763708+00:00",
+  "phase": "baseline_evaluation",
+  "child_pid": 3352214,
+  "child_cookie": "164424621"
+}

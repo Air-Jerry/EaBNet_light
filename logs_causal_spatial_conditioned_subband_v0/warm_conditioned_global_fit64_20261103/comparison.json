@@ -1,0 +1,49 @@
+{
+  "status": "failed_or_window_ended",
+  "scope": "Matched fixed8 training records,64 updates for a source-preserving conditioned-global prototype; fitting only, no full600/generalization claim",
+  "gpu_physical_index": 1,
+  "optimizer_updates_per_branch_target": 64,
+  "unique_training_samples": 8,
+  "original_training_paused": false,
+  "training_signals_sent": 0,
+  "formal_goal_achieved": false,
+  "precision": "FP32 parameters/frontend/loss/inference; BF16 train conv and FP16 train-mode GRUs; original nested causal root FP32 eval",
+  "original_frame_weighted_backward_preserved": true,
+  "diagnostic_weights_not_for_formal_training": true,
+  "branches": {
+    "warm_conditioned_global": {
+      "status": "complete",
+      "parameters": 10632498,
+      "trainable_parameters": 8052800,
+      "frozen_causal_parameters": 2579698,
+      "initial": {
+        "mean_wb_pesq": 3.224398195743561,
+        "mean_loss": 0.441043583676219
+      },
+      "completed_updates": 64,
+      "new_branch_seed": 1234,
+      "source_epoch": 5,
+      "exact_initial_source_weights": true,
+      "last_train_loss": 0.3457429129630327,
+      "training_seconds": 79.45873986091465,
+      "after": {
+        "mean_wb_pesq": 3.807124376296997,
+        "mean_loss": 0.34416478872299194
+      },
+      "all_weights_and_adam_finite": true,
+      "changed_state_tensors": 158,
+      "required_encoder_frequency_and_memory_changed": true
+    }
+  },
+  "source_initial_checkpoint_sha256": "f3ecaec2e5d11cd76f1dfa94ef8d90bbcb4538fd65d74a61dc0a393ee27217bf",
+  "training_metadata_sha256": "d3854b3717979c398d403143342508db8335c2e613b279e3317c5192f5ef952b",
+  "sample_ids_sha256": "e302bed96716a578b81967079b5b56869f04ca2038138a2a428dbea4a7288d1f",
+  "global_batch": 8,
+  "microbatch": 1,
+  "accumulation": 8,
+  "learning_rate": 0.001,
+  "grad_clip": 5.0,
+  "device": "NVIDIA GeForce RTX 4070",
+  "torch_version": "2.5.1+cu121",
+  "error": "AssertionError: "
+}

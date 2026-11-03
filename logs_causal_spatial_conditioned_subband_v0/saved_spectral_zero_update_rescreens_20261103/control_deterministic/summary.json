@@ -1,0 +1,48 @@
+{
+  "status": "saved_trained_weights_zero_update_checks_passed",
+  "branch": "control",
+  "backend": "deterministic",
+  "optimizer_updates": 0,
+  "diagnostic_weights_only": true,
+  "formal_goal_achieved": false,
+  "fixed_previous_collector_omitted_nested_lists": true,
+  "thresholds": {
+    "future": 1e-06,
+    "waveform": 1e-05,
+    "every_hop_ms": 10.0
+  },
+  "checkpoint_sha256": "67e9f4f44367bb31d9310a776fbabc61cd3fc960264d0a06af92ac14e32517f7",
+  "source_checkpoint_sha256": "f3ecaec2e5d11cd76f1dfa94ef8d90bbcb4538fd65d74a61dc0a393ee27217bf",
+  "torch_version": "2.5.1+cu121",
+  "device": "NVIDIA GeForce RTX 4070",
+  "cudnn_deterministic": true,
+  "deterministic_algorithms": true,
+  "cublas_workspace_config": ":4096:8",
+  "repeated_forward_max_errors": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "future_perturbation_max_errors": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "future_passed": true,
+  "cache_logical_bytes": 6219024,
+  "cache_unique_storage_bytes": 6219024,
+  "cache_tensor_count": 34,
+  "independent_stream_storage_disjoint": true,
+  "old_state_unchanged": true,
+  "measured_hops": 600,
+  "max_hop_ms": 8.061886066570878,
+  "mean_hop_ms": 7.593308970875417,
+  "p99_hop_ms": 7.80213103396818,
+  "all_hops_below10ms": true,
+  "warmup_state_discarded": true,
+  "waveform_max_error": 6.873160600662231e-07,
+  "cuda_peak_allocated_bytes": 104921600,
+  "original_diagnostic_checkpoint_unchanged": true
+}

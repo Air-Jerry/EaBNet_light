@@ -1,0 +1,24 @@
+{
+  "status": "skipped_late_evaluation_window",
+  "guard_pid": 3279437,
+  "guard_cookie": "162666765",
+  "formal_pid": 3244986,
+  "formal_cookie": "161864021",
+  "target_epoch": 10,
+  "initial_phase": "phase=evaluation epoch=10",
+  "prototype_sha256": {
+    "experiments/causal_warm_conditioned_global_beamformer.py": "c4ca717b172dda5d299654d176495c9532aa256c7be52d462b8a67b5bbe0e24e"
+  },
+  "gpu_queries": 0,
+  "training_signals_sent": 0,
+  "original_training_paused": false,
+  "formal_goal_achieved": false,
+  "not_before_unix": 1793678215.8516078,
+  "recent_completed_training_seconds": [
+    554,
+    1014,
+    457
+  ],
+  "prediction": "Wake before minimum recent completed train/val/save duration; wait for phase, not GPU polling",
+  "age_seconds": 103.5
+}

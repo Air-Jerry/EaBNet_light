@@ -1,0 +1,846 @@
+{
+  "scope": "Existing10-second whole-card samples; train phases include startup and validation; evaluation GPU1 sometimes includes explicitly recorded diagnostics",
+  "gpu_queries": 0,
+  "gpu": {
+    "phase=train epoch=1": {
+      "0": {
+        "samples": 45,
+        "mean_utilization_percent": 89.8,
+        "peak_whole_card_memory_mib": 1757.0,
+        "mean_power_w": 118.51488888888889
+      },
+      "1": {
+        "samples": 45,
+        "mean_utilization_percent": 88.82222222222222,
+        "peak_whole_card_memory_mib": 1739.0,
+        "mean_power_w": 115.17288888888892
+      }
+    },
+    "phase=evaluation epoch=1": {
+      "0": {
+        "samples": 19,
+        "mean_utilization_percent": 2.6315789473684212,
+        "peak_whole_card_memory_mib": 535.0,
+        "mean_power_w": 33.60421052631578
+      },
+      "1": {
+        "samples": 19,
+        "mean_utilization_percent": 0.0,
+        "peak_whole_card_memory_mib": 18.0,
+        "mean_power_w": 12.276315789473685
+      }
+    },
+    "phase=train epoch=2": {
+      "0": {
+        "samples": 64,
+        "mean_utilization_percent": 78.5625,
+        "peak_whole_card_memory_mib": 1735.0,
+        "mean_power_w": 97.22406249999997
+      },
+      "1": {
+        "samples": 64,
+        "mean_utilization_percent": 65.09375,
+        "peak_whole_card_memory_mib": 1717.0,
+        "mean_power_w": 93.80718749999998
+      }
+    },
+    "phase=evaluation epoch=2": {
+      "0": {
+        "samples": 18,
+        "mean_utilization_percent": 6.111111111111111,
+        "peak_whole_card_memory_mib": 535.0,
+        "mean_power_w": 34.160555555555554
+      },
+      "1": {
+        "samples": 18,
+        "mean_utilization_percent": 0.0,
+        "peak_whole_card_memory_mib": 1087.0,
+        "mean_power_w": 13.453888888888889
+      }
+    },
+    "phase=train epoch=3": {
+      "0": {
+        "samples": 46,
+        "mean_utilization_percent": 89.71739130434783,
+        "peak_whole_card_memory_mib": 1735.0,
+        "mean_power_w": 117.57499999999997
+      },
+      "1": {
+        "samples": 46,
+        "mean_utilization_percent": 86.82608695652173,
+        "peak_whole_card_memory_mib": 1717.0,
+        "mean_power_w": 114.55760869565215
+      }
+    },
+    "phase=evaluation epoch=3": {
+      "0": {
+        "samples": 17,
+        "mean_utilization_percent": 5.411764705882353,
+        "peak_whole_card_memory_mib": 535.0,
+        "mean_power_w": 33.96235294117647
+      },
+      "1": {
+        "samples": 17,
+        "mean_utilization_percent": 0.0,
+        "peak_whole_card_memory_mib": 18.0,
+        "mean_power_w": 10.663529411764708
+      }
+    },
+    "phase=train epoch=4": {
+      "0": {
+        "samples": 65,
+        "mean_utilization_percent": 62.98461538461538,
+        "peak_whole_card_memory_mib": 1735.0,
+        "mean_power_w": 93.93230769230772
+      },
+      "1": {
+        "samples": 65,
+        "mean_utilization_percent": 66.61538461538461,
+        "peak_whole_card_memory_mib": 1717.0,
+        "mean_power_w": 91.03092307692307
+      }
+    },
+    "phase=evaluation epoch=4": {
+      "0": {
+        "samples": 17,
+        "mean_utilization_percent": 3.0,
+        "peak_whole_card_memory_mib": 535.0,
+        "mean_power_w": 33.55411764705883
+      },
+      "1": {
+        "samples": 17,
+        "mean_utilization_percent": 11.529411764705882,
+        "peak_whole_card_memory_mib": 4603.0,
+        "mean_power_w": 31.232352941176472
+      }
+    },
+    "phase=train epoch=5": {
+      "0": {
+        "samples": 64,
+        "mean_utilization_percent": 72.8125,
+        "peak_whole_card_memory_mib": 1735.0,
+        "mean_power_w": 96.28640625000001
+      },
+      "1": {
+        "samples": 64,
+        "mean_utilization_percent": 82.265625,
+        "peak_whole_card_memory_mib": 1717.0,
+        "mean_power_w": 94.58921875000001
+      }
+    },
+    "phase=evaluation epoch=5": {
+      "0": {
+        "samples": 18,
+        "mean_utilization_percent": 4.055555555555555,
+        "peak_whole_card_memory_mib": 535.0,
+        "mean_power_w": 33.56388888888889
+      },
+      "1": {
+        "samples": 18,
+        "mean_utilization_percent": 45.888888888888886,
+        "peak_whole_card_memory_mib": 5051.0,
+        "mean_power_w": 75.18111111111112
+      }
+    },
+    "phase=train epoch=6": {
+      "0": {
+        "samples": 64,
+        "mean_utilization_percent": 70.171875,
+        "peak_whole_card_memory_mib": 1735.0,
+        "mean_power_w": 99.29187500000002
+      },
+      "1": {
+        "samples": 64,
+        "mean_utilization_percent": 59.890625,
+        "peak_whole_card_memory_mib": 1717.0,
+        "mean_power_w": 94.63328124999998
+      }
+    },
+    "phase=evaluation epoch=6": {
+      "0": {
+        "samples": 17,
+        "mean_utilization_percent": 2.8823529411764706,
+        "peak_whole_card_memory_mib": 535.0,
+        "mean_power_w": 34.28764705882353
+      },
+      "1": {
+        "samples": 17,
+        "mean_utilization_percent": 0.0,
+        "peak_whole_card_memory_mib": 18.0,
+        "mean_power_w": 10.86823529411765
+      }
+    },
+    "phase=train epoch=7": {
+      "0": {
+        "samples": 56,
+        "mean_utilization_percent": 73.33928571428571,
+        "peak_whole_card_memory_mib": 1735.0,
+        "mean_power_w": 103.51357142857145
+      },
+      "1": {
+        "samples": 56,
+        "mean_utilization_percent": 71.30357142857143,
+        "peak_whole_card_memory_mib": 1717.0,
+        "mean_power_w": 101.13375000000005
+      }
+    },
+    "phase=evaluation epoch=7": {
+      "0": {
+        "samples": 17,
+        "mean_utilization_percent": 5.176470588235294,
+        "peak_whole_card_memory_mib": 535.0,
+        "mean_power_w": 33.63470588235295
+      },
+      "1": {
+        "samples": 17,
+        "mean_utilization_percent": 0.0,
+        "peak_whole_card_memory_mib": 18.0,
+        "mean_power_w": 10.685882352941176
+      }
+    },
+    "phase=train epoch=8": {
+      "0": {
+        "samples": 101,
+        "mean_utilization_percent": 56.722772277227726,
+        "peak_whole_card_memory_mib": 1735.0,
+        "mean_power_w": 75.94900990099009
+      },
+      "1": {
+        "samples": 101,
+        "mean_utilization_percent": 69.48514851485149,
+        "peak_whole_card_memory_mib": 1717.0,
+        "mean_power_w": 75.52762376237625
+      }
+    },
+    "phase=evaluation epoch=8": {
+      "0": {
+        "samples": 17,
+        "mean_utilization_percent": 4.176470588235294,
+        "peak_whole_card_memory_mib": 535.0,
+        "mean_power_w": 32.828235294117654
+      },
+      "1": {
+        "samples": 17,
+        "mean_utilization_percent": 38.529411764705884,
+        "peak_whole_card_memory_mib": 2897.0,
+        "mean_power_w": 66.60823529411766
+      }
+    },
+    "phase=train epoch=9": {
+      "0": {
+        "samples": 46,
+        "mean_utilization_percent": 88.08695652173913,
+        "peak_whole_card_memory_mib": 1735.0,
+        "mean_power_w": 117.90586956521739
+      },
+      "1": {
+        "samples": 46,
+        "mean_utilization_percent": 87.47826086956522,
+        "peak_whole_card_memory_mib": 1717.0,
+        "mean_power_w": 114.84934782608696
+      }
+    },
+    "phase=evaluation epoch=9": {
+      "0": {
+        "samples": 17,
+        "mean_utilization_percent": 3.764705882352941,
+        "peak_whole_card_memory_mib": 535.0,
+        "mean_power_w": 34.10235294117647
+      },
+      "1": {
+        "samples": 17,
+        "mean_utilization_percent": 0.0,
+        "peak_whole_card_memory_mib": 18.0,
+        "mean_power_w": 11.123529411764707
+      }
+    },
+    "phase=train epoch=10": {
+      "0": {
+        "samples": 65,
+        "mean_utilization_percent": 81.76923076923077,
+        "peak_whole_card_memory_mib": 1735.0,
+        "mean_power_w": 96.68261538461537
+      },
+      "1": {
+        "samples": 65,
+        "mean_utilization_percent": 65.56923076923077,
+        "peak_whole_card_memory_mib": 1717.0,
+        "mean_power_w": 92.34369230769232
+      }
+    },
+    "phase=evaluation epoch=10": {
+      "0": {
+        "samples": 17,
+        "mean_utilization_percent": 3.7058823529411766,
+        "peak_whole_card_memory_mib": 535.0,
+        "mean_power_w": 33.74470588235294
+      },
+      "1": {
+        "samples": 17,
+        "mean_utilization_percent": 0.0,
+        "peak_whole_card_memory_mib": 18.0,
+        "mean_power_w": 10.744705882352937
+      }
+    },
+    "phase=train epoch=11": {
+      "0": {
+        "samples": 73,
+        "mean_utilization_percent": 67.8082191780822,
+        "peak_whole_card_memory_mib": 1735.0,
+        "mean_power_w": 89.0050684931507
+      },
+      "1": {
+        "samples": 73,
+        "mean_utilization_percent": 66.0,
+        "peak_whole_card_memory_mib": 1717.0,
+        "mean_power_w": 87.55000000000003
+      }
+    },
+    "phase=evaluation epoch=11": {
+      "0": {
+        "samples": 18,
+        "mean_utilization_percent": 2.9444444444444446,
+        "peak_whole_card_memory_mib": 535.0,
+        "mean_power_w": 33.391666666666666
+      },
+      "1": {
+        "samples": 18,
+        "mean_utilization_percent": 38.888888888888886,
+        "peak_whole_card_memory_mib": 2899.0,
+        "mean_power_w": 63.13611111111114
+      }
+    },
+    "phase=train epoch=12": {
+      "0": {
+        "samples": 55,
+        "mean_utilization_percent": 89.05454545454545,
+        "peak_whole_card_memory_mib": 1735.0,
+        "mean_power_w": 106.57381818181818
+      },
+      "1": {
+        "samples": 55,
+        "mean_utilization_percent": 73.14545454545454,
+        "peak_whole_card_memory_mib": 1717.0,
+        "mean_power_w": 103.11872727272726
+      }
+    },
+    "phase=evaluation epoch=12": {
+      "0": {
+        "samples": 17,
+        "mean_utilization_percent": 4.352941176470588,
+        "peak_whole_card_memory_mib": 535.0,
+        "mean_power_w": 33.97176470588235
+      },
+      "1": {
+        "samples": 17,
+        "mean_utilization_percent": 33.529411764705884,
+        "peak_whole_card_memory_mib": 2207.0,
+        "mean_power_w": 54.88823529411765
+      }
+    },
+    "phase=train epoch=13": {
+      "0": {
+        "samples": 64,
+        "mean_utilization_percent": 88.328125,
+        "peak_whole_card_memory_mib": 1735.0,
+        "mean_power_w": 97.28640625
+      },
+      "1": {
+        "samples": 64,
+        "mean_utilization_percent": 64.21875,
+        "peak_whole_card_memory_mib": 1717.0,
+        "mean_power_w": 92.68437499999999
+      }
+    },
+    "phase=evaluation epoch=13": {
+      "0": {
+        "samples": 18,
+        "mean_utilization_percent": 4.111111111111111,
+        "peak_whole_card_memory_mib": 535.0,
+        "mean_power_w": 34.07277777777777
+      },
+      "1": {
+        "samples": 18,
+        "mean_utilization_percent": 0.0,
+        "peak_whole_card_memory_mib": 18.0,
+        "mean_power_w": 12.299444444444442
+      }
+    },
+    "phase=train epoch=14": {
+      "0": {
+        "samples": 74,
+        "mean_utilization_percent": 65.78378378378379,
+        "peak_whole_card_memory_mib": 1735.0,
+        "mean_power_w": 89.75405405405404
+      },
+      "1": {
+        "samples": 74,
+        "mean_utilization_percent": 60.62162162162162,
+        "peak_whole_card_memory_mib": 1717.0,
+        "mean_power_w": 86.35513513513513
+      }
+    },
+    "phase=evaluation epoch=14": {
+      "0": {
+        "samples": 17,
+        "mean_utilization_percent": 3.5294117647058822,
+        "peak_whole_card_memory_mib": 535.0,
+        "mean_power_w": 33.257058823529405
+      },
+      "1": {
+        "samples": 17,
+        "mean_utilization_percent": 0.0,
+        "peak_whole_card_memory_mib": 18.0,
+        "mean_power_w": 10.695294117647059
+      }
+    },
+    "phase=train epoch=15": {
+      "0": {
+        "samples": 55,
+        "mean_utilization_percent": 84.67272727272727,
+        "peak_whole_card_memory_mib": 1735.0,
+        "mean_power_w": 105.8758181818182
+      },
+      "1": {
+        "samples": 55,
+        "mean_utilization_percent": 76.2909090909091,
+        "peak_whole_card_memory_mib": 1717.0,
+        "mean_power_w": 103.56272727272726
+      }
+    },
+    "phase=evaluation epoch=15": {
+      "0": {
+        "samples": 17,
+        "mean_utilization_percent": 3.9411764705882355,
+        "peak_whole_card_memory_mib": 535.0,
+        "mean_power_w": 33.73941176470588
+      },
+      "1": {
+        "samples": 17,
+        "mean_utilization_percent": 0.0,
+        "peak_whole_card_memory_mib": 18.0,
+        "mean_power_w": 10.927647058823528
+      }
+    },
+    "phase=train epoch=16": {
+      "0": {
+        "samples": 55,
+        "mean_utilization_percent": 80.0,
+        "peak_whole_card_memory_mib": 1735.0,
+        "mean_power_w": 105.75872727272728
+      },
+      "1": {
+        "samples": 55,
+        "mean_utilization_percent": 78.96363636363637,
+        "peak_whole_card_memory_mib": 1717.0,
+        "mean_power_w": 103.00763636363635
+      }
+    },
+    "phase=evaluation epoch=16": {
+      "0": {
+        "samples": 17,
+        "mean_utilization_percent": 3.0588235294117645,
+        "peak_whole_card_memory_mib": 535.0,
+        "mean_power_w": 34.64588235294118
+      },
+      "1": {
+        "samples": 17,
+        "mean_utilization_percent": 0.0,
+        "peak_whole_card_memory_mib": 18.0,
+        "mean_power_w": 11.089411764705883
+      }
+    },
+    "phase=train epoch=17": {
+      "0": {
+        "samples": 65,
+        "mean_utilization_percent": 80.46153846153847,
+        "peak_whole_card_memory_mib": 1735.0,
+        "mean_power_w": 95.09292307692307
+      },
+      "1": {
+        "samples": 65,
+        "mean_utilization_percent": 73.63076923076923,
+        "peak_whole_card_memory_mib": 1717.0,
+        "mean_power_w": 92.25569230769233
+      }
+    },
+    "phase=evaluation epoch=17": {
+      "0": {
+        "samples": 17,
+        "mean_utilization_percent": 3.235294117647059,
+        "peak_whole_card_memory_mib": 535.0,
+        "mean_power_w": 34.03470588235295
+      },
+      "1": {
+        "samples": 17,
+        "mean_utilization_percent": 0.0,
+        "peak_whole_card_memory_mib": 18.0,
+        "mean_power_w": 10.796470588235294
+      }
+    },
+    "phase=train epoch=18": {
+      "0": {
+        "samples": 74,
+        "mean_utilization_percent": 77.79729729729729,
+        "peak_whole_card_memory_mib": 1735.0,
+        "mean_power_w": 89.26040540540542
+      },
+      "1": {
+        "samples": 74,
+        "mean_utilization_percent": 68.56756756756756,
+        "peak_whole_card_memory_mib": 1717.0,
+        "mean_power_w": 86.51013513513516
+      }
+    },
+    "phase=evaluation epoch=18": {
+      "0": {
+        "samples": 17,
+        "mean_utilization_percent": 3.0588235294117645,
+        "peak_whole_card_memory_mib": 535.0,
+        "mean_power_w": 33.914117647058816
+      },
+      "1": {
+        "samples": 17,
+        "mean_utilization_percent": 0.0,
+        "peak_whole_card_memory_mib": 18.0,
+        "mean_power_w": 10.73235294117647
+      }
+    },
+    "phase=train epoch=19": {
+      "0": {
+        "samples": 115,
+        "mean_utilization_percent": 42.608695652173914,
+        "peak_whole_card_memory_mib": 1735.0,
+        "mean_power_w": 71.77373913043478
+      },
+      "1": {
+        "samples": 115,
+        "mean_utilization_percent": 75.58260869565217,
+        "peak_whole_card_memory_mib": 1717.0,
+        "mean_power_w": 72.84208695652174
+      }
+    },
+    "phase=evaluation epoch=19": {
+      "0": {
+        "samples": 17,
+        "mean_utilization_percent": 5.235294117647059,
+        "peak_whole_card_memory_mib": 535.0,
+        "mean_power_w": 33.54705882352941
+      },
+      "1": {
+        "samples": 17,
+        "mean_utilization_percent": 0.0,
+        "peak_whole_card_memory_mib": 18.0,
+        "mean_power_w": 10.914117647058823
+      }
+    },
+    "phase=train epoch=20": {
+      "0": {
+        "samples": 55,
+        "mean_utilization_percent": 82.21818181818182,
+        "peak_whole_card_memory_mib": 1735.0,
+        "mean_power_w": 105.60909090909092
+      },
+      "1": {
+        "samples": 55,
+        "mean_utilization_percent": 86.32727272727273,
+        "peak_whole_card_memory_mib": 1717.0,
+        "mean_power_w": 102.89854545454548
+      }
+    },
+    "phase=evaluation epoch=20": {
+      "0": {
+        "samples": 17,
+        "mean_utilization_percent": 3.8823529411764706,
+        "peak_whole_card_memory_mib": 535.0,
+        "mean_power_w": 33.52176470588235
+      },
+      "1": {
+        "samples": 17,
+        "mean_utilization_percent": 0.0,
+        "peak_whole_card_memory_mib": 18.0,
+        "mean_power_w": 11.231764705882354
+      }
+    },
+    "phase=train epoch=21": {
+      "0": {
+        "samples": 87,
+        "mean_utilization_percent": 63.724137931034484,
+        "peak_whole_card_memory_mib": 1735.0,
+        "mean_power_w": 82.20988505747127
+      },
+      "1": {
+        "samples": 87,
+        "mean_utilization_percent": 73.77011494252874,
+        "peak_whole_card_memory_mib": 1717.0,
+        "mean_power_w": 80.43356321839077
+      }
+    },
+    "phase=evaluation epoch=21": {
+      "0": {
+        "samples": 18,
+        "mean_utilization_percent": 4.611111111111111,
+        "peak_whole_card_memory_mib": 535.0,
+        "mean_power_w": 32.28944444444444
+      },
+      "1": {
+        "samples": 18,
+        "mean_utilization_percent": 0.0,
+        "peak_whole_card_memory_mib": 18.0,
+        "mean_power_w": 10.759999999999998
+      }
+    },
+    "phase=train epoch=22": {
+      "0": {
+        "samples": 76,
+        "mean_utilization_percent": 66.21052631578948,
+        "peak_whole_card_memory_mib": 1735.0,
+        "mean_power_w": 86.36263157894737
+      },
+      "1": {
+        "samples": 76,
+        "mean_utilization_percent": 64.55263157894737,
+        "peak_whole_card_memory_mib": 1717.0,
+        "mean_power_w": 83.58750000000002
+      }
+    },
+    "phase=evaluation epoch=22": {
+      "0": {
+        "samples": 17,
+        "mean_utilization_percent": 4.0588235294117645,
+        "peak_whole_card_memory_mib": 535.0,
+        "mean_power_w": 34.209411764705884
+      },
+      "1": {
+        "samples": 17,
+        "mean_utilization_percent": 0.0,
+        "peak_whole_card_memory_mib": 18.0,
+        "mean_power_w": 10.741764705882353
+      }
+    },
+    "phase=train epoch=23": {
+      "0": {
+        "samples": 55,
+        "mean_utilization_percent": 75.10909090909091,
+        "peak_whole_card_memory_mib": 1735.0,
+        "mean_power_w": 105.60490909090909
+      },
+      "1": {
+        "samples": 55,
+        "mean_utilization_percent": 76.2909090909091,
+        "peak_whole_card_memory_mib": 1717.0,
+        "mean_power_w": 104.41818181818181
+      }
+    },
+    "phase=evaluation epoch=23": {
+      "0": {
+        "samples": 17,
+        "mean_utilization_percent": 4.235294117647059,
+        "peak_whole_card_memory_mib": 535.0,
+        "mean_power_w": 33.89705882352941
+      },
+      "1": {
+        "samples": 17,
+        "mean_utilization_percent": 0.0,
+        "peak_whole_card_memory_mib": 18.0,
+        "mean_power_w": 10.925294117647057
+      }
+    },
+    "phase=train epoch=24": {
+      "0": {
+        "samples": 75,
+        "mean_utilization_percent": 70.70666666666666,
+        "peak_whole_card_memory_mib": 1735.0,
+        "mean_power_w": 89.03520000000002
+      },
+      "1": {
+        "samples": 75,
+        "mean_utilization_percent": 71.30666666666667,
+        "peak_whole_card_memory_mib": 1717.0,
+        "mean_power_w": 86.9064
+      }
+    },
+    "phase=evaluation epoch=24": {
+      "0": {
+        "samples": 17,
+        "mean_utilization_percent": 4.882352941176471,
+        "peak_whole_card_memory_mib": 535.0,
+        "mean_power_w": 33.98529411764706
+      },
+      "1": {
+        "samples": 17,
+        "mean_utilization_percent": 0.0,
+        "peak_whole_card_memory_mib": 18.0,
+        "mean_power_w": 11.200588235294118
+      }
+    },
+    "phase=train epoch=25": {
+      "0": {
+        "samples": 81,
+        "mean_utilization_percent": 68.79012345679013,
+        "peak_whole_card_memory_mib": 1735.0,
+        "mean_power_w": 87.46925925925925
+      },
+      "1": {
+        "samples": 81,
+        "mean_utilization_percent": 58.2962962962963,
+        "peak_whole_card_memory_mib": 1717.0,
+        "mean_power_w": 84.74827160493827
+      }
+    },
+    "phase=evaluation epoch=25": {
+      "0": {
+        "samples": 17,
+        "mean_utilization_percent": 5.352941176470588,
+        "peak_whole_card_memory_mib": 535.0,
+        "mean_power_w": 33.69882352941176
+      },
+      "1": {
+        "samples": 17,
+        "mean_utilization_percent": 0.0,
+        "peak_whole_card_memory_mib": 18.0,
+        "mean_power_w": 10.788235294117648
+      }
+    },
+    "phase=train epoch=26": {
+      "0": {
+        "samples": 45,
+        "mean_utilization_percent": 91.5111111111111,
+        "peak_whole_card_memory_mib": 1735.0,
+        "mean_power_w": 119.47888888888885
+      },
+      "1": {
+        "samples": 45,
+        "mean_utilization_percent": 88.35555555555555,
+        "peak_whole_card_memory_mib": 1717.0,
+        "mean_power_w": 116.64600000000002
+      }
+    },
+    "phase=evaluation epoch=26": {
+      "0": {
+        "samples": 18,
+        "mean_utilization_percent": 2.611111111111111,
+        "peak_whole_card_memory_mib": 535.0,
+        "mean_power_w": 34.038333333333334
+      },
+      "1": {
+        "samples": 18,
+        "mean_utilization_percent": 0.5,
+        "peak_whole_card_memory_mib": 18.0,
+        "mean_power_w": 12.518333333333338
+      }
+    },
+    "phase=train epoch=27": {
+      "0": {
+        "samples": 45,
+        "mean_utilization_percent": 91.68888888888888,
+        "peak_whole_card_memory_mib": 1735.0,
+        "mean_power_w": 119.54155555555553
+      },
+      "1": {
+        "samples": 45,
+        "mean_utilization_percent": 90.08888888888889,
+        "peak_whole_card_memory_mib": 1717.0,
+        "mean_power_w": 117.15800000000002
+      }
+    },
+    "phase=evaluation epoch=27": {
+      "0": {
+        "samples": 18,
+        "mean_utilization_percent": 5.111111111111111,
+        "peak_whole_card_memory_mib": 535.0,
+        "mean_power_w": 33.78722222222222
+      },
+      "1": {
+        "samples": 18,
+        "mean_utilization_percent": 0.0,
+        "peak_whole_card_memory_mib": 18.0,
+        "mean_power_w": 12.49222222222222
+      }
+    },
+    "phase=train epoch=28": {
+      "0": {
+        "samples": 64,
+        "mean_utilization_percent": 81.328125,
+        "peak_whole_card_memory_mib": 1735.0,
+        "mean_power_w": 97.84062499999997
+      },
+      "1": {
+        "samples": 64,
+        "mean_utilization_percent": 59.78125,
+        "peak_whole_card_memory_mib": 1717.0,
+        "mean_power_w": 94.62609375000001
+      }
+    },
+    "phase=evaluation epoch=28": {
+      "0": {
+        "samples": 17,
+        "mean_utilization_percent": 4.647058823529412,
+        "peak_whole_card_memory_mib": 535.0,
+        "mean_power_w": 33.448823529411754
+      },
+      "1": {
+        "samples": 17,
+        "mean_utilization_percent": 0.0,
+        "peak_whole_card_memory_mib": 18.0,
+        "mean_power_w": 11.014117647058821
+      }
+    },
+    "phase=train epoch=29": {
+      "0": {
+        "samples": 46,
+        "mean_utilization_percent": 89.84782608695652,
+        "peak_whole_card_memory_mib": 1735.0,
+        "mean_power_w": 119.34586956521741
+      },
+      "1": {
+        "samples": 46,
+        "mean_utilization_percent": 90.45652173913044,
+        "peak_whole_card_memory_mib": 1717.0,
+        "mean_power_w": 116.95934782608694
+      }
+    },
+    "phase=evaluation epoch=29": {
+      "0": {
+        "samples": 17,
+        "mean_utilization_percent": 6.176470588235294,
+        "peak_whole_card_memory_mib": 535.0,
+        "mean_power_w": 33.92235294117648
+      },
+      "1": {
+        "samples": 17,
+        "mean_utilization_percent": 0.0,
+        "peak_whole_card_memory_mib": 18.0,
+        "mean_power_w": 10.877647058823527
+      }
+    },
+    "phase=train epoch=30": {
+      "0": {
+        "samples": 46,
+        "mean_utilization_percent": 89.56521739130434,
+        "peak_whole_card_memory_mib": 1735.0,
+        "mean_power_w": 117.42282608695648
+      },
+      "1": {
+        "samples": 46,
+        "mean_utilization_percent": 86.82608695652173,
+        "peak_whole_card_memory_mib": 1717.0,
+        "mean_power_w": 115.15999999999995
+      }
+    },
+    "phase=evaluation epoch=30": {
+      "0": {
+        "samples": 17,
+        "mean_utilization_percent": 5.352941176470588,
+        "peak_whole_card_memory_mib": 535.0,
+        "mean_power_w": 33.86588235294117
+      },
+      "1": {
+        "samples": 17,
+        "mean_utilization_percent": 0.0,
+        "peak_whole_card_memory_mib": 18.0,
+        "mean_power_w": 10.835882352941178
+      }
+    }
+  }
+}
