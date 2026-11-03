@@ -42,12 +42,20 @@
       "checkpoint_sha256": "bbfde05025fd283e00395bfb0c4d7a12b7f5c813ab9f1fd20a84e552317148f4",
       "all_weights_and_adam_finite": true,
       "full53600_600_600_and6700_updates_verified": true
+    },
+    {
+      "epoch": 11,
+      "pesq": 3.113589280049006,
+      "seconds": 3012.1875262260437,
+      "checkpoint_sha256": "3b91a649fe132e877e7013dacb03b09a0c39f051b03bb9aa95c315c68d59ae14",
+      "all_weights_and_adam_finite": true,
+      "full53600_600_600_and6700_updates_verified": true
     }
   ],
   "gpu_queries_while_training": 0,
   "formal_goal_achieved": false,
-  "observation_not_before_unix": 1793715431.9919984,
-  "expected_observation_utc": "2026-11-03T14:17:11.991998+00:00",
-  "last_completed_epoch": 10,
-  "next_epoch": 11
+  "observation_not_before_unix": 1793718444.1875262,
+  "expected_observation_utc": "2026-11-03T15:07:24.187526+00:00",
+  "last_completed_epoch": 11,
+  "next_epoch": 12
 }

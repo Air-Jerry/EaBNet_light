@@ -1,0 +1,13 @@
+{
+  "status": "synchronous_capture_and17_replays_passed",
+  "phase": "next_replays",
+  "new_optimizer_updates": 0,
+  "formal_goal_achieved": false,
+  "cuda_launch_blocking": true,
+  "latency_claim": false,
+  "checkpoint_sha256": "9fabec9f12b8b1386f93664debc1120dafe17b645edeb86b5bf754ed42d42d73",
+  "torch_version": "2.5.1+cu121",
+  "first_frame_error": 0.0,
+  "completed_replays": 17,
+  "graph_static_storage_bytes": 12491368
+}

@@ -1,0 +1,34 @@
+{
+  "scope": "Existing10second whole-card samples; training includes startup and validation; evaluation GPU1 includes auxiliary diagnostic, not parallel main evaluation",
+  "gpu": {
+    "phase=train epoch=11": {
+      "0": {
+        "samples": 280,
+        "mean_utilization_percent": 97.45,
+        "peak_memory_mib": 7721.0,
+        "mean_power_w": 145.5559642857144
+      },
+      "1": {
+        "samples": 280,
+        "mean_utilization_percent": 96.83928571428571,
+        "peak_memory_mib": 7703.0,
+        "mean_power_w": 145.74574999999996
+      }
+    },
+    "phase=evaluation epoch=11": {
+      "0": {
+        "samples": 22,
+        "mean_utilization_percent": 14.636363636363637,
+        "peak_memory_mib": 2213.0,
+        "mean_power_w": 52.8340909090909
+      },
+      "1": {
+        "samples": 22,
+        "mean_utilization_percent": 13.045454545454545,
+        "peak_memory_mib": 4075.0,
+        "mean_power_w": 33.72545454545456
+      }
+    }
+  },
+  "gpu_queries": 0
+}

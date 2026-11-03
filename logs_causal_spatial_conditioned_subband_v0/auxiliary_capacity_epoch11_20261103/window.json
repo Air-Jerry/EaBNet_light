@@ -1,12 +1,94 @@
 {
-  "status": "waiting_epoch11_evaluation",
+  "status": "both_capacity_checks_terminal",
   "guard_pid": 3438247,
   "guard_cookie": "166300586",
   "main_pid": 3356594,
   "main_cookie": "164514460",
-  "gpu_queries": 0,
+  "gpu_queries": 2,
   "training_signals_sent": 0,
   "formal_goal_achieved": false,
-  "checks": {},
-  "not_before_unix": 1793715016.9919984
+  "checks": {
+    "synchronous_graph": {
+      "child": {
+        "status": "helper_terminal",
+        "training_signals_sent": 0,
+        "child_pid": 3439952,
+        "child_cookie": "166325633",
+        "helper_exit_code": 0,
+        "helper_terminal": true
+      },
+      "result": {
+        "status": "synchronous_capture_and17_replays_passed",
+        "phase": "next_replays",
+        "new_optimizer_updates": 0,
+        "formal_goal_achieved": false,
+        "cuda_launch_blocking": true,
+        "latency_claim": false,
+        "checkpoint_sha256": "9fabec9f12b8b1386f93664debc1120dafe17b645edeb86b5bf754ed42d42d73",
+        "torch_version": "2.5.1+cu121",
+        "first_frame_error": 0.0,
+        "completed_replays": 17,
+        "graph_static_storage_bytes": 12491368
+      }
+    },
+    "monaural_warmup": {
+      "child": {
+        "status": "helper_terminal",
+        "training_signals_sent": 0,
+        "child_pid": 3440036,
+        "child_cookie": "166325860",
+        "helper_exit_code": 0,
+        "helper_terminal": true
+      },
+      "result": {
+        "status": "two_stage_train8_capacity_probe_complete",
+        "diagnostic_only": true,
+        "formal_goal_achieved": false,
+        "monaural_updates": 176,
+        "fusion_updates": 32,
+        "scope": "Same8 train6s only; no full600 or generalization claim",
+        "global_batch": 8,
+        "microbatch": 2,
+        "accumulation": 4,
+        "monaural_phase_computes_fixed_source": false,
+        "fusion_and_evaluation_compute_complete_source": true,
+        "source_diagnostic_sha256": "9fabec9f12b8b1386f93664debc1120dafe17b645edeb86b5bf754ed42d42d73",
+        "training_metadata_sha256": "d3854b3717979c398d403143342508db8335c2e613b279e3317c5192f5ef952b",
+        "sample_ids_sha256": "e302bed96716a578b81967079b5b56869f04ca2038138a2a428dbea4a7288d1f",
+        "torch_version": "2.5.1+cu121",
+        "device": "NVIDIA GeForce RTX 4070",
+        "seed": 1234,
+        "learning_rate": 0.001,
+        "pmsqe_weight": 0.1,
+        "training_cudnn_tf32": false,
+        "evaluation_cudnn_tf32": true,
+        "matmul_tf32": false,
+        "before": {
+          "fusion_mean_wb_pesq": 3.2365540862083435,
+          "mono_mean_wb_pesq": 1.1462597995996475
+        },
+        "last_monaural_loss": 0.9776138812303543,
+        "monaural_checkpoint_sha256": "a870af2df2f088e5e8214cdf8511e27c83ed7c1035a996f271bdbc707447a910",
+        "monaural_training_seconds": 15.158273467095569,
+        "after_monaural_warmup": {
+          "fusion_mean_wb_pesq": 3.2364669144153595,
+          "mono_mean_wb_pesq": 1.302848905324936
+        },
+        "last_fusion_loss": 0.43691177666187286,
+        "fusion_training_seconds": 24.67053399211727,
+        "after_fusion": {
+          "fusion_mean_wb_pesq": 3.2377996146678925,
+          "mono_mean_wb_pesq": 1.3028486967086792
+        },
+        "final_checkpoint_sha256": "e276988e77419dffae3b849184c1e29216e5b986cf8781982137eb7886d51ee0",
+        "all_weights_and_both_adam_states_finite": true,
+        "source_all_weights_unchanged": true,
+        "original_checkpoint_unchanged": true
+      }
+    }
+  },
+  "not_before_unix": 1793715016.9919984,
+  "evaluation_pid": 3439947,
+  "evaluation_cookie": "166325601",
+  "active_source_unchanged": true
 }

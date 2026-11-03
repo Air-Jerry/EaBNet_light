@@ -1,0 +1,12 @@
+{
+  "status": "waiting_after_epoch12_matched_joint_screen",
+  "guard_pid": 3445739,
+  "guard_cookie": "166436903",
+  "main_pid": 3356594,
+  "main_cookie": "164514460",
+  "gpu_queries": 0,
+  "training_signals_sent": 0,
+  "new_optimizer_updates": 0,
+  "formal_goal_achieved": false,
+  "not_before_unix": 1793718017.1875262
+}
