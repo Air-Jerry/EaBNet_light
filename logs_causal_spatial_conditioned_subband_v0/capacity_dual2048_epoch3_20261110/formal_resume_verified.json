@@ -1,0 +1,31 @@
+{
+  "status": "actual_exact_epoch3_resume_and_both_ranks_verified",
+  "formal_pid": 1895246,
+  "formal_cookie": "219231188",
+  "formal_stage": "/home/nis/jinrui.yang/EaBNet_light/tmp/decoder_resume_epoch3_stage_20261110",
+  "ranks": [
+    {
+      "pid": 1895325,
+      "cookie": "219231875",
+      "rank": 0
+    },
+    {
+      "pid": 1895326,
+      "cookie": "219231875",
+      "rank": 1
+    }
+  ],
+  "resumed_adam_steps": 20100,
+  "resumed_checkpoint_sha256": "6eedfaa5d14ccec9f3118543cb47163cea313037724d9134a72eb0ad4d233ee9",
+  "first_new_epoch": 4,
+  "original_priority_affinity_and_environment_restored": true,
+  "original_training_sources_unchanged": true,
+  "protected_evaluator_unchanged": true,
+  "actual_training_headers_53600_600_epoch4_verified": true,
+  "diagnostic_weights_used_for_formal": false,
+  "full_epoch4_not_yet_complete": true,
+  "gpu_queries": 0,
+  "batch_queries": 0,
+  "checked_at_utc": "2026-11-09T17:21:08.963569+00:00",
+  "formal_goal_achieved": false
+}

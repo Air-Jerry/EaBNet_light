@@ -1,0 +1,161 @@
+{
+  "status": "owned_tree_terminal_all_complete_epochs_preserved",
+  "old_pid": 1854168,
+  "old_cookie": "218278134",
+  "completed_epoch": 3,
+  "completed_adam_steps": 20100,
+  "best_epoch": 3,
+  "best_pesq": 3.1880745438734692,
+  "actual_recovery_verified": true,
+  "discarded_unsaved_partial_epoch": 4,
+  "all_complete_scores": [
+    {
+      "epoch": 0,
+      "pesq": 3.128550916115443,
+      "checkpoint_sha256": "57787279b40cfdf16bc13aee9d68d984ec603154043ac45003223a2f205c19a8"
+    },
+    {
+      "epoch": 1,
+      "pesq": 3.180702104965846,
+      "checkpoint_sha256": "c236c328fa5ec00ae280c5c601947695f761208cc847091174907bf0ed3fa217"
+    },
+    {
+      "epoch": 2,
+      "pesq": 3.187184657851855,
+      "checkpoint_sha256": "2e73b0f71028a8ff0ded1d5741ce472e4cdf57dfdd5cd9a84a6d9c81771c1d34"
+    },
+    {
+      "epoch": 3,
+      "pesq": 3.1880745438734692,
+      "checkpoint_sha256": "6eedfaa5d14ccec9f3118543cb47163cea313037724d9134a72eb0ad4d233ee9"
+    }
+  ],
+  "diagnostic_driver_pid": 1892592,
+  "diagnostic_driver_cookie": "219179211",
+  "formal_goal_achieved": false,
+  "stopped_processes": [
+    {
+      "pid": 1854168,
+      "ppid": 1,
+      "state": "T",
+      "cookie": "218278134",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light/tmp/decoder_formal_v3_stage_20261109"
+    },
+    {
+      "pid": 1854205,
+      "ppid": 1854168,
+      "state": "T",
+      "cookie": "218278339",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light/tmp/decoder_formal_v3_stage_20261109"
+    },
+    {
+      "pid": 1891099,
+      "ppid": 1854168,
+      "state": "T",
+      "cookie": "219151998",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light/tmp/decoder_formal_v3_stage_20261109"
+    },
+    {
+      "pid": 1891100,
+      "ppid": 1854168,
+      "state": "T",
+      "cookie": "219151998",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light/tmp/decoder_formal_v3_stage_20261109"
+    },
+    {
+      "pid": 1891101,
+      "ppid": 1891099,
+      "state": "T",
+      "cookie": "219151998",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light/tmp/decoder_formal_v3_stage_20261109"
+    },
+    {
+      "pid": 1891117,
+      "ppid": 1891101,
+      "state": "T",
+      "cookie": "219152073",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light/tmp/decoder_formal_v3_stage_20261109"
+    },
+    {
+      "pid": 1891118,
+      "ppid": 1891101,
+      "state": "T",
+      "cookie": "219152073",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light/tmp/decoder_formal_v3_stage_20261109"
+    },
+    {
+      "pid": 1891199,
+      "ppid": 1891117,
+      "state": "T",
+      "cookie": "219152813",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light/tmp/decoder_formal_v3_stage_20261109"
+    },
+    {
+      "pid": 1891200,
+      "ppid": 1891118,
+      "state": "T",
+      "cookie": "219152813",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light/tmp/decoder_formal_v3_stage_20261109"
+    },
+    {
+      "pid": 1891203,
+      "ppid": 1891117,
+      "state": "T",
+      "cookie": "219152813",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light/tmp/decoder_formal_v3_stage_20261109"
+    },
+    {
+      "pid": 1891204,
+      "ppid": 1891118,
+      "state": "T",
+      "cookie": "219152813",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light/tmp/decoder_formal_v3_stage_20261109"
+    },
+    {
+      "pid": 1891207,
+      "ppid": 1891117,
+      "state": "T",
+      "cookie": "219152814",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light/tmp/decoder_formal_v3_stage_20261109"
+    },
+    {
+      "pid": 1891208,
+      "ppid": 1891118,
+      "state": "T",
+      "cookie": "219152814",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light/tmp/decoder_formal_v3_stage_20261109"
+    },
+    {
+      "pid": 1891211,
+      "ppid": 1891117,
+      "state": "T",
+      "cookie": "219152814",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light/tmp/decoder_formal_v3_stage_20261109"
+    },
+    {
+      "pid": 1891213,
+      "ppid": 1891118,
+      "state": "T",
+      "cookie": "219152814",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light/tmp/decoder_formal_v3_stage_20261109"
+    }
+  ],
+  "source_bytes_unchanged": true,
+  "automatic_exact_epoch3_resume_prepared": true,
+  "new_gpu_work_started": false
+}

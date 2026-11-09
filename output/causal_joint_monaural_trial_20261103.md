@@ -100,3 +100,11 @@ CPU重新读取实际检查点，所有权重和Adam有限，实际Adam步数670
 第三轮继续，尚未达到3.4。两轮增幅明显减小，不能据此预言继续训练一定达标；结构容量试验继续按独立对照推进。第三轮完整核验按第二轮实际耗时保守安排至16:58UTC/北京时间00:58，观察器PID1882201/启动标记218929583已实际验证存活。
 
 证据为`logs_causal_spatial_conditioned_subband_v0/decoder_epoch2_observation_20261109/{epoch2_verified,epoch2_paired_analysis,monitor}.json`。原受保护评估器与运行中源码保持，完整最终600条流式验收仍未执行。
+
+## 第三轮及恢复训练
+
+16:58UTC观察器确认正式第3轮：完整原600条WB-PESQ为3.1880745438734692，比第2轮提高0.000889886021614。实际2859.3960947990417秒，即47分39秒；53600条训练、600条验证及600条原指标完整，global8、6700次新更新，累计Adam20100步。全部模型与Adam有限，251项冻结root状态不变、16项root解码器状态改变。检查点SHA256 `6eedfaa5d14ccec9f3118543cb47163cea313037724d9134a72eb0ad4d233ee9`。
+
+额外GRU的同源2048条/256步匹配试验完整600条只比控制高0.000436，未进入正式训练。已验证完整第0至3轮、Adam及原保护检查，在新隔离树按原学习率和环境继续第4轮；诊断权重没有用于正式初始化，运行中源码和原评估器未修改。下一轮按恢复时间与实际耗时，安排17:59:41UTC核验，而非反复查看批次。
+
+第3轮证据：`decoder_epoch3_observation_20261109/{epoch3_verified,epoch3_paired_analysis,monitor}.json`；实际恢复证据：`capacity_dual2048_epoch3_20261110/formal_resume_verified.json`，均位于`logs_causal_spatial_conditioned_subband_v0/`。当前最好正式成绩仍低于3.4，全部600条最终流式验收尚未执行。
