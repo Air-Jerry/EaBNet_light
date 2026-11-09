@@ -1,0 +1,13 @@
+{
+  "status": "waiting_predicted_epoch5_evaluation",
+  "guard_pid": 1916943,
+  "guard_cookie": "219676689",
+  "main_pid": 1912249,
+  "main_cookie": "219579865",
+  "not_before_utc": "2026-11-09T18:49:29.197054+00:00",
+  "latest_window_utc": "2026-11-09T18:57:48.197054+00:00",
+  "gpu_queries": 0,
+  "training_signals_sent": 0,
+  "formal_goal_achieved": false,
+  "scope": "Actual formal4 weights; matched singleGPU original-loop fulljoint/last-block/captured-model cost; diagnostic only; no quality claim"
+}
