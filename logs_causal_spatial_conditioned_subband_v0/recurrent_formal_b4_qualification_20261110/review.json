@@ -1,0 +1,10 @@
+{
+  "status": "failed_read_exact_log",
+  "source_checkpoint": "/home/nis/jinrui.yang/EaBNet_light/tmp/decoder_resume_epoch6_stage_20261110/checkpoints_causal_decoder_monaural_spectral_v1_decoder_monaural_20261109_223052_1854168/model_epoch_7.pt",
+  "source_epoch": 7,
+  "source_checkpoint_sha256": "0fb415ce19fd68d3ad1711b37408025d260a5b077adf9a14a0bf53e871c9a4fd",
+  "formal_goal_achieved": false,
+  "diagnostic_weights_used_for_formal": false,
+  "phase": "cuda_launch",
+  "error": "AssertionError: cuda_launch exit1; inspect exact log"
+}

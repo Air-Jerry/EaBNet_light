@@ -1,5 +1,5 @@
 {
-  "status": "waiting_measured_epoch8_boundary",
+  "status": "superseded_waiting_only_to_complete_missing_temporal_arm",
   "controller_pid": 1955700,
   "controller_cookie": "220550369",
   "main_pid": 1939626,
@@ -10,5 +10,6 @@
   "batch_queries": 0,
   "formal_goal_achieved": false,
   "diagnostic_weights_used_for_formal": false,
-  "training_signals_sent": 0
+  "training_signals_sent": 0,
+  "replacement_script": "coordinate_recurrent_temporal_after_epoch8_v3_20261110.py"
 }

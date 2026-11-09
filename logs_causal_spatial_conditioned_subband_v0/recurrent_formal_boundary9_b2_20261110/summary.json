@@ -1,0 +1,14 @@
+{
+  "status": "waiting_measured_epoch9_boundary",
+  "controller_pid": 1968872,
+  "controller_cookie": "220857296",
+  "main_pid": 1965809,
+  "main_cookie": "220786201",
+  "not_before_utc": "2026-11-09T22:16:54.519744+00:00",
+  "latest_boundary_utc": "2026-11-09T22:30:35.744494+00:00",
+  "gpu_queries": 0,
+  "batch_queries": 0,
+  "formal_goal_achieved": false,
+  "diagnostic_weights_used_for_formal": false,
+  "training_signals_sent": 0
+}

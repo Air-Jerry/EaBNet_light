@@ -1,0 +1,32 @@
+{
+  "status": "original_exact_epoch8_resume_launched",
+  "controller_pid": 1958770,
+  "controller_cookie": "220624690",
+  "main_pid": 1939626,
+  "main_cookie": "220189274",
+  "not_before_utc": "2026-11-09T21:24:17.462495+00:00",
+  "latest_boundary_utc": "2026-11-09T21:38:22.231248+00:00",
+  "gpu_queries": 0,
+  "batch_queries": 0,
+  "formal_goal_achieved": false,
+  "diagnostic_weights_used_for_formal": false,
+  "training_signals_sent": 15,
+  "completed_epoch8_pesq": 3.2033325507243475,
+  "completed_epoch8_seconds": 2858.7752499580383,
+  "actual_completed_epoch8_resume_guard_passed": true,
+  "temporal_trial": {
+    "status": "complete_missing_temporal_matched_trial_and_stream_screen",
+    "full600_pesq": 3.1828245484828948,
+    "gain_vs_control": -0.0023179699977240453,
+    "gain_vs_recurrent": -0.016224295894304852,
+    "matched_records_and_updates_verified": true,
+    "all_single_waveform_stream_gates_passed": true
+  },
+  "error": "AssertionError: recurrent_preflight exited1",
+  "failure_before_or_after_owned_stop": "after",
+  "resumed_pid": 1965809,
+  "resumed_cookie": "220786201",
+  "resumed_stage": "/home/nis/jinrui.yang/EaBNet_light/tmp/decoder_resume_epoch6_stage_20261110",
+  "resumed_adam_steps": 53600,
+  "original_environment_affinity_priority_restored": true
+}

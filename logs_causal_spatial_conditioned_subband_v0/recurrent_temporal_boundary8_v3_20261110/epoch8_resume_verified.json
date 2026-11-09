@@ -1,0 +1,26 @@
+{
+  "status": "actual_exact_epoch8_resume_and_two_torchrun_rank_processes_verified",
+  "checked_at_utc": "2026-11-09T21:42:11.810981+00:00",
+  "formal_pid": 1965809,
+  "formal_cookie": "220786201",
+  "formal_stage": "/home/nis/jinrui.yang/EaBNet_light/tmp/decoder_resume_epoch6_stage_20261110",
+  "ranks": [
+    {
+      "pid": 1965873,
+      "cookie": "220786820",
+      "rank": 0
+    },
+    {
+      "pid": 1965874,
+      "cookie": "220786820",
+      "rank": 1
+    }
+  ],
+  "source_epoch": 8,
+  "resumed_adam_steps": 53600,
+  "diagnostic_weights_used_for_formal": false,
+  "data_loader_children_excluded": true,
+  "new_gpu_queries": 0,
+  "new_batch_queries": 0,
+  "formal_goal_achieved": false
+}
