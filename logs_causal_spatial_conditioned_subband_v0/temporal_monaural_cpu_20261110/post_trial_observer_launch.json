@@ -1,0 +1,12 @@
+{
+  "status": "scheduled_actual_trial_and_restored_epoch7_observer_live",
+  "observer_pid": 1933089,
+  "observer_cookie": "220036445",
+  "next_formal_epoch": 7,
+  "trial_wait_scope": "After actual completed6 and verified CPU recovery",
+  "trial_observation_seconds_after_start": 600,
+  "formal_observation_seconds_after_resume": 3000,
+  "gpu_queries": 0,
+  "batch_queries": 0,
+  "formal_goal_achieved": false
+}

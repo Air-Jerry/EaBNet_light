@@ -6,6 +6,18 @@ from torch import nn
 
 
 @contextmanager
+def _independent_accumulated_gradients(model):
+    # Replay overwrites static gradients; accumulated gradients need separate storage.
+    handles = [parameter.register_hook(lambda gradient: gradient.clone())
+               for parameter in model.parameters() if parameter.requires_grad]
+    try:
+        yield
+    finally:
+        for handle in handles:
+            handle.remove()
+
+
+@contextmanager
 def graphed_model_training(model, sample):
     if sample.device.type != 'cuda' or not model.training:
         raise ValueError('Capture a CUDA model in its original training mode before DDP wrapping')
@@ -33,11 +45,12 @@ def graphed_model_training(model, sample):
                 return surface(value), None
             return original(value, state)
 
-        model.process = process
-        try:
-            yield
-        finally:
-            if had_override:
-                model.process = original
-            else:
-                del model.process
+        with _independent_accumulated_gradients(model):
+            model.process = process
+            try:
+                yield
+            finally:
+                if had_override:
+                    model.process = original
+                else:
+                    del model.process

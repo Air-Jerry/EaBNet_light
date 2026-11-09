@@ -1,0 +1,59 @@
+{
+  "status": "failed_read_exact_log",
+  "scope": "Single GPU; same8 actual6s records repeated for cost; not quality or full epoch proof",
+  "global_batch": 8,
+  "micro_batch": 2,
+  "accumulation_steps": 4,
+  "cold_updates": 1,
+  "hot_updates": 4,
+  "formal_goal_achieved": false,
+  "diagnostic_weights_can_initialize_formal": false,
+  "arms": {
+    "eager_joint": {
+      "status": "complete",
+      "capture_seconds": 2.2137071937322617e-05,
+      "cold_seconds": 15.889402335043997,
+      "hot_seconds": 4.208421224262565,
+      "cold_loss": 0.41509364545345306,
+      "hot_loss": 0.4114483967423439,
+      "hot_samples": 32,
+      "hot_samples_per_second": 7.603801590846531,
+      "actual_adam_updates": 5,
+      "all_weights_and_adam_finite": true,
+      "peak_allocated_bytes": 8182459904,
+      "trainable_parameters": 5686130
+    },
+    "recurrent_adapt": {
+      "status": "complete",
+      "capture_seconds": 0.00024868594482541084,
+      "cold_seconds": 2.7517849039286375,
+      "hot_seconds": 3.390713983681053,
+      "cold_loss": 0.4152974784374237,
+      "hot_loss": 0.41205466352403164,
+      "hot_samples": 32,
+      "hot_samples_per_second": 9.437540339294532,
+      "actual_adam_updates": 5,
+      "all_weights_and_adam_finite": true,
+      "peak_allocated_bytes": 6246007296,
+      "trainable_parameters": 5101386,
+      "frozen_earlier_and_shared_weights_unchanged": true
+    }
+  },
+  "source_checkpoint_sha256": "03e849008fd5d0365ca151a67c2c176606ce0fa1f4be671b846831204091c8b0",
+  "source_epoch": 4,
+  "seed": 1234,
+  "selected_sample_ids": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "training_metadata_sha256": "d3854b3717979c398d403143342508db8335c2e613b279e3317c5192f5ef952b",
+  "capture_scope": "Model process forward/backward only; original run_epoch loss/finite checks/Adam unchanged; no DDP capture",
+  "active_arm": "graphed_joint",
+  "error": "AssertionError: "
+}

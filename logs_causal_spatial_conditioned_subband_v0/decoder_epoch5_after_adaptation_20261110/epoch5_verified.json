@@ -1,0 +1,44 @@
+{
+  "status": "complete",
+  "epoch": 5,
+  "mean": {
+    "enhanced": {
+      "pesq": 3.194194397528966,
+      "stoi": 0.965766695795998,
+      "estoi": 0.9258389987594683,
+      "si_snr_db": 16.16030857013743,
+      "sdr_db": 17.388772269496556
+    },
+    "noisy": {
+      "pesq": 1.0880955342451732,
+      "stoi": 0.6510592990906214,
+      "estoi": 0.3667556529781415,
+      "si_snr_db": -1.2095493301340101,
+      "sdr_db": -1.1495106109218791
+    }
+  },
+  "timing": {
+    "epoch": 5,
+    "status": "complete",
+    "started_unix": 1794247673,
+    "finished_unix": 1794250562.344523,
+    "total_seconds": 2889.3445229530334,
+    "training_validation_checkpoint_seconds": 2674,
+    "evaluation_audit_seconds": 215.34452295303345,
+    "training_samples": 53600,
+    "validation_samples": 600,
+    "full_metric_samples": 600,
+    "optimizer_updates_this_epoch": 6700,
+    "global_batch_size": 8,
+    "limit_seconds": 3600
+  },
+  "checkpoint_sha256": "01cfb86b1d1a0d6683cfaead7358c3c863d4e3e743c3adc17a3a8aad75f1d02a",
+  "all_weights_and_adam_finite": true,
+  "adam_steps": 33500,
+  "frozen_root_state_tensors_unchanged": 251,
+  "changed_root_decoder_state_tensors": 16,
+  "full53600_600_600_and6700_updates_verified": true,
+  "original_protected_evaluator_unchanged": true,
+  "formal_goal_achieved": false,
+  "final_full600_streaming_still_required": true
+}

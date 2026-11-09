@@ -1,6 +1,6 @@
 # 选择性适应：完整600条对照与下一成本检查
 
-目标仍为固定原600条完整语音WB-PESQ至少3.4、原16k/512/160/320/Hann/power0.5/前8通道/ref0/外部归一化none、全模型因果且每10ms输入跳实测小于10ms，以及53600/600/600、global8、6700次有限Adam更新的完整双卡轮次不超过3600秒。当前正式最好3.1936247148，尚未达标。
+目标仍为固定原600条完整语音WB-PESQ至少3.4、原16k/512/160/320/Hann/power0.5/前8通道/ref0/外部归一化none、全模型因果且每10ms输入跳实测小于10ms，以及53600/600/600、global8、6700次有限Adam更新的完整双卡轮次不超过3600秒。当前正式第5轮最好3.1941943975，尚未达标。
 
 ## 已完成的匹配质量试验
 
@@ -40,3 +40,28 @@
 计划使用相同8条真实6秒记录重复进行成本检查，原run_epoch、单GPUmicro2/累积4/global8、fresh Adam1e-4，每组1次冷更新和4次热更新，比较完整联合、最后循环块适应与模型图。图组必须保持捕获阶段零更新，且第一次真实更新的loss、全部权重和Adam与原循环控制匹配；有限性和实际5步同时核验。单GPU重复8条的吞吐只能筛查，不能证明完整双卡轮次一小时或泛化质量。
 
 准备与安排证据位于`logs_causal_spatial_conditioned_subband_v0/capacity_monaural_cpu_20261109/{recurrent_adaptation_preparation,recurrent_graph_cost_window_scheduled}.json`。后续实际窗口结果为服务器`logs_causal_spatial_conditioned_subband_v0/recurrent_graph_cost_epoch5_20261110/window.json`。
+
+## 实际第5轮与成本失败
+
+按18:57:48UTC安排完成核验：第5轮原600条WB-PESQ为3.194194397528966，仅比第4轮提高0.000569682717323。整轮2889.3445229530334秒，48分9秒；53600/600/600、global8及6700次新更新完整，累计Adam33500步，模型与Adam有限，原协议及冻结状态通过。检查点SHA256 `01cfb86b1d1a0d6683cfaead7358c3c863d4e3e743c3adc17a3a8aad75f1d02a`。正式第6轮沿原进程继续，没有使用图加速。
+
+闲卡成本检查实际结束，仅2次GPU认领查询、未向正式训练发送信号。单GPU同8条真实记录、每组1次冷更新和4次热更新，原run_epoch、micro2/累积4/global8、fresh Adam1e-4：
+
+| 组别 | 热32条耗时 | 热条/秒 | 峰值分配 | 实际Adam |
+|---|---:|---:|---:|---:|
+| 完整根联合 | 4.208421秒 | 7.603802 | 8182459904字节 | 5 |
+| 最后循环块适应 | 3.390714秒 | 9.437540 | 6246007296字节 | 5 |
+
+两组权重和Adam有限，最后循环块确实学习，前三块及共享矩阵不变。该单卡重复样本成本比不能线性外推成完整双卡一小时通过，也没有质量结果。
+
+图组成功进入真实更新，但首次更新的全部权重/Adam与控制的等价性断言失败，子进程退出1。原日志定位到`screen_recurrent_and_graph_cost_20261110.py:101`，不是捕获API不支持；因为初版在断言之后才保存比较结果，具体误差没有留存，不能补报数值或宣布加速通过。失败现场保留，正式训练仍使用原循环，检查点未受该试验影响。
+
+## 梯度存储别名复现与修正
+
+检查目标PyTorch2.5.1源码，图反向返回静态梯度的detach视图。在本地及目标服务器CPU复现同类行为：先累积`[1,2,3]`再累积`[4,5,6]`，首份grad别名到重放缓冲，第二次写入后结果错误地成为`[8,10,12]`；将返回梯度复制到独立存储后结果为正确的`[5,7,9]`。此机制可解释观察到的等价性失败，是否完全解释真实GPU差异仍待复测。
+
+`graphed_model_training`在捕获完成后注册梯度复制钩子，退出时移除；捕获本身仍0次优化更新，原有限性检查、累积权重、裁剪和Adam保持。新增1项CPU回归通过，验证错误重现、正确累积、连续两组microbatch和退出清理。目标服务器实际运行修正模块的CPU复现通过，不将其说成CUDA等价性已通过。
+
+新版本在独立`tmp/graphed_accumulation_stage_v2_20261110`，旧失败源码和模型未改。新守护PID1928863/启动标记219948443，19:38:36UTC前不查询GPU，仅在原第6轮唯一评估器及空闲GPU1匹配时复测；子105秒、父110秒。保持权重误差1e-5、Adam相对误差1e-3、loss误差1e-5，新增先保存实测误差再断言。第6轮完整观察器PID1929068/启动标记219954289，安排19:45:11UTC核验，不打断当前轮次。
+
+证据：`decoder_epoch5_after_adaptation_20261110/{epoch5_verified,epoch5_paired_analysis,monitor}.json`、`recurrent_graph_cost_epoch5_20261110/{window,cost_summary}.json`，以及`temporal_monaural_cpu_20261110/{graph_accumulation_v2_preparation,graph_accumulation_v2_scheduled,epoch6_observer_launch}.json`；均相对`logs_causal_spatial_conditioned_subband_v0/`。

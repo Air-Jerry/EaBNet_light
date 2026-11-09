@@ -1,0 +1,13 @@
+{
+  "status": "waiting_predicted_epoch6_evaluation",
+  "guard_pid": 1928863,
+  "guard_cookie": "219948443",
+  "main_pid": 1912249,
+  "main_cookie": "219579865",
+  "not_before_utc": "2026-11-09T19:38:36.344523+00:00",
+  "latest_window_utc": "2026-11-09T19:46:02.344523+00:00",
+  "gpu_queries": 0,
+  "training_signals_sent": 0,
+  "formal_goal_achieved": false,
+  "scope": "Same actual formal4; corrected static gradient accumulation; matched original-loop singleGPU eager/captured cost; no quality claim"
+}
