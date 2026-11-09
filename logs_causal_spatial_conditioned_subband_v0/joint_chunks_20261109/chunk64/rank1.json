@@ -1,0 +1,23 @@
+{
+  "status": "complete",
+  "rank": 1,
+  "chunk_size": 64,
+  "source_epoch": 28,
+  "source_checkpoint_sha256": "c6861b9216592872ec69f53af9bb520756e0b68eea7568f7a005aa18e851768b",
+  "global_batch": 8,
+  "warmup_updates": 4,
+  "measured_updates": 24,
+  "actual_total_updates": 28,
+  "cold_seconds": 15.254759419243783,
+  "hot_seconds": 13.81550622265786,
+  "hot_global_samples_per_second": 13.897427781916093,
+  "projected_train_only_seconds": 3856.828820491986,
+  "loss": 0.4353984451542298,
+  "cold_loss": 0.4408052172511816,
+  "all_weights_and_adam_finite": true,
+  "inference_retention_chunk_restored": 64,
+  "peak_allocated_bytes": 8132894720,
+  "diagnostic_only": true,
+  "measured_scope": "24 updates on192 distinct real6s records after4 warmup updates; not a full epoch",
+  "rank_indices_sha256": "54dd6cb63687f0f70b2d5743f789676d843025e3a89242f08388186506b377b9"
+}

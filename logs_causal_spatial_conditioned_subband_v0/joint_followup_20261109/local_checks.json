@@ -1,0 +1,9 @@
+{
+  "retention_partition_cpu_tests_passed": 3,
+  "decoder_adaptation_cpu_tests_passed": 2,
+  "decoder_trainable_parameters": 3191840,
+  "decoder_adapted_root_parameters": 85408,
+  "precision": "FP32 params/frontend/loss/eval; original internal BF16 conv and FP16 train GRU",
+  "retention_chunk32_promoted": false,
+  "formal_goal_achieved": false
+}

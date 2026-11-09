@@ -1,0 +1,12 @@
+{
+  "status": "controller_kernel_verified_live",
+  "checked_at_utc": "2026-11-09T13:44:45.970653+00:00",
+  "controller_pid": 1839803,
+  "controller_cookie": "217974705",
+  "phase": "control_training",
+  "expected_observation_utc": "2026-11-09T14:00:16.662472+00:00",
+  "gpu_queries": 0,
+  "partial_metric_queries": 0,
+  "report": "logs_causal_spatial_conditioned_subband_v0/decoder_joint_matched2048_20261109/summary.json",
+  "goal_achieved": false
+}

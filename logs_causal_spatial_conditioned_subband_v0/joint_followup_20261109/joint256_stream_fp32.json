@@ -1,0 +1,52 @@
+{
+  "status": "trained_joint600hop_checks_passed",
+  "new_optimizer_updates": 0,
+  "formal_goal_achieved": false,
+  "scope": "Actual256-update joint checkpoint,one complete real6s waveform and600hops; not full600 streaming audit",
+  "checkpoint_sha256": "568b27c2e2e1a42056ccbef45a498d05b50cf0e099681fcf5fec7d85b535d061",
+  "full600_wb_pesq": 3.1690313086907067,
+  "prefix_checks": [
+    {
+      "cutoff": 17,
+      "future": 1.4901161193847656e-07,
+      "repeat": 4.76837158203125e-07
+    },
+    {
+      "cutoff": 150,
+      "future": 4.76837158203125e-07,
+      "repeat": 4.76837158203125e-07
+    },
+    {
+      "cutoff": 300,
+      "future": 4.76837158203125e-07,
+      "repeat": 4.917383193969727e-07
+    },
+    {
+      "cutoff": 500,
+      "future": 4.76837158203125e-07,
+      "repeat": 4.76837158203125e-07
+    }
+  ],
+  "cudnn_allow_tf32": false,
+  "matmul_allow_tf32": false,
+  "device": "NVIDIA GeForce RTX 4070",
+  "torch_version": "2.5.1+cu121",
+  "gates": {
+    "future": true,
+    "waveform": true,
+    "all600hops": true,
+    "cache": true,
+    "weights_unchanged": true
+  },
+  "future_max_error": 4.76837158203125e-07,
+  "waveform_max_error": 6.109476089477539e-07,
+  "measured_hops": 600,
+  "max_hop_ms": 6.26226793974638,
+  "mean_hop_ms": 5.98788593042021,
+  "p99_hop_ms": 6.153845922090113,
+  "cache_bytes": 6219024,
+  "cuda_peak_allocated_bytes": 79874560,
+  "independent_streams": true,
+  "input_state_unchanged": true,
+  "warmup_state_discarded": true
+}
