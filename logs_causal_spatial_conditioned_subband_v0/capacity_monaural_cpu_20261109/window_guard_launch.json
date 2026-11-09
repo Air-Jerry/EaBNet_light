@@ -1,0 +1,13 @@
+{
+  "status": "waiting_predicted_epoch1_evaluation",
+  "guard_pid": 1862835,
+  "guard_cookie": "218483455",
+  "main_pid": 1854168,
+  "main_cookie": "218278134",
+  "not_before_utc": "2026-11-09T15:15:00+00:00",
+  "latest_window_utc": "2026-11-09T15:35:00+00:00",
+  "gpu_queries": 0,
+  "training_signals_sent": 0,
+  "formal_goal_achieved": false,
+  "scope": "Cost and deadline only; no quality comparison"
+}
