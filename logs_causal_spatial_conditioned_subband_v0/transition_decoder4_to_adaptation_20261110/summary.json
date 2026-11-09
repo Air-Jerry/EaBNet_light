@@ -1,0 +1,166 @@
+{
+  "status": "owned_tree_terminal_all_complete_epochs_preserved",
+  "old_pid": 1895246,
+  "old_cookie": "219231188",
+  "completed_epoch": 4,
+  "completed_adam_steps": 26800,
+  "best_epoch": 4,
+  "best_pesq": 3.193624714811643,
+  "actual_recovery_verified": true,
+  "discarded_unsaved_partial_epoch": 5,
+  "all_complete_scores": [
+    {
+      "epoch": 0,
+      "pesq": 3.128550916115443,
+      "checkpoint_sha256": "57787279b40cfdf16bc13aee9d68d984ec603154043ac45003223a2f205c19a8"
+    },
+    {
+      "epoch": 1,
+      "pesq": 3.180702104965846,
+      "checkpoint_sha256": "c236c328fa5ec00ae280c5c601947695f761208cc847091174907bf0ed3fa217"
+    },
+    {
+      "epoch": 2,
+      "pesq": 3.187184657851855,
+      "checkpoint_sha256": "2e73b0f71028a8ff0ded1d5741ce472e4cdf57dfdd5cd9a84a6d9c81771c1d34"
+    },
+    {
+      "epoch": 3,
+      "pesq": 3.1880745438734692,
+      "checkpoint_sha256": "6eedfaa5d14ccec9f3118543cb47163cea313037724d9134a72eb0ad4d233ee9"
+    },
+    {
+      "epoch": 4,
+      "pesq": 3.193624714811643,
+      "checkpoint_sha256": "03e849008fd5d0365ca151a67c2c176606ce0fa1f4be671b846831204091c8b0"
+    }
+  ],
+  "diagnostic_driver_pid": 1909603,
+  "diagnostic_driver_cookie": "219536587",
+  "formal_goal_achieved": false,
+  "stopped_processes": [
+    {
+      "pid": 1895246,
+      "ppid": 1,
+      "state": "T",
+      "cookie": "219231188",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light/tmp/decoder_resume_epoch3_stage_20261110"
+    },
+    {
+      "pid": 1895316,
+      "ppid": 1895246,
+      "state": "T",
+      "cookie": "219231711",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light/tmp/decoder_resume_epoch3_stage_20261110"
+    },
+    {
+      "pid": 1908252,
+      "ppid": 1895246,
+      "state": "T",
+      "cookie": "219515431",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light/tmp/decoder_resume_epoch3_stage_20261110"
+    },
+    {
+      "pid": 1908253,
+      "ppid": 1895246,
+      "state": "T",
+      "cookie": "219515431",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light/tmp/decoder_resume_epoch3_stage_20261110"
+    },
+    {
+      "pid": 1908254,
+      "ppid": 1908252,
+      "state": "T",
+      "cookie": "219515431",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light/tmp/decoder_resume_epoch3_stage_20261110"
+    },
+    {
+      "pid": 1908257,
+      "ppid": 1908254,
+      "state": "T",
+      "cookie": "219515499",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light/tmp/decoder_resume_epoch3_stage_20261110"
+    },
+    {
+      "pid": 1908258,
+      "ppid": 1908254,
+      "state": "T",
+      "cookie": "219515500",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light/tmp/decoder_resume_epoch3_stage_20261110"
+    },
+    {
+      "pid": 1908339,
+      "ppid": 1908257,
+      "state": "T",
+      "cookie": "219516251",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light/tmp/decoder_resume_epoch3_stage_20261110"
+    },
+    {
+      "pid": 1908340,
+      "ppid": 1908258,
+      "state": "T",
+      "cookie": "219516251",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light/tmp/decoder_resume_epoch3_stage_20261110"
+    },
+    {
+      "pid": 1908343,
+      "ppid": 1908257,
+      "state": "T",
+      "cookie": "219516252",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light/tmp/decoder_resume_epoch3_stage_20261110"
+    },
+    {
+      "pid": 1908344,
+      "ppid": 1908258,
+      "state": "T",
+      "cookie": "219516252",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light/tmp/decoder_resume_epoch3_stage_20261110"
+    },
+    {
+      "pid": 1908347,
+      "ppid": 1908257,
+      "state": "T",
+      "cookie": "219516252",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light/tmp/decoder_resume_epoch3_stage_20261110"
+    },
+    {
+      "pid": 1908348,
+      "ppid": 1908258,
+      "state": "T",
+      "cookie": "219516252",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light/tmp/decoder_resume_epoch3_stage_20261110"
+    },
+    {
+      "pid": 1908351,
+      "ppid": 1908257,
+      "state": "T",
+      "cookie": "219516253",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light/tmp/decoder_resume_epoch3_stage_20261110"
+    },
+    {
+      "pid": 1908353,
+      "ppid": 1908258,
+      "state": "T",
+      "cookie": "219516253",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light/tmp/decoder_resume_epoch3_stage_20261110"
+    }
+  ],
+  "source_bytes_unchanged": true,
+  "automatic_exact_epoch4_resume_prepared": true,
+  "new_gpu_work_started": false
+}

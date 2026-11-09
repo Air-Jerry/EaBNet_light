@@ -1,0 +1,12 @@
+{
+  "status": "scheduled_trial_and_epoch5_observer_live",
+  "observer_pid": 1910956,
+  "observer_cookie": "219553149",
+  "script_sha256": "218025131f73df42cac6103dc39c6db747d81c436ef3cba6415223f633f23419",
+  "trial_observation_utc": "2026-11-09T18:10:50.517862+00:00",
+  "next_formal_epoch": 5,
+  "formal_observation_seconds_after_resume": 3000,
+  "gpu_queries": 0,
+  "batch_queries": 0,
+  "formal_goal_achieved": false
+}

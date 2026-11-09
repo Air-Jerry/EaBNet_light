@@ -1,0 +1,38 @@
+{
+  "status": "complete",
+  "scope": "All600 descriptive groups; geometry is a free-field1kHz proxy,not causal attribution;no filtering",
+  "all600": {
+    "count": 600,
+    "initial_pesq": 3.128550916115443,
+    "epoch4_pesq": 3.193624714811643,
+    "mean_delta": 0.06507379869620006,
+    "improved": 530,
+    "degraded": 70
+  },
+  "by_geometry_proxy": {
+    "below0_8": {
+      "count": 409,
+      "initial_pesq": 3.588730823439899,
+      "epoch4_pesq": 3.650814206209626,
+      "mean_delta": 0.06208338276972689,
+      "improved": 360,
+      "degraded": 49
+    },
+    "0_8_to0_95": {
+      "count": 88,
+      "initial_pesq": 2.6906165087764915,
+      "epoch4_pesq": 2.7947474000128834,
+      "mean_delta": 0.10413089123639194,
+      "improved": 84,
+      "degraded": 4
+    },
+    "at_least0_95": {
+      "count": 103,
+      "initial_pesq": 1.6753921369904454,
+      "epoch4_pesq": 1.7189713334574284,
+      "mean_delta": 0.043579196466982946,
+      "improved": 86,
+      "degraded": 17
+    }
+  }
+}
