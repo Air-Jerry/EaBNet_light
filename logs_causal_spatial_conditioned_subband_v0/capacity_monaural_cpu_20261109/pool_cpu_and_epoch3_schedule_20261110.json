@@ -1,0 +1,23 @@
+{
+  "status": "cpu_scoring_verified_cuda_full600_pending",
+  "local_cpu_pairs": 8,
+  "target_server_cpu_pairs": 8,
+  "full6s_synthetic_only": true,
+  "parallel_scores_exactly_equal_serial": true,
+  "cuda_in_scoring_workers": false,
+  "qualified_capacity_policy": "cudnn_deterministic",
+  "capacity_weights_changed_during_numerical_screen": false,
+  "next_guard_pid": 1882202,
+  "next_guard_cookie": "218929583",
+  "not_before_utc": "2026-11-09T16:50:00+00:00",
+  "latest_window_utc": "2026-11-09T17:05:00+00:00",
+  "helper_files_local_sha256": {
+    "tmp/pesq_screen_pool_20261110.py": "cff07d4d1533fd7c723ea328d8dd56123e4eced99a95e7ca6b7d26a03b0da284",
+    "tmp/screen_capacity_batched_baseline_pool_20261110.py": "e87f728efb3f3ad5e9aeebeff37780da02b28e448170317691608920f8795295",
+    "tmp/compare_capacity_matched1024_20261109.py": "ef0d8d8e2f6cfc2d2e7cbb8d519d7c44ee60f82d62659c09c9a2c187046a6a56"
+  },
+  "transfer_exit_code": 0,
+  "actual_matched_quality_training_updates": 0,
+  "trained128_quality_and_streaming_unverified": true,
+  "formal_goal_achieved": false
+}
