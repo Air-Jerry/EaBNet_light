@@ -1,0 +1,85 @@
+{
+  "status": "actual_formal_two_rank_training_started",
+  "checked_at_utc": "2026-11-09T14:37:53.422135+00:00",
+  "owner": {
+    "pid": 1854168,
+    "ppid": 1,
+    "cookie": "218278134",
+    "cwd": "/home/nis/jinrui.yang/EaBNet_light/tmp/decoder_formal_v3_stage_20261109",
+    "arguments": "bash run_light_causal.sh /home/nis/jinrui.yang/EaBNet_light/tmp/decoder_formal_stage_20261109/preflight_20261109 "
+  },
+  "torchrun": {
+    "pid": 1855048,
+    "ppid": 1855046,
+    "cookie": "218300257",
+    "cwd": "/home/nis/jinrui.yang/EaBNet_light/tmp/decoder_formal_v3_stage_20261109",
+    "arguments": "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/bin/python -u -m torch.distributed.run --standalone --nproc_per_node=2 train_light_causal_decoder_monaural.py --train-dir /data/ssd1/jinrui.yang/training_set --val-dir /data/ssd1/jinrui.yang/newset_rt60_005-015_on_NOISEX92/babble/training_set --checkpoint-dir ./checkpoints_causal_decoder_monaural_spectral_v1_decoder_monaural_20261109_223052_1854168 --best-dir ./bestmodels_causal_decoder_monaural_spectral_v1_decoder_monaural_20261109_223052_1854168 --log-dir ./logs_causal_decoder_monaural_spectral_v1/decoder_monaural_20261109_223052_1854168 --num-epochs 1 --parallel-mode ddp --batch-size 2 --grad-accum-steps 2 --segment-seconds 6 --num-workers 4 --strict-memory no --cpu-threads 2 --cpu-thread-scale 1 --learning-rate 0.0001 --grad-clip 5 --use-amp no --model-amp no --allow-tf32 no --resume yes --resume-reset-lr no --stop-on-non-finite yes --skip-non-finite-batches no --save-every 1 "
+  },
+  "ranks": [
+    {
+      "pid": 1855051,
+      "ppid": 1855048,
+      "cookie": "218300339",
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light/tmp/decoder_formal_v3_stage_20261109",
+      "arguments": "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/bin/python -u train_light_causal_decoder_monaural.py --train-dir /data/ssd1/jinrui.yang/training_set --val-dir /data/ssd1/jinrui.yang/newset_rt60_005-015_on_NOISEX92/babble/training_set --checkpoint-dir ./checkpoints_causal_decoder_monaural_spectral_v1_decoder_monaural_20261109_223052_1854168 --best-dir ./bestmodels_causal_decoder_monaural_spectral_v1_decoder_monaural_20261109_223052_1854168 --log-dir ./logs_causal_decoder_monaural_spectral_v1/decoder_monaural_20261109_223052_1854168 --num-epochs 1 --parallel-mode ddp --batch-size 2 --grad-accum-steps 2 --segment-seconds 6 --num-workers 4 --strict-memory no --cpu-threads 2 --cpu-thread-scale 1 --learning-rate 0.0001 --grad-clip 5 --use-amp no --model-amp no --allow-tf32 no --resume yes --resume-reset-lr no --stop-on-non-finite yes --skip-non-finite-batches no --save-every 1 ",
+      "distributed_environment": {
+        "RANK": "0",
+        "LOCAL_RANK": "0",
+        "WORLD_SIZE": "2",
+        "CUDA_VISIBLE_DEVICES": "0,1"
+      }
+    },
+    {
+      "pid": 1855052,
+      "ppid": 1855048,
+      "cookie": "218300339",
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light/tmp/decoder_formal_v3_stage_20261109",
+      "arguments": "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/bin/python -u train_light_causal_decoder_monaural.py --train-dir /data/ssd1/jinrui.yang/training_set --val-dir /data/ssd1/jinrui.yang/newset_rt60_005-015_on_NOISEX92/babble/training_set --checkpoint-dir ./checkpoints_causal_decoder_monaural_spectral_v1_decoder_monaural_20261109_223052_1854168 --best-dir ./bestmodels_causal_decoder_monaural_spectral_v1_decoder_monaural_20261109_223052_1854168 --log-dir ./logs_causal_decoder_monaural_spectral_v1/decoder_monaural_20261109_223052_1854168 --num-epochs 1 --parallel-mode ddp --batch-size 2 --grad-accum-steps 2 --segment-seconds 6 --num-workers 4 --strict-memory no --cpu-threads 2 --cpu-thread-scale 1 --learning-rate 0.0001 --grad-clip 5 --use-amp no --model-amp no --allow-tf32 no --resume yes --resume-reset-lr no --stop-on-non-finite yes --skip-non-finite-batches no --save-every 1 ",
+      "distributed_environment": {
+        "RANK": "1",
+        "LOCAL_RANK": "1",
+        "WORLD_SIZE": "2",
+        "CUDA_VISIBLE_DEVICES": "0,1"
+      }
+    }
+  ],
+  "latest_training_gpu_samples": {
+    "0": [
+      {
+        "timestamp": "2026/11/09 22:37:33.000",
+        "utilization_pct": 99.0,
+        "memory_mib": 5633.0
+      },
+      {
+        "timestamp": "2026/11/09 22:37:43.001",
+        "utilization_pct": 98.0,
+        "memory_mib": 5633.0
+      },
+      {
+        "timestamp": "2026/11/09 22:37:53.002",
+        "utilization_pct": 98.0,
+        "memory_mib": 5633.0
+      }
+    ],
+    "1": [
+      {
+        "timestamp": "2026/11/09 22:37:33.001",
+        "utilization_pct": 9.0,
+        "memory_mib": 5615.0
+      },
+      {
+        "timestamp": "2026/11/09 22:37:43.001",
+        "utilization_pct": 56.0,
+        "memory_mib": 5615.0
+      },
+      {
+        "timestamp": "2026/11/09 22:37:53.002",
+        "utilization_pct": 13.0,
+        "memory_mib": 5615.0
+      }
+    ]
+  },
+  "gpu_queries": 0,
+  "scope": "One startup identity check and existing10s sampler; not an epoch completion or quality claim",
+  "formal_goal_achieved": false
+}

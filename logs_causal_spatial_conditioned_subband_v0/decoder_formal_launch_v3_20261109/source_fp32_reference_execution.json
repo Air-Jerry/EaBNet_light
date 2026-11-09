@@ -1,0 +1,28 @@
+{
+  "status": "complete_original_source_fp32_full600",
+  "controller_pid": 1853222,
+  "controller_cookie": "218256638",
+  "expected_observation_utc": "2026-11-09T14:35:17.324817+00:00",
+  "source_checkpoint_sha256": "c6861b9216592872ec69f53af9bb520756e0b68eea7568f7a005aa18e851768b",
+  "summary_sha256": "3811adcd4d437ca8e5948e0922a02ec4cc5784c08faf958f851d7bc446a66e5a",
+  "evaluator_sha256": "0c3ada1425b33e16688e8424daba23681ac9ded4d8bee931ed24c69e59e5730b",
+  "cudnn_allow_tf32": false,
+  "matmul_allow_tf32": false,
+  "measured_seconds": 210.89030910702422,
+  "mean": {
+    "enhanced": {
+      "pesq": 3.1285515735546747,
+      "stoi": 0.9640156026405025,
+      "estoi": 0.9217170334485858,
+      "si_snr_db": 15.939280278605334,
+      "sdr_db": 17.0439124841304
+    },
+    "noisy": {
+      "pesq": 1.0880955342451732,
+      "stoi": 0.6510592990906214,
+      "estoi": 0.3667556529781415,
+      "si_snr_db": -1.2095493301340101,
+      "sdr_db": -1.1495106109218791
+    }
+  }
+}

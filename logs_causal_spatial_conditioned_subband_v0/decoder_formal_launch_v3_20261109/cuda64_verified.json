@@ -1,0 +1,41 @@
+{
+  "status": "passed",
+  "scope": "256 fixed training records; CUDA training correctness, not generalization",
+  "batch_size_per_gpu": 2,
+  "grad_accum_steps": 2,
+  "effective_global_batch": 8,
+  "torch_version": "2.5.1+cu121",
+  "devices": [
+    "NVIDIA GeForce RTX 4070",
+    "NVIDIA GeForce RTX 4070"
+  ],
+  "training_exit_code": 0,
+  "elapsed_seconds": 65.27771619614214,
+  "frozen_causal_weights_unchanged": true,
+  "frozen_causal_state_tensors": 244,
+  "changed_causal_decoder_state_tensors": 16,
+  "adapted_root_parameters": 85408,
+  "frozen_causal_parameter_rule": "All base.base parameters except decoders,upsamplers,beamformer",
+  "epochs": 2,
+  "generator_adam_step": 64,
+  "all_weights_and_adam_finite": true,
+  "noncausal_frozen_backbones": 0,
+  "state_tensors": 367,
+  "changed_state_tensors": 116,
+  "finite_gradients": "Checked on both ranks before every optimizer step",
+  "checkpoint_sha256": "9134c1930df589a7c1f6ec0fe989945dd340d6a9a87d952f4ad849ef3e7a453a",
+  "gpu_observations": [
+    {
+      "index": 0,
+      "samples": 14,
+      "utilization_mean_pct": 77.28571428571429,
+      "sampled_peak_memory_mib": 5794.0
+    },
+    {
+      "index": 1,
+      "samples": 14,
+      "utilization_mean_pct": 76.78571428571429,
+      "sampled_peak_memory_mib": 5776.0
+    }
+  ]
+}

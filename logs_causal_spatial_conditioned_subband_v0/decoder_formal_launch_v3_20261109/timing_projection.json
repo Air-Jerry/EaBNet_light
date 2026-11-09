@@ -1,0 +1,15 @@
+{
+  "status": "measured",
+  "training_samples": 53600,
+  "validation_samples": 600,
+  "metric_samples": 600,
+  "cuda_checkpoint_sha256": "9134c1930df589a7c1f6ec0fe989945dd340d6a9a87d952f4ad849ef3e7a453a",
+  "evaluation_checkpoint_sha256": "b6ec8724969f906e1fc9863101b9abb3a8a890123b55cdb68e40cd0da183594c",
+  "full600_evaluation_seconds": 210.05657012527809,
+  "projected_complete_epoch_seconds": 2813.2742092936214,
+  "training_samples_per_second": 21.3,
+  "validation_samples_per_second": 22.4,
+  "actual_full_epoch_verified": false,
+  "timed_metric_report": "/home/nis/jinrui.yang/EaBNet_light/tmp/decoder_formal_stage_20261109/preflight_20261109/zero_timed_full600/summary.json",
+  "timed_metric_scope": "Whole original600 metric subprocess including initialization and exit"
+}

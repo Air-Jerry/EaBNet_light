@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "tests": 59,
+  "source": "tests/test_light_decoder_monaural_workflow.py, tests/test_light_causal_monaural_workflow.py, tests/test_light_joint_conditioned_workflow.py",
+  "original_launcher_comments_unchanged": true,
+  "first_complete_epoch_observation_utc": "2026-11-09T15:31:00+00:00",
+  "observation_basis": "Actual startup throughput, full600 measured metric cost and margin; not actual epoch completion",
+  "formal_goal_achieved": false
+}
