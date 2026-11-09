@@ -1,0 +1,57 @@
+{
+  "status": "recurrent_formal_actual_original_loop_and_both_ranks_verified",
+  "controller_pid": 1980275,
+  "controller_cookie": "221132075",
+  "main_pid": 1965809,
+  "main_cookie": "220786201",
+  "not_before_utc": "2026-11-09T22:16:54.519744+00:00",
+  "latest_boundary_utc": "2026-11-09T22:30:35.744494+00:00",
+  "gpu_queries": 0,
+  "batch_queries": 0,
+  "formal_goal_achieved": false,
+  "diagnostic_weights_used_for_formal": false,
+  "training_signals_sent": 15,
+  "completed_epoch9_pesq": 3.208352677623431,
+  "completed_epoch9_seconds": 2860.174398422241,
+  "actual_completed_epoch9_resume_guard_passed": true,
+  "formal_pid": 1982617,
+  "formal_cookie": "221162893",
+  "formal_stage": "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_formal_stage_v2_20261110",
+  "formal_started_at_utc": "2026-11-09T22:31:38.677690+00:00",
+  "qualification": {
+    "status": "passed_dual_cuda_streaming_full600_and_original_launcher_guard",
+    "source_checkpoint": "/home/nis/jinrui.yang/EaBNet_light/tmp/decoder_resume_epoch6_stage_20261110/checkpoints_causal_decoder_monaural_spectral_v1_decoder_monaural_20261109_223052_1854168/model_epoch_9.pt",
+    "source_epoch": 9,
+    "source_checkpoint_sha256": "5cdb2a77b3ec7027512dd173925ca3c9b3af194493a53df02e1ad826a19e567f",
+    "formal_goal_achieved": false,
+    "diagnostic_weights_used_for_formal": false,
+    "phase": "actual_original_preflight_guard",
+    "projected_complete_epoch_seconds": 3280.2555051279023,
+    "full600_initial_pesq": 3.2083532931407293,
+    "cuda_adam_updates": 64,
+    "per_gpu_batch": 2,
+    "grad_accum_steps": 2,
+    "effective_global_batch": 8,
+    "formal_training_started": false
+  },
+  "next_complete_epoch_observation_utc": "2026-11-09T23:34:18.933206+00:00",
+  "logs": "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_formal_stage_v2_20261110/logs_causal_recurrent_adapt_monaural_v1/recurrent_adapt_20261110_063140_1982617",
+  "checkpoints": "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_formal_stage_v2_20261110/checkpoints_causal_recurrent_adapt_monaural_v1_recurrent_adapt_20261110_063140_1982617",
+  "source_weights_exactly_preserved": true,
+  "fresh_adam_verified": true,
+  "first_sampler_epoch": 84,
+  "ranks": [
+    {
+      "pid": 1983658,
+      "cookie": "221185100",
+      "rank": 0
+    },
+    {
+      "pid": 1983659,
+      "cookie": "221185100",
+      "rank": 1
+    }
+  ],
+  "full_training_sample_headers_verified": true,
+  "actual_full_epoch_time_and_quality_unverified": true
+}

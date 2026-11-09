@@ -1,5 +1,5 @@
 {
-  "status": "waiting_measured_epoch9_boundary",
+  "status": "candidate_boundary_failed_original_owner_not_stopped",
   "controller_pid": 1968872,
   "controller_cookie": "220857296",
   "main_pid": 1965809,
@@ -10,5 +10,7 @@
   "batch_queries": 0,
   "formal_goal_achieved": false,
   "diagnostic_weights_used_for_formal": false,
-  "training_signals_sent": 0
+  "training_signals_sent": 0,
+  "error": "AssertionError: ",
+  "failure_before_or_after_owned_stop": "before"
 }

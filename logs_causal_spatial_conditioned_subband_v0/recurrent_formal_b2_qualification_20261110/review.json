@@ -1,0 +1,16 @@
+{
+  "status": "passed_dual_cuda_streaming_full600_and_original_launcher_guard",
+  "source_checkpoint": "/home/nis/jinrui.yang/EaBNet_light/tmp/decoder_resume_epoch6_stage_20261110/checkpoints_causal_decoder_monaural_spectral_v1_decoder_monaural_20261109_223052_1854168/model_epoch_9.pt",
+  "source_epoch": 9,
+  "source_checkpoint_sha256": "5cdb2a77b3ec7027512dd173925ca3c9b3af194493a53df02e1ad826a19e567f",
+  "formal_goal_achieved": false,
+  "diagnostic_weights_used_for_formal": false,
+  "phase": "actual_original_preflight_guard",
+  "projected_complete_epoch_seconds": 3280.2555051279023,
+  "full600_initial_pesq": 3.2083532931407293,
+  "cuda_adam_updates": 64,
+  "per_gpu_batch": 2,
+  "grad_accum_steps": 2,
+  "effective_global_batch": 8,
+  "formal_training_started": false
+}
