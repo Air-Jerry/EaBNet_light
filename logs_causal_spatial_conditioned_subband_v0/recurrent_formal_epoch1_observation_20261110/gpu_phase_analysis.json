@@ -1,0 +1,31 @@
+{
+  "status": "complete_existing_sampler_phase_analysis",
+  "epoch": 1,
+  "scope": "Existing10s sampler; train phase includes validation/checkpoint subprocess tail; no newGPU query",
+  "new_gpu_queries": 0,
+  "new_batch_queries": 0,
+  "perf_rows": [
+    "[PERF][train] samples(local/global)=26800/53600, batches(local/global)=13400/26800, samples/s(local/global)=8.9/17.8, ms/batch(local)=224.2, data_wait=0.8%, compute=99.2%, non_finite_skips(local)=0",
+    "[PERF][val] samples(local/global)=300/600, batches(local/global)=150/300, samples/s(local/global)=11.0/22.0, ms/batch(local)=182.1, data_wait=0.5%, compute=99.3%, non_finite_skips(local)=0"
+  ],
+  "gpus": [
+    {
+      "index": 0,
+      "samples": 305,
+      "utilization_mean_pct": 93.97049180327869,
+      "utilization_median_pct": 97.0,
+      "samples_below50_pct": 2.9508196721311477,
+      "sampled_peak_memory_mib": 6707.0,
+      "mean_power_watts": 141.40386885245903
+    },
+    {
+      "index": 1,
+      "samples": 305,
+      "utilization_mean_pct": 92.54098360655738,
+      "utilization_median_pct": 96.0,
+      "samples_below50_pct": 3.9344262295081966,
+      "sampled_peak_memory_mib": 6687.0,
+      "mean_power_watts": 142.04118032786886
+    }
+  ]
+}

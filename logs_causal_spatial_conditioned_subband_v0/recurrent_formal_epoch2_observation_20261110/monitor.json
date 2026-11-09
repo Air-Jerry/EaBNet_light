@@ -1,0 +1,13 @@
+{
+  "status": "waiting_measured_formal_epoch",
+  "target_epoch": 2,
+  "observer_pid": 1999585,
+  "observer_cookie": "221578017",
+  "formal_pid": 1982617,
+  "formal_cookie": "221162893",
+  "not_before_utc": "2026-11-10T00:25:00.159590+00:00",
+  "gpu_queries": 0,
+  "batch_queries": 0,
+  "training_signals_sent": 0,
+  "formal_goal_achieved": false
+}

@@ -1,0 +1,13 @@
+{
+  "status": "waiting_predicted_epoch2_evaluation",
+  "guard_pid": 2001240,
+  "guard_cookie": "221615506",
+  "main_pid": 1982617,
+  "main_cookie": "221162893",
+  "not_before_utc": "2026-11-10T00:18:24.579795+00:00",
+  "latest_window_utc": "2026-11-10T00:29:39.579795+00:00",
+  "gpu_queries": 0,
+  "training_signals_sent": 0,
+  "formal_goal_achieved": false,
+  "scope": "Exact actual formal1 checkpoint; original public GPU benchmark of all600 hops; no new training,quality rescore or gate changes"
+}
