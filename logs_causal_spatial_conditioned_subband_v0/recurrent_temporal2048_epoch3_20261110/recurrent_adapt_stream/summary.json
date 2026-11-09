@@ -1,0 +1,10 @@
+{
+  "status": "failed",
+  "diagnostic_only": true,
+  "actual_optimizer_updates": 0,
+  "scope": "Exact matched recurrent/temporal256 weights; two fixed perturbation seeds and all600 waveform hops per backend",
+  "full600_quality_measured": false,
+  "formal_goal_achieved": false,
+  "policies": {},
+  "error": "ModuleNotFoundError: No module named 'experiments.causal_frame_graph'"
+}

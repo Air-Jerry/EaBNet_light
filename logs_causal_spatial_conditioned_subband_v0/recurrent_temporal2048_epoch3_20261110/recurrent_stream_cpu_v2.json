@@ -1,0 +1,16 @@
+{
+  "status": "actual256_cpu_stream_and_all_imports_passed",
+  "checkpoint_sha256": "5cbd12675a82dc93a9ff31178f32dcec259b761c0b879cfb11043b1b84d3fd01",
+  "imported_statements": 15,
+  "measured_hops": 600,
+  "sample_id": 0,
+  "future_max_error": 0.0,
+  "waveform_max_error": 4.917383193969727e-07,
+  "model_cache_bytes": 6219024,
+  "CPU_seconds": 24.27908831415698,
+  "new_optimizer_updates": 0,
+  "gpu_queries": 0,
+  "full600_wb_pesq": 3.1990488443771996,
+  "gpu_deadline_and_streaming_unverified": true,
+  "formal_goal_achieved": false
+}

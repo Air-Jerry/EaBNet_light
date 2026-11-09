@@ -48,16 +48,20 @@ MONAURAL_SPECTRAL_CANDIDATE = "causal_monaural_spectral_v1"
 GLOBAL_SPECTRAL_CANDIDATE = "causal_global_spectral_unet_v1"
 GLOBAL_SPECTRAL_BEAM_CANDIDATE = "causal_global_spectral_beamformer_v1"
 DECODER_MONAURAL_CANDIDATE = "causal_decoder_monaural_spectral_v1"
+RECURRENT_ADAPT_CANDIDATE = "causal_recurrent_adapt_monaural_v1"
 IDENTITY_FIELDS = ("sample_rate", "n_fft", "hop_length", "win_length", "power", "target_ref_mic",
                    "channels", "num_mics", "embed_dim", "cd1", "dfsmn_layers", "dfsmn_memory_size",
                    "norm_type", "bf_type", "topo_type", "is_causal")
 
 
 def all_model_candidates():
-    return (*all_reference_candidates(), QUALITY_CANDIDATE, SPATIAL_CANDIDATE, CAUSAL_CANDIDATE, FAST_CANDIDATE, GLOBAL_CANDIDATE, RECURRENT_CANDIDATE, RECURRENT65_CANDIDATE, TCN_CANDIDATE, FOURIER_CANDIDATE, FREQUENCY_ATTENTION_CANDIDATE, POOLED_FREQUENCY_ATTENTION_CANDIDATE, RETENTION_CANDIDATE, FULLBAND_TCN_CANDIDATE, FULLBAND_SPATIAL_CANDIDATE, SUBBAND_GRU_CANDIDATE, CONDITIONED_SUBBAND_CANDIDATE, FROZEN_CONDITIONED_CANDIDATE, SPATIAL_CONDITIONED_CANDIDATE, GATED_MULTICHANNEL_CANDIDATE, FULLCHANNEL_DUALPATH_CANDIDATE, FOLDED_RETENTION_CANDIDATE, JOINT_CONDITIONED_CANDIDATE, JOINT_FIXED_CONDITIONED_CANDIDATE, WIDE_CONDITIONED_CANDIDATE, COVARIANCE_CANDIDATE, MONAURAL_SPECTRAL_CANDIDATE, GLOBAL_SPECTRAL_CANDIDATE, GLOBAL_SPECTRAL_BEAM_CANDIDATE, DECODER_MONAURAL_CANDIDATE)
+    return (*all_reference_candidates(), QUALITY_CANDIDATE, SPATIAL_CANDIDATE, CAUSAL_CANDIDATE, FAST_CANDIDATE, GLOBAL_CANDIDATE, RECURRENT_CANDIDATE, RECURRENT65_CANDIDATE, TCN_CANDIDATE, FOURIER_CANDIDATE, FREQUENCY_ATTENTION_CANDIDATE, POOLED_FREQUENCY_ATTENTION_CANDIDATE, RETENTION_CANDIDATE, FULLBAND_TCN_CANDIDATE, FULLBAND_SPATIAL_CANDIDATE, SUBBAND_GRU_CANDIDATE, CONDITIONED_SUBBAND_CANDIDATE, FROZEN_CONDITIONED_CANDIDATE, SPATIAL_CONDITIONED_CANDIDATE, GATED_MULTICHANNEL_CANDIDATE, FULLCHANNEL_DUALPATH_CANDIDATE, FOLDED_RETENTION_CANDIDATE, JOINT_CONDITIONED_CANDIDATE, JOINT_FIXED_CONDITIONED_CANDIDATE, WIDE_CONDITIONED_CANDIDATE, COVARIANCE_CANDIDATE, MONAURAL_SPECTRAL_CANDIDATE, GLOBAL_SPECTRAL_CANDIDATE, GLOBAL_SPECTRAL_BEAM_CANDIDATE, DECODER_MONAURAL_CANDIDATE, RECURRENT_ADAPT_CANDIDATE)
 
 
 def build_model_candidate(candidate_id, **model_kwargs):
+    if candidate_id == RECURRENT_ADAPT_CANDIDATE:
+        from experiments.causal_recurrent_adapt_monaural import CausalRecurrentAdaptMonaural
+        return CausalRecurrentAdaptMonaural(build_model_candidate(WIDE_CONDITIONED_CANDIDATE, **model_kwargs))
     if candidate_id == DECODER_MONAURAL_CANDIDATE:
         from experiments.causal_decoder_monaural import CausalDecoderMonaural
         return CausalDecoderMonaural(build_model_candidate(WIDE_CONDITIONED_CANDIDATE, **model_kwargs))
@@ -159,6 +163,21 @@ def build_model_candidate(candidate_id, **model_kwargs):
 
 
 def candidate_metadata(candidate_id):
+    if candidate_id == RECURRENT_ADAPT_CANDIDATE:
+        metadata = candidate_metadata(DECODER_MONAURAL_CANDIDATE)
+        files = (*metadata['candidate_implementation_sha256'], 'experiments/causal_mapping_monaural.py',
+                 'experiments/causal_global_adapt_monaural.py', 'experiments/causal_recurrent_adapt_monaural.py')
+        metadata.update(structure_candidate=candidate_id, candidate_schema=31,
+                        candidate_implementation_sha256=source_hashes(files))
+        metadata['candidate_evidence'].update(candidate_id=candidate_id, warm_start_candidate=DECODER_MONAURAL_CANDIDATE,
+            purpose='Adapt the final frequency recurrent block,full-band temporal layer,mapping and decoder',
+            initialization='Complete formal decoder checkpoint; preserve all weights; fresh Adam',
+            adapted_root_parameters=1994954,
+            frozen_parameter_rule='Freeze root stem,encoders,first three recurrent blocks and shared frequency matrix')
+        metadata['candidate_evidence']['model_config'].update(trainable_parameters=5101386,
+            frozen_causal_parameters=584744,
+            base_training_mode='Joint train-mode forward; first three root recurrent blocks and shared matrix frozen; FP32 eval')
+        return metadata
     if candidate_id == DECODER_MONAURAL_CANDIDATE:
         metadata = candidate_metadata(MONAURAL_SPECTRAL_CANDIDATE)
         files = (*metadata['candidate_implementation_sha256'], 'experiments/causal_decoder_monaural.py')

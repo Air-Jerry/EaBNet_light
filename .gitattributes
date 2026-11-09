@@ -57,3 +57,6 @@ train_light_causal_folded_retention.py -text whitespace=blank-at-eol,blank-at-eo
 train_light_causal_covariance.py text eol=lf
 train_light_causal_monaural.py text eol=lf
 run_light_causal_monaural.sh text eol=lf
+
+train_light_causal_recurrent_adapt.py text eol=lf
+run_light_causal_recurrent_adapt.sh text eol=lf

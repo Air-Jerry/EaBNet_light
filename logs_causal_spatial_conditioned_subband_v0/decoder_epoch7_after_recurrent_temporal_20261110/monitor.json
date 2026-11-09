@@ -1,0 +1,18 @@
+{
+  "status": "epoch7_actual_full600_and_budget_verified",
+  "observer_pid": 1933089,
+  "observer_cookie": "220036445",
+  "main_pid": 1939626,
+  "main_cookie": "220189274",
+  "not_before_utc": "2026-11-09T20:39:22.286079+00:00",
+  "gpu_queries": 0,
+  "batch_queries": 0,
+  "formal_goal_achieved": false,
+  "initial_main_handle_live": true,
+  "epoch": 7,
+  "pesq": 3.204783902366956,
+  "seconds": 2835.231247663498,
+  "checkpoint_sha256": "0fb415ce19fd68d3ad1711b37408025d260a5b077adf9a14a0bf53e871c9a4fd",
+  "owner_kernel_alive": true,
+  "next_observation_utc": "2026-11-09T21:24:57.462495+00:00"
+}

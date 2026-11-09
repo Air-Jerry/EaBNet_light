@@ -27,6 +27,7 @@ case "$candidate" in
     causal_wide_conditioned_subband_v1) entry=train_light_causal_wide_conditioned_subband.py; run_prefix=wide_conditioned; learning_rate=0.001 ;;
     causal_monaural_spectral_v1) entry=train_light_causal_monaural.py; run_prefix=monaural_spectral; learning_rate=0.001 ;;
     causal_decoder_monaural_spectral_v1) entry=train_light_causal_decoder_monaural.py; run_prefix=decoder_monaural; learning_rate=0.0001 ;;
+    causal_recurrent_adapt_monaural_v1) entry=train_light_causal_recurrent_adapt.py; run_prefix=recurrent_adapt; learning_rate=0.0001 ;;
     causal_global_spectral_unet_v1) entry=train_light_causal_global_spectral.py; run_prefix=global_spectral; learning_rate=0.001 ;;
     causal_global_spectral_beamformer_v1) entry=train_light_causal_global_beam.py; run_prefix=global_beam; learning_rate=0.001 ;;
     *) printf 'Unsupported cold-start causal candidate: %s\n' "$candidate" >&2; exit 2 ;;
@@ -57,9 +58,9 @@ assert bench['all_hops_below_10ms'],'Investigate startup/live deadlines before f
 assert bench['full_vs_stream_waveform_max_error']<1e-5
 speeds=re.findall(r'\[PERF\]\[train\].*?samples/s\(local/global\)=[\d.]+/([\d.]+)',(root/'cuda_final/training.log').read_text())
 assert speeds and float(speeds[-1])>0
-if sys.argv[3] not in ('causal_retention_subband_gru_v1','causal_fullband_conditioned_subband_v1','causal_frozen_conditioned_subband_v1','causal_spatial_conditioned_subband_v1','causal_fullchannel_dualpath_crn_v1','causal_folded_retention_v1','causal_joint_conditioned_subband_v1','causal_wide_conditioned_subband_v1','causal_monaural_spectral_v1','causal_decoder_monaural_spectral_v1'):
+if sys.argv[3] not in ('causal_retention_subband_gru_v1','causal_fullband_conditioned_subband_v1','causal_frozen_conditioned_subband_v1','causal_spatial_conditioned_subband_v1','causal_fullchannel_dualpath_crn_v1','causal_folded_retention_v1','causal_joint_conditioned_subband_v1','causal_wide_conditioned_subband_v1','causal_monaural_spectral_v1','causal_decoder_monaural_spectral_v1','causal_recurrent_adapt_monaural_v1'):
     assert float(speeds[-1])>=20,'Hot global throughput is insufficient for the one-hour budget'
-if sys.argv[3] in ('causal_fullband_tcn_v1','causal_fullband_spatial_tcn_v1','causal_retention_subband_gru_v1','causal_fullband_conditioned_subband_v1','causal_frozen_conditioned_subband_v1','causal_spatial_conditioned_subband_v1','causal_gated_multichannel_crn_v1','causal_fullchannel_dualpath_crn_v1','causal_folded_retention_v1','causal_joint_conditioned_subband_v1','causal_wide_conditioned_subband_v1','causal_monaural_spectral_v1','causal_decoder_monaural_spectral_v1','causal_global_spectral_unet_v1','causal_global_spectral_beamformer_v1'):
+if sys.argv[3] in ('causal_fullband_tcn_v1','causal_fullband_spatial_tcn_v1','causal_retention_subband_gru_v1','causal_fullband_conditioned_subband_v1','causal_frozen_conditioned_subband_v1','causal_spatial_conditioned_subband_v1','causal_gated_multichannel_crn_v1','causal_fullchannel_dualpath_crn_v1','causal_folded_retention_v1','causal_joint_conditioned_subband_v1','causal_wide_conditioned_subband_v1','causal_monaural_spectral_v1','causal_decoder_monaural_spectral_v1','causal_recurrent_adapt_monaural_v1','causal_global_spectral_unet_v1','causal_global_spectral_beamformer_v1'):
     assert state['args']['causal_training_objective']=='spectral_mrstft_waveform_pmsqe_v1'
     assert state['args']['pmsqe_weight']==.1
     expected_entry={'causal_fullband_spatial_tcn_v1':'train_light_causal_fullband_spatial.py',
@@ -75,7 +76,8 @@ if sys.argv[3] in ('causal_fullband_tcn_v1','causal_fullband_spatial_tcn_v1','ca
         'causal_global_spectral_unet_v1':'train_light_causal_global_spectral.py',
         'causal_global_spectral_beamformer_v1':'train_light_causal_global_beam.py',
         'causal_monaural_spectral_v1':'train_light_causal_monaural.py',
-        'causal_decoder_monaural_spectral_v1':'train_light_causal_decoder_monaural.py'}.get(sys.argv[3],'train_light_causal_fullband.py')
+        'causal_decoder_monaural_spectral_v1':'train_light_causal_decoder_monaural.py',
+        'causal_recurrent_adapt_monaural_v1':'train_light_causal_recurrent_adapt.py'}.get(sys.argv[3],'train_light_causal_fullband.py')
     assert expected_entry in state['args']['causal_training_implementation_sha256']
     if sys.argv[3]=='causal_fullband_spatial_tcn_v1':
         warm=Path(state['args']['spatial_fullband_warmstart_checkpoint'])
@@ -152,6 +154,17 @@ if sys.argv[3] in ('causal_fullband_tcn_v1','causal_fullband_spatial_tcn_v1','ca
         assert state['args']['candidate_evidence']['partially_frozen_backbone'] is True
         assert check['frozen_causal_weights_unchanged'] is True and check['changed_causal_decoder_state_tensors']>0
         assert check['frozen_causal_parameter_rule']=='All base.base parameters except decoders,upsamplers,beamformer'
+    elif sys.argv[3]=='causal_recurrent_adapt_monaural_v1':
+        warm=Path(state['args']['recurrent_adapt_warmstart_checkpoint'])
+        assert warm.is_absolute() and hashlib.sha256(warm.read_bytes()).hexdigest()==state['args']['recurrent_adapt_warmstart_sha256']
+        source,_=read_candidate_checkpoint(warm,'causal_decoder_monaural_spectral_v1')
+        assert not source.get('diagnostic_only',False) and not source['args'].get('diagnostic_only',False)
+        assert int(source['epoch'])==state['args']['recurrent_adapt_warmstart_epoch']>=1
+        assert source['args']['decoder_monaural_sample_epoch_offset']+int(source['epoch'])==state['args']['recurrent_adapt_sample_epoch_offset']
+        assert state['args']['gru_training_precision']=='fp16' and state['args']['cudnn_training_benchmark'] is True
+        assert state['args']['candidate_evidence']['partially_frozen_backbone'] is True
+        assert check['frozen_causal_weights_unchanged'] is True and check['changed_causal_recurrent_state_tensors']>0
+        assert check['frozen_causal_parameter_rule']=='Freeze root stem,encoders,first three recurrent blocks and shared frequency matrix'
     projection=json.loads((root/'timing_projection.json').read_text())
     baseline=json.loads((root/'zero_mapping_full600/summary.json').read_text())
     assert projection['status']=='measured'
@@ -183,7 +196,8 @@ names.update({'run_light_causal_folded_retention.sh','train_light_causal_folded_
 names.update({'run_light_causal_joint_conditioned_subband.sh','train_light_causal_joint_conditioned_subband.py'})
 names.update({'run_light_causal_wide_conditioned_subband.sh','train_light_causal_wide_conditioned_subband.py'})
 names.update({'run_light_causal_monaural.sh','train_light_causal_monaural.py'})
-names.update({'run_light_causal_decoder_monaural.sh','train_light_causal_decoder_monaural.py'})
+names.update({'run_light_causal_decoder_monaural.sh','train_light_causal_decoder_monaural.py',
+    'run_light_causal_recurrent_adapt.sh','train_light_causal_recurrent_adapt.py'})
 names.update({'run_light_causal_global_spectral.sh','train_light_causal_global_spectral.py',
               'run_light_causal_global_beam.sh','train_light_causal_global_beam.py'})
 ancestors=set();cursor=os.getpid()
@@ -210,7 +224,7 @@ PY_BATCH
 )
 warm=''
 warm_args=()
-if [[ "$candidate" == causal_fullband_spatial_tcn_v1 || "$candidate" == causal_retention_subband_gru_v1 || "$candidate" == causal_fullband_conditioned_subband_v1 || "$candidate" == causal_frozen_conditioned_subband_v1 || "$candidate" == causal_spatial_conditioned_subband_v1 || "$candidate" == causal_joint_conditioned_subband_v1 || "$candidate" == causal_wide_conditioned_subband_v1 || "$candidate" == causal_monaural_spectral_v1 || "$candidate" == causal_decoder_monaural_spectral_v1 ]]; then
+if [[ "$candidate" == causal_fullband_spatial_tcn_v1 || "$candidate" == causal_retention_subband_gru_v1 || "$candidate" == causal_fullband_conditioned_subband_v1 || "$candidate" == causal_frozen_conditioned_subband_v1 || "$candidate" == causal_spatial_conditioned_subband_v1 || "$candidate" == causal_joint_conditioned_subband_v1 || "$candidate" == causal_wide_conditioned_subband_v1 || "$candidate" == causal_monaural_spectral_v1 || "$candidate" == causal_decoder_monaural_spectral_v1 || "$candidate" == causal_recurrent_adapt_monaural_v1 ]]; then
     warm=$("$train_py" - "$preflight/cuda_final/checkpoints/model_epoch_2.pt" "$candidate" <<'PY_WARM'
 import sys,torch
 state=torch.load(sys.argv[1],map_location='cpu',weights_only=False)
@@ -221,7 +235,8 @@ key={'causal_retention_subband_gru_v1':'subband_warmstart_checkpoint',
       'causal_joint_conditioned_subband_v1':'joint_conditioned_warmstart_checkpoint',
       'causal_wide_conditioned_subband_v1':'capacity_warmstart_checkpoint',
       'causal_monaural_spectral_v1':'monaural_warmstart_checkpoint',
-      'causal_decoder_monaural_spectral_v1':'decoder_monaural_warmstart_checkpoint'}.get(sys.argv[2],'spatial_fullband_warmstart_checkpoint')
+      'causal_decoder_monaural_spectral_v1':'decoder_monaural_warmstart_checkpoint',
+      'causal_recurrent_adapt_monaural_v1':'recurrent_adapt_warmstart_checkpoint'}.get(sys.argv[2],'spatial_fullband_warmstart_checkpoint')
 print(state['args'][key])
 PY_WARM
 )
@@ -229,7 +244,7 @@ PY_WARM
 fi
 run="${run_prefix}_$(date +%Y%m%d_%H%M%S)_$$"
 if [[ -n "${CAUSAL_RESUME_RUN:-}" ]]; then
-    [[ "$candidate" == causal_fullchannel_dualpath_crn_v1 || "$candidate" == causal_folded_retention_v1 || "$candidate" == causal_joint_conditioned_subband_v1 || "$candidate" == causal_wide_conditioned_subband_v1 || "$candidate" == causal_monaural_spectral_v1 || "$candidate" == causal_decoder_monaural_spectral_v1 || "$candidate" == causal_global_spectral_unet_v1 || "$candidate" == causal_global_spectral_beamformer_v1 ]] || { printf 'Resume is verified for the full-channel,folded-retention,joint-conditioned,wide-conditioned,monaural-spectral,global-spectral and global-beam candidates only.\n' >&2; exit 2; }
+    [[ "$candidate" == causal_fullchannel_dualpath_crn_v1 || "$candidate" == causal_folded_retention_v1 || "$candidate" == causal_joint_conditioned_subband_v1 || "$candidate" == causal_wide_conditioned_subband_v1 || "$candidate" == causal_monaural_spectral_v1 || "$candidate" == causal_decoder_monaural_spectral_v1 || "$candidate" == causal_recurrent_adapt_monaural_v1 || "$candidate" == causal_global_spectral_unet_v1 || "$candidate" == causal_global_spectral_beamformer_v1 ]] || { printf 'Resume is verified for the full-channel,folded-retention,joint-conditioned,wide-conditioned,monaural-spectral,global-spectral and global-beam candidates only.\n' >&2; exit 2; }
     run="$(basename -- "$CAUSAL_RESUME_RUN")"
     [[ "$run" == "${run_prefix}_"* && -d "./logs_${candidate}/$run" ]] || { printf 'Invalid existing causal run.\n' >&2; exit 2; }
 fi
@@ -245,7 +260,7 @@ from light_candidate_runtime import read_candidate_checkpoint
 torch.set_num_threads(2)
 root,checkpoints,best=map(lambda value:Path(value).resolve(),sys.argv[1:4])
 state,_=read_candidate_checkpoint(checkpoints/'checkpoint_latest.pt',sys.argv[4])
-schemas={'causal_fullchannel_dualpath_crn_v1':21,'causal_folded_retention_v1':22,'causal_joint_conditioned_subband_v1':23,'causal_wide_conditioned_subband_v1':25,'causal_monaural_spectral_v1':27,'causal_global_spectral_unet_v1':28,'causal_global_spectral_beamformer_v1':29,'causal_decoder_monaural_spectral_v1':30}
+schemas={'causal_fullchannel_dualpath_crn_v1':21,'causal_folded_retention_v1':22,'causal_joint_conditioned_subband_v1':23,'causal_wide_conditioned_subband_v1':25,'causal_monaural_spectral_v1':27,'causal_global_spectral_unet_v1':28,'causal_global_spectral_beamformer_v1':29,'causal_decoder_monaural_spectral_v1':30,'causal_recurrent_adapt_monaural_v1':31}
 assert sys.argv[4] in schemas
 epoch=int(state['epoch']);assert 1<=epoch<30 and state['args']['candidate_schema']==schemas[sys.argv[4]]
 for key,path in (('log_dir',root),('checkpoint_dir',checkpoints),('best_dir',best),('train_dir',Path(sys.argv[5]).resolve()),('val_dir',Path(sys.argv[6]).resolve())):
@@ -317,7 +332,7 @@ evaluate_epoch() {
     local epoch="$1"
     local result="$logs/pesq_selection/model_epoch_${epoch}"
     local evaluation_command=("$train_py" -u evaluate_light.py)
-    if [[ "$candidate" == causal_decoder_monaural_spectral_v1 ]]; then
+    if [[ "$candidate" == causal_decoder_monaural_spectral_v1 || "$candidate" == causal_recurrent_adapt_monaural_v1 ]]; then
         evaluation_command=("$train_py" -u -c 'import torch; torch.backends.cuda.matmul.allow_tf32=False; torch.backends.cudnn.allow_tf32=False; import evaluate_light; evaluate_light.main()')
     fi
     timeout --kill-after=15s "${2:-3600}s" "${evaluation_command[@]}" --checkpoint "$checkpoints/model_epoch_${epoch}.pt" \
@@ -333,10 +348,12 @@ import json,math,sys
 from pathlib import Path
 root=Path(sys.argv[1])/'pesq_selection';baseline=json.loads((root/'model_epoch_0/summary.json').read_text())
 candidate=sys.argv[2] if len(sys.argv)>2 else 'causal_unet_spatial_v1'
-if candidate in ('causal_fullband_spatial_tcn_v1','causal_retention_subband_gru_v1','causal_fullband_conditioned_subband_v1','causal_frozen_conditioned_subband_v1','causal_spatial_conditioned_subband_v1','causal_joint_conditioned_subband_v1','causal_wide_conditioned_subband_v1','causal_monaural_spectral_v1','causal_decoder_monaural_spectral_v1'):
+if candidate in ('causal_fullband_spatial_tcn_v1','causal_retention_subband_gru_v1','causal_fullband_conditioned_subband_v1','causal_frozen_conditioned_subband_v1','causal_spatial_conditioned_subband_v1','causal_joint_conditioned_subband_v1','causal_wide_conditioned_subband_v1','causal_monaural_spectral_v1','causal_decoder_monaural_spectral_v1','causal_recurrent_adapt_monaural_v1'):
     import hashlib,torch
     warm=Path(sys.argv[3]).resolve();source=torch.load(warm,map_location='cpu',weights_only=False)
-    old=json.loads((Path(source['args']['log_dir'])/'pesq_selection'/f"model_epoch_{source['epoch']}"/'summary.json').read_text())
+    source_logs=Path(source['args']['log_dir'])
+    if candidate=='causal_recurrent_adapt_monaural_v1' and not source_logs.is_absolute():source_logs=warm.parent.parent/source_logs
+    old=json.loads((source_logs/'pesq_selection'/f"model_epoch_{source['epoch']}"/'summary.json').read_text())
     assert old['status']=='complete' and old['completed_samples']==old['expected_samples']==600
     assert old['checkpoint_sha256']==hashlib.sha256(warm.read_bytes()).hexdigest()
     expected_source={'causal_retention_subband_gru_v1':'causal_frequency_attention_retention_v1',
@@ -346,7 +363,8 @@ if candidate in ('causal_fullband_spatial_tcn_v1','causal_retention_subband_gru_
         'causal_joint_conditioned_subband_v1':'causal_spatial_conditioned_subband_v1',
         'causal_wide_conditioned_subband_v1':'causal_joint_conditioned_subband_v1',
         'causal_monaural_spectral_v1':'causal_wide_conditioned_subband_v1',
-        'causal_decoder_monaural_spectral_v1':'causal_monaural_spectral_v1'}.get(candidate,'causal_fullband_tcn_v1')
+        'causal_decoder_monaural_spectral_v1':'causal_monaural_spectral_v1',
+        'causal_recurrent_adapt_monaural_v1':'causal_decoder_monaural_spectral_v1'}.get(candidate,'causal_fullband_tcn_v1')
     if candidate=='causal_frozen_conditioned_subband_v1':
         expected_source=source['args'].get('structure_candidate')
         assert expected_source in ('causal_retention_subband_gru_v1','causal_fullband_conditioned_subband_v1')
@@ -371,7 +389,7 @@ else:
 keys=('frontend','frontend_protocol','num_mics','selected_pairs_sha256','metadata_sha256','metric_protocol')
 for key in keys:assert baseline[key]==old[key],key
 for name,value in old['mean']['noisy'].items():assert abs(baseline['mean']['noisy'][name]-value)<1e-10,name
-warm_candidate=candidate in ('causal_fullband_spatial_tcn_v1','causal_retention_subband_gru_v1','causal_fullband_conditioned_subband_v1','causal_frozen_conditioned_subband_v1','causal_spatial_conditioned_subband_v1','causal_joint_conditioned_subband_v1','causal_wide_conditioned_subband_v1','causal_monaural_spectral_v1','causal_decoder_monaural_spectral_v1')
+warm_candidate=candidate in ('causal_fullband_spatial_tcn_v1','causal_retention_subband_gru_v1','causal_fullband_conditioned_subband_v1','causal_frozen_conditioned_subband_v1','causal_spatial_conditioned_subband_v1','causal_joint_conditioned_subband_v1','causal_wide_conditioned_subband_v1','causal_monaural_spectral_v1','causal_decoder_monaural_spectral_v1','causal_recurrent_adapt_monaural_v1')
 expected=old['mean']['enhanced'] if warm_candidate else baseline['mean']['noisy']
 tolerance=1e-4 if warm_candidate else 1e-3
 for name,value in expected.items():assert abs(baseline['mean']['enhanced'][name]-value)<tolerance,name
