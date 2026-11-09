@@ -1,0 +1,16 @@
+{
+  "status": "exact_audit_only_change_verified",
+  "changed_files": [
+    "evaluate_light_streaming.py"
+  ],
+  "old_sha256": "2e9e40631272586e7e96eb9f75fb1f8526802dcf554583802aeeb77e560364f8",
+  "new_sha256": "ac52dd20bb64a3c1119094f5d5828bb06832af624d0c8adb5a4afbb0cfe23989",
+  "added_registered_candidates": [
+    "causal_global_spectral_unet_v1",
+    "causal_global_spectral_beamformer_v1",
+    "causal_decoder_monaural_spectral_v1"
+  ],
+  "all_other_source_hashes_identical": true,
+  "live_source_hashes_unchanged": true,
+  "scoring_frontend_and_all_thresholds_unchanged": true
+}

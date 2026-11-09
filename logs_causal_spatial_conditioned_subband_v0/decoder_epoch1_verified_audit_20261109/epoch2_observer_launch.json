@@ -1,0 +1,9 @@
+{
+  "pid": 1874698,
+  "cookie": "218762364",
+  "status": "waiting_scheduled_epoch2",
+  "not_before_utc": "2026-11-09T16:12:00+00:00",
+  "actual_main_handle_live": true,
+  "gpu_queries": 0,
+  "batch_queries": 0
+}

@@ -170,3 +170,20 @@ def test_same_backend_source_reference_preserves_source_data_and_full600(tmp_pat
     else:
         exec(compile(textwrap.dedent(code), 'same backend warm reference', 'exec'), namespace)
         assert namespace['old'] == reference
+
+
+@pytest.mark.parametrize('fault', [None, 'partial', 'gain', 'future'])
+def test_registered_decoder_has_full_streaming_audit_support(fault):
+    import json
+    from audit_light_final import require_protocol
+    root = Path(__file__).resolve().parents[1]
+    report = json.loads((root/'logs_causal_spatial_conditioned_subband_v0/decoder_formal_launch_v3_20261109/full600_initialization.json').read_text())
+    report['mixture_ref_mic'] = 0
+    if fault == 'partial': report['completed_samples'] = 599
+    if fault == 'gain': report['metric_protocol']['target_gain_matching'] = True
+    if fault == 'future': report['candidate_evidence']['future_frames'] = 1
+    if fault:
+        with pytest.raises(ValueError):
+            require_protocol(report)
+    else:
+        require_protocol(report)

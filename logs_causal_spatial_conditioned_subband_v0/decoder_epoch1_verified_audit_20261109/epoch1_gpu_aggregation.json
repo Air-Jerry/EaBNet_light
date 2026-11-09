@@ -1,0 +1,36 @@
+{
+  "status": "complete_epoch1_existing_sampler_aggregation",
+  "gpu_queries": 0,
+  "interval_seconds": 10,
+  "scope": "Existing phase=train samples include training,validation and checkpoint; NVML utilization is not compute throughput",
+  "phases": {
+    "phase=train epoch=1": {
+      "0": {
+        "samples": 264,
+        "mean_util_percent": 96.61742424242425,
+        "peak_memory_mib": 5635.0,
+        "mean_power_w": 141.69223484848484
+      },
+      "1": {
+        "samples": 264,
+        "mean_util_percent": 92.875,
+        "peak_memory_mib": 5617.0,
+        "mean_power_w": 141.53897727272727
+      }
+    },
+    "phase=evaluation epoch=1": {
+      "0": {
+        "samples": 21,
+        "mean_util_percent": 20.428571428571427,
+        "peak_memory_mib": 2211.0,
+        "mean_power_w": 57.52904761904762
+      },
+      "1": {
+        "samples": 21,
+        "mean_util_percent": 14.0,
+        "peak_memory_mib": 5507.0,
+        "mean_power_w": 31.08952380952381
+      }
+    }
+  }
+}

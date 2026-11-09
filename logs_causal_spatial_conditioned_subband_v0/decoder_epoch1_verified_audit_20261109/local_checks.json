@@ -1,0 +1,12 @@
+{
+  "status": "all_requested_checks_passed_with_isolated_retry",
+  "changed_protocol_tests_passed": 4,
+  "regression_first_attempt_passed": 48,
+  "regression_first_attempt_failures": 1,
+  "first_failure": "Local CPython fatal tokenizer error while importing Torch in training subprocess; not a test assertion about model results",
+  "isolated_retry_passed": 1,
+  "isolated_retry_seconds": 19.39,
+  "eventual_passed_tests": 49,
+  "original_validation_thresholds_unchanged": true,
+  "protected_live_training_sources_modified": false
+}

@@ -1,0 +1,10 @@
+{
+  "pid": 1873601,
+  "cookie": "218738186",
+  "status": "waiting_predicted_epoch2_evaluation",
+  "gpu_queries": 0,
+  "not_before_utc": "2026-11-09T16:04:00+00:00",
+  "latest_window_utc": "2026-11-09T16:14:00+00:00",
+  "actual_optimizer_updates": 0,
+  "training_signals_sent": 0
+}
