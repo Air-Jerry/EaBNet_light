@@ -1,0 +1,21 @@
+{
+  "status": "actual_worker_initialization_CPU_and_serialized235_Adam_steps80400_verified",
+  "source_checkpoint_sha256": "e301247371fc3b342c2a2904430e5a86e1617b83d0003cdfe1a31623bb1fadc7",
+  "rows": [
+    {
+      "branch": "control",
+      "checkpoint_sha256": "827a2ba8c87fc5281042727a967798f6703682cbb6062c981d9ea730295d5e6f",
+      "learning_rate": 0.0001,
+      "state_parameters": 235,
+      "actual_new_updates": 0
+    },
+    {
+      "branch": "expanded_temporal",
+      "checkpoint_sha256": "c8dcb3c992852540917c85701390e689ef93c4d8560a511fe69d5caaa30e6b18",
+      "learning_rate": 0.0001,
+      "state_parameters": 235,
+      "actual_new_updates": 0
+    }
+  ],
+  "gpu_queries": 0
+}

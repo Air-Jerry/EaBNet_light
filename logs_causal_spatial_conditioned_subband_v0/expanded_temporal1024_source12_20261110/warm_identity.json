@@ -1,0 +1,12 @@
+{
+  "status": "complete_source12_cuda_warm_embedding",
+  "source_checkpoint_sha256": "e301247371fc3b342c2a2904430e5a86e1617b83d0003cdfe1a31623bb1fadc7",
+  "source_epoch": 12,
+  "cuda_initial_output_max_error": 2.384185791015625e-07,
+  "added_parameters": 566016,
+  "total_parameters": 6252146,
+  "trainable_parameters": 5667402,
+  "optimizer_updates": 0,
+  "diagnostic_only": true,
+  "formal_goal_achieved": false
+}

@@ -1,0 +1,23 @@
+{
+  "status": "complete_zero_update_initialization",
+  "checkpoint_sha256": "c8dcb3c992852540917c85701390e689ef93c4d8560a511fe69d5caaa30e6b18",
+  "source_checkpoint_sha256": "e301247371fc3b342c2a2904430e5a86e1617b83d0003cdfe1a31623bb1fadc7",
+  "branch": "expanded_temporal",
+  "learning_rate": 0.0001,
+  "adam_mapping": {
+    "original_parameter_steps": 80400,
+    "state_parameters": 235,
+    "expanded_parameters": [
+      "recurrent.weight_ih_l0",
+      "recurrent.weight_hh_l0",
+      "recurrent.bias_ih_l0",
+      "recurrent.bias_hh_l0",
+      "projection.weight"
+    ],
+    "old_moment_entries_exactly_preserved": true,
+    "new_neuron_moments_zero": true,
+    "new_neuron_parameter_step_is_inherited": true
+  },
+  "actual_updates": 0,
+  "all_weights_and_Adam_finite": true
+}

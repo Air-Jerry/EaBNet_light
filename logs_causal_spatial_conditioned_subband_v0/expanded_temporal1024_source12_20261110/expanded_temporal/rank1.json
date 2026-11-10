@@ -1,0 +1,52 @@
+{
+  "status": "complete",
+  "branch": "expanded_temporal",
+  "rank": 1,
+  "seed": 1234,
+  "initial_checkpoint_sha256": "c8dcb3c992852540917c85701390e689ef93c4d8560a511fe69d5caaa30e6b18",
+  "source_checkpoint_sha256": "e301247371fc3b342c2a2904430e5a86e1617b83d0003cdfe1a31623bb1fadc7",
+  "source_epoch": 12,
+  "sampler_epoch": 96,
+  "training_metadata_sha256": "d3854b3717979c398d403143342508db8335c2e613b279e3317c5192f5ef952b",
+  "rank_selected_indices_sha256": "6da4235734e800f78871ab411b5d5bbfd2dfa06efe679b9ab627c8e9c4a0ed7e",
+  "ordered_global_indices_sha256": "8552ade47b7514113f795740339a2cfdeec4bb6a7e6df2682de027a7158cd94e",
+  "global_distinct_training_records": 8192,
+  "optimizer_updates": 1024,
+  "global_batch": 8,
+  "learning_rate": 0.0001,
+  "fresh_adam": false,
+  "initial_adam_steps": 80400,
+  "adam_restoration": {
+    "original_parameter_steps": 80400,
+    "state_parameters": 235,
+    "expanded_parameters": [
+      "recurrent.weight_ih_l0",
+      "recurrent.weight_hh_l0",
+      "recurrent.bias_ih_l0",
+      "recurrent.bias_hh_l0",
+      "projection.weight"
+    ],
+    "old_moment_entries_exactly_preserved": true,
+    "new_neuron_moments_zero": true,
+    "new_neuron_parameter_step_is_inherited": true
+  },
+  "frame_weighted_loss": true,
+  "seconds_per_record": 6,
+  "trainable_parameters": 5667402,
+  "root_state_tensors_changed": 135,
+  "frozen_parameters_unchanged": true,
+  "all_weights_and_adam_finite": true,
+  "training_seconds": 502.9482986968942,
+  "loss": 0.4085351787307445,
+  "loss_components": {
+    "samples": 4096,
+    "batches": 2048,
+    "spectral": 0.2729068100452423,
+    "mrstft": 0.6759867668151855,
+    "waveform": 0.1325894445180893,
+    "total": 0.35376396775245667,
+    "pmsqe": 0.5164895057678223,
+    "combined_total": 0.40541291832923887
+  },
+  "formal_goal_achieved": false
+}
