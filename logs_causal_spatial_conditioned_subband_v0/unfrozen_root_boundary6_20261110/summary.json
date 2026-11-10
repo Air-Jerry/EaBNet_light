@@ -1,0 +1,52 @@
+{
+  "status": "exact_complete6_model_adam_and_actual_both_ranks_resumed",
+  "controller_pid": 2060630,
+  "controller_cookie": "223015385",
+  "main_pid": 2057164,
+  "main_cookie": "222940317",
+  "not_before_utc": "2026-11-10T04:22:21.877445+00:00",
+  "resumed_from_completed_epoch": 6,
+  "resumed_adam_steps": 40200,
+  "diagnostic_source_epoch": 5,
+  "gpu_queries": 0,
+  "batch_queries": 0,
+  "training_signals_sent": 15,
+  "formal_goal_achieved": false,
+  "diagnostic_weights_can_initialize_formal": false,
+  "helper_sha256": {
+    "/home/nis/jinrui.yang/EaBNet_light/tmp/run_unfrozen_root_retained_source5_20261110.py": "3b988b85d0517911a506c4262cc6d290a96968ec20bbdfc5cc8c52c0d29a7fe0",
+    "/home/nis/jinrui.yang/EaBNet_light/tmp/compare_unfrozen_root_retained_source5_20261110.py": "3e3fbda3563b2d7a359053afc5ac4ac316be3616e21f87a739564963e51af290",
+    "/home/nis/jinrui.yang/EaBNet_light/tmp/screen_unfrozen_root_retained_stream_20261110.py": "c10f7e1c731a58523cfe61546835afa481a28503d944c794e81f3c9dab54ebb0"
+  },
+  "completed_epoch": 6,
+  "pesq": 3.281111575961113,
+  "seconds": 3267.243396282196,
+  "resumed_checkpoint_sha256": "2625a09228d1bf28e9f18fe7c2c780906167edccd51020c6fbbb401d26fa77cf",
+  "model_and_adam_strict_restored": true,
+  "diagnostic_full600_scores": {
+    "control": 3.2754883386691414,
+    "unfrozen_root": 3.264720679918925
+  },
+  "trial_status": "complete_matched2arm_retained_Adam_full600_and_trained_stream",
+  "formal_pid": 2073473,
+  "formal_cookie": "223318444",
+  "formal_stage": "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_formal_stage_v2_20261110",
+  "logs": "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_formal_stage_v2_20261110/logs_causal_recurrent_adapt_monaural_v1/recurrent_adapt_20261110_063140_1982617",
+  "checkpoints": "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_formal_stage_v2_20261110/checkpoints_causal_recurrent_adapt_monaural_v1_recurrent_adapt_20261110_063140_1982617",
+  "original_environment_affinity_priority_restored": true,
+  "diagnostic_weights_used_for_formal": false,
+  "resumed_unix": 1794285057.6960554,
+  "actual_both_ranks_verified": true,
+  "ranks": [
+    {
+      "pid": 2073541,
+      "cookie": "223319004",
+      "rank": 0
+    },
+    {
+      "pid": 2073542,
+      "cookie": "223319004",
+      "rank": 1
+    }
+  ]
+}
