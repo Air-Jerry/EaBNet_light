@@ -1,0 +1,90 @@
+{
+  "status": "complete",
+  "scope": "Existing full600 first formal epoch scores; descriptive groups only,not causal attribution;no filtering or rescoring",
+  "epoch1_checkpoint_sha256": "b41d04c38d43b2e869a675be8ef4419126beac3cf10c93116b696d41bbd8c40c",
+  "metadata_sha256": "8d0b4d229ebc42cd9892e6d0e0d36416007ded01fbc0b753df4bf7e6b734eb02",
+  "new_optimizer_updates": 0,
+  "new_gpu_queries": 0,
+  "new_audio_metrics_computed": false,
+  "formal_goal_achieved": false,
+  "all600": {
+    "count": 600,
+    "initial_pesq": 3.208353853225708,
+    "epoch1_pesq": 3.2388516863187156,
+    "mean_delta": 0.030497833093007406,
+    "median_delta": 0.025136590003967285,
+    "improved": 460,
+    "degraded": 140
+  },
+  "by_freefield_1khz_proxy": {
+    "below0_8": {
+      "count": 409,
+      "initial_pesq": 3.666827056402099,
+      "epoch1_pesq": 3.696352581231693,
+      "mean_delta": 0.029525524829594023,
+      "median_delta": 0.02669501304626465,
+      "improved": 314,
+      "degraded": 95
+    },
+    "0_8_to0_95": {
+      "count": 88,
+      "initial_pesq": 2.814664985645901,
+      "epoch1_pesq": 2.8579629212617874,
+      "mean_delta": 0.043297935615886345,
+      "median_delta": 0.03349721431732178,
+      "improved": 72,
+      "degraded": 16
+    },
+    "at_least0_95": {
+      "count": 103,
+      "initial_pesq": 1.7241701663119122,
+      "epoch1_pesq": 1.7475929028779558,
+      "mean_delta": 0.023422736566043593,
+      "median_delta": 0.014059066772460938,
+      "improved": 74,
+      "degraded": 29
+    }
+  },
+  "by_snr": {
+    "-5.0": {
+      "count": 140,
+      "initial_pesq": 2.8801949994904654,
+      "epoch1_pesq": 2.921538495165961,
+      "mean_delta": 0.041343495675495695,
+      "median_delta": 0.02904808521270752,
+      "improved": 113,
+      "degraded": 27
+    },
+    "-2.0": {
+      "count": 161,
+      "initial_pesq": 3.077880626879864,
+      "epoch1_pesq": 3.1085578084732433,
+      "mean_delta": 0.030677181593379618,
+      "median_delta": 0.025548219680786133,
+      "improved": 121,
+      "degraded": 40
+    },
+    "0.0": {
+      "count": 149,
+      "initial_pesq": 3.4310277996447263,
+      "epoch1_pesq": 3.460400900584739,
+      "mean_delta": 0.02937310094001309,
+      "median_delta": 0.0271759033203125,
+      "improved": 117,
+      "degraded": 32
+    },
+    "2.0": {
+      "count": 150,
+      "initial_pesq": 3.4334872595469155,
+      "epoch1_pesq": 3.4547872074445087,
+      "mean_delta": 0.02129994789759318,
+      "median_delta": 0.017569541931152344,
+      "improved": 109,
+      "degraded": 41
+    }
+  },
+  "input_summary_sha256": {
+    "0": "d7b22d50724ae0321a00f5627e532bf7ed542153c346fb21a34a73c9ed6dda7f",
+    "1": "81f0e65e5ebd887a1fc457c45024184fb5cf9e1f18a55d91be133aea563def0e"
+  }
+}
