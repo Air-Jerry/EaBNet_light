@@ -1,0 +1,12 @@
+{
+  "status": "complete_exact_source8_cuda_warm_identity",
+  "source_checkpoint_sha256": "1115600ed45e33aeeb7959991d749a7aeb86662aa290087bbd01c936a42b29c4",
+  "source_epoch": 8,
+  "cuda_initial_output_max_error": 0.0,
+  "added_parameters": 6864,
+  "total_parameters": 5692994,
+  "trainable_parameters": 5108250,
+  "optimizer_updates": 0,
+  "diagnostic_only": true,
+  "formal_goal_achieved": false
+}

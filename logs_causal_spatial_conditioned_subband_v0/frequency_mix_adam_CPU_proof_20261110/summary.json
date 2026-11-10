@@ -1,0 +1,20 @@
+{
+  "status": "actual_source8_retained_Adam_exact",
+  "source_checkpoint_sha256": "1115600ed45e33aeeb7959991d749a7aeb86662aa290087bbd01c936a42b29c4",
+  "rows": [
+    {
+      "existing_adam_moments_exactly_preserved": true,
+      "source_adam_steps": 53600,
+      "existing_state_parameters": 235,
+      "fresh_frequency_parameters": 0
+    },
+    {
+      "existing_adam_moments_exactly_preserved": true,
+      "source_adam_steps": 53600,
+      "existing_state_parameters": 235,
+      "fresh_frequency_parameters": 12
+    }
+  ],
+  "actual_new_updates": 0,
+  "gpu_queries": 0
+}

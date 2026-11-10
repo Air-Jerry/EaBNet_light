@@ -1,0 +1,70 @@
+{
+  "status": "complete_zero_update_backend_screen",
+  "diagnostic_only": true,
+  "actual_optimizer_updates": 0,
+  "scope": "Exact matched retained-Adam frequency256 weights; two fixed perturbation seeds and all600 waveform hops per backend",
+  "full600_quality_measured": false,
+  "formal_goal_achieved": false,
+  "policies": {
+    "cudnn_deterministic": {
+      "repeated_identical_input_max_error": 0.0,
+      "future_perturbations": [
+        {
+          "seed": 1234,
+          "cutoff": 17,
+          "error": 0.0
+        },
+        {
+          "seed": 1234,
+          "cutoff": 150,
+          "error": 0.0
+        },
+        {
+          "seed": 1234,
+          "cutoff": 300,
+          "error": 0.0
+        },
+        {
+          "seed": 1234,
+          "cutoff": 500,
+          "error": 0.0
+        },
+        {
+          "seed": 5678,
+          "cutoff": 17,
+          "error": 0.0
+        },
+        {
+          "seed": 5678,
+          "cutoff": 150,
+          "error": 0.0
+        },
+        {
+          "seed": 5678,
+          "cutoff": 300,
+          "error": 0.0
+        },
+        {
+          "seed": 5678,
+          "cutoff": 500,
+          "error": 0.0
+        }
+      ],
+      "future_max_error": 0.0,
+      "waveform_max_error": 4.172325134277344e-07,
+      "max_hop_ms": 9.444200899451971,
+      "mean_hop_ms": 7.245666288460295,
+      "measured_hops": 600,
+      "bounded_cache_bytes": 6219024,
+      "all_original_single_waveform_gates_passed": true,
+      "independent_readonly_external_states": true,
+      "model_state_unchanged": true
+    }
+  },
+  "checkpoint_sha256": "51dbeb374dbfa0a6c7ca721bbd92efb36b2ef451cd0d12462ea9b986f85e326a",
+  "source_formal_checkpoint_sha256": "1115600ed45e33aeeb7959991d749a7aeb86662aa290087bbd01c936a42b29c4",
+  "sample_id": 0,
+  "samples": 96000,
+  "cublas_workspace_config": ":4096:8",
+  "diagnostic_checkpoint_unchanged": true
+}
