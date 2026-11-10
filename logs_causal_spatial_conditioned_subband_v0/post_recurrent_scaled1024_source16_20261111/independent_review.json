@@ -1,0 +1,106 @@
+{
+  "status": "actual_matched1024_full600_negative_not_adopted",
+  "control": 3.328448541164398,
+  "post_recurrent": 3.3251226309935253,
+  "new_minus_control": -0.0033259101708730063,
+  "paired_samples": 600,
+  "paired_positive": 283,
+  "paired_negative": 317,
+  "paired_median": -0.0010846853256225586,
+  "original_source_weights_Adam_recipe_records_updates_and_metric_protocol_matched": true,
+  "both_branches_finite_and_cross_rank_identical": true,
+  "phase_logs_checked": [
+    "actual_source16_gradient_equivalence_0.log",
+    "control_evaluation_0.log",
+    "control_evaluation_1.log",
+    "control_initial_evaluation_0.log",
+    "control_initial_evaluation_1.log",
+    "control_training_0.log",
+    "control_zero_update_initialization_0.log",
+    "gpu_utilization.log",
+    "post_recurrent_evaluation_0.log",
+    "post_recurrent_evaluation_1.log",
+    "post_recurrent_initial_evaluation_0.log",
+    "post_recurrent_initial_evaluation_1.log",
+    "post_recurrent_training_0.log",
+    "post_recurrent_zero_update_initialization_0.log",
+    "trained_post_recurrent_stream_0.log"
+  ],
+  "new_training_seconds": 482.8923272173852,
+  "control_training_seconds": 468.4401934337802,
+  "long_projected_full_seconds": 3444.1508350742515,
+  "projection_is_not_actual_formal_epoch": true,
+  "trained_single_waveform_stream": {
+    "repeated_identical_input_max_error": 0.0,
+    "future_perturbations": [
+      {
+        "seed": 1234,
+        "cutoff": 17,
+        "error": 0.0
+      },
+      {
+        "seed": 1234,
+        "cutoff": 150,
+        "error": 0.0
+      },
+      {
+        "seed": 1234,
+        "cutoff": 300,
+        "error": 0.0
+      },
+      {
+        "seed": 1234,
+        "cutoff": 500,
+        "error": 0.0
+      },
+      {
+        "seed": 5678,
+        "cutoff": 17,
+        "error": 0.0
+      },
+      {
+        "seed": 5678,
+        "cutoff": 150,
+        "error": 0.0
+      },
+      {
+        "seed": 5678,
+        "cutoff": 300,
+        "error": 0.0
+      },
+      {
+        "seed": 5678,
+        "cutoff": 500,
+        "error": 0.0
+      }
+    ],
+    "future_max_error": 0.0,
+    "waveform_max_error": 4.023313522338867e-07,
+    "max_hop_ms": 7.098156958818436,
+    "mean_hop_ms": 6.91315146163106,
+    "measured_hops": 600,
+    "bounded_cache_bytes": 6219024,
+    "all_original_single_waveform_gates_passed": true,
+    "independent_readonly_external_states": true,
+    "model_state_unchanged": true
+  },
+  "trained_checkpoint_sha256": "3802e839a384bf38cacf4557683c397c9e19cb0ffa4e53231d76cc7b5d165516",
+  "raw_summary_sha256": "6eeec9db2f1af5b82bab53e51f5685073c2968ce4e8a4f56b3f850a9ad46cc55",
+  "gpu_window_start_utc": "2026-11-10T20:00:20+00:00",
+  "gpu_window_end_exclusive_utc": "2026-11-10T20:06:50+00:00",
+  "gpu_statistics": {
+    "0": {
+      "samples": 39,
+      "mean_utilization": 96.56410256410257,
+      "peak_memory_MB": 6763.0
+    },
+    "1": {
+      "samples": 39,
+      "mean_utilization": 95.58974358974359,
+      "peak_memory_MB": 6745.0
+    }
+  },
+  "gpu_scope": "Interior of new-branch actual1024 training;39 samples/card;not full epoch",
+  "formal_goal_achieved": false,
+  "diagnostic_weights_used_for_formal": false
+}

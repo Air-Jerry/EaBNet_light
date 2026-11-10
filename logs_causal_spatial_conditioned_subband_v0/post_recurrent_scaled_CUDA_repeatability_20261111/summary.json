@@ -1,0 +1,38 @@
+{
+  "status": "complete_actual_post_recurrent_source16_CUDA_repeatability",
+  "pid": 2312774,
+  "source_checkpoint_sha256": "2fe3ea71fb6c1ced3e4469888ab828119633ba9fb3b59ea981fe48e6faed2e52",
+  "actual_new_updates": 0,
+  "micro_batch": 2,
+  "real_input_samples": 96000,
+  "backward_loss_factor": 0.0009765625,
+  "diagnostic_only": true,
+  "formal_goal_achieved": false,
+  "results": [
+    {
+      "mode": "baseline_first",
+      "seconds": 7.6705490332096815,
+      "loss": 0.31350162625312805,
+      "peak_allocated_bytes": 6430336512,
+      "status": "complete",
+      "output_max_error": 0.0,
+      "gradient_max_error": 0.0,
+      "gradient_relative_l2_error": 0.0,
+      "strict_gradient_gate": true
+    },
+    {
+      "mode": "baseline_repeat",
+      "seconds": 0.2633620770648122,
+      "loss": 0.31350162625312805,
+      "peak_allocated_bytes": 6466427904,
+      "status": "complete",
+      "output_max_error": 0.0,
+      "gradient_max_error": 0.0,
+      "gradient_relative_l2_error": 0.0,
+      "strict_gradient_gate": true
+    }
+  ],
+  "no_backward_graph_through_early_frozen_GRUs": true,
+  "model_weights_unchanged": true,
+  "all249_trainable_gradients_exact": true
+}

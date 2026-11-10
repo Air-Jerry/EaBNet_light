@@ -1,0 +1,27 @@
+{
+  "status": "waiting_measured_complete20_boundary",
+  "controller_pid": 2326930,
+  "controller_cookie": "229207561",
+  "main_pid": 2318993,
+  "main_cookie": "229019115",
+  "not_before_utc": "2026-11-10T21:16:29.350948+00:00",
+  "resumed_from_completed_epoch": 20,
+  "resumed_adam_steps": 134000,
+  "diagnostic_source_epoch": 16,
+  "gpu_queries": 0,
+  "batch_queries": 0,
+  "training_signals_sent": 0,
+  "formal_goal_achieved": false,
+  "diagnostic_weights_can_initialize_formal": false,
+  "helper_sha256": {
+    "/home/nis/jinrui.yang/EaBNet_light/tmp/run_joint_attention_scaled1024_source16_20261111.py": "ce4a86f39885e7256a9b4b0acc819f7c63c4e7452b539e3746c1c0ddc6f31264",
+    "/home/nis/jinrui.yang/EaBNet_light/tmp/compare_joint_attention_scaled1024_source16_20261111.py": "8cd59533db61d203cf0e707a110ef58f708d6be6761538b29553681f04692841",
+    "/home/nis/jinrui.yang/EaBNet_light/tmp/check_joint_attention_scaled_CUDA_repeatability_20261111.py": "91a41df7f0d450670177c6eb625a3752f9e60f298164754e0c4311cce509d0a9",
+    "/home/nis/jinrui.yang/EaBNet_light/tmp/screen_joint_attention_scaled1024_trained_20261111.py": "c6e689fa82f8d9f2f3e7a779c1a2d336c8119523180d34dc2bab955621ca6e9b",
+    "/home/nis/jinrui.yang/EaBNet_light/tmp/joint_attention_scaled_trial_helpers_20261111.json": "3a4d38f4ca2c36b081b0eb96e0ebfc6b02e9e462d3252b227a9dde7ce8ab6610",
+    "/home/nis/jinrui.yang/EaBNet_light/tmp/checkpoint_spatial_training_overlay_20261111.py": "8cd2ccf05a70062a7b9fdf65040c3ed0f0c25b2dfb8e29022617bf9ced9f0aa1",
+    "/home/nis/jinrui.yang/EaBNet_light/tmp/deterministic_reflect_pad_overlay_20261110.py": "ba6177c0b4f82a9c912a17f89484d9f55c9c22476ac9a2aa5ddd128968ad7f6e",
+    "/home/nis/jinrui.yang/EaBNet_light/tmp/restore_unfrozen_root_probe_adam_20261110.py": "501351aac741ccf5407a1dee4736696cbbdc9244d1b53067148866c6c1154ac9",
+    "/home/nis/jinrui.yang/EaBNet_light/tmp/observe_recurrent_scaled_epoch_v6_20261111.py": "8d4e988afcdfe7dbbe6aa66f4fe1d9c86cc1c9cf5337a29bc0fbf6cc5e6a9d59"
+  }
+}
