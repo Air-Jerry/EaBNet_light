@@ -1,0 +1,21 @@
+{
+  "status": "waiting_measured_complete15_boundary",
+  "controller_pid": 2223972,
+  "controller_cookie": "226894177",
+  "main_pid": 2221565,
+  "main_cookie": "226842357",
+  "not_before_utc": "2026-11-10T15:12:48.371915+00:00",
+  "resumed_from_completed_epoch": 15,
+  "resumed_adam_steps": 100500,
+  "diagnostic_source_epoch": 14,
+  "gpu_queries": 0,
+  "batch_queries": 0,
+  "training_signals_sent": 0,
+  "formal_goal_achieved": false,
+  "diagnostic_weights_can_initialize_formal": false,
+  "helper_sha256": {
+    "/home/nis/jinrui.yang/EaBNet_light/tmp/run_full_root_production_profile_20261110.py": "846317ca06acbbd50a7135e52970e71e8c90a7d0c0d61addf69711dd2bcad4c9",
+    "/home/nis/jinrui.yang/EaBNet_light/tmp/profile_full_root_recompute_ddp_production_20261110.py": "4e5c83d6d464794eb3bba313d1f8a4fef37e674a203266e1de13ce9f697205e8",
+    "/home/nis/jinrui.yang/EaBNet_light/tmp/deterministic_reflect_pad_overlay_20261110.py": "ba6177c0b4f82a9c912a17f89484d9f55c9c22476ac9a2aa5ddd128968ad7f6e"
+  }
+}

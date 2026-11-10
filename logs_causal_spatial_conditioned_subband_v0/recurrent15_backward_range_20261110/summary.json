@@ -1,0 +1,115 @@
+{
+  "status": "complete_source14_failure_location_gradient_range_probe",
+  "pid": 2209887,
+  "source_checkpoint_sha256": "8799883c92a05646e5cdc37ebd7b92ec2d644948a712cd23f95fba2b789a7f52",
+  "source_epoch": 14,
+  "source_adam_steps": 93800,
+  "sampler_epoch": 98,
+  "actual_optimizer_updates": 0,
+  "diagnostic_only": true,
+  "formal_goal_achieved": false,
+  "scope": "Both ranks microbatches2959/2960 records at source14 weights; lost evolved partial-epoch weights unavailable; not an exact replay",
+  "selected_indices_sha256": "d3854b3717979c398d403143342508db8335c2e613b279e3317c5192f5ef952b",
+  "selection": [
+    [
+      53584,
+      29668,
+      35925,
+      19785
+    ],
+    [
+      45562,
+      24206,
+      16588,
+      29470
+    ]
+  ],
+  "gpu_queries": 1,
+  "results": [
+    {
+      "gru_precision": "fp16",
+      "backward_factor": 1.0,
+      "rank_records": 0,
+      "raw_losses": [
+        0.26511141657829285,
+        0.5687013864517212
+      ],
+      "all_gradients_finite": true,
+      "finite_parameters": 235,
+      "nonfinite_parameters": [],
+      "maximum_finite_gradient": 0.10544924437999725,
+      "peak_gpu_bytes": 6138761216
+    },
+    {
+      "gru_precision": "fp16",
+      "backward_factor": 1.0,
+      "rank_records": 1,
+      "raw_losses": [
+        0.3686867654323578,
+        0.4160105586051941
+      ],
+      "all_gradients_finite": true,
+      "finite_parameters": 235,
+      "nonfinite_parameters": [],
+      "maximum_finite_gradient": 0.18677204847335815,
+      "peak_gpu_bytes": 6138761216
+    },
+    {
+      "gru_precision": "fp16",
+      "backward_factor": 0.0009765625,
+      "rank_records": 0,
+      "raw_losses": [
+        0.26511141657829285,
+        0.5687013864517212
+      ],
+      "all_gradients_finite": true,
+      "finite_parameters": 235,
+      "nonfinite_parameters": [],
+      "maximum_finite_gradient": 0.10607320815324783,
+      "peak_gpu_bytes": 6159155200
+    },
+    {
+      "gru_precision": "fp16",
+      "backward_factor": 0.0009765625,
+      "rank_records": 1,
+      "raw_losses": [
+        0.3686867654323578,
+        0.4160105586051941
+      ],
+      "all_gradients_finite": true,
+      "finite_parameters": 235,
+      "nonfinite_parameters": [],
+      "maximum_finite_gradient": 0.18677204847335815,
+      "peak_gpu_bytes": 6159155200
+    },
+    {
+      "gru_precision": "fp32",
+      "backward_factor": 1.0,
+      "rank_records": 0,
+      "raw_losses": [
+        0.2650848925113678,
+        0.5688558220863342
+      ],
+      "all_gradients_finite": true,
+      "finite_parameters": 235,
+      "nonfinite_parameters": [],
+      "maximum_finite_gradient": 0.10368136316537857,
+      "peak_gpu_bytes": 8644830208
+    },
+    {
+      "gru_precision": "fp32",
+      "backward_factor": 1.0,
+      "rank_records": 1,
+      "raw_losses": [
+        0.36884456872940063,
+        0.41602930426597595
+      ],
+      "all_gradients_finite": true,
+      "finite_parameters": 235,
+      "nonfinite_parameters": [],
+      "maximum_finite_gradient": 0.20757070183753967,
+      "peak_gpu_bytes": 8644830208
+    }
+  ],
+  "seconds": 19.73874684376642
+}

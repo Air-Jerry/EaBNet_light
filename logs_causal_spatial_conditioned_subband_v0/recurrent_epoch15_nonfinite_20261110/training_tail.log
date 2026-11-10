@@ -1,0 +1,81 @@
+3400 [11:07<38:25,  4.55it/s, loss=0.3684]train:  22%|██▏       | 2915/13400 [11:07<38:25,  4.55it/s, loss=0.5073]train:  22%|██▏       | 2916/13400 [11:07<39:14,  4.45it/s, loss=0.5073]train:  22%|██▏       | 2916/13400 [11:07<39:14,  4.45it/s, loss=0.5293]train:  22%|██▏       | 2917/13400 [11:07<38:27,  4.54it/s, loss=0.5293]train:  22%|██▏       | 2917/13400 [11:07<38:27,  4.54it/s, loss=0.5564]train:  22%|██▏       | 2918/13400 [11:07<39:07,  4.46it/s, loss=0.5564]train:  22%|██▏       | 2918/13400 [11:08<39:07,  4.46it/s, loss=0.3539]train:  22%|██▏       | 2919/13400 [11:08<38:21,  4.55it/s, loss=0.3539]train:  22%|██▏       | 2919/13400 [11:08<38:21,  4.55it/s, loss=0.4742]train:  22%|██▏       | 2920/13400 [11:08<39:04,  4.47it/s, loss=0.4742]train:  22%|██▏       | 2920/13400 [11:08<39:04,  4.47it/s, loss=0.4124]train:  22%|██▏       | 2921/13400 [11:08<38:23,  4.55it/s, loss=0.4124]train:  22%|██▏       | 2921/13400 [11:08<38:23,  4.55it/s, loss=0.5650]train:  22%|██▏       | 2922/13400 [11:08<39:07,  4.46it/s, loss=0.5650]train:  22%|██▏       | 2922/13400 [11:09<39:07,  4.46it/s, loss=0.4814]train:  22%|██▏       | 2923/13400 [11:09<38:18,  4.56it/s, loss=0.4814]train:  22%|██▏       | 2923/13400 [11:09<38:18,  4.56it/s, loss=0.2328]train:  22%|██▏       | 2924/13400 [11:09<39:05,  4.47it/s, loss=0.2328]train:  22%|██▏       | 2924/13400 [11:09<39:05,  4.47it/s, loss=0.3586]train:  22%|██▏       | 2925/13400 [11:09<38:16,  4.56it/s, loss=0.3586]train:  22%|██▏       | 2925/13400 [11:09<38:16,  4.56it/s, loss=0.4367]train:  22%|██▏       | 2926/13400 [11:09<39:10,  4.46it/s, loss=0.4367]train:  22%|██▏       | 2926/13400 [11:09<39:10,  4.46it/s, loss=0.5261]train:  22%|██▏       | 2927/13400 [11:09<38:20,  4.55it/s, loss=0.5261]train:  22%|██▏       | 2927/13400 [11:10<38:20,  4.55it/s, loss=0.4878]train:  22%|██▏       | 2928/13400 [11:10<39:11,  4.45it/s, loss=0.4878]train:  22%|██▏       | 2928/13400 [11:10<39:11,  4.45it/s, loss=0.1511]train:  22%|██▏       | 2929/13400 [11:10<38:29,  4.53it/s, loss=0.1511]train:  22%|██▏       | 2929/13400 [11:10<38:29,  4.53it/s, loss=0.3030]train:  22%|██▏       | 2930/13400 [11:10<39:06,  4.46it/s, loss=0.3030]train:  22%|██▏       | 2930/13400 [11:10<39:06,  4.46it/s, loss=0.6008]train:  22%|██▏       | 2931/13400 [11:10<38:22,  4.55it/s, loss=0.6008]train:  22%|██▏       | 2931/13400 [11:11<38:22,  4.55it/s, loss=0.4502]train:  22%|██▏       | 2932/13400 [11:11<39:05,  4.46it/s, loss=0.4502]train:  22%|██▏       | 2932/13400 [11:11<39:05,  4.46it/s, loss=0.5416]train:  22%|██▏       | 2933/13400 [11:11<38:18,  4.55it/s, loss=0.5416]train:  22%|██▏       | 2933/13400 [11:11<38:18,  4.55it/s, loss=0.3973]train:  22%|██▏       | 2934/13400 [11:11<39:06,  4.46it/s, loss=0.3973]train:  22%|██▏       | 2934/13400 [11:11<39:06,  4.46it/s, loss=0.6390]train:  22%|██▏       | 2935/13400 [11:11<38:19,  4.55it/s, loss=0.6390]train:  22%|██▏       | 2935/13400 [11:11<38:19,  4.55it/s, loss=0.5121]train:  22%|██▏       | 2936/13400 [11:11<39:06,  4.46it/s, loss=0.5121]train:  22%|██▏       | 2936/13400 [11:12<39:06,  4.46it/s, loss=0.4092]train:  22%|██▏       | 2937/13400 [11:12<38:18,  4.55it/s, loss=0.4092]train:  22%|██▏       | 2937/13400 [11:12<38:18,  4.55it/s, loss=0.5297]train:  22%|██▏       | 2938/13400 [11:12<39:03,  4.46it/s, loss=0.5297]train:  22%|██▏       | 2938/13400 [11:12<39:03,  4.46it/s, loss=0.4888]train:  22%|██▏       | 2939/13400 [11:12<38:21,  4.55it/s, loss=0.4888]train:  22%|██▏       | 2939/13400 [11:12<38:21,  4.55it/s, loss=0.3947]train:  22%|██▏       | 2940/13400 [11:12<39:03,  4.46it/s, loss=0.3947]train:  22%|██▏       | 2940/13400 [11:13<39:03,  4.46it/s, loss=0.2659]train:  22%|██▏       | 2941/13400 [11:13<38:12,  4.56it/s, loss=0.2659]train:  22%|██▏       | 2941/13400 [11:13<38:12,  4.56it/s, loss=0.4327]train:  22%|██▏       | 2942/13400 [11:13<39:01,  4.47it/s, loss=0.4327]train:  22%|██▏       | 2942/13400 [11:13<39:01,  4.47it/s, loss=0.3962]train:  22%|██▏       | 2943/13400 [11:13<38:13,  4.56it/s, loss=0.3962]train:  22%|██▏       | 2943/13400 [11:13<38:13,  4.56it/s, loss=0.3794]train:  22%|██▏       | 2944/13400 [11:13<39:04,  4.46it/s, loss=0.3794]train:  22%|██▏       | 2944/13400 [11:13<39:04,  4.46it/s, loss=0.5329]train:  22%|██▏       | 2945/13400 [11:13<38:14,  4.56it/s, loss=0.5329]train:  22%|██▏       | 2945/13400 [11:14<38:14,  4.56it/s, loss=0.3029]train:  22%|██▏       | 2946/13400 [11:14<38:58,  4.47it/s, loss=0.3029]train:  22%|██▏       | 2946/13400 [11:14<38:58,  4.47it/s, loss=0.2975]train:  22%|██▏       | 2947/13400 [11:14<38:11,  4.56it/s, loss=0.2975]train:  22%|██▏       | 2947/13400 [11:14<38:11,  4.56it/s, loss=0.3963]train:  22%|██▏       | 2948/13400 [11:14<38:57,  4.47it/s, loss=0.3963]train:  22%|██▏       | 2948/13400 [11:14<38:57,  4.47it/s, loss=0.4783]train:  22%|██▏       | 2949/13400 [11:14<38:17,  4.55it/s, loss=0.4783]train:  22%|██▏       | 2949/13400 [11:15<38:17,  4.55it/s, loss=0.4377]train:  22%|██▏       | 2950/13400 [11:15<38:55,  4.47it/s, loss=0.4377]train:  22%|██▏       | 2950/13400 [11:15<38:55,  4.47it/s, loss=0.2968]train:  22%|██▏       | 2951/13400 [11:15<38:10,  4.56it/s, loss=0.2968]train:  22%|██▏       | 2951/13400 [11:15<38:10,  4.56it/s, loss=0.2323]train:  22%|██▏       | 2952/13400 [11:15<38:54,  4.48it/s, loss=0.2323]train:  22%|██▏       | 2952/13400 [11:15<38:54,  4.48it/s, loss=0.4563]train:  22%|██▏       | 2953/13400 [11:15<38:08,  4.56it/s, loss=0.4563]train:  22%|██▏       | 2953/13400 [11:15<38:08,  4.56it/s, loss=0.5455]train:  22%|██▏       | 2954/13400 [11:15<39:04,  4.46it/s, loss=0.5455]train:  22%|██▏       | 2954/13400 [11:16<39:04,  4.46it/s, loss=0.3103]train:  22%|██▏       | 2955/13400 [11:16<38:17,  4.55it/s, loss=0.3103]train:  22%|██▏       | 2955/13400 [11:16<38:17,  4.55it/s, loss=0.2547]train:  22%|██▏       | 2956/13400 [11:16<39:06,  4.45it/s, loss=0.2547]train:  22%|██▏       | 2956/13400 [11:16<39:06,  4.45it/s, loss=0.1424]train:  22%|██▏       | 2957/13400 [11:16<38:19,  4.54it/s, loss=0.1424]train:  22%|██▏       | 2957/13400 [11:16<38:19,  4.54it/s, loss=0.3953]train:  22%|██▏       | 2958/13400 [11:16<38:57,  4.47it/s, loss=0.3953]train:  22%|██▏       | 2958/13400 [11:17<38:57,  4.47it/s, loss=0.5139]train:  22%|██▏       | 2959/13400 [11:17<38:11,  4.56it/s, loss=0.5139]                                                                        [rank1]: Traceback (most recent call last):
+[rank1]:   File "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_formal_stage_v2_20261110/train_light_causal_recurrent_adapt.py", line 133, in <module>
+[rank1]:     if __name__=='__main__':raise SystemExit(main())
+[rank1]:   File "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_formal_stage_v2_20261110/train_light_causal_recurrent_adapt.py", line 127, in main
+[rank1]:     return fullband.main([])
+[rank1]:   File "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_formal_stage_v2_20261110/train_light_causal_fullband.py", line 78, in main
+[rank1]:     return causal.main(argv,candidate_id=FULLBAND_TCN_CANDIDATE,entry_file=__file__)
+[rank1]:   File "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_formal_stage_v2_20261110/train_light_causal.py", line 102, in main
+[rank1]:     trainer.main()
+[rank1]:   File "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_formal_stage_v2_20261110/train_light.py", line 1081, in main
+[rank1]:     train_loss = run_epoch(model, train_loader, optimizer, scaler, device, gpu_ids, args, training=True)
+[rank1]:   File "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_formal_stage_v2_20261110/train_light_causal.py", line 96, in causal_epoch
+[rank1]:     return epoch(*epoch_args, **epoch_kwargs)
+[rank1]:   File "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_formal_stage_v2_20261110/train_light_causal_fullband.py", line 73, in synchronized_epoch
+[rank1]:     return epoch(*epoch_args,**epoch_kwargs)
+[rank1]:   File "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_formal_stage_v2_20261110/train_light_causal_recurrent_adapt.py", line 97, in autotuned_epoch
+[rank1]:     return epoch_function(*values,**options)
+[rank1]:   File "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_formal_stage_v2_20261110/train_light.py", line 683, in run_epoch
+[rank1]:     raise FloatingPointError('Non-finite gradient; optimizer step aborted')
+[rank1]: FloatingPointError: Non-finite gradient; optimizer step aborted
+[rank0]: Traceback (most recent call last):
+[rank0]:   File "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_formal_stage_v2_20261110/train_light_causal_recurrent_adapt.py", line 133, in <module>
+[rank0]:     if __name__=='__main__':raise SystemExit(main())
+[rank0]:   File "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_formal_stage_v2_20261110/train_light_causal_recurrent_adapt.py", line 127, in main
+[rank0]:     return fullband.main([])
+[rank0]:   File "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_formal_stage_v2_20261110/train_light_causal_fullband.py", line 78, in main
+[rank0]:     return causal.main(argv,candidate_id=FULLBAND_TCN_CANDIDATE,entry_file=__file__)
+[rank0]:   File "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_formal_stage_v2_20261110/train_light_causal.py", line 102, in main
+[rank0]:     trainer.main()
+[rank0]:   File "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_formal_stage_v2_20261110/train_light.py", line 1081, in main
+[rank0]:     train_loss = run_epoch(model, train_loader, optimizer, scaler, device, gpu_ids, args, training=True)
+[rank0]:   File "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_formal_stage_v2_20261110/train_light_causal.py", line 96, in causal_epoch
+[rank0]:     return epoch(*epoch_args, **epoch_kwargs)
+[rank0]:   File "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_formal_stage_v2_20261110/train_light_causal_fullband.py", line 73, in synchronized_epoch
+[rank0]:     return epoch(*epoch_args,**epoch_kwargs)
+[rank0]:   File "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_formal_stage_v2_20261110/train_light_causal_recurrent_adapt.py", line 97, in autotuned_epoch
+[rank0]:     return epoch_function(*values,**options)
+[rank0]:   File "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_formal_stage_v2_20261110/train_light.py", line 683, in run_epoch
+[rank0]:     raise FloatingPointError('Non-finite gradient; optimizer step aborted')
+[rank0]: FloatingPointError: Non-finite gradient; optimizer step aborted
+[rank0]:[W1110 20:59:19.507125036 ProcessGroupNCCL.cpp:1250] Warning: WARNING: process group has NOT been destroyed before we destruct ProcessGroupNCCL. On normal program exit, the application should call destroy_process_group to ensure that any pending NCCL operations have finished in this process. In rare cases this process can exit before this point and block the progress of another member of the process group. This constraint has always been present,  but this warning has only been added since PyTorch 2.4 (function operator())
+E1110 20:59:20.047000 2198425 site-packages/torch/distributed/elastic/multiprocessing/api.py:869] failed (exitcode: 1) local_rank: 0 (pid: 2198428) of binary: /home/nis/jinrui.yang/miniconda3/envs/EaBNet/bin/python
+Traceback (most recent call last):
+  File "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/distributed/run.py", line 923, in <module>
+    main()
+  File "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 355, in wrapper
+    return f(*args, **kwargs)
+  File "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/distributed/run.py", line 919, in main
+    run(args)
+  File "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/distributed/run.py", line 910, in run
+    elastic_launch(
+  File "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 138, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 269, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+train_light_causal_recurrent_adapt.py FAILED
+------------------------------------------------------------
+Failures:
+[1]:
+  time      : 2026-11-10_20:59:20
+  host      : nca.g11
+  rank      : 1 (local_rank: 1)
+  exitcode  : 1 (pid: 2198429)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2026-11-10_20:59:20
+  host      : nca.g11
+  rank      : 0 (local_rank: 0)
+  exitcode  : 1 (pid: 2198428)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================

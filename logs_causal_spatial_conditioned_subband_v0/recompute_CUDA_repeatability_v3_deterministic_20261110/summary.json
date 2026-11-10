@@ -1,0 +1,33 @@
+{
+  "status": "complete_actual_same_model_CUDA_checkpoint_repeatability",
+  "pid": 2217863,
+  "source_checkpoint_sha256": "8799883c92a05646e5cdc37ebd7b92ec2d644948a712cd23f95fba2b789a7f52",
+  "actual_new_updates": 0,
+  "micro_batch": 2,
+  "real_input_samples": 96000,
+  "diagnostic_only": true,
+  "formal_goal_achieved": false,
+  "results": [
+    {
+      "mode": "baseline_first",
+      "status": "failed",
+      "error": "RuntimeError: reflection_pad1d_backward_out_cuda does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True)'. You can turn off determinism just for this operation, or you can use the 'warn_only=True' option, if that's acceptable for your application. You can also file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation."
+    },
+    {
+      "mode": "baseline_repeat",
+      "status": "failed",
+      "error": "OutOfMemoryError: CUDA out of memory. Tried to allocate 152.00 MiB. GPU 0 has a total capacity of 11.60 GiB of which 19.06 MiB is free. Including non-PyTorch memory, this process has 11.54 GiB memory in use. Of the allocated memory 11.18 GiB is allocated by PyTorch, and 95.86 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)"
+    },
+    {
+      "mode": "nonreentrant",
+      "status": "failed",
+      "error": "RuntimeError: reflection_pad1d_backward_out_cuda does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True)'. You can turn off determinism just for this operation, or you can use the 'warn_only=True' option, if that's acceptable for your application. You can also file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation."
+    },
+    {
+      "mode": "no_early_stop",
+      "status": "failed",
+      "error": "RuntimeError: reflection_pad1d_backward_out_cuda does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True)'. You can turn off determinism just for this operation, or you can use the 'warn_only=True' option, if that's acceptable for your application. You can also file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation."
+    }
+  ],
+  "model_weights_unchanged": true
+}

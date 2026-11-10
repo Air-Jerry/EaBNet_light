@@ -1,0 +1,14 @@
+{
+  "status": "strict_profile_collective_qualification_incomplete",
+  "original_profile_reports_retained": true,
+  "original_torchrun_exit_code": 0,
+  "actual_reported_updates_per_rank": 80,
+  "weights_and_Adam_finiteness_reported": true,
+  "teardown_async_collective_error_found": true,
+  "collective_qualification_passed": false,
+  "source": "control.log",
+  "error": "Rank1 WorkNCCL SeqNum570 ALLREDUCE Numel4597592 raised async ncclSystemError after completed rank reports",
+  "interpretation": "No claim that the model caused this error; timing alone and zero exit code cannot establish clean communication or formal qualification",
+  "planned_replacement": "full_root_production_boundary15_v2_20261110",
+  "formal_goal_achieved": false
+}

@@ -1,0 +1,68 @@
+{
+  "status": "complete_actual_same_model_CUDA_checkpoint_repeatability",
+  "pid": 2216815,
+  "source_checkpoint_sha256": "8799883c92a05646e5cdc37ebd7b92ec2d644948a712cd23f95fba2b789a7f52",
+  "actual_new_updates": 0,
+  "micro_batch": 2,
+  "real_input_samples": 96000,
+  "diagnostic_only": true,
+  "formal_goal_achieved": false,
+  "results": [
+    {
+      "mode": "baseline_first",
+      "seconds": 6.796087720897049,
+      "loss": 0.3124970495700836,
+      "peak_allocated_bytes": 8032872448,
+      "status": "complete",
+      "output_max_error": 0.0,
+      "gradient_max_error": 0.0,
+      "gradient_relative_l2_error": 0.0,
+      "strict_gradient_gate": true
+    },
+    {
+      "mode": "baseline_repeat",
+      "seconds": 0.26565672596916556,
+      "loss": 0.3124970495700836,
+      "peak_allocated_bytes": 8043929088,
+      "status": "complete",
+      "output_max_error": 0.0,
+      "gradient_max_error": 0.0008319467306137085,
+      "gradient_relative_l2_error": 0.004357522391227559,
+      "strict_gradient_gate": false
+    },
+    {
+      "mode": "nonreentrant",
+      "seconds": 0.29353172006085515,
+      "loss": 0.3124970495700836,
+      "peak_allocated_bytes": 5682288640,
+      "status": "complete",
+      "output_max_error": 0.0,
+      "gradient_max_error": 0.0008319467306137085,
+      "gradient_relative_l2_error": 0.004591205476386663,
+      "strict_gradient_gate": false
+    },
+    {
+      "mode": "no_early_stop",
+      "seconds": 0.2945713559165597,
+      "loss": 0.3124970495700836,
+      "peak_allocated_bytes": 5682288640,
+      "status": "complete",
+      "output_max_error": 0.0,
+      "gradient_max_error": 0.00041597336530685425,
+      "gradient_relative_l2_error": 0.003801162428561599,
+      "strict_gradient_gate": false
+    },
+    {
+      "mode": "reentrant",
+      "seconds": 0.7488128999248147,
+      "loss": 0.312463641166687,
+      "peak_allocated_bytes": 5682288640,
+      "status": "complete",
+      "output_max_error": 0.2076517939567566,
+      "gradient_max_error": 0.03161397576332092,
+      "gradient_relative_l2_error": 0.1894867423078459,
+      "strict_gradient_gate": false
+    }
+  ],
+  "model_weights_unchanged": true
+}

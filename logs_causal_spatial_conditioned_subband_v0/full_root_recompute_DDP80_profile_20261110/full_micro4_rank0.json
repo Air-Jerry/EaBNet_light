@@ -1,0 +1,44 @@
+{
+  "status": "complete_actual80_updates_64_measured_global8",
+  "branch": "full_micro4",
+  "rank": 0,
+  "pid": 2221025,
+  "source_checkpoint_sha256": "8799883c92a05646e5cdc37ebd7b92ec2d644948a712cd23f95fba2b789a7f52",
+  "source_adam_steps": 93800,
+  "sampler_epoch": 98,
+  "global_batch": 8,
+  "seed": 1234,
+  "seconds_per_record": 6,
+  "micro_batch": 4,
+  "grad_accum_steps": 1,
+  "diagnostic_only": true,
+  "actual_quality_unverified": true,
+  "formal_goal_achieved": false,
+  "restored_Adam": {
+    "existing_adam_moments_exactly_preserved": true,
+    "source_adam_steps": 93800,
+    "existing_state_parameters": 235,
+    "newly_unfrozen_parameter_tensors": 125
+  },
+  "global_distinct_records": 640,
+  "global_indices_sha256": "47809af8c7630a0fdac3e9a0cd34a8480517b493130168d77b3cb92f7b6a6923",
+  "original_loss_weights_and_frame_weighting": true,
+  "strict_determinism": true,
+  "backward_factor": 1.0,
+  "warmup": {
+    "seconds": 29.4066408816725,
+    "updates": 16,
+    "loss": 0.43919628486037254,
+    "peak_allocated_bytes": 11424932864,
+    "peak_reserved_bytes": 11729371136
+  },
+  "measured": {
+    "seconds": 48.301731469109654,
+    "updates": 64,
+    "loss": 0.4062958847498521,
+    "peak_allocated_bytes": 11424932864,
+    "peak_reserved_bytes": 11729371136
+  },
+  "all_weights_and_Adam_finite": true,
+  "actual_new_updates": 80
+}

@@ -1,0 +1,8 @@
+{
+  "pid": 2225467,
+  "cookie": "226932022",
+  "state": "S",
+  "self_check": "Exact complete15 binding and inherited ownership controls loaded;0 GPU or training signals.",
+  "old_wait_controller_cancelled_before_eta": true,
+  "formal_pid_untouched": 2221565
+}

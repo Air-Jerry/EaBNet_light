@@ -1,0 +1,104 @@
+[W1110 22:16:42.120215386 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
+[W1110 22:16:42.200317212 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
+train:   0%|          | 0/16 [00:00<?, ?it/s]/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/_inductor/compile_fx.py:167: UserWarning: TensorFloat32 tensor cores for float32 matrix multiplication available but not enabled. Consider setting `torch.set_float32_matmul_precision('high')` for better performance.
+  warnings.warn(
+/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/_inductor/compile_fx.py:167: UserWarning: TensorFloat32 tensor cores for float32 matrix multiplication available but not enabled. Consider setting `torch.set_float32_matmul_precision('high')` for better performance.
+  warnings.warn(
+/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/autograd/graph.py:825: UserWarning: Grad strides do not match bucket view strides. This may indicate grad was not created according to the gradient layout contract, or that the param's strides changed since DDP was constructed.  This is not an error, but may impair performance.
+grad.sizes() = [2, 16, 1, 1], strides() = [16, 1, 16, 16]
+bucket_view.sizes() = [2, 16, 1, 1], strides() = [16, 1, 1, 1] (Triggered internally at ../torch/csrc/distributed/c10d/reducer.cpp:327.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/autograd/graph.py:825: UserWarning: Grad strides do not match bucket view strides. This may indicate grad was not created according to the gradient layout contract, or that the param's strides changed since DDP was constructed.  This is not an error, but may impair performance.
+grad.sizes() = [2, 16, 1, 1], strides() = [16, 1, 16, 16]
+bucket_view.sizes() = [2, 16, 1, 1], strides() = [16, 1, 1, 1] (Triggered internally at ../torch/csrc/distributed/c10d/reducer.cpp:327.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+train:   0%|          | 0/16 [00:17<?, ?it/s, loss=0.4772]train:   6%|▋         | 1/16 [00:17<04:29, 17.99s/it, loss=0.4772]train:   6%|▋         | 1/16 [00:18<04:29, 17.99s/it, loss=0.5043]train:  12%|█▎        | 2/16 [00:18<01:49,  7.85s/it, loss=0.5043]train:  12%|█▎        | 2/16 [00:19<01:49,  7.85s/it, loss=0.5584]train:  19%|█▉        | 3/16 [00:19<00:59,  4.61s/it, loss=0.5584]train:  19%|█▉        | 3/16 [00:20<00:59,  4.61s/it, loss=0.3283]train:  25%|██▌       | 4/16 [00:20<00:37,  3.08s/it, loss=0.3283]train:  25%|██▌       | 4/16 [00:20<00:37,  3.08s/it, loss=0.2520]train:  31%|███▏      | 5/16 [00:20<00:24,  2.24s/it, loss=0.2520]train:  31%|███▏      | 5/16 [00:21<00:24,  2.24s/it, loss=0.3630]train:  38%|███▊      | 6/16 [00:21<00:17,  1.79s/it, loss=0.3630]train:  38%|███▊      | 6/16 [00:22<00:17,  1.79s/it, loss=0.2851]train:  44%|████▍     | 7/16 [00:22<00:13,  1.45s/it, loss=0.2851]train:  44%|████▍     | 7/16 [00:23<00:13,  1.45s/it, loss=0.3201]train:  50%|█████     | 8/16 [00:23<00:09,  1.22s/it, loss=0.3201]train:  50%|█████     | 8/16 [00:24<00:09,  1.22s/it, loss=0.3682]train:  56%|█████▋    | 9/16 [00:24<00:07,  1.08s/it, loss=0.3682]train:  56%|█████▋    | 9/16 [00:24<00:07,  1.08s/it, loss=0.5780]train:  62%|██████▎   | 10/16 [00:24<00:05,  1.03it/s, loss=0.5780]train:  62%|██████▎   | 10/16 [00:25<00:05,  1.03it/s, loss=0.4644]train:  69%|██████▉   | 11/16 [00:25<00:04,  1.10it/s, loss=0.4644]train:  69%|██████▉   | 11/16 [00:26<00:04,  1.10it/s, loss=0.3240]train:  75%|███████▌  | 12/16 [00:26<00:03,  1.17it/s, loss=0.3240]train:  75%|███████▌  | 12/16 [00:27<00:03,  1.17it/s, loss=0.6569]train:  81%|████████▏ | 13/16 [00:27<00:02,  1.21it/s, loss=0.6569]train:  81%|████████▏ | 13/16 [00:27<00:02,  1.21it/s, loss=0.3971]train:  88%|████████▊ | 14/16 [00:27<00:01,  1.25it/s, loss=0.3971]train:  88%|████████▊ | 14/16 [00:28<00:01,  1.25it/s, loss=0.3540]train:  94%|█████████▍| 15/16 [00:28<00:00,  1.27it/s, loss=0.3540]train:  94%|█████████▍| 15/16 [00:29<00:00,  1.27it/s, loss=0.4483]train: 100%|██████████| 16/16 [00:29<00:00,  1.29it/s, loss=0.4483]                                                                   [PERF][train] samples(local/global)=64/128, batches(local/global)=16/32, samples/s(local/global)=2.2/4.4, ms/batch(local)=1837.8, data_wait=0.3%, compute=99.6%, non_finite_skips(local)=0
+train:   0%|          | 0/64 [00:00<?, ?it/s]train:   0%|          | 0/64 [00:00<?, ?it/s, loss=0.3457]train:   2%|▏         | 1/64 [00:00<00:54,  1.16it/s, loss=0.3457]train:   2%|▏         | 1/64 [00:01<00:54,  1.16it/s, loss=0.4032]train:   3%|▎         | 2/64 [00:01<00:49,  1.25it/s, loss=0.4032]train:   3%|▎         | 2/64 [00:02<00:49,  1.25it/s, loss=0.3524]train:   5%|▍         | 3/64 [00:02<00:47,  1.29it/s, loss=0.3524]train:   5%|▍         | 3/64 [00:03<00:47,  1.29it/s, loss=0.4121]train:   6%|▋         | 4/64 [00:03<00:45,  1.31it/s, loss=0.4121]train:   6%|▋         | 4/64 [00:03<00:45,  1.31it/s, loss=0.3102]train:   8%|▊         | 5/64 [00:03<00:44,  1.31it/s, loss=0.3102]train:   8%|▊         | 5/64 [00:04<00:44,  1.31it/s, loss=0.2071]train:   9%|▉         | 6/64 [00:04<00:43,  1.32it/s, loss=0.2071]train:   9%|▉         | 6/64 [00:05<00:43,  1.32it/s, loss=0.3251]train:  11%|█         | 7/64 [00:05<00:42,  1.33it/s, loss=0.3251]train:  11%|█         | 7/64 [00:06<00:42,  1.33it/s, loss=0.4275]train:  12%|█▎        | 8/64 [00:06<00:42,  1.33it/s, loss=0.4275]train:  12%|█▎        | 8/64 [00:06<00:42,  1.33it/s, loss=0.3230]train:  14%|█▍        | 9/64 [00:06<00:41,  1.33it/s, loss=0.3230]train:  14%|█▍        | 9/64 [00:07<00:41,  1.33it/s, loss=0.3542]train:  16%|█▌        | 10/64 [00:07<00:40,  1.33it/s, loss=0.3542]train:  16%|█▌        | 10/64 [00:08<00:40,  1.33it/s, loss=0.2959]train:  17%|█▋        | 11/64 [00:08<00:39,  1.33it/s, loss=0.2959]train:  17%|█▋        | 11/64 [00:09<00:39,  1.33it/s, loss=0.3588]train:  19%|█▉        | 12/64 [00:09<00:39,  1.33it/s, loss=0.3588]train:  19%|█▉        | 12/64 [00:09<00:39,  1.33it/s, loss=0.4010]train:  20%|██        | 13/64 [00:09<00:38,  1.33it/s, loss=0.4010]train:  20%|██        | 13/64 [00:10<00:38,  1.33it/s, loss=0.3828]train:  22%|██▏       | 14/64 [00:10<00:37,  1.33it/s, loss=0.3828]train:  22%|██▏       | 14/64 [00:11<00:37,  1.33it/s, loss=0.4625]train:  23%|██▎       | 15/64 [00:11<00:36,  1.33it/s, loss=0.4625]train:  23%|██▎       | 15/64 [00:12<00:36,  1.33it/s, loss=0.3505]train:  25%|██▌       | 16/64 [00:12<00:36,  1.33it/s, loss=0.3505]train:  25%|██▌       | 16/64 [00:12<00:36,  1.33it/s, loss=0.4888]train:  27%|██▋       | 17/64 [00:12<00:35,  1.33it/s, loss=0.4888]train:  27%|██▋       | 17/64 [00:13<00:35,  1.33it/s, loss=0.5284]train:  28%|██▊       | 18/64 [00:13<00:34,  1.33it/s, loss=0.5284]train:  28%|██▊       | 18/64 [00:14<00:34,  1.33it/s, loss=0.4124]train:  30%|██▉       | 19/64 [00:14<00:33,  1.33it/s, loss=0.4124]train:  30%|██▉       | 19/64 [00:15<00:33,  1.33it/s, loss=0.2696]train:  31%|███▏      | 20/64 [00:15<00:33,  1.33it/s, loss=0.2696]train:  31%|███▏      | 20/64 [00:15<00:33,  1.33it/s, loss=0.4918]train:  33%|███▎      | 21/64 [00:15<00:32,  1.33it/s, loss=0.4918]train:  33%|███▎      | 21/64 [00:16<00:32,  1.33it/s, loss=0.4961]train:  34%|███▍      | 22/64 [00:16<00:31,  1.33it/s, loss=0.4961]train:  34%|███▍      | 22/64 [00:17<00:31,  1.33it/s, loss=0.3539]train:  36%|███▌      | 23/64 [00:17<00:30,  1.33it/s, loss=0.3539]train:  36%|███▌      | 23/64 [00:18<00:30,  1.33it/s, loss=0.4870]train:  38%|███▊      | 24/64 [00:18<00:30,  1.33it/s, loss=0.4870]train:  38%|███▊      | 24/64 [00:18<00:30,  1.33it/s, loss=0.6104]train:  39%|███▉      | 25/64 [00:18<00:29,  1.33it/s, loss=0.6104]train:  39%|███▉      | 25/64 [00:19<00:29,  1.33it/s, loss=0.3744]train:  41%|████      | 26/64 [00:19<00:28,  1.33it/s, loss=0.3744]train:  41%|████      | 26/64 [00:20<00:28,  1.33it/s, loss=0.4940]train:  42%|████▏     | 27/64 [00:20<00:27,  1.33it/s, loss=0.4940]train:  42%|████▏     | 27/64 [00:21<00:27,  1.33it/s, loss=0.5235]train:  44%|████▍     | 28/64 [00:21<00:27,  1.33it/s, loss=0.5235]train:  44%|████▍     | 28/64 [00:21<00:27,  1.33it/s, loss=0.4086]train:  45%|████▌     | 29/64 [00:21<00:26,  1.33it/s, loss=0.4086]train:  45%|████▌     | 29/64 [00:22<00:26,  1.33it/s, loss=0.3918]train:  47%|████▋     | 30/64 [00:22<00:25,  1.33it/s, loss=0.3918]train:  47%|████▋     | 30/64 [00:23<00:25,  1.33it/s, loss=0.3630]train:  48%|████▊     | 31/64 [00:23<00:24,  1.33it/s, loss=0.3630]train:  48%|████▊     | 31/64 [00:24<00:24,  1.33it/s, loss=0.3759]train:  50%|█████     | 32/64 [00:24<00:24,  1.33it/s, loss=0.3759]train:  50%|█████     | 32/64 [00:24<00:24,  1.33it/s, loss=0.5717]train:  52%|█████▏    | 33/64 [00:24<00:23,  1.33it/s, loss=0.5717]train:  52%|█████▏    | 33/64 [00:25<00:23,  1.33it/s, loss=0.4130]train:  53%|█████▎    | 34/64 [00:25<00:22,  1.33it/s, loss=0.4130]train:  53%|█████▎    | 34/64 [00:26<00:22,  1.33it/s, loss=0.2483]train:  55%|█████▍    | 35/64 [00:26<00:21,  1.33it/s, loss=0.2483]train:  55%|█████▍    | 35/64 [00:27<00:21,  1.33it/s, loss=0.4552]train:  56%|█████▋    | 36/64 [00:27<00:21,  1.33it/s, loss=0.4552]train:  56%|█████▋    | 36/64 [00:27<00:21,  1.33it/s, loss=0.3238]train:  58%|█████▊    | 37/64 [00:27<00:20,  1.33it/s, loss=0.3238]train:  58%|█████▊    | 37/64 [00:28<00:20,  1.33it/s, loss=0.2920]train:  59%|█████▉    | 38/64 [00:28<00:19,  1.33it/s, loss=0.2920]train:  59%|█████▉    | 38/64 [00:29<00:19,  1.33it/s, loss=0.3592]train:  61%|██████    | 39/64 [00:29<00:18,  1.33it/s, loss=0.3592]train:  61%|██████    | 39/64 [00:30<00:18,  1.33it/s, loss=0.3200]train:  62%|██████▎   | 40/64 [00:30<00:18,  1.33it/s, loss=0.3200]train:  62%|██████▎   | 40/64 [00:30<00:18,  1.33it/s, loss=0.4708]train:  64%|██████▍   | 41/64 [00:30<00:17,  1.33it/s, loss=0.4708]train:  64%|██████▍   | 41/64 [00:31<00:17,  1.33it/s, loss=0.4064]train:  66%|██████▌   | 42/64 [00:31<00:16,  1.33it/s, loss=0.4064]train:  66%|██████▌   | 42/64 [00:32<00:16,  1.33it/s, loss=0.3759]train:  67%|██████▋   | 43/64 [00:32<00:15,  1.33it/s, loss=0.3759]train:  67%|██████▋   | 43/64 [00:33<00:15,  1.33it/s, loss=0.3410]train:  69%|██████▉   | 44/64 [00:33<00:15,  1.33it/s, loss=0.3410]train:  69%|██████▉   | 44/64 [00:33<00:15,  1.33it/s, loss=0.5671]train:  70%|███████   | 45/64 [00:33<00:14,  1.33it/s, loss=0.5671]train:  70%|███████   | 45/64 [00:34<00:14,  1.33it/s, loss=0.4154]train:  72%|███████▏  | 46/64 [00:34<00:13,  1.33it/s, loss=0.4154]train:  72%|███████▏  | 46/64 [00:35<00:13,  1.33it/s, loss=0.4331]train:  73%|███████▎  | 47/64 [00:35<00:12,  1.33it/s, loss=0.4331]train:  73%|███████▎  | 47/64 [00:36<00:12,  1.33it/s, loss=0.4996]train:  75%|███████▌  | 48/64 [00:36<00:12,  1.33it/s, loss=0.4996]train:  75%|███████▌  | 48/64 [00:36<00:12,  1.33it/s, loss=0.4552]train:  77%|███████▋  | 49/64 [00:36<00:11,  1.33it/s, loss=0.4552]train:  77%|███████▋  | 49/64 [00:37<00:11,  1.33it/s, loss=0.4553]train:  78%|███████▊  | 50/64 [00:37<00:10,  1.33it/s, loss=0.4553]train:  78%|███████▊  | 50/64 [00:38<00:10,  1.33it/s, loss=0.4957]train:  80%|███████▉  | 51/64 [00:38<00:09,  1.33it/s, loss=0.4957]train:  80%|███████▉  | 51/64 [00:39<00:09,  1.33it/s, loss=0.5391]train:  81%|████████▏ | 52/64 [00:39<00:09,  1.33it/s, loss=0.5391]train:  81%|████████▏ | 52/64 [00:39<00:09,  1.33it/s, loss=0.2582]train:  83%|████████▎ | 53/64 [00:39<00:08,  1.33it/s, loss=0.2582]train:  83%|████████▎ | 53/64 [00:40<00:08,  1.33it/s, loss=0.4575]train:  84%|████████▍ | 54/64 [00:40<00:07,  1.33it/s, loss=0.4575]train:  84%|████████▍ | 54/64 [00:41<00:07,  1.33it/s, loss=0.2244]train:  86%|████████▌ | 55/64 [00:41<00:06,  1.33it/s, loss=0.2244]train:  86%|████████▌ | 55/64 [00:42<00:06,  1.33it/s, loss=0.3528]train:  88%|████████▊ | 56/64 [00:42<00:06,  1.33it/s, loss=0.3528]train:  88%|████████▊ | 56/64 [00:42<00:06,  1.33it/s, loss=0.3549]train:  89%|████████▉ | 57/64 [00:42<00:05,  1.33it/s, loss=0.3549]train:  89%|████████▉ | 57/64 [00:43<00:05,  1.33it/s, loss=0.3762]train:  91%|█████████ | 58/64 [00:43<00:04,  1.33it/s, loss=0.3762]train:  91%|█████████ | 58/64 [00:44<00:04,  1.33it/s, loss=0.4642]train:  92%|█████████▏| 59/64 [00:44<00:03,  1.33it/s, loss=0.4642]train:  92%|█████████▏| 59/64 [00:45<00:03,  1.33it/s, loss=0.5074]train:  94%|█████████▍| 60/64 [00:45<00:03,  1.33it/s, loss=0.5074]train:  94%|█████████▍| 60/64 [00:45<00:03,  1.33it/s, loss=0.3896]train:  95%|█████████▌| 61/64 [00:45<00:02,  1.33it/s, loss=0.3896]train:  95%|█████████▌| 61/64 [00:46<00:02,  1.33it/s, loss=0.4110]train:  97%|█████████▋| 62/64 [00:46<00:01,  1.33it/s, loss=0.4110]train:  97%|█████████▋| 62/64 [00:47<00:01,  1.33it/s, loss=0.2659]train:  98%|█████████▊| 63/64 [00:47<00:00,  1.33it/s, loss=0.2659]train:  98%|█████████▊| 63/64 [00:48<00:00,  1.33it/s, loss=0.3606]train: 100%|██████████| 64/64 [00:48<00:00,  1.33it/s, loss=0.3606]                                                                   [PERF][train] samples(local/global)=256/512, batches(local/global)=64/128, samples/s(local/global)=5.3/10.6, ms/batch(local)=754.3, data_wait=0.3%, compute=99.6%, non_finite_skips(local)=0
+{
+  "status": "complete_actual80_updates_64_measured_global8",
+  "branch": "full_micro4",
+  "rank": 0,
+  "pid": 2221025,
+  "source_checkpoint_sha256": "8799883c92a05646e5cdc37ebd7b92ec2d644948a712cd23f95fba2b789a7f52",
+  "source_adam_steps": 93800,
+  "sampler_epoch": 98,
+  "global_batch": 8,
+  "seed": 1234,
+  "seconds_per_record": 6,
+  "micro_batch": 4,
+  "grad_accum_steps": 1,
+  "diagnostic_only": true,
+  "actual_quality_unverified": true,
+  "formal_goal_achieved": false,
+  "restored_Adam": {
+    "existing_adam_moments_exactly_preserved": true,
+    "source_adam_steps": 93800,
+    "existing_state_parameters": 235,
+    "newly_unfrozen_parameter_tensors": 125
+  },
+  "global_distinct_records": 640,
+  "global_indices_sha256": "47809af8c7630a0fdac3e9a0cd34a8480517b493130168d77b3cb92f7b6a6923",
+  "original_loss_weights_and_frame_weighting": true,
+  "strict_determinism": true,
+  "backward_factor": 1.0,
+  "warmup": {
+    "seconds": 29.4066408816725,
+    "updates": 16,
+    "loss": 0.43919628486037254,
+    "peak_allocated_bytes": 11424932864,
+    "peak_reserved_bytes": 11729371136
+  },
+  "measured": {
+    "seconds": 48.301731469109654,
+    "updates": 64,
+    "loss": 0.4062958847498521,
+    "peak_allocated_bytes": 11424932864,
+    "peak_reserved_bytes": 11729371136
+  },
+  "all_weights_and_Adam_finite": true,
+  "actual_new_updates": 80
+}
+{
+  "status": "complete_actual80_updates_64_measured_global8",
+  "branch": "full_micro4",
+  "rank": 1,
+  "pid": 2221026,
+  "source_checkpoint_sha256": "8799883c92a05646e5cdc37ebd7b92ec2d644948a712cd23f95fba2b789a7f52",
+  "source_adam_steps": 93800,
+  "sampler_epoch": 98,
+  "global_batch": 8,
+  "seed": 1234,
+  "seconds_per_record": 6,
+  "micro_batch": 4,
+  "grad_accum_steps": 1,
+  "diagnostic_only": true,
+  "actual_quality_unverified": true,
+  "formal_goal_achieved": false,
+  "restored_Adam": {
+    "existing_adam_moments_exactly_preserved": true,
+    "source_adam_steps": 93800,
+    "existing_state_parameters": 235,
+    "newly_unfrozen_parameter_tensors": 125
+  },
+  "global_distinct_records": 640,
+  "global_indices_sha256": "47809af8c7630a0fdac3e9a0cd34a8480517b493130168d77b3cb92f7b6a6923",
+  "original_loss_weights_and_frame_weighting": true,
+  "strict_determinism": true,
+  "backward_factor": 1.0,
+  "warmup": {
+    "seconds": 29.406640831846744,
+    "updates": 16,
+    "loss": 0.43919628486037254,
+    "peak_allocated_bytes": 11424932864,
+    "peak_reserved_bytes": 11729371136
+  },
+  "measured": {
+    "seconds": 48.30171574279666,
+    "updates": 64,
+    "loss": 0.4062958847498521,
+    "peak_allocated_bytes": 11424932864,
+    "peak_reserved_bytes": 11729371136
+  },
+  "all_weights_and_Adam_finite": true,
+  "actual_new_updates": 80
+}

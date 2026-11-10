@@ -1,0 +1,49 @@
+{
+  "status": "complete_actual_CUDA_gradient_and_memory_screen",
+  "pid": 2215698,
+  "source_checkpoint_sha256": "8799883c92a05646e5cdc37ebd7b92ec2d644948a712cd23f95fba2b789a7f52",
+  "source_epoch": 14,
+  "actual_new_updates": 0,
+  "backward_factor": 1.0,
+  "real_input_samples": 96000,
+  "diagnostic_only": true,
+  "formal_goal_achieved": false,
+  "actual_DDP_throughput_and_full_epoch_unverified": true,
+  "results": [
+    {
+      "micro_batch": 2,
+      "recompute": false,
+      "status": "finite_forward_backward",
+      "seconds": 11.957506641279906,
+      "loss": 0.3124970495700836,
+      "peak_allocated_bytes": 8032872448,
+      "peak_reserved_bytes": 8134852608
+    },
+    {
+      "micro_batch": 2,
+      "recompute": true,
+      "status": "CUDA_gradient_or_recompute_check_failed",
+      "seconds": 0.3490165420807898,
+      "loss": 0.3124970495700836,
+      "peak_allocated_bytes": 5679752704,
+      "peak_reserved_bytes": 5788139520,
+      "output_max_error": 0.0,
+      "parameter_gradient_max_error": 0.0008319467306137085,
+      "parameter_gradient_relative_l2_error": 0.00399044592642618,
+      "gradient_parameter_count": 360,
+      "error": "AssertionError: "
+    },
+    {
+      "micro_batch": 4,
+      "recompute": true,
+      "status": "finite_forward_backward",
+      "seconds": 2.413848637137562,
+      "loss": 0.31975317001342773,
+      "peak_allocated_bytes": 11305377792,
+      "peak_reserved_bytes": 11567890432
+    }
+  ],
+  "micro4_memory_passed": true,
+  "CUDA_recompute_gradients_passed": false,
+  "no_source_or_formal_training_changes": true
+}

@@ -1,0 +1,50 @@
+{
+  "status": "exact_complete14_model_adam_and_actual_both_ranks_resumed",
+  "failed_owner_terminal_verified": true,
+  "prior_failure": {
+    "status": "failed",
+    "final_phase": "training_epoch_15",
+    "exit_code": 1,
+    "finished_unix": 1794315560.2262914
+  },
+  "resumed_from_completed_epoch": 14,
+  "resumed_adam_steps": 93800,
+  "resumed_checkpoint_sha256": "8799883c92a05646e5cdc37ebd7b92ec2d644948a712cd23f95fba2b789a7f52",
+  "model_and_adam_strict_restored": true,
+  "diagnostic_weights_used_for_formal": false,
+  "original_environment_affinity_priority_restored": false,
+  "declared_effective_training_environment_and_original_affinity_priority_verified": true,
+  "environment_scope": "Original exited process environ unavailable; explicit thread/library settings, CUDA0/1, no CUBLAS override, parent affinity eight P cores and priority0; original checkpoint args/code retained",
+  "declared_environment": {
+    "CUDA_VISIBLE_DEVICES": "0,1",
+    "OMP_NUM_THREADS": "2",
+    "MKL_NUM_THREADS": "2",
+    "OPENBLAS_NUM_THREADS": "2",
+    "TORCHINDUCTOR_COMPILE_THREADS": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "formal_stage": "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_formal_stage_v2_20261110",
+  "logs": "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_formal_stage_v2_20261110/logs_causal_recurrent_adapt_monaural_v1/recurrent_adapt_20261110_063140_1982617",
+  "checkpoints": "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_formal_stage_v2_20261110/checkpoints_causal_recurrent_adapt_monaural_v1_recurrent_adapt_20261110_063140_1982617",
+  "gpu_queries": 1,
+  "formal_goal_achieved": false,
+  "formal_pid": 2221565,
+  "formal_cookie": "226842357",
+  "actual_both_ranks_verified": true,
+  "ranks": [
+    {
+      "pid": 2221643,
+      "cookie": "226843048",
+      "rank": 0
+    },
+    {
+      "pid": 2221644,
+      "cookie": "226843049",
+      "rank": 1
+    }
+  ],
+  "resumed_unix": 1794320298.1578271,
+  "observed_CPU_threads8": false,
+  "observer_pid": 2221927,
+  "observer_cookie": "226843992"
+}

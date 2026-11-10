@@ -1,0 +1,17 @@
+{
+  "status": "actual_step_time_rejects_strict_deterministic_full_root_under_one_hour",
+  "source_profile": "full_root_recompute_DDP80_profile_20261110/summary.json",
+  "actual_profile_updates": 64,
+  "new_measured_seconds": 48.301731469109654,
+  "control_measured_seconds": 34.539897629991174,
+  "measured_cost_ratio": 1.3984329654517855,
+  "new_projected_training_only_seconds": 5056.587513172417,
+  "new_minimum_projected_epoch_with_evaluation60reserve": 5329.80160137394,
+  "excludes_validation_and_checkpoint_seconds": true,
+  "old_relative_projection_seconds": 4534.239333933113,
+  "old_relative_projection_not_budget_evidence": "Strict profile control differs from original production numerical settings; absolute new step time is required",
+  "actual_complete_new_epoch_unverified": true,
+  "quality_unverified": true,
+  "adopted": false,
+  "formal_goal_achieved": false
+}
