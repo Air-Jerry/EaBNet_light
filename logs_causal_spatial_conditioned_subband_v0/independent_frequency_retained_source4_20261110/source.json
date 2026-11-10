@@ -1,0 +1,6 @@
+{
+  "source_checkpoint": "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_formal_stage_v2_20261110/checkpoints_causal_recurrent_adapt_monaural_v1_recurrent_adapt_20261110_063140_1982617/model_epoch_4.pt",
+  "source_checkpoint_sha256": "c6fead9ed348828c852da26ca3c1a53b32b2d8e78c7ebccab908edd56815b278",
+  "source_epoch": 4,
+  "source_full600_pesq": 3.275180070002874
+}

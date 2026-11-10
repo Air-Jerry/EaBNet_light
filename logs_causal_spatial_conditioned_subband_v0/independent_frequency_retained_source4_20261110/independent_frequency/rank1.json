@@ -1,0 +1,43 @@
+{
+  "status": "complete",
+  "branch": "independent_frequency",
+  "rank": 1,
+  "seed": 1234,
+  "source_checkpoint_sha256": "c6fead9ed348828c852da26ca3c1a53b32b2d8e78c7ebccab908edd56815b278",
+  "source_epoch": 4,
+  "sampler_epoch": 88,
+  "training_metadata_sha256": "d3854b3717979c398d403143342508db8335c2e613b279e3317c5192f5ef952b",
+  "rank_selected_indices_sha256": "064a631a1b9b4afe8451c885d0f5c896572a6cd89f185f963021f794db94ea2c",
+  "ordered_global_indices_sha256": "0fc76a847518816d2a113d20d8434c99783f70551069259cbf3a3cd4d37b9b02",
+  "global_distinct_training_records": 2048,
+  "optimizer_updates": 256,
+  "global_batch": 8,
+  "learning_rate": 0.0001,
+  "fresh_adam": false,
+  "initial_adam_steps": 26800,
+  "adam_restoration": {
+    "existing_adam_moments_exactly_preserved": true,
+    "source_adam_steps": 26800,
+    "existing_state_parameters": 235,
+    "fresh_matrix_parameters": 2
+  },
+  "frame_weighted_loss": true,
+  "seconds_per_record": 6,
+  "trainable_parameters": 5135706,
+  "root_state_tensors_changed": 137,
+  "frozen_parameters_unchanged": true,
+  "all_weights_and_adam_finite": true,
+  "training_seconds": 124.21966763073578,
+  "loss": 0.4179132303179358,
+  "loss_components": {
+    "samples": 1024,
+    "batches": 512,
+    "spectral": 0.2808592915534973,
+    "mrstft": 0.6921904683113098,
+    "waveform": 0.13534493744373322,
+    "total": 0.36361265182495117,
+    "pmsqe": 0.5323681235313416,
+    "combined_total": 0.4168494641780853
+  },
+  "formal_goal_achieved": false
+}

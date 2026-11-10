@@ -1,5 +1,5 @@
 {
-  "status": "waiting_measured_complete5_boundary",
+  "status": "exact_complete5_model_adam_and_actual_both_ranks_resumed",
   "controller_pid": 2043973,
   "controller_cookie": "222633503",
   "main_pid": 2039886,
@@ -10,12 +10,43 @@
   "diagnostic_source_epoch": 4,
   "gpu_queries": 0,
   "batch_queries": 0,
-  "training_signals_sent": 0,
+  "training_signals_sent": 15,
   "formal_goal_achieved": false,
   "diagnostic_weights_can_initialize_formal": false,
   "helper_sha256": {
     "/home/nis/jinrui.yang/EaBNet_light/tmp/run_independent_frequency_retained_source4_20261110.py": "5b27d5f22431f80d5d7bb85ff3117047b7a99483b263aa1a81fcf968d9171b6e",
     "/home/nis/jinrui.yang/EaBNet_light/tmp/compare_independent_frequency_retained_source4_20261110.py": "a2558a1a7cd50d2980863ebdea8ea3776326eb646ada9341a0e278baacaf354a",
     "/home/nis/jinrui.yang/EaBNet_light/tmp/screen_independent_frequency_retained_stream_20261110.py": "5082ad0108487393b078796f5c48ab75df17b877ebc4c58b57d8ce71199e05e8"
-  }
+  },
+  "completed_epoch": 5,
+  "pesq": 3.2717404413223266,
+  "seconds": 3254.8848271369934,
+  "resumed_checkpoint_sha256": "92987cb48f1545392cef616683d631bde080900208e56e7b0fb8772aadf9fa4d",
+  "model_and_adam_strict_restored": true,
+  "diagnostic_full600_scores": {
+    "control": 3.2730787865320843,
+    "independent_frequency": 3.2707536764939626
+  },
+  "trial_status": "complete_matched2arm_retained_Adam_full600_and_trained_stream",
+  "formal_pid": 2057164,
+  "formal_cookie": "222940317",
+  "formal_stage": "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_formal_stage_v2_20261110",
+  "logs": "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_formal_stage_v2_20261110/logs_causal_recurrent_adapt_monaural_v1/recurrent_adapt_20261110_063140_1982617",
+  "checkpoints": "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_formal_stage_v2_20261110/checkpoints_causal_recurrent_adapt_monaural_v1_recurrent_adapt_20261110_063140_1982617",
+  "original_environment_affinity_priority_restored": true,
+  "diagnostic_weights_used_for_formal": false,
+  "resumed_unix": 1794281276.992618,
+  "actual_both_ranks_verified": true,
+  "ranks": [
+    {
+      "pid": 2057232,
+      "cookie": "222940924",
+      "rank": 0
+    },
+    {
+      "pid": 2057233,
+      "cookie": "222940924",
+      "rank": 1
+    }
+  ]
 }
