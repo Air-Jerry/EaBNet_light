@@ -1,5 +1,5 @@
 {
-  "status": "waiting_measured_formal_epoch",
+  "status": "formal_epoch_actual_full600_and_budget_verified",
   "target_epoch": 11,
   "observer_pid": 2131553,
   "observer_cookie": "224718525",
@@ -11,5 +11,11 @@
   "gpu_queries": 0,
   "batch_queries": 0,
   "training_signals_sent": 0,
-  "formal_goal_achieved": false
+  "formal_goal_achieved": false,
+  "formal_owner_terminal_before_eta": true,
+  "epoch": 11,
+  "pesq": 3.299778140385946,
+  "seconds": 3266.8701243400574,
+  "checkpoint_sha256": "049f8bb37f9ce8ebe6cba58e6442e1f069ffcd9155a0fd3594cfed10cea67f70",
+  "next_observation_utc": "2026-11-10T10:07:22.740249+00:00"
 }

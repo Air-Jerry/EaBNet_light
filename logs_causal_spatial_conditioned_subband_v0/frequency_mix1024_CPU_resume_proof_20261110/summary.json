@@ -1,0 +1,28 @@
+{
+  "status": "both_actual_diagnostic256_model_Adam_exactly_restored_and_sampler_prefix_verified",
+  "rows": [
+    {
+      "branch": "control",
+      "resumed_checkpoint_sha256": "54f6a1b011b080026a70d034b14acf91bfd1737564d8542ee7ebae718eacf986",
+      "old_Adam_steps": 53856,
+      "new_branch_Adam_steps": null,
+      "selected_distinct_total": 8192,
+      "new_distinct_records": 6144,
+      "new_updates": 768,
+      "total_updates": 1024
+    },
+    {
+      "branch": "frequency_mix",
+      "resumed_checkpoint_sha256": "51dbeb374dbfa0a6c7ca721bbd92efb36b2ef451cd0d12462ea9b986f85e326a",
+      "old_Adam_steps": 53856,
+      "new_branch_Adam_steps": 256,
+      "selected_distinct_total": 8192,
+      "new_distinct_records": 6144,
+      "new_updates": 768,
+      "total_updates": 1024
+    }
+  ],
+  "dropout_nonzero": false,
+  "actual_updates": 0,
+  "gpu_queries": 0
+}
