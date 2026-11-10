@@ -1,0 +1,28 @@
+{
+  "status": "helper_terminal_read_real_screen_result",
+  "guard_pid": 2234825,
+  "guard_cookie": "227145449",
+  "formal_pid": 2221565,
+  "formal_cookie": "226842357",
+  "not_before_utc": "2026-11-10T15:08:35.157827+00:00",
+  "latest_start_utc": "2026-11-10T15:10:35.157827+00:00",
+  "gpu_queries": 2,
+  "batch_queries": 0,
+  "phase_polls": 23,
+  "training_signals_sent": 0,
+  "formal_goal_achieved": false,
+  "worker_sha256": "0073df68a64c32a07d0956dafe9ddfacdac39a58a98874ae42e90bfc52114d1c",
+  "actual_native_evaluator_pid": 2235094,
+  "actual_native_evaluator_cookie": "227149439",
+  "helper": {
+    "status": "helper_terminal",
+    "training_signals_sent": 0,
+    "child_pid": 2235111,
+    "child_cookie": "227149914",
+    "helper_exit_code": 0,
+    "helper_terminal": true
+  },
+  "screen_status": "complete_one_update_real_CUDA_causal_stream_screen",
+  "actual_screen_completed": true,
+  "all_hops_below10ms": true
+}

@@ -1,0 +1,55 @@
+/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/_inductor/compile_fx.py:167: UserWarning: TensorFloat32 tensor cores for float32 matrix multiplication available but not enabled. Consider setting `torch.set_float32_matmul_precision('high')` for better performance.
+  warnings.warn(
+{
+  "status": "complete_one_update_real_CUDA_causal_stream_screen",
+  "pid": 2235111,
+  "source_checkpoint_sha256": "e301247371fc3b342c2a2904430e5a86e1617b83d0003cdfe1a31623bb1fadc7",
+  "source_epoch": 12,
+  "diagnostic_only": true,
+  "formal_goal_achieved": false,
+  "total_parameters": 5871194,
+  "trainable_parameters": 185064,
+  "actual_global_batch": 8,
+  "parallel_mode": "single_gpu_preflight_not_DDP_qualification",
+  "micro_batch": 2,
+  "grad_accum_steps": 4,
+  "actual_new_optimizer_updates": 1,
+  "formal_or_diagnostic_warmstart_allowed": false,
+  "full600_quality_and_formal_epoch_still_unverified": true,
+  "initial_CUDA_output_max_error": 5.364418029785156e-07,
+  "Adam_restoration": {
+    "source_existing_state_parameters": 235,
+    "source_adam_steps": 80400,
+    "source_states_exact_and_frozen": true,
+    "fresh_head_parameter_tensors": 82
+  },
+  "training_seconds": 31.818344930186868,
+  "raw_losses": [
+    0.31300848722457886,
+    0.3281380236148834,
+    0.6000027656555176,
+    0.3756141662597656
+  ],
+  "training_peak_allocated_bytes": 3848947712,
+  "training_peak_reserved_bytes": 4125097984,
+  "frozen_source_weights_and_235_Adam_states_unchanged": true,
+  "future_errors": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "waveform_max_error": 4.76837158203125e-07,
+  "real_input_samples": 96000,
+  "measured_hops": 600,
+  "mean_hop_ms": 7.643577717244625,
+  "maximum_hop_ms": 8.118560072034597,
+  "all_hops_below10ms": true,
+  "cache_bytes": 7225776,
+  "quality_unverified": true,
+  "actual_DDP_and_full_epoch_unverified": true
+}

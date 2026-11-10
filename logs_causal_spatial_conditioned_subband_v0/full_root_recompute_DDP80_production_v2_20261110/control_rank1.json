@@ -1,0 +1,46 @@
+{
+  "status": "complete_actual80_updates_64_measured_global8",
+  "branch": "control",
+  "rank": 1,
+  "pid": 2236676,
+  "source_checkpoint_sha256": "8799883c92a05646e5cdc37ebd7b92ec2d644948a712cd23f95fba2b789a7f52",
+  "source_adam_steps": 93800,
+  "sampler_epoch": 98,
+  "global_batch": 8,
+  "seed": 1234,
+  "seconds_per_record": 6,
+  "micro_batch": 2,
+  "grad_accum_steps": 2,
+  "diagnostic_only": true,
+  "actual_quality_unverified": true,
+  "formal_goal_achieved": false,
+  "restored_Adam": {
+    "existing_adam_moments_exactly_preserved": true,
+    "source_adam_steps": 93800,
+    "existing_state_parameters": 235,
+    "newly_unfrozen_parameter_tensors": 0
+  },
+  "global_distinct_records": 640,
+  "global_indices_sha256": "47809af8c7630a0fdac3e9a0cd34a8480517b493130168d77b3cb92f7b6a6923",
+  "original_loss_weights_and_frame_weighting": true,
+  "strict_determinism": false,
+  "backward_factor": 1.0,
+  "warmup": {
+    "seconds": 17.91828781971708,
+    "updates": 16,
+    "loss": 0.4389146154280752,
+    "peak_allocated_bytes": 6194103296,
+    "peak_reserved_bytes": 6792675328
+  },
+  "measured": {
+    "seconds": 28.225328051950783,
+    "updates": 64,
+    "loss": 0.4056973464321345,
+    "peak_allocated_bytes": 6194103296,
+    "peak_reserved_bytes": 6792675328
+  },
+  "cross_rank_model_and_Adam_sha256": "4ab43e1796234f70121483553cef45d12860347457f4318ff5ebb80c7492acf8",
+  "actual_cross_rank_model_and_Adam_identity_verified": true,
+  "all_weights_and_Adam_finite": true,
+  "actual_new_updates": 80
+}

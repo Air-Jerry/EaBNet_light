@@ -1,5 +1,5 @@
 {
-  "status": "waiting_measured_complete15_boundary",
+  "status": "exact_complete15_model_adam_and_actual_both_ranks_resumed",
   "controller_pid": 2225467,
   "controller_cookie": "226932022",
   "main_pid": 2221565,
@@ -10,12 +10,266 @@
   "diagnostic_source_epoch": 14,
   "gpu_queries": 0,
   "batch_queries": 0,
-  "training_signals_sent": 0,
+  "training_signals_sent": 15,
   "formal_goal_achieved": false,
   "diagnostic_weights_can_initialize_formal": false,
   "helper_sha256": {
     "/home/nis/jinrui.yang/EaBNet_light/tmp/run_full_root_production_profile_v2_20261110.py": "18b9724fa7eecfa4e878d05bf720c654a34803b403a48c971643aa315a439eaf",
     "/home/nis/jinrui.yang/EaBNet_light/tmp/profile_full_root_recompute_ddp_production_v2_20261110.py": "1e9017d58f16ead3fbcbd3887cd5422a177b25f203cd62dff488f0b6d202dbb2",
     "/home/nis/jinrui.yang/EaBNet_light/tmp/deterministic_reflect_pad_overlay_20261110.py": "ba6177c0b4f82a9c912a17f89484d9f55c9c22476ac9a2aa5ddd128968ad7f6e"
-  }
+  },
+  "completed_epoch": 15,
+  "pesq": 3.309360023935636,
+  "seconds": 3281.2650876045227,
+  "resumed_checkpoint_sha256": "31f45fd32e71b690e5bf036582c59715867e43727ee6e1c4715cc94525b34ffe",
+  "model_and_adam_strict_restored": true,
+  "throughput_trial": {
+    "status": "complete_actual_DDP80_profile",
+    "controller": {
+      "pid": 2236667,
+      "cookie": "227172245",
+      "state": "R",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light"
+    },
+    "started_unix": 1794323592.0525577,
+    "expected_seconds": 180,
+    "not_before_observation_unix": 1794323802.0525582,
+    "results": {
+      "control": {
+        "exit_code": 0,
+        "ranks": [
+          {
+            "status": "complete_actual80_updates_64_measured_global8",
+            "branch": "control",
+            "rank": 0,
+            "pid": 2236675,
+            "source_checkpoint_sha256": "8799883c92a05646e5cdc37ebd7b92ec2d644948a712cd23f95fba2b789a7f52",
+            "source_adam_steps": 93800,
+            "sampler_epoch": 98,
+            "global_batch": 8,
+            "seed": 1234,
+            "seconds_per_record": 6,
+            "micro_batch": 2,
+            "grad_accum_steps": 2,
+            "diagnostic_only": true,
+            "actual_quality_unverified": true,
+            "formal_goal_achieved": false,
+            "restored_Adam": {
+              "existing_adam_moments_exactly_preserved": true,
+              "source_adam_steps": 93800,
+              "existing_state_parameters": 235,
+              "newly_unfrozen_parameter_tensors": 0
+            },
+            "global_distinct_records": 640,
+            "global_indices_sha256": "47809af8c7630a0fdac3e9a0cd34a8480517b493130168d77b3cb92f7b6a6923",
+            "original_loss_weights_and_frame_weighting": true,
+            "strict_determinism": false,
+            "backward_factor": 1.0,
+            "warmup": {
+              "seconds": 17.918276889249682,
+              "updates": 16,
+              "loss": 0.4389146154280752,
+              "peak_allocated_bytes": 6194103296,
+              "peak_reserved_bytes": 6792675328
+            },
+            "measured": {
+              "seconds": 28.22533758589998,
+              "updates": 64,
+              "loss": 0.4056973464321345,
+              "peak_allocated_bytes": 6194103296,
+              "peak_reserved_bytes": 6792675328
+            },
+            "cross_rank_model_and_Adam_sha256": "4ab43e1796234f70121483553cef45d12860347457f4318ff5ebb80c7492acf8",
+            "actual_cross_rank_model_and_Adam_identity_verified": true,
+            "all_weights_and_Adam_finite": true,
+            "actual_new_updates": 80
+          },
+          {
+            "status": "complete_actual80_updates_64_measured_global8",
+            "branch": "control",
+            "rank": 1,
+            "pid": 2236676,
+            "source_checkpoint_sha256": "8799883c92a05646e5cdc37ebd7b92ec2d644948a712cd23f95fba2b789a7f52",
+            "source_adam_steps": 93800,
+            "sampler_epoch": 98,
+            "global_batch": 8,
+            "seed": 1234,
+            "seconds_per_record": 6,
+            "micro_batch": 2,
+            "grad_accum_steps": 2,
+            "diagnostic_only": true,
+            "actual_quality_unverified": true,
+            "formal_goal_achieved": false,
+            "restored_Adam": {
+              "existing_adam_moments_exactly_preserved": true,
+              "source_adam_steps": 93800,
+              "existing_state_parameters": 235,
+              "newly_unfrozen_parameter_tensors": 0
+            },
+            "global_distinct_records": 640,
+            "global_indices_sha256": "47809af8c7630a0fdac3e9a0cd34a8480517b493130168d77b3cb92f7b6a6923",
+            "original_loss_weights_and_frame_weighting": true,
+            "strict_determinism": false,
+            "backward_factor": 1.0,
+            "warmup": {
+              "seconds": 17.91828781971708,
+              "updates": 16,
+              "loss": 0.4389146154280752,
+              "peak_allocated_bytes": 6194103296,
+              "peak_reserved_bytes": 6792675328
+            },
+            "measured": {
+              "seconds": 28.225328051950783,
+              "updates": 64,
+              "loss": 0.4056973464321345,
+              "peak_allocated_bytes": 6194103296,
+              "peak_reserved_bytes": 6792675328
+            },
+            "cross_rank_model_and_Adam_sha256": "4ab43e1796234f70121483553cef45d12860347457f4318ff5ebb80c7492acf8",
+            "actual_cross_rank_model_and_Adam_identity_verified": true,
+            "all_weights_and_Adam_finite": true,
+            "actual_new_updates": 80
+          }
+        ]
+      },
+      "full_micro4": {
+        "exit_code": 0,
+        "ranks": [
+          {
+            "status": "complete_actual80_updates_64_measured_global8",
+            "branch": "full_micro4",
+            "rank": 0,
+            "pid": 2237118,
+            "source_checkpoint_sha256": "8799883c92a05646e5cdc37ebd7b92ec2d644948a712cd23f95fba2b789a7f52",
+            "source_adam_steps": 93800,
+            "sampler_epoch": 98,
+            "global_batch": 8,
+            "seed": 1234,
+            "seconds_per_record": 6,
+            "micro_batch": 4,
+            "grad_accum_steps": 1,
+            "diagnostic_only": true,
+            "actual_quality_unverified": true,
+            "formal_goal_achieved": false,
+            "restored_Adam": {
+              "existing_adam_moments_exactly_preserved": true,
+              "source_adam_steps": 93800,
+              "existing_state_parameters": 235,
+              "newly_unfrozen_parameter_tensors": 125
+            },
+            "global_distinct_records": 640,
+            "global_indices_sha256": "47809af8c7630a0fdac3e9a0cd34a8480517b493130168d77b3cb92f7b6a6923",
+            "original_loss_weights_and_frame_weighting": true,
+            "strict_determinism": false,
+            "backward_factor": 1.0,
+            "warmup": {
+              "seconds": 24.885858700145036,
+              "updates": 16,
+              "loss": 0.43917096219956875,
+              "peak_allocated_bytes": 11374863360,
+              "peak_reserved_bytes": 11624513536
+            },
+            "measured": {
+              "seconds": 39.587388009764254,
+              "updates": 64,
+              "loss": 0.4061881371308118,
+              "peak_allocated_bytes": 11374863360,
+              "peak_reserved_bytes": 11624513536
+            },
+            "cross_rank_model_and_Adam_sha256": "83a02ecfa9c0834e8c9d83e98cfe80ee8fa8163b03b93426b1304706a41671a2",
+            "actual_cross_rank_model_and_Adam_identity_verified": true,
+            "all_weights_and_Adam_finite": true,
+            "actual_new_updates": 80
+          },
+          {
+            "status": "complete_actual80_updates_64_measured_global8",
+            "branch": "full_micro4",
+            "rank": 1,
+            "pid": 2237119,
+            "source_checkpoint_sha256": "8799883c92a05646e5cdc37ebd7b92ec2d644948a712cd23f95fba2b789a7f52",
+            "source_adam_steps": 93800,
+            "sampler_epoch": 98,
+            "global_batch": 8,
+            "seed": 1234,
+            "seconds_per_record": 6,
+            "micro_batch": 4,
+            "grad_accum_steps": 1,
+            "diagnostic_only": true,
+            "actual_quality_unverified": true,
+            "formal_goal_achieved": false,
+            "restored_Adam": {
+              "existing_adam_moments_exactly_preserved": true,
+              "source_adam_steps": 93800,
+              "existing_state_parameters": 235,
+              "newly_unfrozen_parameter_tensors": 125
+            },
+            "global_distinct_records": 640,
+            "global_indices_sha256": "47809af8c7630a0fdac3e9a0cd34a8480517b493130168d77b3cb92f7b6a6923",
+            "original_loss_weights_and_frame_weighting": true,
+            "strict_determinism": false,
+            "backward_factor": 1.0,
+            "warmup": {
+              "seconds": 24.885865669231862,
+              "updates": 16,
+              "loss": 0.43917096219956875,
+              "peak_allocated_bytes": 11374863360,
+              "peak_reserved_bytes": 11624513536
+            },
+            "measured": {
+              "seconds": 39.587379845324904,
+              "updates": 64,
+              "loss": 0.4061881371308118,
+              "peak_allocated_bytes": 11374863360,
+              "peak_reserved_bytes": 11624513536
+            },
+            "cross_rank_model_and_Adam_sha256": "83a02ecfa9c0834e8c9d83e98cfe80ee8fa8163b03b93426b1304706a41671a2",
+            "actual_cross_rank_model_and_Adam_identity_verified": true,
+            "all_weights_and_Adam_finite": true,
+            "actual_new_updates": 80
+          }
+        ]
+      }
+    },
+    "formal_goal_achieved": false,
+    "diagnostic_weights_can_initialize_formal": false,
+    "phase": "full_micro4",
+    "child": {
+      "pid": 2237115,
+      "cookie": "227177882",
+      "state": "R",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light"
+    },
+    "training_cost_ratio": 1.4025479018376812,
+    "projected_full_epoch_seconds_with60reserve": 4546.7775451009375,
+    "projection_is_not_actual_complete_epoch_proof": true,
+    "projected_training_only_seconds": 4144.304682272195,
+    "minimum_projected_full_epoch_including_evaluation60reserve": 4417.518770473718,
+    "budget_projection_method": "Absolute new measured step time; old relative ratio is descriptive only"
+  },
+  "trial_status": "complete_actual_DDP80_profile",
+  "formal_pid": 2237702,
+  "formal_cookie": "227185370",
+  "formal_stage": "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_formal_stage_v2_20261110",
+  "logs": "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_formal_stage_v2_20261110/logs_causal_recurrent_adapt_monaural_v1/recurrent_adapt_20261110_063140_1982617",
+  "checkpoints": "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_formal_stage_v2_20261110/checkpoints_causal_recurrent_adapt_monaural_v1_recurrent_adapt_20261110_063140_1982617",
+  "original_environment_affinity_priority_restored": true,
+  "diagnostic_weights_used_for_formal": false,
+  "resumed_unix": 1794323727.11784,
+  "actual_both_ranks_verified": true,
+  "ranks": [
+    {
+      "pid": 2237778,
+      "cookie": "227185933",
+      "rank": 0
+    },
+    {
+      "pid": 2237779,
+      "cookie": "227185933",
+      "rank": 1
+    }
+  ],
+  "observer_pid": 2237922,
+  "observer_cookie": "227186798"
 }

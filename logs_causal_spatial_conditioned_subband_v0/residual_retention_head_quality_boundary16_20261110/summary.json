@@ -1,0 +1,22 @@
+{
+  "status": "waiting_measured_complete16_boundary",
+  "controller_pid": 2243111,
+  "controller_cookie": "227317189",
+  "main_pid": 2237702,
+  "main_cookie": "227185370",
+  "not_before_utc": "2026-11-10T16:10:18.382928+00:00",
+  "resumed_from_completed_epoch": 16,
+  "resumed_adam_steps": 107200,
+  "diagnostic_source_epoch": 12,
+  "gpu_queries": 0,
+  "batch_queries": 0,
+  "training_signals_sent": 0,
+  "formal_goal_achieved": false,
+  "diagnostic_weights_can_initialize_formal": false,
+  "helper_sha256": {
+    "/home/nis/jinrui.yang/EaBNet_light/tmp/run_residual_retention1024_source12_20261110.py": "3280da1cf7afef9ece725c117731db1a679c53857d7270c11460933534ab244e",
+    "/home/nis/jinrui.yang/EaBNet_light/tmp/compare_residual_retention1024_source12_20261110.py": "4fcda0f76a1ef8772933fb1591738ddfc4620fbbee8b3394b4795ae387d4d1b3",
+    "/home/nis/jinrui.yang/EaBNet_light/tmp/screen_residual_retention1024_trained_20261110.py": "f78f20b1ebe89ba867d8d576bf2d4021da9bf9dce51afa7ac1ab155d5bfbb65d",
+    "/home/nis/jinrui.yang/EaBNet_light/tmp/frozen_source_training_precision_overlay_20261110.py": "e7346ce03572a3bbde13f07d3862a0556a9c01ae464e6c524096301595c3b503"
+  }
+}
