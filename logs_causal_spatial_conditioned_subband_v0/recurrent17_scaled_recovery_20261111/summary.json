@@ -1,0 +1,80 @@
+{
+  "status": "exact_complete16_model_adam_and_actual_both_ranks_resumed",
+  "failed_owner_terminal_verified": true,
+  "original_failed_owner_pid": 2256165,
+  "original_failed_owner_cookie": "227575312",
+  "source_checkpoint": "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_formal_stage_v2_20261110/checkpoints_causal_recurrent_adapt_monaural_v1_recurrent_adapt_20261110_063140_1982617/model_epoch_16.pt",
+  "resumed_checkpoint_sha256": "2fe3ea71fb6c1ced3e4469888ab828119633ba9fb3b59ea981fe48e6faed2e52",
+  "resumed_from_completed_epoch": 16,
+  "resumed_adam_steps": 107200,
+  "backward_loss_factor": 0.0009765625,
+  "numerical_training_implementation_sha256": {
+    "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_backward_overlay_20261111/experiments/scaled_recurrent_entry.py": "2378e50141a97e6d91e57dd4ba04a581d73ace29a565aa7322158f59589da5dd",
+    "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_backward_overlay_20261111/experiments/scaled_backward.py": "afab37d041d601957e4b415c48470691df469fb6e2aaa7a7eee6644bbeae90cd",
+    "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_backward_overlay_20261111/experiments/scaled_recurrent_python.py": "430daff050b8de8f986a29f4ba64c81b7800c2dd2326e1607552c5b30de9c53c"
+  },
+  "actual_scaled800_qualification_sha256": "ff5d9027286c228ce0496075cf8244b7db431b2445546b5a2cbae8ff8b587ef6",
+  "diagnostic_weights_used_for_formal": false,
+  "original_nonfinite_root_cause_unresolved": true,
+  "original_loss_sampling_learning_rate_and_clipping_retained": true,
+  "declared_recovery_environment_and_affinity_verified": true,
+  "declared_parent_affinity": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23
+  ],
+  "declared_cpu_threads_intra_interop": [
+    2,
+    1
+  ],
+  "declared_parent_priority": 0,
+  "original_pinned_source_files_unchanged": true,
+  "formal_stage": "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_formal_stage_v2_20261110",
+  "logs": "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_formal_stage_v2_20261110/logs_causal_recurrent_adapt_monaural_v1/recurrent_adapt_20261110_063140_1982617",
+  "checkpoints": "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_formal_stage_v2_20261110/checkpoints_causal_recurrent_adapt_monaural_v1_recurrent_adapt_20261110_063140_1982617",
+  "model_and_adam_strict_restored": true,
+  "formal_goal_achieved": false,
+  "formal_pid": 2268617,
+  "formal_cookie": "227865322",
+  "resumed_unix": 1794330527.1504436,
+  "actual_both_ranks_verified": true,
+  "ranks": [
+    {
+      "pid": 2268695,
+      "cookie": "227865956",
+      "rank": 0,
+      "torchrun_parent": 2268680
+    },
+    {
+      "pid": 2268696,
+      "cookie": "227865956",
+      "rank": 1,
+      "torchrun_parent": 2268680
+    }
+  ],
+  "actual_rank_parent_relationship_verified": true,
+  "recovery_rank_verifier_superseded_pid": 2268562,
+  "observer_pid": 2270100,
+  "observer_cookie": "227891842"
+}

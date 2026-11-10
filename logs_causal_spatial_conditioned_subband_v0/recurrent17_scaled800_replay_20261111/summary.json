@@ -1,0 +1,31 @@
+{
+  "status": "diagnostic_prefix_replay_terminal",
+  "controller": {
+    "pid": 2265151,
+    "cookie": "227784900",
+    "state": "R",
+    "uid": 1169,
+    "cwd": "/home/nis/jinrui.yang/EaBNet_light"
+  },
+  "worker_sha256": "dd8656ae89acf0e7c8d3082a31146651b89da675302f2acae48492c6a049b2c4",
+  "started_unix": 1794329719.1015553,
+  "expected_seconds": 420,
+  "not_before_observation_unix": 1794330169.1015558,
+  "gpu_initial_queries": 1,
+  "utilization_sample_seconds": 10,
+  "diagnostic_only": true,
+  "formal_goal_achieved": false,
+  "child": {
+    "pid": 2265155,
+    "cookie": "227784955",
+    "state": "D",
+    "uid": 1169,
+    "cwd": "/home/nis/jinrui.yang/EaBNet_light"
+  },
+  "exit_code": 0,
+  "finished_unix": 1794330098.3136945,
+  "rank_statuses": [
+    "complete800_scaled_updates_weights_Adam_finite_and_rank_identity_verified",
+    "complete800_scaled_updates_weights_Adam_finite_and_rank_identity_verified"
+  ]
+}

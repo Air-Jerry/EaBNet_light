@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/home/nis/jinrui.yang/EaBNet_light/tmp/coordinate_encoder_adapt_after_recurrent17_20261111.py", line 24, in <module>
+    origin=info(PID);assert owned(origin) and origin['cookie']==COOKIE
+AssertionError

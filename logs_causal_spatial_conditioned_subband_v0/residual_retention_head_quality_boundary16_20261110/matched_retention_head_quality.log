@@ -1,0 +1,169 @@
+{
+  "status": "complete_matched_retained_source12_new1024_original_full600_and_trained_stream",
+  "controller_pid": 2251404,
+  "controller_cookie": "227515215",
+  "source_checkpoint": "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_formal_stage_v2_20261110/checkpoints_causal_recurrent_adapt_monaural_v1_recurrent_adapt_20261110_063140_1982617/model_epoch_12.pt",
+  "source_checkpoint_sha256": "e301247371fc3b342c2a2904430e5a86e1617b83d0003cdfe1a31623bb1fadc7",
+  "source_epoch": 12,
+  "worker_sha256": "4fcda0f76a1ef8772933fb1591738ddfc4620fbbee8b3394b4795ae387d4d1b3",
+  "stream_worker_sha256": "f78f20b1ebe89ba867d8d576bf2d4021da9bf9dce51afa7ac1ab155d5bfbb65d",
+  "control_reuse_proof_sha256": "5b3e3b1d655428f8f3f7d3dd92f3be7929f648f1aeaab761f42e4e701dbdbbde",
+  "original_loss_frontend_and_data_interface_retained": true,
+  "diagnostic_only": true,
+  "diagnostic_weights_can_initialize_formal": false,
+  "formal_goal_achieved": false,
+  "new_quality_selection_delta": 0.005,
+  "gpu_queries": 1,
+  "scope": "Actual source12;old235 Adam80400 states retained unused/frozen;new82 parameter tensors fresh;8192 distinct6s sampler96 seed1234 global8 LR1e-4;reuse original1024 actual control",
+  "phase_history": [
+    {
+      "phase": "zero_update_initialization",
+      "started_at_utc": "2026-11-10T16:10:21.840731+00:00",
+      "finished_at_utc": "2026-11-10T16:10:25.674106+00:00"
+    },
+    {
+      "phase": "residual_head_initial_evaluation",
+      "started_at_utc": "2026-11-10T16:10:25.677177+00:00",
+      "finished_at_utc": "2026-11-10T16:11:50.648826+00:00"
+    },
+    {
+      "phase": "residual_head_training",
+      "started_at_utc": "2026-11-10T16:11:50.658981+00:00",
+      "finished_at_utc": "2026-11-10T16:18:35.057300+00:00"
+    },
+    {
+      "phase": "residual_head_evaluation",
+      "started_at_utc": "2026-11-10T16:18:35.081449+00:00",
+      "finished_at_utc": "2026-11-10T16:20:05.472362+00:00"
+    },
+    {
+      "phase": "trained_stream",
+      "started_at_utc": "2026-11-10T16:20:05.490234+00:00",
+      "finished_at_utc": "2026-11-10T16:20:21.156736+00:00"
+    }
+  ],
+  "phase": "trained_stream",
+  "children": [
+    {
+      "pid": 2255964,
+      "cookie": "227573595"
+    }
+  ],
+  "initial_full600_consistency_verified": true,
+  "new_training": [
+    {
+      "status": "complete",
+      "branch": "residual_head",
+      "rank": 0,
+      "source_checkpoint_sha256": "e301247371fc3b342c2a2904430e5a86e1617b83d0003cdfe1a31623bb1fadc7",
+      "source_epoch": 12,
+      "initial_checkpoint_sha256": "b254b83f0e2b19eee39e9f21cd2259b10b5dd302c208897ba34d9d6a71a08f86",
+      "initial_adam_steps": 80400,
+      "fresh_adam": false,
+      "seed": 1234,
+      "sampler_epoch": 96,
+      "training_metadata_sha256": "d3854b3717979c398d403143342508db8335c2e613b279e3317c5192f5ef952b",
+      "rank_selected_indices_sha256": "b3fc14b0186d36d27561886a77478f558a4ac558edc1fd8bf490af16b3bffa2f",
+      "ordered_global_indices_sha256": "8552ade47b7514113f795740339a2cfdeec4bb6a7e6df2682de027a7158cd94e",
+      "planned_global_distinct_training_records": 8192,
+      "global_batch": 8,
+      "learning_rate": 0.0001,
+      "frame_weighted_loss": true,
+      "seconds_per_record": 6,
+      "trainable_parameters": 185064,
+      "source_parameters_frozen": 5686130,
+      "diagnostic_only": true,
+      "formal_goal_achieved": false,
+      "phases": {
+        "warmup": {
+          "seconds": 51.20648157829419,
+          "updates": 16,
+          "loss": 0.41264053992927074
+        },
+        "measured": {
+          "seconds": 18.966454210225493,
+          "updates": 64,
+          "loss": 0.39793664508033544
+        },
+        "remaining": {
+          "seconds": 320.4252764978446,
+          "updates": 944,
+          "loss": 0.4089852088699275
+        }
+      },
+      "source_training_precision": "Frozen source uses inherited BF16 conv/FP16 GRU training compute;source params/states fixed;FP32 inference",
+      "frozen_source_precision_helper_sha256": "e7346ce03572a3bbde13f07d3862a0556a9c01ae464e6c524096301595c3b503",
+      "projected_full_epoch_with300eval60reserve": 2345.5506751329813,
+      "optimizer_updates": 1024,
+      "global_distinct_training_records": 8192,
+      "training_seconds": 390.824001503177,
+      "all_weights_and_adam_finite": true,
+      "frozen_source_weights_and_235_Adam_unchanged": true,
+      "cross_rank_model_Adam_digest": "03c48e349db9df24e2e5820f2e0e6c407b8afeb4f01335bfd4e9832213472c92",
+      "actual_cross_rank_identity_verified": true,
+      "projection_not_actual_formal_epoch_proof": true,
+      "checkpoint_sha256": "edbc232aea4895ed08a25611127934b14fb9fad3a60abe777de73c710c5a8b70"
+    },
+    {
+      "status": "complete",
+      "branch": "residual_head",
+      "rank": 1,
+      "source_checkpoint_sha256": "e301247371fc3b342c2a2904430e5a86e1617b83d0003cdfe1a31623bb1fadc7",
+      "source_epoch": 12,
+      "initial_checkpoint_sha256": "b254b83f0e2b19eee39e9f21cd2259b10b5dd302c208897ba34d9d6a71a08f86",
+      "initial_adam_steps": 80400,
+      "fresh_adam": false,
+      "seed": 1234,
+      "sampler_epoch": 96,
+      "training_metadata_sha256": "d3854b3717979c398d403143342508db8335c2e613b279e3317c5192f5ef952b",
+      "rank_selected_indices_sha256": "6da4235734e800f78871ab411b5d5bbfd2dfa06efe679b9ab627c8e9c4a0ed7e",
+      "ordered_global_indices_sha256": "8552ade47b7514113f795740339a2cfdeec4bb6a7e6df2682de027a7158cd94e",
+      "planned_global_distinct_training_records": 8192,
+      "global_batch": 8,
+      "learning_rate": 0.0001,
+      "frame_weighted_loss": true,
+      "seconds_per_record": 6,
+      "trainable_parameters": 185064,
+      "source_parameters_frozen": 5686130,
+      "diagnostic_only": true,
+      "formal_goal_achieved": false,
+      "phases": {
+        "warmup": {
+          "seconds": 51.20648157829419,
+          "updates": 16,
+          "loss": 0.41264053992927074
+        },
+        "measured": {
+          "seconds": 18.966454210225493,
+          "updates": 64,
+          "loss": 0.39793664508033544
+        },
+        "remaining": {
+          "seconds": 320.4252764978446,
+          "updates": 944,
+          "loss": 0.4089852088699275
+        }
+      },
+      "source_training_precision": "Frozen source uses inherited BF16 conv/FP16 GRU training compute;source params/states fixed;FP32 inference",
+      "frozen_source_precision_helper_sha256": "e7346ce03572a3bbde13f07d3862a0556a9c01ae464e6c524096301595c3b503",
+      "projected_full_epoch_with300eval60reserve": 2345.5506751329813,
+      "optimizer_updates": 1024,
+      "global_distinct_training_records": 8192,
+      "training_seconds": 390.8245986099355,
+      "all_weights_and_adam_finite": true,
+      "frozen_source_weights_and_235_Adam_unchanged": true,
+      "cross_rank_model_Adam_digest": "03c48e349db9df24e2e5820f2e0e6c407b8afeb4f01335bfd4e9832213472c92",
+      "actual_cross_rank_identity_verified": true,
+      "projection_not_actual_formal_epoch_proof": true
+    }
+  ],
+  "full600_scores": {
+    "control": 3.3104096243778867,
+    "residual_head": 3.304741312066714
+  },
+  "new_minus_control": -0.005668312311172485,
+  "matched_records_updates_and_protocol_verified": true,
+  "next_qualification_recommended": false,
+  "projected_full_epoch_with300eval60reserve": 2345.5506751329813,
+  "projection_is_not_actual_formal_epoch_proof": true
+}

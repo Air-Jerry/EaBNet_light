@@ -1,0 +1,31 @@
+{
+  "status": "diagnostic_prefix_replay_terminal",
+  "controller": {
+    "pid": 2262210,
+    "cookie": "227716727",
+    "state": "R",
+    "uid": 1169,
+    "cwd": "/home/nis/jinrui.yang/EaBNet_light"
+  },
+  "worker_sha256": "6db60a1f4c71297e6313d3988cad9feb5e4063a6431415bf5b7325475cc1c92c",
+  "started_unix": 1794329037.0162597,
+  "expected_seconds": 420,
+  "not_before_observation_unix": 1794329487.0162601,
+  "gpu_initial_queries": 1,
+  "utilization_sample_seconds": 10,
+  "diagnostic_only": true,
+  "formal_goal_achieved": false,
+  "child": {
+    "pid": 2262214,
+    "cookie": "227716747",
+    "state": "R",
+    "uid": 1169,
+    "cwd": "/home/nis/jinrui.yang/EaBNet_light"
+  },
+  "exit_code": 0,
+  "finished_unix": 1794329410.4657469,
+  "rank_statuses": [
+    "complete800_updates_without_reproducing_original_failure",
+    "complete800_updates_without_reproducing_original_failure"
+  ]
+}

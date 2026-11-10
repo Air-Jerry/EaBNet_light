@@ -1,0 +1,34 @@
+{
+  "status": "actual_two_direct_torchrun_children_verified_no_training_restart",
+  "previous_recovery_observer": null,
+  "ranks": [
+    {
+      "pid": 2268695,
+      "cookie": "227865956",
+      "rank": 0,
+      "torchrun_parent": 2268680
+    },
+    {
+      "pid": 2268696,
+      "cookie": "227865956",
+      "rank": 1,
+      "torchrun_parent": 2268680
+    }
+  ],
+  "formal_owner": {
+    "pid": 2268617,
+    "cookie": "227865322",
+    "state": "S",
+    "ppid": 1,
+    "uid": 1169,
+    "cwd": "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_formal_stage_v2_20261110",
+    "args": [
+      "bash",
+      "run_light_causal.sh",
+      "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_formal_stage_v2_20261110/preflight_b2_20261110"
+    ]
+  },
+  "gpu_queries": 0,
+  "training_signals_sent": 0,
+  "observer_only_signals_sent": 0
+}

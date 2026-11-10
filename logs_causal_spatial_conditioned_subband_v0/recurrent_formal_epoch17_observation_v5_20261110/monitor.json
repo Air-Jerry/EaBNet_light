@@ -1,0 +1,18 @@
+{
+  "status": "observation_incomplete_read_native_model_status",
+  "target_epoch": 17,
+  "observer_pid": 2256386,
+  "observer_cookie": "227576943",
+  "launch_report": "/home/nis/jinrui.yang/EaBNet_light/logs_causal_spatial_conditioned_subband_v0/residual_retention_head_quality_boundary16_20261110/summary.json",
+  "verified_resume_boundary": true,
+  "formal_pid": 2256165,
+  "formal_cookie": "227575312",
+  "not_before_utc": "2026-11-10T17:16:18.358666+00:00",
+  "gpu_queries": 0,
+  "batch_queries": 0,
+  "training_signals_sent": 0,
+  "formal_goal_achieved": false,
+  "formal_owner_terminal_before_eta": true,
+  "formal_owner_live_at_last_observation": false,
+  "error": "RuntimeError: Actual formal owner terminal before complete epoch; inspect exact native status"
+}

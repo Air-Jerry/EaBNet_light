@@ -1,0 +1,15 @@
+{
+  "status": "waiting_measured_formal_epoch",
+  "target_epoch": 17,
+  "observer_pid": 2270100,
+  "observer_cookie": "227891842",
+  "launch_report": "/home/nis/jinrui.yang/EaBNet_light/logs_causal_spatial_conditioned_subband_v0/recurrent17_scaled_recovery_20261111/summary.json",
+  "verified_resume_boundary": true,
+  "formal_pid": 2268617,
+  "formal_cookie": "227865322",
+  "not_before_utc": "2026-11-10T18:04:37.479368+00:00",
+  "gpu_queries": 0,
+  "batch_queries": 0,
+  "training_signals_sent": 0,
+  "formal_goal_achieved": false
+}

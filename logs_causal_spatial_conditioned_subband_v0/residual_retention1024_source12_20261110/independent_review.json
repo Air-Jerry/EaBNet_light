@@ -1,0 +1,35 @@
+{
+  "status": "independent_full600_matching_finite_updates_and_failed_deadline_confirmed",
+  "checked_at_utc": "2026-11-10T16:32:54.814103+00:00",
+  "source_summary_sha256": "a8e9a4167518adb96c3dfbdea0796f5db81074616f0de6f873e067d5cf077f6c",
+  "control_wb_pesq": 3.3104096243778867,
+  "residual_head_wb_pesq": 3.304741312066714,
+  "new_minus_control": -0.005668312311172485,
+  "actual_new_updates": 1024,
+  "actual_distinct_training_records": 8192,
+  "trained_checkpoint_sha256": "edbc232aea4895ed08a25611127934b14fb9fad3a60abe777de73c710c5a8b70",
+  "future_max_error": 0.0,
+  "waveform_max_error": 4.3213367462158203e-07,
+  "max_hop_ms": 11.066219303756952,
+  "mean_hop_ms": 9.694882139253119,
+  "remaining944_training_seconds": 320.4252764978446,
+  "projection6700_with300eval60reserve_from944": 2634.2048226012275,
+  "gpu_remaining_training_samples": {
+    "0": {
+      "count": 30,
+      "mean": 82.2,
+      "min": 0.0,
+      "max": 100.0
+    },
+    "1": {
+      "count": 30,
+      "mean": 86.83333333333333,
+      "min": 0.0,
+      "max": 99.0
+    }
+  },
+  "adopted": false,
+  "formal_goal_achieved": false,
+  "diagnostic_weights_used_for_formal": false,
+  "full600_final_streaming_still_required": true
+}

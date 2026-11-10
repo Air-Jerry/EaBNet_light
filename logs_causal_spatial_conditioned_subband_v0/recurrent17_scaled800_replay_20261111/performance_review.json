@@ -1,0 +1,22 @@
+{
+  "status": "scaled800_raw_sampler_CPU_review",
+  "scope": "After first60sec through actual trial finish;diagnostic only;not current formal epoch proof",
+  "gpu": {
+    "0": {
+      "samples": 32,
+      "mean_utilization": 96.84375,
+      "min_utilization": 93.0,
+      "max_utilization": 99.0
+    },
+    "1": {
+      "samples": 32,
+      "mean_utilization": 95.6875,
+      "min_utilization": 91.0,
+      "max_utilization": 98.0
+    }
+  },
+  "actual800_training_seconds": 367.5982809732668,
+  "absolute6700_training_projection": 3078.6356031511095,
+  "projection6700_with300eval60reserve": 3438.6356031511095,
+  "projection_not_actual_full_epoch_proof": true
+}

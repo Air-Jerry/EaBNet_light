@@ -1,0 +1,49 @@
+{
+  "status": "actual_scaled_formal17_live_past_previous_failure_location",
+  "checked_at_utc": "2026-11-10T17:16:29.262846+00:00",
+  "previous_failed_last_microbatch": 1257,
+  "observed_last_microbatch": 1960,
+  "past_previous_failed_location": true,
+  "actual_parent_and_both_ranks_live": true,
+  "observer_live": true,
+  "original_native_status": {
+    "status": "running",
+    "resumed_from_completed_epoch": 16,
+    "resumed_unix": 1794330527.1504436
+  },
+  "backward_loss_factor": 0.0009765625,
+  "gpu_queries": 0,
+  "training_signals_sent": 0,
+  "formal_goal_achieved": false,
+  "complete_epoch_stability_quality_and_budget_unverified": true,
+  "owners": [
+    {
+      "pid": 2268617,
+      "cookie": "227865322",
+      "state": "S",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_formal_stage_v2_20261110"
+    },
+    {
+      "pid": 2268695,
+      "cookie": "227865956",
+      "state": "R",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_formal_stage_v2_20261110"
+    },
+    {
+      "pid": 2268696,
+      "cookie": "227865956",
+      "state": "R",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_formal_stage_v2_20261110"
+    },
+    {
+      "pid": 2270100,
+      "cookie": "227891842",
+      "state": "S",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light"
+    }
+  ]
+}

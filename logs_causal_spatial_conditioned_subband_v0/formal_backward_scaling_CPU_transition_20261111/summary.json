@@ -1,0 +1,24 @@
+{
+  "status": "actual_original_parse_formal16_exact_model_Adam_and_declared_backward_transition_verified",
+  "source_checkpoint": "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_formal_stage_v2_20261110/checkpoints_causal_recurrent_adapt_monaural_v1_recurrent_adapt_20261110_063140_1982617/model_epoch_16.pt",
+  "source_checkpoint_sha256": "2fe3ea71fb6c1ced3e4469888ab828119633ba9fb3b59ea981fe48e6faed2e52",
+  "source_epoch": 16,
+  "source_adam_steps": 107200,
+  "source_Adam_states": 235,
+  "source_model_Adam_exactly_preserved": true,
+  "original_parser_and_factory_restored": true,
+  "gpu_queries": 0,
+  "actual_new_updates": 0,
+  "source_and_pinned_training_files_unchanged": true,
+  "CUDA_long_training_qualification_pending": true,
+  "backward_loss_factor": 0.0009765625,
+  "backward_scaling_source_checkpoint": "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_formal_stage_v2_20261110/checkpoints_causal_recurrent_adapt_monaural_v1_recurrent_adapt_20261110_063140_1982617/model_epoch_16.pt",
+  "backward_scaling_source_sha256": "2fe3ea71fb6c1ced3e4469888ab828119633ba9fb3b59ea981fe48e6faed2e52",
+  "backward_scaling_initial_epoch": 16,
+  "numerical_training_implementation_sha256": {
+    "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_backward_overlay_20261111/experiments/scaled_recurrent_entry.py": "2378e50141a97e6d91e57dd4ba04a581d73ace29a565aa7322158f59589da5dd",
+    "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_backward_overlay_20261111/experiments/scaled_backward.py": "afab37d041d601957e4b415c48470691df469fb6e2aaa7a7eee6644bbeae90cd",
+    "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_backward_overlay_20261111/experiments/scaled_recurrent_python.py": "430daff050b8de8f986a29f4ba64c81b7800c2dd2326e1607552c5b30de9c53c"
+  },
+  "backward_scaling_unscale_before_weight_normalization_and_clipping": true
+}

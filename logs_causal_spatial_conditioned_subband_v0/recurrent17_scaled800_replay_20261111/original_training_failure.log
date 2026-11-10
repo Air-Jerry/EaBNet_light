@@ -1,0 +1,140 @@
+train:   9%|▉         | 1226/13400 [04:49<45:27,  4.46it/s, loss=0.5231]
+train:   9%|▉         | 1226/13400 [04:49<45:27,  4.46it/s, loss=0.3258]
+train:   9%|▉         | 1227/13400 [04:49<44:34,  4.55it/s, loss=0.3258]
+train:   9%|▉         | 1227/13400 [04:49<44:34,  4.55it/s, loss=0.3066]
+train:   9%|▉         | 1228/13400 [04:49<45:28,  4.46it/s, loss=0.3066]
+train:   9%|▉         | 1228/13400 [04:49<45:28,  4.46it/s, loss=0.4766]
+train:   9%|▉         | 1229/13400 [04:49<44:28,  4.56it/s, loss=0.4766]
+train:   9%|▉         | 1229/13400 [04:50<44:28,  4.56it/s, loss=0.3734]
+train:   9%|▉         | 1230/13400 [04:50<45:29,  4.46it/s, loss=0.3734]
+train:   9%|▉         | 1230/13400 [04:50<45:29,  4.46it/s, loss=0.4262]
+train:   9%|▉         | 1231/13400 [04:50<44:31,  4.56it/s, loss=0.4262]
+train:   9%|▉         | 1231/13400 [04:50<44:31,  4.56it/s, loss=0.2913]
+train:   9%|▉         | 1232/13400 [04:50<45:29,  4.46it/s, loss=0.2913]
+train:   9%|▉         | 1232/13400 [04:50<45:29,  4.46it/s, loss=0.4573]
+train:   9%|▉         | 1233/13400 [04:50<44:33,  4.55it/s, loss=0.4573]
+train:   9%|▉         | 1233/13400 [04:51<44:33,  4.55it/s, loss=0.5244]
+train:   9%|▉         | 1234/13400 [04:51<45:25,  4.46it/s, loss=0.5244]
+train:   9%|▉         | 1234/13400 [04:51<45:25,  4.46it/s, loss=0.6406]
+train:   9%|▉         | 1235/13400 [04:51<44:26,  4.56it/s, loss=0.6406]
+train:   9%|▉         | 1235/13400 [04:51<44:26,  4.56it/s, loss=0.4527]
+train:   9%|▉         | 1236/13400 [04:51<45:22,  4.47it/s, loss=0.4527]
+train:   9%|▉         | 1236/13400 [04:51<45:22,  4.47it/s, loss=0.5720]
+train:   9%|▉         | 1237/13400 [04:51<44:33,  4.55it/s, loss=0.5720]
+train:   9%|▉         | 1237/13400 [04:51<44:33,  4.55it/s, loss=0.3225]
+train:   9%|▉         | 1238/13400 [04:51<45:25,  4.46it/s, loss=0.3225]
+train:   9%|▉         | 1238/13400 [04:52<45:25,  4.46it/s, loss=0.2336]
+train:   9%|▉         | 1239/13400 [04:52<44:25,  4.56it/s, loss=0.2336]
+train:   9%|▉         | 1239/13400 [04:52<44:25,  4.56it/s, loss=0.4600]
+train:   9%|▉         | 1240/13400 [04:52<45:24,  4.46it/s, loss=0.4600]
+train:   9%|▉         | 1240/13400 [04:52<45:24,  4.46it/s, loss=0.5217]
+train:   9%|▉         | 1241/13400 [04:52<44:26,  4.56it/s, loss=0.5217]
+train:   9%|▉         | 1241/13400 [04:52<44:26,  4.56it/s, loss=0.5904]
+train:   9%|▉         | 1242/13400 [04:52<45:21,  4.47it/s, loss=0.5904]
+train:   9%|▉         | 1242/13400 [04:53<45:21,  4.47it/s, loss=0.3145]
+train:   9%|▉         | 1243/13400 [04:53<44:27,  4.56it/s, loss=0.3145]
+train:   9%|▉         | 1243/13400 [04:53<44:27,  4.56it/s, loss=0.3562]
+train:   9%|▉         | 1244/13400 [04:53<45:18,  4.47it/s, loss=0.3562]
+train:   9%|▉         | 1244/13400 [04:53<45:18,  4.47it/s, loss=0.5725]
+train:   9%|▉         | 1245/13400 [04:53<44:25,  4.56it/s, loss=0.5725]
+train:   9%|▉         | 1245/13400 [04:53<44:25,  4.56it/s, loss=0.2827]
+train:   9%|▉         | 1246/13400 [04:53<45:17,  4.47it/s, loss=0.2827]
+train:   9%|▉         | 1246/13400 [04:53<45:17,  4.47it/s, loss=0.3186]
+train:   9%|▉         | 1247/13400 [04:53<44:20,  4.57it/s, loss=0.3186]
+train:   9%|▉         | 1247/13400 [04:54<44:20,  4.57it/s, loss=0.4431]
+train:   9%|▉         | 1248/13400 [04:54<45:20,  4.47it/s, loss=0.4431]
+train:   9%|▉         | 1248/13400 [04:54<45:20,  4.47it/s, loss=0.2177]
+train:   9%|▉         | 1249/13400 [04:54<44:30,  4.55it/s, loss=0.2177]
+train:   9%|▉         | 1249/13400 [04:54<44:30,  4.55it/s, loss=0.6724]
+train:   9%|▉         | 1250/13400 [04:54<45:19,  4.47it/s, loss=0.6724]
+train:   9%|▉         | 1250/13400 [04:54<45:19,  4.47it/s, loss=0.6147]
+train:   9%|▉         | 1251/13400 [04:54<44:25,  4.56it/s, loss=0.6147]
+train:   9%|▉         | 1251/13400 [04:55<44:25,  4.56it/s, loss=0.5505]
+train:   9%|▉         | 1252/13400 [04:55<45:26,  4.46it/s, loss=0.5505]
+train:   9%|▉         | 1252/13400 [04:55<45:26,  4.46it/s, loss=0.3229]
+train:   9%|▉         | 1253/13400 [04:55<44:29,  4.55it/s, loss=0.3229]
+train:   9%|▉         | 1253/13400 [04:55<44:29,  4.55it/s, loss=0.1415]
+train:   9%|▉         | 1254/13400 [04:55<45:21,  4.46it/s, loss=0.1415]
+train:   9%|▉         | 1254/13400 [04:55<45:21,  4.46it/s, loss=0.4205]
+train:   9%|▉         | 1255/13400 [04:55<44:26,  4.55it/s, loss=0.4205]
+train:   9%|▉         | 1255/13400 [04:55<44:26,  4.55it/s, loss=0.3097]
+train:   9%|▉         | 1256/13400 [04:55<45:13,  4.47it/s, loss=0.3097]
+train:   9%|▉         | 1256/13400 [04:56<45:13,  4.47it/s, loss=0.2146]
+train:   9%|▉         | 1257/13400 [04:56<44:21,  4.56it/s, loss=0.2146]
+                                                                        
+[rank0]: Traceback (most recent call last):
+[rank0]:   File "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_formal_stage_v2_20261110/train_light_causal_recurrent_adapt.py", line 133, in <module>
+[rank0]:     if __name__=='__main__':raise SystemExit(main())
+[rank0]:   File "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_formal_stage_v2_20261110/train_light_causal_recurrent_adapt.py", line 127, in main
+[rank0]:     return fullband.main([])
+[rank0]:   File "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_formal_stage_v2_20261110/train_light_causal_fullband.py", line 78, in main
+[rank0]:     return causal.main(argv,candidate_id=FULLBAND_TCN_CANDIDATE,entry_file=__file__)
+[rank0]:   File "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_formal_stage_v2_20261110/train_light_causal.py", line 102, in main
+[rank0]:     trainer.main()
+[rank0]:   File "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_formal_stage_v2_20261110/train_light.py", line 1081, in main
+[rank0]:     train_loss = run_epoch(model, train_loader, optimizer, scaler, device, gpu_ids, args, training=True)
+[rank0]:   File "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_formal_stage_v2_20261110/train_light_causal.py", line 96, in causal_epoch
+[rank0]:     return epoch(*epoch_args, **epoch_kwargs)
+[rank0]:   File "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_formal_stage_v2_20261110/train_light_causal_fullband.py", line 73, in synchronized_epoch
+[rank0]:     return epoch(*epoch_args,**epoch_kwargs)
+[rank0]:   File "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_formal_stage_v2_20261110/train_light_causal_recurrent_adapt.py", line 97, in autotuned_epoch
+[rank0]:     return epoch_function(*values,**options)
+[rank0]:   File "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_formal_stage_v2_20261110/train_light.py", line 683, in run_epoch
+[rank0]:     raise FloatingPointError('Non-finite gradient; optimizer step aborted')
+[rank0]: FloatingPointError: Non-finite gradient; optimizer step aborted
+[rank1]: Traceback (most recent call last):
+[rank1]:   File "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_formal_stage_v2_20261110/train_light_causal_recurrent_adapt.py", line 133, in <module>
+[rank1]:     if __name__=='__main__':raise SystemExit(main())
+[rank1]:   File "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_formal_stage_v2_20261110/train_light_causal_recurrent_adapt.py", line 127, in main
+[rank1]:     return fullband.main([])
+[rank1]:   File "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_formal_stage_v2_20261110/train_light_causal_fullband.py", line 78, in main
+[rank1]:     return causal.main(argv,candidate_id=FULLBAND_TCN_CANDIDATE,entry_file=__file__)
+[rank1]:   File "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_formal_stage_v2_20261110/train_light_causal.py", line 102, in main
+[rank1]:     trainer.main()
+[rank1]:   File "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_formal_stage_v2_20261110/train_light.py", line 1081, in main
+[rank1]:     train_loss = run_epoch(model, train_loader, optimizer, scaler, device, gpu_ids, args, training=True)
+[rank1]:   File "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_formal_stage_v2_20261110/train_light_causal.py", line 96, in causal_epoch
+[rank1]:     return epoch(*epoch_args, **epoch_kwargs)
+[rank1]:   File "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_formal_stage_v2_20261110/train_light_causal_fullband.py", line 73, in synchronized_epoch
+[rank1]:     return epoch(*epoch_args,**epoch_kwargs)
+[rank1]:   File "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_formal_stage_v2_20261110/train_light_causal_recurrent_adapt.py", line 97, in autotuned_epoch
+[rank1]:     return epoch_function(*values,**options)
+[rank1]:   File "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_formal_stage_v2_20261110/train_light.py", line 683, in run_epoch
+[rank1]:     raise FloatingPointError('Non-finite gradient; optimizer step aborted')
+[rank1]: FloatingPointError: Non-finite gradient; optimizer step aborted
+[rank0]:[W1111 00:25:33.372963182 ProcessGroupNCCL.cpp:1250] Warning: WARNING: process group has NOT been destroyed before we destruct ProcessGroupNCCL. On normal program exit, the application should call destroy_process_group to ensure that any pending NCCL operations have finished in this process. In rare cases this process can exit before this point and block the progress of another member of the process group. This constraint has always been present,  but this warning has only been added since PyTorch 2.4 (function operator())
+W1111 00:25:34.903000 2256241 site-packages/torch/distributed/elastic/multiprocessing/api.py:897] Sending process 2256245 closing signal SIGTERM
+E1111 00:25:34.911000 2256241 site-packages/torch/distributed/elastic/multiprocessing/api.py:869] failed (exitcode: 1) local_rank: 0 (pid: 2256244) of binary: /home/nis/jinrui.yang/miniconda3/envs/EaBNet/bin/python
+Traceback (most recent call last):
+  File "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/distributed/run.py", line 923, in <module>
+    main()
+  File "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 355, in wrapper
+    return f(*args, **kwargs)
+  File "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/distributed/run.py", line 919, in main
+    run(args)
+  File "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/distributed/run.py", line 910, in run
+    elastic_launch(
+  File "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 138, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 269, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+train_light_causal_recurrent_adapt.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2026-11-11_00:25:34
+  host      : nca.g11
+  rank      : 0 (local_rank: 0)
+  exitcode  : 1 (pid: 2256244)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
