@@ -1,0 +1,32 @@
+{
+  "status": "actual_source16_both_branches_CPU_model_Adam_and_merge_passed",
+  "elapsed_seconds": 4.697275876998901,
+  "checks": [
+    {
+      "script": "coordinate_encoder_b2_scaled_quality_after_recurrent18_20261111.py",
+      "exitcode": 0,
+      "stdout": "Exact complete18 binding and inherited ownership controls loaded;0 GPU or training signals.\n"
+    },
+    {
+      "script": "run_encoder_b2_scaled1024_source16_20261111.py",
+      "exitcode": 0,
+      "stdout": "Dual quality merge:1 positive and5 rejection checks passed;0 GPU work.\n{\"status\": \"complete_zero_update_initialization\", \"branch\": \"control\", \"source_checkpoint_sha256\": \"2fe3ea71fb6c1ced3e4469888ab828119633ba9fb3b59ea981fe48e6faed2e52\", \"source_epoch\": 16, \"source_Adam_restoration\": {\"existing_adam_moments_exactly_preserved\": true, \"source_adam_steps\": 107200, \"existing_state_parameters\": 235, \"newly_unfrozen_parameter_tensors\": 0}, \"actual_updates\": 0, \"diagnostic_only\": true, \"backward_loss_factor\": 0.0009765625, \"implementation_sha256\": {\"encoder\": \"c45cfd7e56d48a473d569fd2f4426b48af77f11b02d6e02a280f2e14289dbb85\", \"backward\": \"afab37d041d601957e4b415c48470691df469fb6e2aaa7a7eee6644bbeae90cd\", \"checkpoint\": \"8cd2ccf05a70062a7b9fdf65040c3ed0f0c25b2dfb8e29022617bf9ced9f0aa1\", \"reflection\": \"ba6177c0b4f82a9c912a17f89484d9f55c9c22476ac9a2aa5ddd128968ad7f6e\", \"worker\": \"58e21d8795509e057f451938458daabbad7ddb6c73a1afabab679b386bd6c4cc\"}}\n{\"status\": \"complete_zero_update_initialization\", \"branch\": \"encoder\", \"source_checkpoint_sha256\": \"2fe3ea71fb6c1ced3e4469888ab828119633ba9fb3b59ea981fe48e6faed2e52\", \"source_epoch\": 16, \"source_Adam_restoration\": {\"existing_adam_moments_exactly_preserved\": true, \"source_adam_steps\": 107200, \"existing_state_parameters\": 235, \"newly_unfrozen_parameter_tensors\": 15}, \"actual_updates\": 0, \"diagnostic_only\": true, \"backward_loss_factor\": 0.0009765625, \"implementation_sha256\": {\"encoder\": \"c45cfd7e56d48a473d569fd2f4426b48af77f11b02d6e02a280f2e14289dbb85\", \"backward\": \"afab37d041d601957e4b415c48470691df469fb6e2aaa7a7eee6644bbeae90cd\", \"checkpoint\": \"8cd2ccf05a70062a7b9fdf65040c3ed0f0c25b2dfb8e29022617bf9ced9f0aa1\", \"reflection\": \"ba6177c0b4f82a9c912a17f89484d9f55c9c22476ac9a2aa5ddd128968ad7f6e\", \"worker\": \"58e21d8795509e057f451938458daabbad7ddb6c73a1afabab679b386bd6c4cc\"}}\nActual source16 two-branch warm model/Adam and full600 merge checks passed;0 GPU or signals.\n"
+    }
+  ],
+  "helper_sha256": {
+    "tmp/compare_encoder_b2_scaled1024_source16_20261111.py": "58e21d8795509e057f451938458daabbad7ddb6c73a1afabab679b386bd6c4cc",
+    "tmp/run_encoder_b2_scaled1024_source16_20261111.py": "9808aabdb20dc22e3892d5fe7f5d5ff90f7478f3a2a026bb37be4cbaa03bef06",
+    "tmp/screen_encoder_b2_scaled1024_trained_20261111.py": "96b27731b9899d55d0896abd1d91fa5c3d2adc0233fe667c63a50da42aa6677e",
+    "tmp/coordinate_encoder_b2_scaled_quality_after_recurrent18_20261111.py": "5090d623c743048918169a41cb8b728a5546ddb1f9d48ae6822c2a1af0603577",
+    "tmp/encoder_b2_scaled_trial_helpers_20261111.json": "1438680ed5e840260675d245058d4e37f9a8c2de5602d559efc7682459eee327"
+  },
+  "manifest_sha256": "1438680ed5e840260675d245058d4e37f9a8c2de5602d559efc7682459eee327",
+  "micro_batch": 2,
+  "grad_accum_steps": 2,
+  "recompute_root_layers": false,
+  "backward_loss_factor": 0.0009765625,
+  "actual_GPU_queries": 0,
+  "actual_optimizer_updates": 0,
+  "training_signals_sent": 0,
+  "formal_goal_achieved": false
+}

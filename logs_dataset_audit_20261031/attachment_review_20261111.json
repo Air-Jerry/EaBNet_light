@@ -1,0 +1,46 @@
+{
+  "checked_at_utc": "2026-11-10T18:24:52.824864+00:00",
+  "generator_sha256": "289d8541c4952592b93737c71010b02a434e7424bc53aad65259d2e22957000e",
+  "original_source_and_comments_unchanged": true,
+  "original_geometry_function": {
+    "target": [
+      2.8,
+      2.8,
+      1.2
+    ],
+    "noise": [
+      2.8,
+      2.8,
+      1.2
+    ],
+    "coincident": true,
+    "requested_distance_m": 3,
+    "actual_distance_m": 0.4242640687119283
+  },
+  "original_absorption_function": {
+    "required_coefficient": 3.0187500000000003,
+    "returned": 0.99
+  },
+  "original_rms_on_silence": 1e-06,
+  "original_main_resume_test": {
+    "generator_sha256": "289d8541c4952592b93737c71010b02a434e7424bc53aad65259d2e22957000e",
+    "original_main_exercised": true,
+    "acoustic_generation_stubbed": true,
+    "seed": 1234,
+    "uninterrupted_samples": 21,
+    "resumed_samples": 21,
+    "interrupted_after_committed_samples": 3,
+    "prefix_equal_before_interruption": 3,
+    "mismatched_rng_draws_after_resume": 18,
+    "resume_restarts_rng_sequence": true,
+    "missing_previous_audio_not_validated": true,
+    "original_source_modified": false,
+    "status": "complete"
+  },
+  "float_wav_preserves_out_of_unit_range_samples": true,
+  "new_actual_rir_simulation": false,
+  "new_server_or_waveform_audit": false,
+  "prior_waveform_evidence": "logs_dataset_audit_20261031/summary.json",
+  "prior_waveform_evidence_date": "2026-10-31",
+  "status": "complete"
+}

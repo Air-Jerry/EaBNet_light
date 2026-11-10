@@ -1,0 +1,53 @@
+{
+  "status": "complete_original53600_600_600_6700_update_formal_epoch_verified",
+  "epoch": 17,
+  "mean": {
+    "enhanced": {
+      "pesq": 3.3186740084489186,
+      "stoi": 0.9699463074885756,
+      "estoi": 0.9350313275674758,
+      "si_snr_db": 16.653535687193433,
+      "sdr_db": 18.045913710787865
+    },
+    "noisy": {
+      "pesq": 1.0880955342451732,
+      "stoi": 0.6510592990906214,
+      "estoi": 0.3667556529781415,
+      "si_snr_db": -1.2095493301340101,
+      "sdr_db": -1.1495106109218791
+    }
+  },
+  "timing": {
+    "epoch": 17,
+    "status": "complete",
+    "started_unix": 1794330528,
+    "finished_unix": 1794333797.4101274,
+    "total_seconds": 3269.410127401352,
+    "training_validation_checkpoint_seconds": 3054,
+    "evaluation_audit_seconds": 215.41012740135193,
+    "training_samples": 53600,
+    "validation_samples": 600,
+    "full_metric_samples": 600,
+    "optimizer_updates_this_epoch": 6700,
+    "global_batch_size": 8,
+    "limit_seconds": 3600
+  },
+  "checkpoint_sha256": "e95026e4215c53ad1c2bb7dde17fed5842a31ac2997637ef006a4ba42baa5ae7",
+  "all_weights_and_adam_finite": true,
+  "original_protected_evaluator_unchanged": true,
+  "diagnostic_weights_used_for_formal": false,
+  "frozen_causal_weights_unchanged": true,
+  "frozen_causal_state_tensors": 131,
+  "changed_causal_recurrent_state_tensors": 135,
+  "adapted_root_parameters": 1994954,
+  "frozen_causal_parameter_rule": "Freeze root stem,encoders,first three recurrent blocks and shared frequency matrix",
+  "full600_final_streaming_still_required": true,
+  "formal_goal_achieved": false,
+  "backward_loss_factor": 0.0009765625,
+  "scaler_scale": 0.0009765625,
+  "numerical_training_implementation_sha256": {
+    "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_backward_overlay_20261111/experiments/scaled_recurrent_entry.py": "2378e50141a97e6d91e57dd4ba04a581d73ace29a565aa7322158f59589da5dd",
+    "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_backward_overlay_20261111/experiments/scaled_backward.py": "afab37d041d601957e4b415c48470691df469fb6e2aaa7a7eee6644bbeae90cd",
+    "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_backward_overlay_20261111/experiments/scaled_recurrent_python.py": "430daff050b8de8f986a29f4ba64c81b7800c2dd2326e1607552c5b30de9c53c"
+  }
+}

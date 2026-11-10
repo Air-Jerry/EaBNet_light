@@ -1,0 +1,141 @@
+[W1111 02:04:24.536607830 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
+[W1111 02:04:24.683710266 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
+train:   0%|          | 0/16 [00:00<?, ?it/s]/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/autograd/graph.py:825: UserWarning: Grad strides do not match bucket view strides. This may indicate grad was not created according to the gradient layout contract, or that the param's strides changed since DDP was constructed.  This is not an error, but may impair performance.
+grad.sizes() = [2, 16, 1, 1], strides() = [16, 1, 16, 16]
+bucket_view.sizes() = [2, 16, 1, 1], strides() = [16, 1, 1, 1] (Triggered internally at ../torch/csrc/distributed/c10d/reducer.cpp:327.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+/home/nis/jinrui.yang/miniconda3/envs/EaBNet/lib/python3.10/site-packages/torch/autograd/graph.py:825: UserWarning: Grad strides do not match bucket view strides. This may indicate grad was not created according to the gradient layout contract, or that the param's strides changed since DDP was constructed.  This is not an error, but may impair performance.
+grad.sizes() = [2, 16, 1, 1], strides() = [16, 1, 16, 16]
+bucket_view.sizes() = [2, 16, 1, 1], strides() = [16, 1, 1, 1] (Triggered internally at ../torch/csrc/distributed/c10d/reducer.cpp:327.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+train:   0%|          | 0/16 [00:18<?, ?it/s, loss=0.3763]train:   6%|▋         | 1/16 [00:18<04:43, 18.91s/it, loss=0.3763]train:   6%|▋         | 1/16 [00:19<04:43, 18.91s/it, loss=0.2970]train:  12%|█▎        | 2/16 [00:19<01:53,  8.12s/it, loss=0.2970]train:  12%|█▎        | 2/16 [00:20<01:53,  8.12s/it, loss=0.4405]train:  19%|█▉        | 3/16 [00:20<01:00,  4.67s/it, loss=0.4405]train:  19%|█▉        | 3/16 [00:20<01:00,  4.67s/it, loss=0.4130]train:  25%|██▌       | 4/16 [00:20<00:36,  3.05s/it, loss=0.4130]train:  25%|██▌       | 4/16 [00:21<00:36,  3.05s/it, loss=0.4070]train:  31%|███▏      | 5/16 [00:21<00:23,  2.16s/it, loss=0.4070]train:  31%|███▏      | 5/16 [00:21<00:23,  2.16s/it, loss=0.4850]train:  38%|███▊      | 6/16 [00:21<00:16,  1.62s/it, loss=0.4850]train:  38%|███▊      | 6/16 [00:22<00:16,  1.62s/it, loss=0.3202]train:  44%|████▍     | 7/16 [00:22<00:11,  1.27s/it, loss=0.3202]train:  44%|████▍     | 7/16 [00:22<00:11,  1.27s/it, loss=0.3286]train:  50%|█████     | 8/16 [00:22<00:08,  1.05s/it, loss=0.3286]train:  50%|█████     | 8/16 [00:23<00:08,  1.05s/it, loss=0.4219]train:  56%|█████▋    | 9/16 [00:23<00:06,  1.11it/s, loss=0.4219]train:  56%|█████▋    | 9/16 [00:24<00:06,  1.11it/s, loss=0.3613]train:  62%|██████▎   | 10/16 [00:24<00:04,  1.26it/s, loss=0.3613]train:  62%|██████▎   | 10/16 [00:24<00:04,  1.26it/s, loss=0.3754]train:  69%|██████▉   | 11/16 [00:24<00:03,  1.38it/s, loss=0.3754]train:  69%|██████▉   | 11/16 [00:25<00:03,  1.38it/s, loss=0.3914]train:  75%|███████▌  | 12/16 [00:25<00:02,  1.47it/s, loss=0.3914]train:  75%|███████▌  | 12/16 [00:25<00:02,  1.47it/s, loss=0.4928]train:  81%|████████▏ | 13/16 [00:25<00:01,  1.55it/s, loss=0.4928]train:  81%|████████▏ | 13/16 [00:26<00:01,  1.55it/s, loss=0.3918]train:  88%|████████▊ | 14/16 [00:26<00:01,  1.61it/s, loss=0.3918]train:  88%|████████▊ | 14/16 [00:26<00:01,  1.61it/s, loss=0.3372]train:  94%|█████████▍| 15/16 [00:26<00:00,  1.65it/s, loss=0.3372]train:  94%|█████████▍| 15/16 [00:27<00:00,  1.65it/s, loss=0.3396]train: 100%|██████████| 16/16 [00:27<00:00,  1.68it/s, loss=0.3396]                                                                   [PERF][train] samples(local/global)=64/128, batches(local/global)=16/32, samples/s(local/global)=2.3/4.7, ms/batch(local)=1715.3, data_wait=0.4%, compute=99.6%, non_finite_skips(local)=0
+train:   0%|          | 0/64 [00:00<?, ?it/s]train:   0%|          | 0/64 [00:00<?, ?it/s, loss=0.4495]train:   2%|▏         | 1/64 [00:00<00:45,  1.37it/s, loss=0.4495]train:   2%|▏         | 1/64 [00:01<00:45,  1.37it/s, loss=0.4653]train:   3%|▎         | 2/64 [00:01<00:39,  1.58it/s, loss=0.4653]train:   3%|▎         | 2/64 [00:01<00:39,  1.58it/s, loss=0.3771]train:   5%|▍         | 3/64 [00:01<00:36,  1.65it/s, loss=0.3771]train:   5%|▍         | 3/64 [00:02<00:36,  1.65it/s, loss=0.3983]train:   6%|▋         | 4/64 [00:02<00:35,  1.69it/s, loss=0.3983]train:   6%|▋         | 4/64 [00:03<00:35,  1.69it/s, loss=0.5058]train:   8%|▊         | 5/64 [00:03<00:34,  1.72it/s, loss=0.5058]train:   8%|▊         | 5/64 [00:03<00:34,  1.72it/s, loss=0.4149]train:   9%|▉         | 6/64 [00:03<00:33,  1.73it/s, loss=0.4149]train:   9%|▉         | 6/64 [00:04<00:33,  1.73it/s, loss=0.3896]train:  11%|█         | 7/64 [00:04<00:32,  1.74it/s, loss=0.3896]train:  11%|█         | 7/64 [00:04<00:32,  1.74it/s, loss=0.4241]train:  12%|█▎        | 8/64 [00:04<00:32,  1.74it/s, loss=0.4241]train:  12%|█▎        | 8/64 [00:05<00:32,  1.74it/s, loss=0.4114]train:  14%|█▍        | 9/64 [00:05<00:31,  1.75it/s, loss=0.4114]train:  14%|█▍        | 9/64 [00:05<00:31,  1.75it/s, loss=0.2433]train:  16%|█▌        | 10/64 [00:05<00:30,  1.75it/s, loss=0.2433]train:  16%|█▌        | 10/64 [00:06<00:30,  1.75it/s, loss=0.4764]train:  17%|█▋        | 11/64 [00:06<00:30,  1.75it/s, loss=0.4764]train:  17%|█▋        | 11/64 [00:06<00:30,  1.75it/s, loss=0.3913]train:  19%|█▉        | 12/64 [00:06<00:29,  1.75it/s, loss=0.3913]train:  19%|█▉        | 12/64 [00:07<00:29,  1.75it/s, loss=0.4067]train:  20%|██        | 13/64 [00:07<00:29,  1.75it/s, loss=0.4067]train:  20%|██        | 13/64 [00:08<00:29,  1.75it/s, loss=0.4095]train:  22%|██▏       | 14/64 [00:08<00:28,  1.76it/s, loss=0.4095]train:  22%|██▏       | 14/64 [00:08<00:28,  1.76it/s, loss=0.2871]train:  23%|██▎       | 15/64 [00:08<00:27,  1.76it/s, loss=0.2871]train:  23%|██▎       | 15/64 [00:09<00:27,  1.76it/s, loss=0.3133]train:  25%|██▌       | 16/64 [00:09<00:27,  1.75it/s, loss=0.3133]train:  25%|██▌       | 16/64 [00:09<00:27,  1.75it/s, loss=0.5171]train:  27%|██▋       | 17/64 [00:09<00:26,  1.76it/s, loss=0.5171]train:  27%|██▋       | 17/64 [00:10<00:26,  1.76it/s, loss=0.3837]train:  28%|██▊       | 18/64 [00:10<00:26,  1.75it/s, loss=0.3837]train:  28%|██▊       | 18/64 [00:10<00:26,  1.75it/s, loss=0.3677]train:  30%|██▉       | 19/64 [00:10<00:25,  1.76it/s, loss=0.3677]train:  30%|██▉       | 19/64 [00:11<00:25,  1.76it/s, loss=0.2015]train:  31%|███▏      | 20/64 [00:11<00:25,  1.76it/s, loss=0.2015]train:  31%|███▏      | 20/64 [00:12<00:25,  1.76it/s, loss=0.3385]train:  33%|███▎      | 21/64 [00:12<00:24,  1.76it/s, loss=0.3385]train:  33%|███▎      | 21/64 [00:12<00:24,  1.76it/s, loss=0.3543]train:  34%|███▍      | 22/64 [00:12<00:23,  1.75it/s, loss=0.3543]train:  34%|███▍      | 22/64 [00:13<00:23,  1.75it/s, loss=0.4259]train:  36%|███▌      | 23/64 [00:13<00:23,  1.75it/s, loss=0.4259]train:  36%|███▌      | 23/64 [00:13<00:23,  1.75it/s, loss=0.6040]train:  38%|███▊      | 24/64 [00:13<00:22,  1.75it/s, loss=0.6040]train:  38%|███▊      | 24/64 [00:14<00:22,  1.75it/s, loss=0.3614]train:  39%|███▉      | 25/64 [00:14<00:22,  1.75it/s, loss=0.3614]train:  39%|███▉      | 25/64 [00:14<00:22,  1.75it/s, loss=0.2527]train:  41%|████      | 26/64 [00:14<00:21,  1.75it/s, loss=0.2527]train:  41%|████      | 26/64 [00:15<00:21,  1.75it/s, loss=0.4083]train:  42%|████▏     | 27/64 [00:15<00:21,  1.75it/s, loss=0.4083]train:  42%|████▏     | 27/64 [00:16<00:21,  1.75it/s, loss=0.2912]train:  44%|████▍     | 28/64 [00:16<00:20,  1.75it/s, loss=0.2912]train:  44%|████▍     | 28/64 [00:16<00:20,  1.75it/s, loss=0.2513]train:  45%|████▌     | 29/64 [00:16<00:19,  1.76it/s, loss=0.2513]train:  45%|████▌     | 29/64 [00:17<00:19,  1.76it/s, loss=0.7023]train:  47%|████▋     | 30/64 [00:17<00:19,  1.75it/s, loss=0.7023]train:  47%|████▋     | 30/64 [00:17<00:19,  1.75it/s, loss=0.4548]train:  48%|████▊     | 31/64 [00:17<00:18,  1.75it/s, loss=0.4548]train:  48%|████▊     | 31/64 [00:18<00:18,  1.75it/s, loss=0.4739]train:  50%|█████     | 32/64 [00:18<00:18,  1.75it/s, loss=0.4739]train:  50%|█████     | 32/64 [00:18<00:18,  1.75it/s, loss=0.2811]train:  52%|█████▏    | 33/64 [00:18<00:17,  1.76it/s, loss=0.2811]train:  52%|█████▏    | 33/64 [00:19<00:17,  1.76it/s, loss=0.4153]train:  53%|█████▎    | 34/64 [00:19<00:17,  1.75it/s, loss=0.4153]train:  53%|█████▎    | 34/64 [00:20<00:17,  1.75it/s, loss=0.3669]train:  55%|█████▍    | 35/64 [00:20<00:16,  1.76it/s, loss=0.3669]train:  55%|█████▍    | 35/64 [00:20<00:16,  1.76it/s, loss=0.5121]train:  56%|█████▋    | 36/64 [00:20<00:15,  1.75it/s, loss=0.5121]train:  56%|█████▋    | 36/64 [00:21<00:15,  1.75it/s, loss=0.3216]train:  58%|█████▊    | 37/64 [00:21<00:15,  1.75it/s, loss=0.3216]train:  58%|█████▊    | 37/64 [00:21<00:15,  1.75it/s, loss=0.3061]train:  59%|█████▉    | 38/64 [00:21<00:14,  1.75it/s, loss=0.3061]train:  59%|█████▉    | 38/64 [00:22<00:14,  1.75it/s, loss=0.2949]train:  61%|██████    | 39/64 [00:22<00:14,  1.75it/s, loss=0.2949]train:  61%|██████    | 39/64 [00:22<00:14,  1.75it/s, loss=0.4663]train:  62%|██████▎   | 40/64 [00:22<00:13,  1.75it/s, loss=0.4663]train:  62%|██████▎   | 40/64 [00:23<00:13,  1.75it/s, loss=0.3030]train:  64%|██████▍   | 41/64 [00:23<00:13,  1.75it/s, loss=0.3030]train:  64%|██████▍   | 41/64 [00:24<00:13,  1.75it/s, loss=0.5020]train:  66%|██████▌   | 42/64 [00:24<00:12,  1.75it/s, loss=0.5020]train:  66%|██████▌   | 42/64 [00:24<00:12,  1.75it/s, loss=0.5788]train:  67%|██████▋   | 43/64 [00:24<00:11,  1.75it/s, loss=0.5788]train:  67%|██████▋   | 43/64 [00:25<00:11,  1.75it/s, loss=0.4731]train:  69%|██████▉   | 44/64 [00:25<00:11,  1.75it/s, loss=0.4731]train:  69%|██████▉   | 44/64 [00:25<00:11,  1.75it/s, loss=0.4868]train:  70%|███████   | 45/64 [00:25<00:10,  1.75it/s, loss=0.4868]train:  70%|███████   | 45/64 [00:26<00:10,  1.75it/s, loss=0.2858]train:  72%|███████▏  | 46/64 [00:26<00:10,  1.75it/s, loss=0.2858]train:  72%|███████▏  | 46/64 [00:26<00:10,  1.75it/s, loss=0.2630]train:  73%|███████▎  | 47/64 [00:26<00:09,  1.75it/s, loss=0.2630]train:  73%|███████▎  | 47/64 [00:27<00:09,  1.75it/s, loss=0.5428]train:  75%|███████▌  | 48/64 [00:27<00:09,  1.75it/s, loss=0.5428]train:  75%|███████▌  | 48/64 [00:28<00:09,  1.75it/s, loss=0.4791]train:  77%|███████▋  | 49/64 [00:28<00:08,  1.75it/s, loss=0.4791]train:  77%|███████▋  | 49/64 [00:28<00:08,  1.75it/s, loss=0.5231]train:  78%|███████▊  | 50/64 [00:28<00:07,  1.75it/s, loss=0.5231]train:  78%|███████▊  | 50/64 [00:29<00:07,  1.75it/s, loss=0.4966]train:  80%|███████▉  | 51/64 [00:29<00:07,  1.75it/s, loss=0.4966]train:  80%|███████▉  | 51/64 [00:29<00:07,  1.75it/s, loss=0.4698]train:  81%|████████▏ | 52/64 [00:29<00:06,  1.75it/s, loss=0.4698]train:  81%|████████▏ | 52/64 [00:30<00:06,  1.75it/s, loss=0.4536]train:  83%|████████▎ | 53/64 [00:30<00:06,  1.75it/s, loss=0.4536]train:  83%|████████▎ | 53/64 [00:30<00:06,  1.75it/s, loss=0.4835]train:  84%|████████▍ | 54/64 [00:30<00:05,  1.75it/s, loss=0.4835]train:  84%|████████▍ | 54/64 [00:31<00:05,  1.75it/s, loss=0.3724]train:  86%|████████▌ | 55/64 [00:31<00:05,  1.75it/s, loss=0.3724]train:  86%|████████▌ | 55/64 [00:32<00:05,  1.75it/s, loss=0.3834]train:  88%|████████▊ | 56/64 [00:32<00:04,  1.75it/s, loss=0.3834]train:  88%|████████▊ | 56/64 [00:32<00:04,  1.75it/s, loss=0.3751]train:  89%|████████▉ | 57/64 [00:32<00:03,  1.75it/s, loss=0.3751]train:  89%|████████▉ | 57/64 [00:33<00:03,  1.75it/s, loss=0.5317]train:  91%|█████████ | 58/64 [00:33<00:03,  1.75it/s, loss=0.5317]train:  91%|█████████ | 58/64 [00:33<00:03,  1.75it/s, loss=0.4939]train:  92%|█████████▏| 59/64 [00:33<00:02,  1.75it/s, loss=0.4939]train:  92%|█████████▏| 59/64 [00:34<00:02,  1.75it/s, loss=0.5084]train:  94%|█████████▍| 60/64 [00:34<00:02,  1.75it/s, loss=0.5084]train:  94%|█████████▍| 60/64 [00:34<00:02,  1.75it/s, loss=0.4012]train:  95%|█████████▌| 61/64 [00:34<00:01,  1.75it/s, loss=0.4012]train:  95%|█████████▌| 61/64 [00:35<00:01,  1.75it/s, loss=0.4928]train:  97%|█████████▋| 62/64 [00:35<00:01,  1.75it/s, loss=0.4928]train:  97%|█████████▋| 62/64 [00:36<00:01,  1.75it/s, loss=0.3051]train:  98%|█████████▊| 63/64 [00:36<00:00,  1.75it/s, loss=0.3051]train:  98%|█████████▊| 63/64 [00:36<00:00,  1.75it/s, loss=0.3585]train: 100%|██████████| 64/64 [00:36<00:00,  1.75it/s, loss=0.3585]                                                                   [PERF][train] samples(local/global)=256/512, batches(local/global)=64/128, samples/s(local/global)=7.0/14.0, ms/batch(local)=573.1, data_wait=0.5%, compute=99.4%, non_finite_skips(local)=0
+{
+  "status": "budget_failed_after80",
+  "branch": "encoder",
+  "rank": 0,
+  "source_checkpoint_sha256": "2fe3ea71fb6c1ced3e4469888ab828119633ba9fb3b59ea981fe48e6faed2e52",
+  "source_epoch": 16,
+  "initial_checkpoint_sha256": "f9b4fe9d98028367212cd580e725ef7718b2f62ae937e86987a01e770b5b8b1d",
+  "initial_adam_steps": 107200,
+  "fresh_adam": false,
+  "seed": 1234,
+  "sampler_epoch": 100,
+  "global_batch": 8,
+  "micro_batch": 4,
+  "grad_accum_steps": 1,
+  "learning_rate": 0.0001,
+  "backward_loss_factor": 0.0009765625,
+  "training_metadata_sha256": "d3854b3717979c398d403143342508db8335c2e613b279e3317c5192f5ef952b",
+  "rank_selected_indices_sha256": "2433ea6ef1b9805ba7ac343fddf10e247b38de9d3e9545cdba7a7e50dcc80a18",
+  "ordered_global_indices_sha256": "329fe707657f70bdb83d19c4b9a4349cb37e5d7edb1dcc93db6bdc3a7ebc24fe",
+  "planned_global_distinct_training_records": 8192,
+  "seconds_per_record": 6,
+  "frame_weighted_loss": true,
+  "trainable_parameters": 5201930,
+  "diagnostic_only": true,
+  "formal_goal_achieved": false,
+  "implementation_sha256": {
+    "encoder": "c45cfd7e56d48a473d569fd2f4426b48af77f11b02d6e02a280f2e14289dbb85",
+    "backward": "afab37d041d601957e4b415c48470691df469fb6e2aaa7a7eee6644bbeae90cd",
+    "checkpoint": "8cd2ccf05a70062a7b9fdf65040c3ed0f0c25b2dfb8e29022617bf9ced9f0aa1",
+    "reflection": "ba6177c0b4f82a9c912a17f89484d9f55c9c22476ac9a2aa5ddd128968ad7f6e",
+    "worker": "6c450b8765c0ab395c3c21120e345f3a33b97fcb8174cb523f4574b5e88660a9"
+  },
+  "recompute_root_layers": true,
+  "phases": {
+    "warmup": {
+      "seconds": 27.446949659381062,
+      "updates": 16,
+      "loss": 0.4058388085104525,
+      "peak_allocated_bytes": 11368335360,
+      "peak_reserved_bytes": 11892948992
+    },
+    "measured": {
+      "seconds": 36.68076610611752,
+      "updates": 64,
+      "loss": 0.403976485831663,
+      "peak_allocated_bytes": 11368335872,
+      "peak_reserved_bytes": 11892948992
+    }
+  },
+  "projected_full_epoch_with300eval60reserve": 4200.0177017341775,
+  "optimizer_updates": 80,
+  "global_distinct_training_records": 640,
+  "training_seconds": 64.31092601269484,
+  "all_weights_and_adam_finite": true,
+  "frozen_parameters_unchanged": true,
+  "final_scaler_scale": 0.0009765625,
+  "actual_cross_rank_identity_verified": true,
+  "cross_rank_model_Adam_digest": "a90d2d89b98ef47a1a6d00fd03f6600597cb8d1db9959bb4dfdfa96c7a1825ee",
+  "encoder_convolution_max_changes": {
+    "base.base.stem": 0.003446131944656372,
+    "base.base.encoders.0": 0.003626525402069092,
+    "base.base.encoders.1": 0.0034820199944078922
+  },
+  "checkpoint_sha256": "ef59ba7c770b66c673d5f334c6fbee59050fe2c24104e6d3049e881b489d93af"
+}
+{
+  "status": "budget_failed_after80",
+  "branch": "encoder",
+  "rank": 1,
+  "source_checkpoint_sha256": "2fe3ea71fb6c1ced3e4469888ab828119633ba9fb3b59ea981fe48e6faed2e52",
+  "source_epoch": 16,
+  "initial_checkpoint_sha256": "f9b4fe9d98028367212cd580e725ef7718b2f62ae937e86987a01e770b5b8b1d",
+  "initial_adam_steps": 107200,
+  "fresh_adam": false,
+  "seed": 1234,
+  "sampler_epoch": 100,
+  "global_batch": 8,
+  "micro_batch": 4,
+  "grad_accum_steps": 1,
+  "learning_rate": 0.0001,
+  "backward_loss_factor": 0.0009765625,
+  "training_metadata_sha256": "d3854b3717979c398d403143342508db8335c2e613b279e3317c5192f5ef952b",
+  "rank_selected_indices_sha256": "e2b3eff5c6dfeb7142d8b07fc1f767adf02b46015f7021605f75da2f3943a96b",
+  "ordered_global_indices_sha256": "329fe707657f70bdb83d19c4b9a4349cb37e5d7edb1dcc93db6bdc3a7ebc24fe",
+  "planned_global_distinct_training_records": 8192,
+  "seconds_per_record": 6,
+  "frame_weighted_loss": true,
+  "trainable_parameters": 5201930,
+  "diagnostic_only": true,
+  "formal_goal_achieved": false,
+  "implementation_sha256": {
+    "encoder": "c45cfd7e56d48a473d569fd2f4426b48af77f11b02d6e02a280f2e14289dbb85",
+    "backward": "afab37d041d601957e4b415c48470691df469fb6e2aaa7a7eee6644bbeae90cd",
+    "checkpoint": "8cd2ccf05a70062a7b9fdf65040c3ed0f0c25b2dfb8e29022617bf9ced9f0aa1",
+    "reflection": "ba6177c0b4f82a9c912a17f89484d9f55c9c22476ac9a2aa5ddd128968ad7f6e",
+    "worker": "6c450b8765c0ab395c3c21120e345f3a33b97fcb8174cb523f4574b5e88660a9"
+  },
+  "recompute_root_layers": true,
+  "phases": {
+    "warmup": {
+      "seconds": 27.446949659381062,
+      "updates": 16,
+      "loss": 0.4058388085104525,
+      "peak_allocated_bytes": 11368335360,
+      "peak_reserved_bytes": 11892948992
+    },
+    "measured": {
+      "seconds": 36.68076610611752,
+      "updates": 64,
+      "loss": 0.403976485831663,
+      "peak_allocated_bytes": 11368335872,
+      "peak_reserved_bytes": 11892948992
+    }
+  },
+  "projected_full_epoch_with300eval60reserve": 4200.0177017341775,
+  "optimizer_updates": 80,
+  "global_distinct_training_records": 640,
+  "training_seconds": 64.31047209398821,
+  "all_weights_and_adam_finite": true,
+  "frozen_parameters_unchanged": true,
+  "final_scaler_scale": 0.0009765625,
+  "actual_cross_rank_identity_verified": true,
+  "cross_rank_model_Adam_digest": "a90d2d89b98ef47a1a6d00fd03f6600597cb8d1db9959bb4dfdfa96c7a1825ee",
+  "encoder_convolution_max_changes": {
+    "base.base.stem": 0.003446131944656372,
+    "base.base.encoders.0": 0.003626525402069092,
+    "base.base.encoders.1": 0.0034820199944078922
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "status": "complete_actual_same_model_CUDA_checkpoint_repeatability",
+  "pid": 2282772,
+  "source_checkpoint_sha256": "2fe3ea71fb6c1ced3e4469888ab828119633ba9fb3b59ea981fe48e6faed2e52",
+  "actual_new_updates": 0,
+  "micro_batch": 2,
+  "real_input_samples": 96000,
+  "backward_loss_factor": 0.0009765625,
+  "diagnostic_only": true,
+  "formal_goal_achieved": false,
+  "results": [
+    {
+      "mode": "baseline_first",
+      "seconds": 8.018113496247679,
+      "loss": 0.31337815523147583,
+      "peak_allocated_bytes": 8053110272,
+      "status": "complete",
+      "output_max_error": 0.0,
+      "gradient_max_error": 0.0,
+      "gradient_relative_l2_error": 0.0,
+      "strict_gradient_gate": true
+    },
+    {
+      "mode": "baseline_repeat",
+      "seconds": 0.2903831209987402,
+      "loss": 0.31337815523147583,
+      "peak_allocated_bytes": 8089201664,
+      "status": "complete",
+      "output_max_error": 0.0,
+      "gradient_max_error": 0.0,
+      "gradient_relative_l2_error": 0.0,
+      "strict_gradient_gate": true
+    },
+    {
+      "mode": "nonreentrant",
+      "seconds": 0.3421126711182296,
+      "loss": 0.31337815523147583,
+      "peak_allocated_bytes": 5732358144,
+      "status": "complete",
+      "output_max_error": 0.0,
+      "gradient_max_error": 0.0,
+      "gradient_relative_l2_error": 0.0,
+      "strict_gradient_gate": true
+    }
+  ],
+  "model_weights_unchanged": true,
+  "all250_trainable_gradients_exact": true,
+  "checkpoint_helper_sha256": "8cd2ccf05a70062a7b9fdf65040c3ed0f0c25b2dfb8e29022617bf9ced9f0aa1"
+}

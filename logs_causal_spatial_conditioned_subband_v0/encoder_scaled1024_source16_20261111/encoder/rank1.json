@@ -1,0 +1,64 @@
+{
+  "status": "budget_failed_after80",
+  "branch": "encoder",
+  "rank": 1,
+  "source_checkpoint_sha256": "2fe3ea71fb6c1ced3e4469888ab828119633ba9fb3b59ea981fe48e6faed2e52",
+  "source_epoch": 16,
+  "initial_checkpoint_sha256": "f9b4fe9d98028367212cd580e725ef7718b2f62ae937e86987a01e770b5b8b1d",
+  "initial_adam_steps": 107200,
+  "fresh_adam": false,
+  "seed": 1234,
+  "sampler_epoch": 100,
+  "global_batch": 8,
+  "micro_batch": 4,
+  "grad_accum_steps": 1,
+  "learning_rate": 0.0001,
+  "backward_loss_factor": 0.0009765625,
+  "training_metadata_sha256": "d3854b3717979c398d403143342508db8335c2e613b279e3317c5192f5ef952b",
+  "rank_selected_indices_sha256": "e2b3eff5c6dfeb7142d8b07fc1f767adf02b46015f7021605f75da2f3943a96b",
+  "ordered_global_indices_sha256": "329fe707657f70bdb83d19c4b9a4349cb37e5d7edb1dcc93db6bdc3a7ebc24fe",
+  "planned_global_distinct_training_records": 8192,
+  "seconds_per_record": 6,
+  "frame_weighted_loss": true,
+  "trainable_parameters": 5201930,
+  "diagnostic_only": true,
+  "formal_goal_achieved": false,
+  "implementation_sha256": {
+    "encoder": "c45cfd7e56d48a473d569fd2f4426b48af77f11b02d6e02a280f2e14289dbb85",
+    "backward": "afab37d041d601957e4b415c48470691df469fb6e2aaa7a7eee6644bbeae90cd",
+    "checkpoint": "8cd2ccf05a70062a7b9fdf65040c3ed0f0c25b2dfb8e29022617bf9ced9f0aa1",
+    "reflection": "ba6177c0b4f82a9c912a17f89484d9f55c9c22476ac9a2aa5ddd128968ad7f6e",
+    "worker": "6c450b8765c0ab395c3c21120e345f3a33b97fcb8174cb523f4574b5e88660a9"
+  },
+  "recompute_root_layers": true,
+  "phases": {
+    "warmup": {
+      "seconds": 27.446949659381062,
+      "updates": 16,
+      "loss": 0.4058388085104525,
+      "peak_allocated_bytes": 11368335360,
+      "peak_reserved_bytes": 11892948992
+    },
+    "measured": {
+      "seconds": 36.68076610611752,
+      "updates": 64,
+      "loss": 0.403976485831663,
+      "peak_allocated_bytes": 11368335872,
+      "peak_reserved_bytes": 11892948992
+    }
+  },
+  "projected_full_epoch_with300eval60reserve": 4200.0177017341775,
+  "optimizer_updates": 80,
+  "global_distinct_training_records": 640,
+  "training_seconds": 64.31047209398821,
+  "all_weights_and_adam_finite": true,
+  "frozen_parameters_unchanged": true,
+  "final_scaler_scale": 0.0009765625,
+  "actual_cross_rank_identity_verified": true,
+  "cross_rank_model_Adam_digest": "a90d2d89b98ef47a1a6d00fd03f6600597cb8d1db9959bb4dfdfa96c7a1825ee",
+  "encoder_convolution_max_changes": {
+    "base.base.stem": 0.003446131944656372,
+    "base.base.encoders.0": 0.003626525402069092,
+    "base.base.encoders.1": 0.0034820199944078922
+  }
+}
