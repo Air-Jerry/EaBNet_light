@@ -1,5 +1,5 @@
 {
-  "status": "waiting_measured_complete18_boundary",
+  "status": "exact_complete18_model_adam_and_actual_both_ranks_resumed",
   "controller_pid": 2290605,
   "controller_cookie": "228365380",
   "main_pid": 2283401,
@@ -10,7 +10,7 @@
   "diagnostic_source_epoch": 16,
   "gpu_queries": 0,
   "batch_queries": 0,
-  "training_signals_sent": 0,
+  "training_signals_sent": 15,
   "formal_goal_achieved": false,
   "diagnostic_weights_can_initialize_formal": false,
   "helper_sha256": {
@@ -23,5 +23,267 @@
     "/home/nis/jinrui.yang/EaBNet_light/tmp/deterministic_reflect_pad_overlay_20261110.py": "ba6177c0b4f82a9c912a17f89484d9f55c9c22476ac9a2aa5ddd128968ad7f6e",
     "/home/nis/jinrui.yang/EaBNet_light/tmp/restore_unfrozen_root_probe_adam_20261110.py": "501351aac741ccf5407a1dee4736696cbbdc9244d1b53067148866c6c1154ac9",
     "/home/nis/jinrui.yang/EaBNet_light/tmp/observe_recurrent_scaled_epoch_v6_20261111.py": "8d4e988afcdfe7dbbe6aa66f4fe1d9c86cc1c9cf5337a29bc0fbf6cc5e6a9d59"
-  }
+  },
+  "completed_epoch": 18,
+  "pesq": 3.3158375358581544,
+  "seconds": 3278.851401567459,
+  "resumed_checkpoint_sha256": "5870b4625d80bede0cf723b22ed82ed422a1eaa7a709868a50fa8d3205b18b6a",
+  "model_and_adam_strict_restored": true,
+  "encoder_scaled_quality_trial": {
+    "status": "actual_encoder80_budget_failed_no_control_quality_or_adoption",
+    "controller_pid": 2298156,
+    "controller_cookie": "228541169",
+    "source_checkpoint": "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_formal_stage_v2_20261110/checkpoints_causal_recurrent_adapt_monaural_v1_recurrent_adapt_20261110_063140_1982617/model_epoch_16.pt",
+    "source_checkpoint_sha256": "2fe3ea71fb6c1ced3e4469888ab828119633ba9fb3b59ea981fe48e6faed2e52",
+    "source_epoch": 16,
+    "helper_manifest_sha256": "1438680ed5e840260675d245058d4e37f9a8c2de5602d559efc7682459eee327",
+    "noisy_reference_sha256": "88dc5d5669146de1528e997f90c87822cc4ea93fa171c18e2a1505036e76772c",
+    "original_loss_frontend_and_data_interface_retained": true,
+    "diagnostic_only": true,
+    "diagnostic_weights_can_initialize_formal": false,
+    "formal_goal_achieved": false,
+    "new_quality_selection_delta": 0.005,
+    "backward_loss_factor": 0.0009765625,
+    "results": {},
+    "gpu_queries": 1,
+    "scope": "Both actual1024;source16/Adam107200/sampler100/seed1234/global8/micro2/accum2/no root recomputation/equal-value reflection/8192 distinct6s/LR1e-4;only extra encoder trainability differs",
+    "actual_CUDA_gradient_equivalence": {
+      "status": "complete_actual_same_model_CUDA_checkpoint_repeatability",
+      "pid": 2282772,
+      "source_checkpoint_sha256": "2fe3ea71fb6c1ced3e4469888ab828119633ba9fb3b59ea981fe48e6faed2e52",
+      "actual_new_updates": 0,
+      "micro_batch": 2,
+      "real_input_samples": 96000,
+      "backward_loss_factor": 0.0009765625,
+      "diagnostic_only": true,
+      "formal_goal_achieved": false,
+      "results": [
+        {
+          "mode": "baseline_first",
+          "seconds": 8.018113496247679,
+          "loss": 0.31337815523147583,
+          "peak_allocated_bytes": 8053110272,
+          "status": "complete",
+          "output_max_error": 0.0,
+          "gradient_max_error": 0.0,
+          "gradient_relative_l2_error": 0.0,
+          "strict_gradient_gate": true
+        },
+        {
+          "mode": "baseline_repeat",
+          "seconds": 0.2903831209987402,
+          "loss": 0.31337815523147583,
+          "peak_allocated_bytes": 8089201664,
+          "status": "complete",
+          "output_max_error": 0.0,
+          "gradient_max_error": 0.0,
+          "gradient_relative_l2_error": 0.0,
+          "strict_gradient_gate": true
+        },
+        {
+          "mode": "nonreentrant",
+          "seconds": 0.3421126711182296,
+          "loss": 0.31337815523147583,
+          "peak_allocated_bytes": 5732358144,
+          "status": "complete",
+          "output_max_error": 0.0,
+          "gradient_max_error": 0.0,
+          "gradient_relative_l2_error": 0.0,
+          "strict_gradient_gate": true
+        }
+      ],
+      "model_weights_unchanged": true,
+      "all250_trainable_gradients_exact": true,
+      "checkpoint_helper_sha256": "8cd2ccf05a70062a7b9fdf65040c3ed0f0c25b2dfb8e29022617bf9ced9f0aa1"
+    },
+    "actual_CUDA_gradient_equivalence_reused_not_rerun": true,
+    "phase_history": [
+      {
+        "phase": "control_zero_update_initialization",
+        "started_at_utc": "2026-11-10T19:01:21.435001+00:00",
+        "finished_at_utc": "2026-11-10T19:01:25.518362+00:00"
+      },
+      {
+        "phase": "encoder_zero_update_initialization",
+        "started_at_utc": "2026-11-10T19:01:25.519966+00:00",
+        "finished_at_utc": "2026-11-10T19:01:29.700657+00:00"
+      },
+      {
+        "phase": "encoder_training",
+        "started_at_utc": "2026-11-10T19:01:29.704090+00:00",
+        "finished_at_utc": "2026-11-10T19:02:34.453060+00:00"
+      }
+    ],
+    "phase": "encoder_training",
+    "children": [
+      {
+        "pid": 2298217,
+        "cookie": "228542016"
+      }
+    ],
+    "new_training": [
+      {
+        "status": "budget_failed_after80",
+        "branch": "encoder",
+        "rank": 0,
+        "source_checkpoint_sha256": "2fe3ea71fb6c1ced3e4469888ab828119633ba9fb3b59ea981fe48e6faed2e52",
+        "source_epoch": 16,
+        "initial_checkpoint_sha256": "c87baee03a68e5e1bb65e5d4eb128d676fb2d609d890a9fa5dfbfc9e7aef1396",
+        "initial_adam_steps": 107200,
+        "fresh_adam": false,
+        "seed": 1234,
+        "sampler_epoch": 100,
+        "global_batch": 8,
+        "micro_batch": 2,
+        "grad_accum_steps": 2,
+        "learning_rate": 0.0001,
+        "backward_loss_factor": 0.0009765625,
+        "training_metadata_sha256": "d3854b3717979c398d403143342508db8335c2e613b279e3317c5192f5ef952b",
+        "rank_selected_indices_sha256": "2433ea6ef1b9805ba7ac343fddf10e247b38de9d3e9545cdba7a7e50dcc80a18",
+        "ordered_global_indices_sha256": "329fe707657f70bdb83d19c4b9a4349cb37e5d7edb1dcc93db6bdc3a7ebc24fe",
+        "planned_global_distinct_training_records": 8192,
+        "seconds_per_record": 6,
+        "frame_weighted_loss": true,
+        "trainable_parameters": 5201930,
+        "diagnostic_only": true,
+        "formal_goal_achieved": false,
+        "implementation_sha256": {
+          "encoder": "c45cfd7e56d48a473d569fd2f4426b48af77f11b02d6e02a280f2e14289dbb85",
+          "backward": "afab37d041d601957e4b415c48470691df469fb6e2aaa7a7eee6644bbeae90cd",
+          "checkpoint": "8cd2ccf05a70062a7b9fdf65040c3ed0f0c25b2dfb8e29022617bf9ced9f0aa1",
+          "reflection": "ba6177c0b4f82a9c912a17f89484d9f55c9c22476ac9a2aa5ddd128968ad7f6e",
+          "worker": "58e21d8795509e057f451938458daabbad7ddb6c73a1afabab679b386bd6c4cc"
+        },
+        "recompute_root_layers": false,
+        "phases": {
+          "warmup": {
+            "seconds": 19.027547443285584,
+            "updates": 16,
+            "loss": 0.40579411981161684,
+            "peak_allocated_bytes": 8120235520,
+            "peak_reserved_bytes": 8407482368
+          },
+          "measured": {
+            "seconds": 32.573196415323764,
+            "updates": 64,
+            "loss": 0.4038892925600521,
+            "peak_allocated_bytes": 8120236032,
+            "peak_reserved_bytes": 8319401984
+          }
+        },
+        "projected_full_epoch_with300eval60reserve": 3770.0064997292066,
+        "optimizer_updates": 80,
+        "global_distinct_training_records": 640,
+        "training_seconds": 51.78247212199494,
+        "all_weights_and_adam_finite": true,
+        "frozen_parameters_unchanged": true,
+        "final_scaler_scale": 0.0009765625,
+        "actual_cross_rank_identity_verified": true,
+        "cross_rank_model_Adam_digest": "044443543ad54b590ad91032e70858166b5d747b35b47c350fc7a82b978ba259",
+        "encoder_convolution_max_changes": {
+          "base.base.stem": 0.0034329481422901154,
+          "base.base.encoders.0": 0.0031383633613586426,
+          "base.base.encoders.1": 0.0036590099334716797
+        },
+        "checkpoint_sha256": "6b575ee00d472e486d5a49b54a828d3fa7da32c846019ed4c4e1d9a57ea8fe76"
+      },
+      {
+        "status": "budget_failed_after80",
+        "branch": "encoder",
+        "rank": 1,
+        "source_checkpoint_sha256": "2fe3ea71fb6c1ced3e4469888ab828119633ba9fb3b59ea981fe48e6faed2e52",
+        "source_epoch": 16,
+        "initial_checkpoint_sha256": "c87baee03a68e5e1bb65e5d4eb128d676fb2d609d890a9fa5dfbfc9e7aef1396",
+        "initial_adam_steps": 107200,
+        "fresh_adam": false,
+        "seed": 1234,
+        "sampler_epoch": 100,
+        "global_batch": 8,
+        "micro_batch": 2,
+        "grad_accum_steps": 2,
+        "learning_rate": 0.0001,
+        "backward_loss_factor": 0.0009765625,
+        "training_metadata_sha256": "d3854b3717979c398d403143342508db8335c2e613b279e3317c5192f5ef952b",
+        "rank_selected_indices_sha256": "e2b3eff5c6dfeb7142d8b07fc1f767adf02b46015f7021605f75da2f3943a96b",
+        "ordered_global_indices_sha256": "329fe707657f70bdb83d19c4b9a4349cb37e5d7edb1dcc93db6bdc3a7ebc24fe",
+        "planned_global_distinct_training_records": 8192,
+        "seconds_per_record": 6,
+        "frame_weighted_loss": true,
+        "trainable_parameters": 5201930,
+        "diagnostic_only": true,
+        "formal_goal_achieved": false,
+        "implementation_sha256": {
+          "encoder": "c45cfd7e56d48a473d569fd2f4426b48af77f11b02d6e02a280f2e14289dbb85",
+          "backward": "afab37d041d601957e4b415c48470691df469fb6e2aaa7a7eee6644bbeae90cd",
+          "checkpoint": "8cd2ccf05a70062a7b9fdf65040c3ed0f0c25b2dfb8e29022617bf9ced9f0aa1",
+          "reflection": "ba6177c0b4f82a9c912a17f89484d9f55c9c22476ac9a2aa5ddd128968ad7f6e",
+          "worker": "58e21d8795509e057f451938458daabbad7ddb6c73a1afabab679b386bd6c4cc"
+        },
+        "recompute_root_layers": false,
+        "phases": {
+          "warmup": {
+            "seconds": 19.027547443285584,
+            "updates": 16,
+            "loss": 0.40579411981161684,
+            "peak_allocated_bytes": 8120235520,
+            "peak_reserved_bytes": 8407482368
+          },
+          "measured": {
+            "seconds": 32.573196415323764,
+            "updates": 64,
+            "loss": 0.4038892925600521,
+            "peak_allocated_bytes": 8120236032,
+            "peak_reserved_bytes": 8319401984
+          }
+        },
+        "projected_full_epoch_with300eval60reserve": 3770.0064997292066,
+        "optimizer_updates": 80,
+        "global_distinct_training_records": 640,
+        "training_seconds": 51.78410692512989,
+        "all_weights_and_adam_finite": true,
+        "frozen_parameters_unchanged": true,
+        "final_scaler_scale": 0.0009765625,
+        "actual_cross_rank_identity_verified": true,
+        "cross_rank_model_Adam_digest": "044443543ad54b590ad91032e70858166b5d747b35b47c350fc7a82b978ba259",
+        "encoder_convolution_max_changes": {
+          "base.base.stem": 0.0034329481422901154,
+          "base.base.encoders.0": 0.0031383633613586426,
+          "base.base.encoders.1": 0.0036590099334716797
+        }
+      }
+    ],
+    "quality_unverified": true,
+    "skipped_full600_and_control_training": true
+  },
+  "trial_status": "actual_encoder80_budget_failed_no_control_quality_or_adoption",
+  "formal_pid": 2298693,
+  "formal_cookie": "228548506",
+  "formal_stage": "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_formal_stage_v2_20261110",
+  "logs": "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_formal_stage_v2_20261110/logs_causal_recurrent_adapt_monaural_v1/recurrent_adapt_20261110_063140_1982617",
+  "checkpoints": "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_formal_stage_v2_20261110/checkpoints_causal_recurrent_adapt_monaural_v1_recurrent_adapt_20261110_063140_1982617",
+  "original_environment_affinity_priority_restored": true,
+  "diagnostic_weights_used_for_formal": false,
+  "backward_loss_factor": 0.0009765625,
+  "numerical_training_implementation_sha256": {
+    "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_backward_overlay_20261111/experiments/scaled_recurrent_entry.py": "2378e50141a97e6d91e57dd4ba04a581d73ace29a565aa7322158f59589da5dd",
+    "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_backward_overlay_20261111/experiments/scaled_backward.py": "afab37d041d601957e4b415c48470691df469fb6e2aaa7a7eee6644bbeae90cd",
+    "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_backward_overlay_20261111/experiments/scaled_recurrent_python.py": "430daff050b8de8f986a29f4ba64c81b7800c2dd2326e1607552c5b30de9c53c"
+  },
+  "original_backward_scaling_policy_retained": true,
+  "resumed_unix": 1794337359.0050986,
+  "actual_both_ranks_verified": true,
+  "ranks": [
+    {
+      "pid": 2298758,
+      "cookie": "228549127",
+      "rank": 0
+    },
+    {
+      "pid": 2298759,
+      "cookie": "228549128",
+      "rank": 1
+    }
+  ],
+  "observer_pid": 2299057,
+  "observer_cookie": "228550034"
 }

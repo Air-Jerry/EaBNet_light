@@ -1,0 +1,30 @@
+[
+  {
+    "role": "formal19",
+    "pid": 2298693,
+    "cookie": "228548506",
+    "state": "S",
+    "cwd": "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_formal_stage_v2_20261110"
+  },
+  {
+    "role": "rank0",
+    "pid": 2298758,
+    "cookie": "228549127",
+    "state": "R",
+    "cwd": "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_formal_stage_v2_20261110"
+  },
+  {
+    "role": "rank1",
+    "pid": 2298759,
+    "cookie": "228549128",
+    "state": "R",
+    "cwd": "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_formal_stage_v2_20261110"
+  },
+  {
+    "role": "observer19",
+    "pid": 2299057,
+    "cookie": "228550034",
+    "state": "S",
+    "cwd": "/home/nis/jinrui.yang/EaBNet_light"
+  }
+]

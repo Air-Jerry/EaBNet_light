@@ -1,0 +1,37 @@
+{
+  "status": "actual80_cost_rejected_no_quality_or_formal_adoption",
+  "actual_updates": 80,
+  "source_epoch": 16,
+  "training_only_projection_seconds": 3410.0064997292066,
+  "full_projection_seconds": 3770.0064997292066,
+  "peak_allocated_bytes": 8120236032,
+  "all_finite_and_cross_rank_identical": true,
+  "phase_logs_checked": [
+    "control_zero_update_initialization_0.log",
+    "encoder_training_0.log",
+    "encoder_zero_update_initialization_0.log",
+    "gpu_utilization.log"
+  ],
+  "gpu_window_start": "2026-11-11T03:01:51+08:00",
+  "gpu_window_end_exclusive": "2026-11-11T03:02:22+08:00",
+  "gpu_timestamp_utc_offset_seconds": 28800,
+  "gpu_utilization_percent": {
+    "0": {
+      "samples": 4,
+      "mean": 96.0,
+      "minimum": 93.0,
+      "maximum": 99.0
+    },
+    "1": {
+      "samples": 4,
+      "mean": 96.25,
+      "minimum": 95.0,
+      "maximum": 98.0
+    }
+  },
+  "gpu_sample_scope": "Four10-second samples per GPU;startup and teardown excluded;not a full-epoch utilization measurement",
+  "raw_summary_sha256": "e87991566c0ac25c3938cef1a75fd5d802d6f609ebe883a21940b9048bd9dc84",
+  "raw_gpu_log_sha256": "eff71ce0dc6cda92b9f45cad6705e4322057f220fac4541edd97e769d2126755",
+  "formal_goal_achieved": false,
+  "quality_unverified": true
+}
