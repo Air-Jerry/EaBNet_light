@@ -1,0 +1,15 @@
+{
+  "status": "waiting_measured_formal_epoch",
+  "target_epoch": 5,
+  "observer_pid": 2040882,
+  "observer_cookie": "222584706",
+  "launch_report": "/home/nis/jinrui.yang/EaBNet_light/logs_causal_spatial_conditioned_subband_v0/past_filter_boundary4_20261110/summary.json",
+  "verified_resume_boundary": true,
+  "formal_pid": 2039886,
+  "formal_cookie": "222565987",
+  "not_before_utc": "2026-11-10T03:20:54.523051+00:00",
+  "gpu_queries": 0,
+  "batch_queries": 0,
+  "training_signals_sent": 0,
+  "formal_goal_achieved": false
+}

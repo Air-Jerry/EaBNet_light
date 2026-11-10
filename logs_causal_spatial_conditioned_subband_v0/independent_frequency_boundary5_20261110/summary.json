@@ -1,0 +1,21 @@
+{
+  "status": "waiting_measured_complete5_boundary",
+  "controller_pid": 2043973,
+  "controller_cookie": "222633503",
+  "main_pid": 2039886,
+  "main_cookie": "222565987",
+  "not_before_utc": "2026-11-10T03:20:04.523051+00:00",
+  "resumed_from_completed_epoch": 5,
+  "resumed_adam_steps": 33500,
+  "diagnostic_source_epoch": 4,
+  "gpu_queries": 0,
+  "batch_queries": 0,
+  "training_signals_sent": 0,
+  "formal_goal_achieved": false,
+  "diagnostic_weights_can_initialize_formal": false,
+  "helper_sha256": {
+    "/home/nis/jinrui.yang/EaBNet_light/tmp/run_independent_frequency_retained_source4_20261110.py": "5b27d5f22431f80d5d7bb85ff3117047b7a99483b263aa1a81fcf968d9171b6e",
+    "/home/nis/jinrui.yang/EaBNet_light/tmp/compare_independent_frequency_retained_source4_20261110.py": "a2558a1a7cd50d2980863ebdea8ea3776326eb646ada9341a0e278baacaf354a",
+    "/home/nis/jinrui.yang/EaBNet_light/tmp/screen_independent_frequency_retained_stream_20261110.py": "5082ad0108487393b078796f5c48ab75df17b877ebc4c58b57d8ce71199e05e8"
+  }
+}
