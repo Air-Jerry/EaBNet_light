@@ -1,0 +1,46 @@
+{
+  "status": "complete_original53600_600_600_6700_update_formal_epoch_verified",
+  "epoch": 7,
+  "mean": {
+    "enhanced": {
+      "pesq": 3.2769000081221265,
+      "stoi": 0.968492330425326,
+      "estoi": 0.9319265997081743,
+      "si_snr_db": 16.421467779012286,
+      "sdr_db": 17.764401540578287
+    },
+    "noisy": {
+      "pesq": 1.0880955342451732,
+      "stoi": 0.6510592990906214,
+      "estoi": 0.3667556529781415,
+      "si_snr_db": -1.2095493301340101,
+      "sdr_db": -1.1495106109218791
+    }
+  },
+  "timing": {
+    "epoch": 7,
+    "status": "complete",
+    "started_unix": 1794285058,
+    "finished_unix": 1794288327.0404806,
+    "total_seconds": 3269.0404806137085,
+    "training_validation_checkpoint_seconds": 3054,
+    "evaluation_audit_seconds": 215.0404806137085,
+    "training_samples": 53600,
+    "validation_samples": 600,
+    "full_metric_samples": 600,
+    "optimizer_updates_this_epoch": 6700,
+    "global_batch_size": 8,
+    "limit_seconds": 3600
+  },
+  "checkpoint_sha256": "0420720b4e5bace545f289845200a125203d237382c855b24953f63615b3f8a3",
+  "all_weights_and_adam_finite": true,
+  "original_protected_evaluator_unchanged": true,
+  "diagnostic_weights_used_for_formal": false,
+  "frozen_causal_weights_unchanged": true,
+  "frozen_causal_state_tensors": 131,
+  "changed_causal_recurrent_state_tensors": 135,
+  "adapted_root_parameters": 1994954,
+  "frozen_causal_parameter_rule": "Freeze root stem,encoders,first three recurrent blocks and shared frequency matrix",
+  "full600_final_streaming_still_required": true,
+  "formal_goal_achieved": false
+}
