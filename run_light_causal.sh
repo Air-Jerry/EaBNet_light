@@ -8,6 +8,12 @@ fi
 train_py="${TRAIN_PY:-$HOME/miniconda3/envs/EaBNet/bin/python}"
 export CUDA_VISIBLE_DEVICES="${CUDA_VISIBLE_DEVICES:-0,1}"
 preflight="$1"
+max_epochs="${CAUSAL_MAX_EPOCHS:-30}"
+if [[ ! "$max_epochs" =~ ^[1-9][0-9]{0,8}$ ]]; then
+    printf 'CAUSAL_MAX_EPOCHS must be a positive integer of at most nine digits.\n' >&2
+    exit 2
+fi
+export CAUSAL_MAX_EPOCHS="$max_epochs"
 candidate="${CAUSAL_MODEL_CANDIDATE:-causal_unet_spatial_v1}"
 learning_rate=0.001
 case "$candidate" in
@@ -253,7 +259,7 @@ best="./bestmodels_${candidate}_${run}"
 logs="./logs_${candidate}/${run}"
 if [[ -n "${CAUSAL_RESUME_RUN:-}" ]]; then
     resume_settings=$("$train_py" - "$logs" "$checkpoints" "$best" "$candidate" "$train_dir" "$val_dir" <<'PY_RESUME'
-import hashlib,json,math,sys,time,torch
+import hashlib,json,math,os,sys,time,torch
 from pathlib import Path
 from audit_light_final import require_protocol
 from light_candidate_runtime import read_candidate_checkpoint
@@ -262,7 +268,7 @@ root,checkpoints,best=map(lambda value:Path(value).resolve(),sys.argv[1:4])
 state,_=read_candidate_checkpoint(checkpoints/'checkpoint_latest.pt',sys.argv[4])
 schemas={'causal_fullchannel_dualpath_crn_v1':21,'causal_folded_retention_v1':22,'causal_joint_conditioned_subband_v1':23,'causal_wide_conditioned_subband_v1':25,'causal_monaural_spectral_v1':27,'causal_global_spectral_unet_v1':28,'causal_global_spectral_beamformer_v1':29,'causal_decoder_monaural_spectral_v1':30,'causal_recurrent_adapt_monaural_v1':31}
 assert sys.argv[4] in schemas
-epoch=int(state['epoch']);assert 1<=epoch<30 and state['args']['candidate_schema']==schemas[sys.argv[4]]
+epoch=int(state['epoch']);assert 1<=epoch<int(os.environ.get('CAUSAL_MAX_EPOCHS','30')) and state['args']['candidate_schema']==schemas[sys.argv[4]]
 for key,path in (('log_dir',root),('checkpoint_dir',checkpoints),('best_dir',best),('train_dir',Path(sys.argv[5]).resolve()),('val_dir',Path(sys.argv[6]).resolve())):
     assert Path(state['args'][key]).resolve()==path,key
 assert state['args']['parallel_mode']=='ddp' and state['args']['batch_size']*state['args']['grad_accum_steps']*2==8
@@ -344,7 +350,7 @@ evaluate_epoch() {
 
 check_results() {
     "$train_py" - "$logs" "$candidate" "$warm" <<'PY_RESULTS'
-import json,math,sys
+import json,math,os,sys
 from pathlib import Path
 root=Path(sys.argv[1])/'pesq_selection';baseline=json.loads((root/'model_epoch_0/summary.json').read_text())
 candidate=sys.argv[2] if len(sys.argv)>2 else 'causal_unet_spatial_v1'
@@ -407,7 +413,7 @@ for p in root.glob('model_epoch_*/summary.json'):
     assert all(math.isfinite(v) for metrics in r['mean'].values() for v in metrics.values())
     rows.append(dict(epoch=epoch,pesq=score,checkpoint=r['checkpoint'],checkpoint_sha256=r['checkpoint_sha256']))
 rows.sort(key=lambda r:r['epoch']);best=max(rows,key=lambda r:r['pesq'])
-result=dict(status='target_reached_pending_streaming_audit' if best['pesq']>=3.4 else ('complete' if rows[-1]['epoch']==30 else 'partial'),
+result=dict(status='target_reached_pending_streaming_audit' if best['pesq']>=3.4 else ('complete' if rows[-1]['epoch']==int(os.environ.get('CAUSAL_MAX_EPOCHS','30')) else 'partial'),
     selection_scope='Same full600 comparison samples; not an independent final test',
     model_is_causal=True,results=rows,best_completed_epoch=best['epoch'],best_completed_pesq=best['pesq'],
     target_reached=best['pesq']>=3.4,final_full600_waveform_streaming_audit_required=True)
@@ -431,7 +437,7 @@ else
     start_epoch=1
 fi
 check_results >/dev/null
-for ((epoch=start_epoch; epoch<=30; epoch++)); do
+for ((epoch=start_epoch; epoch<=max_epochs; epoch++)); do
     phase="training_epoch_${epoch}"
     epoch_start=$(date +%s)
     train_budget=$(( 3600 - evaluation_reserve ))

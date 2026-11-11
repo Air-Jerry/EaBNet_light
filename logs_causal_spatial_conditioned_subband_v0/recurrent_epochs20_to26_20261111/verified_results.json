@@ -1,0 +1,576 @@
+{
+  "attention": {
+    "status": "complete_actual_joint_attention1024_reused_exact_recipe_control_full600_and_trained_stream",
+    "source_epoch": 16,
+    "source_checkpoint_sha256": "2fe3ea71fb6c1ced3e4469888ab828119633ba9fb3b59ea981fe48e6faed2e52",
+    "new_minus_control": -0.007600745558738353,
+    "full600_scores": {
+      "control": 3.328448541164398,
+      "joint_attention": 3.3208477956056597
+    },
+    "matched_records_updates_and_protocol_verified": true,
+    "projected_full_epoch_with300eval60reserve": 3323.6768265842893,
+    "actual_CUDA_gradient_equivalence": {
+      "status": "complete_actual_joint_attention_source16_CUDA_repeatability",
+      "pid": 2333565,
+      "source_checkpoint_sha256": "2fe3ea71fb6c1ced3e4469888ab828119633ba9fb3b59ea981fe48e6faed2e52",
+      "actual_new_updates": 0,
+      "micro_batch": 2,
+      "real_input_samples": 96000,
+      "backward_loss_factor": 0.0009765625,
+      "diagnostic_only": true,
+      "formal_goal_achieved": false,
+      "results": [
+        {
+          "mode": "baseline_first",
+          "seconds": 5.835707247722894,
+          "loss": 0.3134419918060303,
+          "peak_allocated_bytes": 7514217984,
+          "status": "complete",
+          "output_max_error": 0.0,
+          "gradient_max_error": 0.0,
+          "gradient_relative_l2_error": 0.0,
+          "strict_gradient_gate": true
+        },
+        {
+          "mode": "baseline_repeat",
+          "seconds": 0.324242128059268,
+          "loss": 0.3134419918060303,
+          "peak_allocated_bytes": 7550309376,
+          "status": "complete",
+          "output_max_error": 0.0,
+          "gradient_max_error": 0.0,
+          "gradient_relative_l2_error": 0.0,
+          "strict_gradient_gate": true
+        }
+      ],
+      "warm_training_output_max_error": 0.0,
+      "deterministic_attention_backend": "MATH",
+      "no_backward_graph_through_early_frozen_GRUs": true,
+      "model_weights_unchanged": true,
+      "all239_trainable_gradients_exact": true
+    },
+    "streaming_screen": {
+      "status": "complete_zero_update_backend_screen",
+      "diagnostic_only": true,
+      "actual_optimizer_updates": 0,
+      "scope": "Exact matched1024 joint-encoder weights from formal16;original inference operations; two fixed perturbation seeds and all600 waveform hops per backend",
+      "full600_quality_measured": false,
+      "formal_goal_achieved": false,
+      "policies": {
+        "cudnn_deterministic": {
+          "repeated_identical_input_max_error": 0.0,
+          "future_perturbations": [
+            {
+              "seed": 1234,
+              "cutoff": 17,
+              "error": 0.0
+            },
+            {
+              "seed": 1234,
+              "cutoff": 150,
+              "error": 0.0
+            },
+            {
+              "seed": 1234,
+              "cutoff": 300,
+              "error": 0.0
+            },
+            {
+              "seed": 1234,
+              "cutoff": 500,
+              "error": 0.0
+            },
+            {
+              "seed": 5678,
+              "cutoff": 17,
+              "error": 0.0
+            },
+            {
+              "seed": 5678,
+              "cutoff": 150,
+              "error": 0.0
+            },
+            {
+              "seed": 5678,
+              "cutoff": 300,
+              "error": 0.0
+            },
+            {
+              "seed": 5678,
+              "cutoff": 500,
+              "error": 0.0
+            }
+          ],
+          "future_max_error": 0.0,
+          "waveform_max_error": 8.493661880493164e-07,
+          "max_hop_ms": 8.095234166830778,
+          "mean_hop_ms": 7.2359531799641745,
+          "measured_hops": 600,
+          "bounded_cache_bytes": 6349199,
+          "all_original_single_waveform_gates_passed": true,
+          "independent_readonly_external_states": true,
+          "model_state_unchanged": true
+        }
+      },
+      "checkpoint_sha256": "848d3077bac360a1f22d05a194ba34a1b77e86fe2b086321f0932a71bacf7c72",
+      "source_formal_checkpoint_sha256": "2fe3ea71fb6c1ced3e4469888ab828119633ba9fb3b59ea981fe48e6faed2e52",
+      "sample_id": 0,
+      "samples": 96000,
+      "cublas_workspace_config": ":4096:8",
+      "diagnostic_checkpoint_unchanged": true
+    },
+    "matched_training": [
+      {
+        "rank": 0,
+        "optimizer_updates": 1024,
+        "global_distinct_training_records": 8192,
+        "all_weights_and_adam_finite": true,
+        "actual_cross_rank_identity_verified": true,
+        "training_seconds": 463.78703726502135,
+        "checkpoint_sha256": "848d3077bac360a1f22d05a194ba34a1b77e86fe2b086321f0932a71bacf7c72"
+      },
+      {
+        "rank": 1,
+        "optimizer_updates": 1024,
+        "global_distinct_training_records": 8192,
+        "all_weights_and_adam_finite": true,
+        "actual_cross_rank_identity_verified": true,
+        "training_seconds": 463.7876090188511
+      }
+    ]
+  },
+  "boundary": {
+    "status": "exact_complete20_model_adam_and_actual_both_ranks_resumed",
+    "completed_epoch": 20,
+    "pesq": 3.324410203297933,
+    "seconds": 3308.977288246155,
+    "resumed_adam_steps": 134000,
+    "resumed_checkpoint_sha256": "7b4dc1dae391a5d6182cc7cd42537d689d24d45f531938e7e34d6c1d0846d556",
+    "model_and_adam_strict_restored": true,
+    "formal_pid": 2337086,
+    "formal_cookie": "229422008",
+    "actual_both_ranks_verified": true,
+    "ranks": [
+      {
+        "pid": 2337158,
+        "cookie": "229422755",
+        "rank": 0
+      },
+      {
+        "pid": 2337159,
+        "cookie": "229422756",
+        "rank": 1
+      }
+    ],
+    "diagnostic_weights_used_for_formal": false,
+    "original_backward_scaling_policy_retained": true,
+    "resumed_unix": 1794346095.0852118
+  },
+  "formal": [
+    {
+      "timing": {
+        "epoch": 20,
+        "status": "complete",
+        "started_unix": 1794342067,
+        "finished_unix": 1794345375.9772882,
+        "total_seconds": 3308.977288246155,
+        "training_validation_checkpoint_seconds": 3095,
+        "evaluation_audit_seconds": 213.97728824615479,
+        "training_samples": 53600,
+        "validation_samples": 600,
+        "full_metric_samples": 600,
+        "optimizer_updates_this_epoch": 6700,
+        "global_batch_size": 8,
+        "limit_seconds": 3600
+      },
+      "checkpoint_sha256": "7b4dc1dae391a5d6182cc7cd42537d689d24d45f531938e7e34d6c1d0846d556",
+      "mean": {
+        "enhanced": {
+          "pesq": 3.324410203297933,
+          "stoi": 0.9701112032944915,
+          "estoi": 0.9351358908433925,
+          "si_snr_db": 16.589299397679884,
+          "sdr_db": 17.949133808843897
+        },
+        "noisy": {
+          "pesq": 1.0880955342451732,
+          "stoi": 0.6510592990906214,
+          "estoi": 0.3667556529781415,
+          "si_snr_db": -1.2095493301340101,
+          "sdr_db": -1.1495106109218791
+        }
+      },
+      "frontend": {
+        "sample_rate": 16000,
+        "n_fft": 512,
+        "hop_length": 160,
+        "win_length": 320,
+        "power": 0.5,
+        "target_ref_mic": 0
+      },
+      "metric_protocol": {
+        "pesq": "pesq wideband",
+        "estoi": "pystoi extended=True; JSON estoi=fraction, CSV estoi_pct=100*estoi",
+        "stoi": "pystoi extended=False, fraction",
+        "si_snr_db": "zero-mean projection SI-SNR",
+        "si_snr_epsilon": 1e-08,
+        "sdr_db": "mir_eval.separation.bss_eval_sources, single source, 512-tap distortion filter; not SI-SNR",
+        "target_gain_matching": false,
+        "max_level_gain_db": 20.0,
+        "gain_rule": "none",
+        "external_normalization_clipping_or_alignment": false,
+        "length_policy": "truncate mixture and target to common length as in training Dataset; no delay correction",
+        "aggregation": "paired arithmetic mean over every selected utterance; failures abort with no mean"
+      },
+      "selected_pairs_sha256": "18233928bdcb499f4e65e3b66a1f8c39387675d09f1621ae6ac94881d7444cfb"
+    },
+    {
+      "timing": {
+        "epoch": 21,
+        "status": "complete",
+        "started_unix": 1794346096,
+        "finished_unix": 1794349365.2131808,
+        "total_seconds": 3269.2131807804108,
+        "training_validation_checkpoint_seconds": 3055,
+        "evaluation_audit_seconds": 214.21318078041077,
+        "training_samples": 53600,
+        "validation_samples": 600,
+        "full_metric_samples": 600,
+        "optimizer_updates_this_epoch": 6700,
+        "global_batch_size": 8,
+        "limit_seconds": 3600
+      },
+      "checkpoint_sha256": "723c2af777ed77cc1d8ceaf9634d084e24848062d2c96a4f2ee790b990fe80d7",
+      "mean": {
+        "enhanced": {
+          "pesq": 3.334746073881785,
+          "stoi": 0.9703686085270852,
+          "estoi": 0.9358594027159738,
+          "si_snr_db": 16.670230732618833,
+          "sdr_db": 18.04674380436393
+        },
+        "noisy": {
+          "pesq": 1.0880955342451732,
+          "stoi": 0.6510592990906214,
+          "estoi": 0.3667556529781415,
+          "si_snr_db": -1.2095493301340101,
+          "sdr_db": -1.1495106109218791
+        }
+      },
+      "frontend": {
+        "sample_rate": 16000,
+        "n_fft": 512,
+        "hop_length": 160,
+        "win_length": 320,
+        "power": 0.5,
+        "target_ref_mic": 0
+      },
+      "metric_protocol": {
+        "pesq": "pesq wideband",
+        "estoi": "pystoi extended=True; JSON estoi=fraction, CSV estoi_pct=100*estoi",
+        "stoi": "pystoi extended=False, fraction",
+        "si_snr_db": "zero-mean projection SI-SNR",
+        "si_snr_epsilon": 1e-08,
+        "sdr_db": "mir_eval.separation.bss_eval_sources, single source, 512-tap distortion filter; not SI-SNR",
+        "target_gain_matching": false,
+        "max_level_gain_db": 20.0,
+        "gain_rule": "none",
+        "external_normalization_clipping_or_alignment": false,
+        "length_policy": "truncate mixture and target to common length as in training Dataset; no delay correction",
+        "aggregation": "paired arithmetic mean over every selected utterance; failures abort with no mean"
+      },
+      "selected_pairs_sha256": "18233928bdcb499f4e65e3b66a1f8c39387675d09f1621ae6ac94881d7444cfb"
+    },
+    {
+      "timing": {
+        "epoch": 22,
+        "status": "complete",
+        "started_unix": 1794349365,
+        "finished_unix": 1794352645.269116,
+        "total_seconds": 3280.269115924835,
+        "training_validation_checkpoint_seconds": 3064,
+        "evaluation_audit_seconds": 216.2691159248352,
+        "training_samples": 53600,
+        "validation_samples": 600,
+        "full_metric_samples": 600,
+        "optimizer_updates_this_epoch": 6700,
+        "global_batch_size": 8,
+        "limit_seconds": 3600
+      },
+      "checkpoint_sha256": "b34a800f8852d399f4999cf7e802f707d41897e466d7de59bcc25afec19cc79e",
+      "mean": {
+        "enhanced": {
+          "pesq": 3.3270616487662,
+          "stoi": 0.9704087517221175,
+          "estoi": 0.9358102228389381,
+          "si_snr_db": 16.617538551864683,
+          "sdr_db": 18.032650594185288
+        },
+        "noisy": {
+          "pesq": 1.0880955342451732,
+          "stoi": 0.6510592990906214,
+          "estoi": 0.3667556529781415,
+          "si_snr_db": -1.2095493301340101,
+          "sdr_db": -1.1495106109218791
+        }
+      },
+      "frontend": {
+        "sample_rate": 16000,
+        "n_fft": 512,
+        "hop_length": 160,
+        "win_length": 320,
+        "power": 0.5,
+        "target_ref_mic": 0
+      },
+      "metric_protocol": {
+        "pesq": "pesq wideband",
+        "estoi": "pystoi extended=True; JSON estoi=fraction, CSV estoi_pct=100*estoi",
+        "stoi": "pystoi extended=False, fraction",
+        "si_snr_db": "zero-mean projection SI-SNR",
+        "si_snr_epsilon": 1e-08,
+        "sdr_db": "mir_eval.separation.bss_eval_sources, single source, 512-tap distortion filter; not SI-SNR",
+        "target_gain_matching": false,
+        "max_level_gain_db": 20.0,
+        "gain_rule": "none",
+        "external_normalization_clipping_or_alignment": false,
+        "length_policy": "truncate mixture and target to common length as in training Dataset; no delay correction",
+        "aggregation": "paired arithmetic mean over every selected utterance; failures abort with no mean"
+      },
+      "selected_pairs_sha256": "18233928bdcb499f4e65e3b66a1f8c39387675d09f1621ae6ac94881d7444cfb"
+    },
+    {
+      "timing": {
+        "epoch": 23,
+        "status": "complete",
+        "started_unix": 1794352645,
+        "finished_unix": 1794355893.5147278,
+        "total_seconds": 3248.514727830887,
+        "training_validation_checkpoint_seconds": 3034,
+        "evaluation_audit_seconds": 214.51472783088684,
+        "training_samples": 53600,
+        "validation_samples": 600,
+        "full_metric_samples": 600,
+        "optimizer_updates_this_epoch": 6700,
+        "global_batch_size": 8,
+        "limit_seconds": 3600
+      },
+      "checkpoint_sha256": "88627e71268efe4241150c935acb02307ccfc2f86ac86498b1b60021564faabb",
+      "mean": {
+        "enhanced": {
+          "pesq": 3.322301678061485,
+          "stoi": 0.9704904113213316,
+          "estoi": 0.9360141877138449,
+          "si_snr_db": 16.662060648241063,
+          "sdr_db": 18.02928702092433
+        },
+        "noisy": {
+          "pesq": 1.0880955342451732,
+          "stoi": 0.6510592990906214,
+          "estoi": 0.3667556529781415,
+          "si_snr_db": -1.2095493301340101,
+          "sdr_db": -1.1495106109218791
+        }
+      },
+      "frontend": {
+        "sample_rate": 16000,
+        "n_fft": 512,
+        "hop_length": 160,
+        "win_length": 320,
+        "power": 0.5,
+        "target_ref_mic": 0
+      },
+      "metric_protocol": {
+        "pesq": "pesq wideband",
+        "estoi": "pystoi extended=True; JSON estoi=fraction, CSV estoi_pct=100*estoi",
+        "stoi": "pystoi extended=False, fraction",
+        "si_snr_db": "zero-mean projection SI-SNR",
+        "si_snr_epsilon": 1e-08,
+        "sdr_db": "mir_eval.separation.bss_eval_sources, single source, 512-tap distortion filter; not SI-SNR",
+        "target_gain_matching": false,
+        "max_level_gain_db": 20.0,
+        "gain_rule": "none",
+        "external_normalization_clipping_or_alignment": false,
+        "length_policy": "truncate mixture and target to common length as in training Dataset; no delay correction",
+        "aggregation": "paired arithmetic mean over every selected utterance; failures abort with no mean"
+      },
+      "selected_pairs_sha256": "18233928bdcb499f4e65e3b66a1f8c39387675d09f1621ae6ac94881d7444cfb"
+    },
+    {
+      "timing": {
+        "epoch": 24,
+        "status": "complete",
+        "started_unix": 1794355893,
+        "finished_unix": 1794359141.6107745,
+        "total_seconds": 3248.6107745170593,
+        "training_validation_checkpoint_seconds": 3035,
+        "evaluation_audit_seconds": 213.61077451705933,
+        "training_samples": 53600,
+        "validation_samples": 600,
+        "full_metric_samples": 600,
+        "optimizer_updates_this_epoch": 6700,
+        "global_batch_size": 8,
+        "limit_seconds": 3600
+      },
+      "checkpoint_sha256": "8fa10dc9200a75f1f710bf08584978c6b92304259ad47593e63d435bee95f09c",
+      "mean": {
+        "enhanced": {
+          "pesq": 3.3337704187631605,
+          "stoi": 0.9703021809749847,
+          "estoi": 0.935898908949876,
+          "si_snr_db": 16.678518213422905,
+          "sdr_db": 18.065899504402356
+        },
+        "noisy": {
+          "pesq": 1.0880955342451732,
+          "stoi": 0.6510592990906214,
+          "estoi": 0.3667556529781415,
+          "si_snr_db": -1.2095493301340101,
+          "sdr_db": -1.1495106109218791
+        }
+      },
+      "frontend": {
+        "sample_rate": 16000,
+        "n_fft": 512,
+        "hop_length": 160,
+        "win_length": 320,
+        "power": 0.5,
+        "target_ref_mic": 0
+      },
+      "metric_protocol": {
+        "pesq": "pesq wideband",
+        "estoi": "pystoi extended=True; JSON estoi=fraction, CSV estoi_pct=100*estoi",
+        "stoi": "pystoi extended=False, fraction",
+        "si_snr_db": "zero-mean projection SI-SNR",
+        "si_snr_epsilon": 1e-08,
+        "sdr_db": "mir_eval.separation.bss_eval_sources, single source, 512-tap distortion filter; not SI-SNR",
+        "target_gain_matching": false,
+        "max_level_gain_db": 20.0,
+        "gain_rule": "none",
+        "external_normalization_clipping_or_alignment": false,
+        "length_policy": "truncate mixture and target to common length as in training Dataset; no delay correction",
+        "aggregation": "paired arithmetic mean over every selected utterance; failures abort with no mean"
+      },
+      "selected_pairs_sha256": "18233928bdcb499f4e65e3b66a1f8c39387675d09f1621ae6ac94881d7444cfb"
+    },
+    {
+      "timing": {
+        "epoch": 25,
+        "status": "complete",
+        "started_unix": 1794359141,
+        "finished_unix": 1794362436.3300228,
+        "total_seconds": 3295.3300228118896,
+        "training_validation_checkpoint_seconds": 3081,
+        "evaluation_audit_seconds": 214.33002281188965,
+        "training_samples": 53600,
+        "validation_samples": 600,
+        "full_metric_samples": 600,
+        "optimizer_updates_this_epoch": 6700,
+        "global_batch_size": 8,
+        "limit_seconds": 3600
+      },
+      "checkpoint_sha256": "c9c78ad9763dd70e610171ecc3327a387f6d6dce642aecc339f25e7ed723a155",
+      "mean": {
+        "enhanced": {
+          "pesq": 3.3354230292638145,
+          "stoi": 0.9707703050239793,
+          "estoi": 0.9366316088789999,
+          "si_snr_db": 16.72652425562196,
+          "sdr_db": 18.113507042735097
+        },
+        "noisy": {
+          "pesq": 1.0880955342451732,
+          "stoi": 0.6510592990906214,
+          "estoi": 0.3667556529781415,
+          "si_snr_db": -1.2095493301340101,
+          "sdr_db": -1.1495106109218791
+        }
+      },
+      "frontend": {
+        "sample_rate": 16000,
+        "n_fft": 512,
+        "hop_length": 160,
+        "win_length": 320,
+        "power": 0.5,
+        "target_ref_mic": 0
+      },
+      "metric_protocol": {
+        "pesq": "pesq wideband",
+        "estoi": "pystoi extended=True; JSON estoi=fraction, CSV estoi_pct=100*estoi",
+        "stoi": "pystoi extended=False, fraction",
+        "si_snr_db": "zero-mean projection SI-SNR",
+        "si_snr_epsilon": 1e-08,
+        "sdr_db": "mir_eval.separation.bss_eval_sources, single source, 512-tap distortion filter; not SI-SNR",
+        "target_gain_matching": false,
+        "max_level_gain_db": 20.0,
+        "gain_rule": "none",
+        "external_normalization_clipping_or_alignment": false,
+        "length_policy": "truncate mixture and target to common length as in training Dataset; no delay correction",
+        "aggregation": "paired arithmetic mean over every selected utterance; failures abort with no mean"
+      },
+      "selected_pairs_sha256": "18233928bdcb499f4e65e3b66a1f8c39387675d09f1621ae6ac94881d7444cfb"
+    },
+    {
+      "timing": {
+        "epoch": 26,
+        "status": "complete",
+        "started_unix": 1794362436,
+        "finished_unix": 1794365683.0920236,
+        "total_seconds": 3247.0920236110687,
+        "training_validation_checkpoint_seconds": 3033,
+        "evaluation_audit_seconds": 214.09202361106873,
+        "training_samples": 53600,
+        "validation_samples": 600,
+        "full_metric_samples": 600,
+        "optimizer_updates_this_epoch": 6700,
+        "global_batch_size": 8,
+        "limit_seconds": 3600
+      },
+      "checkpoint_sha256": "7712fecd60b2b9820924068e8c63e2e8bdad94b307f7010b2652fefb77e2591a",
+      "mean": {
+        "enhanced": {
+          "pesq": 3.3403881565729776,
+          "stoi": 0.970607015576228,
+          "estoi": 0.9363416817727142,
+          "si_snr_db": 16.70854904408658,
+          "sdr_db": 18.092356549983293
+        },
+        "noisy": {
+          "pesq": 1.0880955342451732,
+          "stoi": 0.6510592990906214,
+          "estoi": 0.3667556529781415,
+          "si_snr_db": -1.2095493301340101,
+          "sdr_db": -1.1495106109218791
+        }
+      },
+      "frontend": {
+        "sample_rate": 16000,
+        "n_fft": 512,
+        "hop_length": 160,
+        "win_length": 320,
+        "power": 0.5,
+        "target_ref_mic": 0
+      },
+      "metric_protocol": {
+        "pesq": "pesq wideband",
+        "estoi": "pystoi extended=True; JSON estoi=fraction, CSV estoi_pct=100*estoi",
+        "stoi": "pystoi extended=False, fraction",
+        "si_snr_db": "zero-mean projection SI-SNR",
+        "si_snr_epsilon": 1e-08,
+        "sdr_db": "mir_eval.separation.bss_eval_sources, single source, 512-tap distortion filter; not SI-SNR",
+        "target_gain_matching": false,
+        "max_level_gain_db": 20.0,
+        "gain_rule": "none",
+        "external_normalization_clipping_or_alignment": false,
+        "length_policy": "truncate mixture and target to common length as in training Dataset; no delay correction",
+        "aggregation": "paired arithmetic mean over every selected utterance; failures abort with no mean"
+      },
+      "selected_pairs_sha256": "18233928bdcb499f4e65e3b66a1f8c39387675d09f1621ae6ac94881d7444cfb"
+    }
+  ],
+  "best": {
+    "best_completed_epoch": 26,
+    "best_completed_pesq": 3.3403881565729776,
+    "target_reached": false
+  }
+}

@@ -24,8 +24,11 @@ CANDIDATES=[('causal_fullchannel_dualpath_crn_v1',21,'fullchannel'),
 @pytest.mark.parametrize('fault',[None,'unfinished','wrong_directory','wrong_dataset','wrong_batch',
     'wrong_schema','target_reached','old_target_reached','partial_metrics','gain','cropped',
     'changed_cohort','bad_noisy','no_quality_gain','hour','nonfinite_weights','unevaluated_latest',
-    'different_adam','optimizer_steps','scheduler','source_changed','checkpoint_changed'])
+    'different_adam','optimizer_steps','scheduler','source_changed','checkpoint_changed','extended_limit'])
 def test_resume_requires_same_evaluated_state_and_complete_budget(tmp_path,monkeypatch,fault,candidate,schema,preflight):
+    epoch = 30 if fault == 'extended_limit' else 3
+    if fault == 'extended_limit':
+        monkeypatch.setenv('CAUSAL_MAX_EPOCHS', '40')
     root=tmp_path/'logs';root.mkdir()
     checkpoints=tmp_path/'checkpoints';checkpoints.mkdir()
     best=tmp_path/'best'
@@ -34,11 +37,11 @@ def test_resume_requires_same_evaluated_state_and_complete_budget(tmp_path,monke
     args=dict(log_dir=str(root),checkpoint_dir=str(checkpoints),best_dir=str(best),
         train_dir=str(train),val_dir=str(validation),parallel_mode='ddp',batch_size=2,grad_accum_steps=2,
         candidate_schema=schema,causal_training_implementation_sha256={str(script):hashlib.sha256(script.read_bytes()).hexdigest()})
-    state=dict(epoch=3,args=args,model_state_dict={'weight':torch.ones(1)},
-        optimizer_state_dict=dict(state={0:dict(step=torch.tensor(20100),exp_avg=torch.zeros(1),exp_avg_sq=torch.ones(1))},
+    state=dict(epoch=epoch,args=args,model_state_dict={'weight':torch.ones(1)},
+        optimizer_state_dict=dict(state={0:dict(step=torch.tensor(epoch*6700),exp_avg=torch.zeros(1),exp_avg_sq=torch.ones(1))},
             param_groups=[dict(lr=.0005,params=[0])]),lr_reducer_state=dict(best=.3,wait=2))
     evaluated=copy.deepcopy(state)
-    checked=checkpoints/'model_epoch_3.pt';checked.write_bytes(b'evaluated checkpoint')
+    checked=checkpoints/f'model_epoch_{epoch}.pt';checked.write_bytes(b'evaluated checkpoint')
     baseline_path=(f'{preflight}_preflight_20261103/initial_full600_summary.json' if schema==27
                    else f'{preflight}_preflight_20261102/zero_full600_summary.json')
     if schema in (28,29):baseline_path='global_spectral_preflight_20261103/initial_full600_summary.json'
@@ -48,9 +51,9 @@ def test_resume_requires_same_evaluated_state_and_complete_budget(tmp_path,monke
         baseline.update(candidate_metadata(candidate))
     summary=copy.deepcopy(baseline);summary['mean']['enhanced']['pesq']=2.4
     summary['checkpoint_sha256']=hashlib.sha256(checked.read_bytes()).hexdigest()
-    timing=dict(epoch=3,status='complete',training_samples=53600,validation_samples=600,full_metric_samples=600,
+    timing=dict(epoch=epoch,status='complete',training_samples=53600,validation_samples=600,full_metric_samples=600,
         optimizer_updates_this_epoch=6700,global_batch_size=8,total_seconds=3200.,evaluation_audit_seconds=217.4)
-    ranking=dict(target_reached=False,results=[dict(epoch=3)])
+    ranking=dict(target_reached=False,results=[dict(epoch=epoch)])
     if fault=='unfinished':timing['status']='running'
     if fault=='wrong_directory':state['args']['log_dir']=str(tmp_path/'other')
     if fault=='wrong_dataset':state['args']['train_dir']=str(tmp_path/'other_data')
@@ -74,8 +77,8 @@ def test_resume_requires_same_evaluated_state_and_complete_budget(tmp_path,monke
     if fault=='scheduler':state['lr_reducer_state']['wait']=0
     if fault=='source_changed':script.write_text('changed implementation')
     if fault=='checkpoint_changed':checked.write_bytes(b'not evaluated')
-    for epoch,report in ((0,baseline),(3,summary)):
-        directory=root/f'pesq_selection/model_epoch_{epoch}';directory.mkdir(parents=True)
+    for evaluated_epoch,report in ((0,baseline),(epoch,summary)):
+        directory=root/f'pesq_selection/model_epoch_{evaluated_epoch}';directory.mkdir(parents=True)
         (directory/'summary.json').write_text(json.dumps(report))
     (root/'epoch_timing.jsonl').write_text(json.dumps(timing)+'\n')
     (root/'pesq_selection/checkpoint_ranking.json').write_text(json.dumps(ranking))
@@ -87,16 +90,16 @@ def test_resume_requires_same_evaluated_state_and_complete_budget(tmp_path,monke
     monkeypatch.setattr(sys,'argv',['-',str(root),str(checkpoints),str(best),candidate,str(train),str(validation)])
     shell=(ROOT/'run_light_causal.sh').read_text()
     code=shell.split("<<'PY_RESUME'\n",1)[1].split('\nPY_RESUME',1)[0]
-    if fault and not (schema in (22,23,25,27,28,29) and fault=='no_quality_gain'):
+    if fault not in (None, 'extended_limit') and not (schema in (22,23,25,27,28,29) and fault=='no_quality_gain'):
         with pytest.raises((AssertionError,ValueError)):
             exec(compile(code,'causal completed-boundary resume','exec'),{})
         assert status.read_text()=='original complete status'
     else:
         exec(compile(code,'causal completed-boundary resume','exec'),{})
-        assert json.loads(status.read_text())['resumed_from_completed_epoch']==3
+        assert json.loads(status.read_text())['resumed_from_completed_epoch']==epoch
         assert state['optimizer_state_dict']['param_groups'][0]['lr']==.0005
         assert state['lr_reducer_state']['wait']==2
-        assert int(state['optimizer_state_dict']['state'][0]['step'])==20100
+        assert int(state['optimizer_state_dict']['state'][0]['step'])==epoch*6700
 
 
 @pytest.mark.parametrize('candidate,prefix,run,accepted',[
@@ -133,4 +136,4 @@ def test_resume_guard_runs_before_status_sampler_and_cold_initialization():
     assert shell.index("<<'PY_RESUME'")<shell.index('sampler=$!')<shell.index('trap finish EXIT')
     block=shell.split('if [[ -n "${CAUSAL_RESUME_RUN:-}" ]]; then\n    read -r start_epoch evaluation_reserve',1)[1]
     assert block.index('else\n')<block.index('--num-epochs 0')<block.index('start_epoch=1\nfi')
-    assert 'for ((epoch=start_epoch; epoch<=30; epoch++)); do' in shell
+    assert 'for ((epoch=start_epoch; epoch<=max_epochs; epoch++)); do' in shell
