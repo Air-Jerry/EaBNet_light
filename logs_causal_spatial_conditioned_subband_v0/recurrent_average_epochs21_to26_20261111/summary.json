@@ -1,0 +1,64 @@
+{
+  "status": "complete",
+  "pid": 2426069,
+  "started_unix": 1794366356.8704855,
+  "cpu_affinity": [
+    16,
+    18
+  ],
+  "evaluator_sha256": "0c3ada1425b33e16688e8424daba23681ac9ded4d8bee931ed24c69e59e5730b",
+  "sources": [
+    {
+      "epoch": 21,
+      "sha256": "723c2af777ed77cc1d8ceaf9634d084e24848062d2c96a4f2ee790b990fe80d7",
+      "pesq": 3.334746073881785,
+      "seconds": 3269.2131807804108
+    },
+    {
+      "epoch": 22,
+      "sha256": "b34a800f8852d399f4999cf7e802f707d41897e466d7de59bcc25afec19cc79e",
+      "pesq": 3.3270616487662,
+      "seconds": 3280.269115924835
+    },
+    {
+      "epoch": 23,
+      "sha256": "88627e71268efe4241150c935acb02307ccfc2f86ac86498b1b60021564faabb",
+      "pesq": 3.322301678061485,
+      "seconds": 3248.514727830887
+    },
+    {
+      "epoch": 24,
+      "sha256": "8fa10dc9200a75f1f710bf08584978c6b92304259ad47593e63d435bee95f09c",
+      "pesq": 3.3337704187631605,
+      "seconds": 3248.6107745170593
+    },
+    {
+      "epoch": 25,
+      "sha256": "c9c78ad9763dd70e610171ecc3327a387f6d6dce642aecc339f25e7ed723a155",
+      "pesq": 3.3354230292638145,
+      "seconds": 3295.3300228118896
+    },
+    {
+      "epoch": 26,
+      "sha256": "7712fecd60b2b9820924068e8c63e2e8bdad94b307f7010b2652fefb77e2591a",
+      "pesq": 3.3403881565729776,
+      "seconds": 3247.0920236110687
+    }
+  ],
+  "results": {
+    "average": {
+      "pesq": 3.3380916605393094,
+      "seconds": 2642.4975230693817,
+      "samples": 600,
+      "checkpoint_sha256": "504860f8d38067d71e85f9e625b49c9cb5ac5f1240041cf3ec06a1ff4bdc7fa3"
+    },
+    "epoch26": {
+      "pesq": 3.340386871298154,
+      "seconds": 2660.356859445572,
+      "samples": 600,
+      "checkpoint_sha256": "7712fecd60b2b9820924068e8c63e2e8bdad94b307f7010b2652fefb77e2591a"
+    }
+  },
+  "phase_started_unix": 1794369000.6024783,
+  "difference": -0.0022952107588447568
+}

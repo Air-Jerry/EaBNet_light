@@ -1,0 +1,55 @@
+{
+  "rows": [
+    {
+      "timing": {
+        "epoch": 27,
+        "status": "complete",
+        "started_unix": 1794365683,
+        "finished_unix": 1794369022.8680909,
+        "total_seconds": 3339.868090867996,
+        "training_validation_checkpoint_seconds": 3111,
+        "evaluation_audit_seconds": 228.86809086799622,
+        "training_samples": 53600,
+        "validation_samples": 600,
+        "full_metric_samples": 600,
+        "optimizer_updates_this_epoch": 6700,
+        "global_batch_size": 8,
+        "limit_seconds": 3600
+      },
+      "pesq": 3.3393618883689244,
+      "checkpoint_sha256": "701190dcc7aef54275ea955dfa6fcb740c7c62915d2a426ad7a6d4e9eee9b5ca",
+      "selected_pairs_sha256": "18233928bdcb499f4e65e3b66a1f8c39387675d09f1621ae6ac94881d7444cfb"
+    },
+    {
+      "timing": {
+        "epoch": 28,
+        "status": "complete",
+        "started_unix": 1794369023,
+        "finished_unix": 1794372377.0839958,
+        "total_seconds": 3354.083995819092,
+        "training_validation_checkpoint_seconds": 3140,
+        "evaluation_audit_seconds": 214.0839958190918,
+        "training_samples": 53600,
+        "validation_samples": 600,
+        "full_metric_samples": 600,
+        "optimizer_updates_this_epoch": 6700,
+        "global_batch_size": 8,
+        "limit_seconds": 3600
+      },
+      "pesq": 3.3539184459050495,
+      "checkpoint_sha256": "fc460f331e07dd4c3e3a8d531522973c27757ba86caa2a3f3a096a1112e6321f",
+      "selected_pairs_sha256": "18233928bdcb499f4e65e3b66a1f8c39387675d09f1621ae6ac94881d7444cfb"
+    }
+  ],
+  "native": {
+    "status": "running",
+    "resumed_from_completed_epoch": 20,
+    "resumed_unix": 1794346095.0852118
+  },
+  "live_owner_cookie": "229422008",
+  "best": {
+    "best_completed_epoch": 28,
+    "best_completed_pesq": 3.3539184459050495,
+    "target_reached": false
+  }
+}
