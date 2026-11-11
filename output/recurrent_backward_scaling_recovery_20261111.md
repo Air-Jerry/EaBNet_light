@@ -108,3 +108,7 @@ post-recurrent分支实际1024步后，完整600条3.32512263099，低于同源�
 双卡对照已在独立目录排期。两组分别完成第30轮CPU暖启动自检，原235项Adam状态及201000步精确保留，只有相位支路的新增卷积状态为空。若正式训练到第40轮仍低于3.4，协调器在正式进程正常退出、双卡空闲后，从届时最高分的正式检查点开始对照。两组使用同一Adam状态、8192条不同的6秒训练样本和1024次更新，然后评估同一完整600条。短程训练成本会先做筛查。若正式训练先达到3.4，协调器会跳过对照，由正式流程完成流式验收。服务器核验记录见 `logs_causal_spatial_conditioned_subband_v0/beam_cues_matched_after_formal_20261111/verified_schedule.json`。
 
 第32轮完成，600条WB-PESQ为3.34672，耗时54.55分钟。既有每10秒采样在训练、验证和保存阶段共覆盖每卡306点，平均GPU利用率为95.6%和93.8%，显存峰值为6707和6689 MiB。第33轮已启动。最高分仍为3.35392，差0.04608。计时、利用率和分组证据见 `logs_causal_spatial_conditioned_subband_v0/recurrent_continuation_epoch30_20261111/epoch32_results.json`。
+
+第33轮得3.34809，用时54.33分钟。第34轮得3.35323，用时54.72分钟。两轮各完成53600条训练、600条验证、600条评估和6700次更新。第34轮训练、验证和保存阶段每卡采样307次，平均GPU利用率为95.1%和94.5%。第35轮已启动。完整评估身份、检查点哈希及计时见 `logs_causal_spatial_conditioned_subband_v0/recurrent_continuation_epoch30_20261111/epochs33_34_results.json`。
+
+相位支路的CUDA流式筛查已排期。若1024步匹配对照的600条PESQ增益为正，筛查读取该次评分所用的同一检查点，测试真实6秒音频的600跳耗时、未来帧扰动、整段与流式波形误差及缓存独立性。这是正式全600条流式验收前的单条筛查。实测训练到第35轮时，对照和筛查两个等待进程均已核对内核身份。排期见 `logs_causal_spatial_conditioned_subband_v0/beam_cues_matched_after_formal_20261111/verified_stream_schedule.json`。

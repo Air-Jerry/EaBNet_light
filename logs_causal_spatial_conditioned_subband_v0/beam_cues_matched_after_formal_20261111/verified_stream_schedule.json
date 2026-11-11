@@ -1,0 +1,9 @@
+{
+  "status": "waiting_for_matched_trial",
+  "pid": 2504061,
+  "cookie": "233405450",
+  "trial_pid": 2492090,
+  "trial_cookie": "233073501",
+  "worker_sha256": "a0bdfe9995f4b60668ede00d6d7ffb0da4ebd4cc072f0c4a7ae7a7b56868e5fc",
+  "controller_sha256": "6f54471261a8d69bb3c9be92ff642bcb0ddbb731a08b8e906be18c308ce7a531"
+}
