@@ -124,3 +124,19 @@ post-recurrent分支实际1024步后，完整600条3.32512263099，低于同源�
 第36轮完整600条WB-PESQ为3.34930，耗时54.58分钟，第37轮已启动。与第28轮配对比较，103条高相干样本平均提高0.00767，整体下降0.00462。实测数据见 `logs_causal_spatial_conditioned_subband_v0/recurrent_continuation_epoch30_20261111/epoch36_results.json`。
 
 新增对照分析入口 `python -m experiments.analyze_beam_cues_trial <trial_summary> <comparison_dir>`。它核对原600条的元数据、音频路径身份、评分口径及两组分数的对应关系，然后按请求SNR、几何相干性和二者交集汇总。已用第28和36轮的真实逐样本分数验证计算，并验证错配的音频身份会被拒绝。新相位支路的训练结果尚未产生。
+
+## 第40轮与感知损失对照
+
+第37至40轮的固定600条WB-PESQ分别为3.35405、3.35443、3.35353和3.35635，耗时54.35、54.54、54.13和55.49分钟。原正式训练在第40轮正常退出。最高分为3.35635。各轮计时和检查点身份见 `logs_causal_spatial_conditioned_subband_v0/recurrent_continuation_epoch30_20261111/epoch40_results.json`。
+
+两项诊断使用第40轮模型及268000步Adam。每组更新1024次，使用相同8192条原训练记录并评估固定600条。
+
+| 组别 | 600条WB-PESQ | 相对控制 | 103条高相干样本变化 |
+|---|---:|---:|---:|
+| 原结构与PMSQE 0.1 | 3.35526 | 0 | 0 |
+| 相位支路与PMSQE 0.1 | 3.35517 | −0.00009 | −0.00216 |
+| 原结构与PMSQE 0.3 | 3.36111 | +0.00586 | −0.00475 |
+
+相位支路结束试验。PMSQE 0.3的训练和评估均实际完成，汇总时JSON对象索引类型不一致。用现有分片统一索引后，重新核验逐条noisy分数、评估身份、训练顺序、更新次数及检查点哈希。权重0.3的短程训练耗时467.24秒，完整轮次耗时估算3310.63秒。分组表明总体增益未覆盖高相干难例。证据见 `logs_causal_spatial_conditioned_subband_v0/beam_cues_matched_after_formal_20261111/source40_matched_results.json`。
+
+第41轮双卡已从第40轮正式模型和268000步Adam续跑。训练阶段使用PMSQE 0.3，验证损失仍用0.1，以保持调度器和历史验证损失的比较口径。前端、模型推理、数据接口、批量和其他损失权重沿用原配置。此次先跑至第44轮。第41轮的两rank已记录恢复成功和实际训练权重。完整轮次耗时和正式PESQ仍待实测。证据见 `logs_causal_spatial_conditioned_subband_v0/recurrent_formal_pmsqe03_20261112/launch_evidence.json`。
