@@ -1,0 +1,66 @@
+{
+  "selfcheck": {
+    "control": {
+      "status": "complete_zero_update_initialization",
+      "branch": "control",
+      "source_checkpoint_sha256": "72305aa64b9d5efeedd7164e195d6d81194b2cf32d06a5485c110168b14a3101",
+      "source_epoch": 30,
+      "source_Adam_restoration": {
+        "existing_adam_moments_exactly_preserved": true,
+        "source_adam_steps": 201000,
+        "existing_state_parameters": 235,
+        "new_attention_parameter_tensors": 0
+      },
+      "actual_updates": 0,
+      "diagnostic_only": true,
+      "backward_loss_factor": 0.0009765625,
+      "implementation_sha256": {
+        "beam_cues": "e2b9b035089e0327fda691e10aed67fbae63e3fcabaf90cb3c86c1b993ee3f95",
+        "backward": "afab37d041d601957e4b415c48470691df469fb6e2aaa7a7eee6644bbeae90cd",
+        "checkpoint": "8cd2ccf05a70062a7b9fdf65040c3ed0f0c25b2dfb8e29022617bf9ced9f0aa1",
+        "reflection": "ba6177c0b4f82a9c912a17f89484d9f55c9c22476ac9a2aa5ddd128968ad7f6e",
+        "worker": "dd88d2692e155604a7fcc755992ea137926c85ee98b4539b52a46e7721b6ec49"
+      }
+    },
+    "beam_cues": {
+      "status": "complete_zero_update_initialization",
+      "branch": "beam_cues",
+      "source_checkpoint_sha256": "72305aa64b9d5efeedd7164e195d6d81194b2cf32d06a5485c110168b14a3101",
+      "source_epoch": 30,
+      "source_Adam_restoration": {
+        "existing_adam_moments_exactly_preserved": true,
+        "source_adam_steps": 201000,
+        "existing_state_parameters": 235,
+        "new_attention_parameter_tensors": 1
+      },
+      "actual_updates": 0,
+      "diagnostic_only": true,
+      "backward_loss_factor": 0.0009765625,
+      "implementation_sha256": {
+        "beam_cues": "e2b9b035089e0327fda691e10aed67fbae63e3fcabaf90cb3c86c1b993ee3f95",
+        "backward": "afab37d041d601957e4b415c48470691df469fb6e2aaa7a7eee6644bbeae90cd",
+        "checkpoint": "8cd2ccf05a70062a7b9fdf65040c3ed0f0c25b2dfb8e29022617bf9ced9f0aa1",
+        "reflection": "ba6177c0b4f82a9c912a17f89484d9f55c9c22476ac9a2aa5ddd128968ad7f6e",
+        "worker": "dd88d2692e155604a7fcc755992ea137926c85ee98b4539b52a46e7721b6ec49"
+      }
+    }
+  },
+  "coordinator": {
+    "worker_sha256": "dd88d2692e155604a7fcc755992ea137926c85ee98b4539b52a46e7721b6ec49",
+    "prototype_sha256": "e2b9b035089e0327fda691e10aed67fbae63e3fcabaf90cb3c86c1b993ee3f95",
+    "diagnostic_only": true,
+    "status": "waiting_for_formal_launcher_exit",
+    "pid": 2492090,
+    "cookie": "233073501",
+    "source_epoch": 30,
+    "source_checkpoint_sha256": "72305aa64b9d5efeedd7164e195d6d81194b2cf32d06a5485c110168b14a3101",
+    "owner": {
+      "pid": 2477176,
+      "cookie": "232703634",
+      "state": "R",
+      "uid": 1169,
+      "cwd": "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_formal_stage_v2_20261110"
+    }
+  },
+  "controller_sha256": "8e19d42e6c01790e58543d8f4de0f4b3f451f1be9a318c24a11e8bfc082b7bad"
+}
