@@ -140,3 +140,9 @@ post-recurrent分支实际1024步后，完整600条3.32512263099，低于同源�
 相位支路结束试验。PMSQE 0.3的训练和评估均实际完成，汇总时JSON对象索引类型不一致。用现有分片统一索引后，重新核验逐条noisy分数、评估身份、训练顺序、更新次数及检查点哈希。权重0.3的短程训练耗时467.24秒，完整轮次耗时估算3310.63秒。分组表明总体增益未覆盖高相干难例。证据见 `logs_causal_spatial_conditioned_subband_v0/beam_cues_matched_after_formal_20261111/source40_matched_results.json`。
 
 第41轮双卡已从第40轮正式模型和268000步Adam续跑。训练阶段使用PMSQE 0.3，验证损失仍用0.1，以保持调度器和历史验证损失的比较口径。前端、模型推理、数据接口、批量和其他损失权重沿用原配置。此次先跑至第44轮。第41轮的两rank已记录恢复成功和实际训练权重。完整轮次耗时和正式PESQ仍待实测。证据见 `logs_causal_spatial_conditioned_subband_v0/recurrent_formal_pmsqe03_20261112/launch_evidence.json`。
+
+## PMSQE 0.3完整轮次及0.6对照
+
+第41至44轮分别得到3.36022、3.35934、3.35649和3.35807。完整轮次耗时54.20至55.52分钟，各完成53600条训练、600条验证、600条评估及6700次更新。第41轮比第40轮高0.00387，后续三轮未继续改善。正式检查点保存训练权重0.3、验证权重0.1和原第40轮的哈希。证据见 `logs_causal_spatial_conditioned_subband_v0/recurrent_formal_pmsqe03_20261112/verified_through_epoch44.json`。
+
+0.6组从相同第40轮起点以相同记录顺序更新1024次。完整600条得3.36299，比0.1控制组高0.00774，比0.3诊断组高0.00188。第45轮使用0.6训练权重，两个rank均从第44轮正式检查点恢复，保留294800步Adam和原验证损失。先验证第45至46轮。0.6的完整轮次耗时和得分仍待验证。证据见 `logs_causal_spatial_conditioned_subband_v0/recurrent_formal_pmsqe03_20261112/pmsqe06_matched_result.json` 和 `logs_causal_spatial_conditioned_subband_v0/recurrent_formal_pmsqe06_20261112/launch_evidence.json`。

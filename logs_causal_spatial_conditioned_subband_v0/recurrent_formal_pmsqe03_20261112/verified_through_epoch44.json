@@ -1,0 +1,241 @@
+{
+  "controller": {
+    "status": "training_complete",
+    "pid": 2616591,
+    "source_checkpoint_sha256": "0208a4f1fc059582f90ea4582beafa6a9609b86931158079c082f0535fecffb7",
+    "resumed_from_epoch": 40,
+    "adam_steps": 268000,
+    "training_pmsqe_weight": 0.3,
+    "validation_pmsqe_weight": 0.1,
+    "requested_epoch_limit": 44,
+    "proxy_sha256": "3076e52ba199f67034c48e7115a6ffbf75d368bed636efb2b0a09745d52c2eb7",
+    "matched_results_sha256": "63d57c5ecc8487b4c30692f49d40464dee8273d53c3b0ba54c43ea3edd82dbb6",
+    "diagnostic_weights_used": false,
+    "launcher_pid": 2616594,
+    "launcher_cookie": "236272086",
+    "launched_unix": 1794414590.405808,
+    "best_epoch": 41,
+    "best_pesq": 3.360222084124883,
+    "updated_unix": 1794427749.2621295
+  },
+  "owner": null,
+  "native": {
+    "status": "complete",
+    "final_phase": "complete",
+    "exit_code": 0,
+    "finished_unix": 1794427749.2553933
+  },
+  "best": {
+    "best_completed_epoch": 41,
+    "best_completed_pesq": 3.360222084124883,
+    "target_reached": false
+  },
+  "epochs": {
+    "41": {
+      "timing": {
+        "epoch": 41,
+        "status": "complete",
+        "started_unix": 1794414597,
+        "finished_unix": 1794417928.4410522,
+        "total_seconds": 3331.44105219841,
+        "training_validation_checkpoint_seconds": 3113,
+        "evaluation_audit_seconds": 218.44105219841003,
+        "training_samples": 53600,
+        "validation_samples": 600,
+        "full_metric_samples": 600,
+        "optimizer_updates_this_epoch": 6700,
+        "global_batch_size": 8,
+        "limit_seconds": 3600
+      },
+      "checkpoint_sha256": "5c18a99ab4338c7245c0f30e885f6e6580db0453eea1b4aa66128f4f3b71825b",
+      "mean": {
+        "enhanced": {
+          "pesq": 3.360222084124883,
+          "stoi": 0.9709083864625007,
+          "estoi": 0.9372820231636948,
+          "si_snr_db": 16.753983090325907,
+          "sdr_db": 18.218196584467798
+        },
+        "noisy": {
+          "pesq": 1.0880955342451732,
+          "stoi": 0.6510592990906214,
+          "estoi": 0.3667556529781415,
+          "si_snr_db": -1.2095493301340101,
+          "sdr_db": -1.1495106109218791
+        }
+      },
+      "adam_steps": 274700,
+      "training_pmsqe_weight": 0.3,
+      "validation_pmsqe_weight": 0.1
+    },
+    "42": {
+      "timing": {
+        "epoch": 42,
+        "status": "complete",
+        "started_unix": 1794417928,
+        "finished_unix": 1794421210.1153395,
+        "total_seconds": 3282.1153395175934,
+        "training_validation_checkpoint_seconds": 3067,
+        "evaluation_audit_seconds": 215.11533951759338,
+        "training_samples": 53600,
+        "validation_samples": 600,
+        "full_metric_samples": 600,
+        "optimizer_updates_this_epoch": 6700,
+        "global_batch_size": 8,
+        "limit_seconds": 3600
+      },
+      "checkpoint_sha256": "fc77b3245241e661802bd594aee8256f91da2723c4b8c8a8b1911de208a38be1",
+      "mean": {
+        "enhanced": {
+          "pesq": 3.3593392445643744,
+          "stoi": 0.9709224533369643,
+          "estoi": 0.9372663903569762,
+          "si_snr_db": 16.749394838737285,
+          "sdr_db": 18.18975850505521
+        },
+        "noisy": {
+          "pesq": 1.0880955342451732,
+          "stoi": 0.6510592990906214,
+          "estoi": 0.3667556529781415,
+          "si_snr_db": -1.2095493301340101,
+          "sdr_db": -1.1495106109218791
+        }
+      },
+      "adam_steps": 281400,
+      "training_pmsqe_weight": 0.3,
+      "validation_pmsqe_weight": 0.1
+    },
+    "43": {
+      "timing": {
+        "epoch": 43,
+        "status": "complete",
+        "started_unix": 1794421210,
+        "finished_unix": 1794424461.8624544,
+        "total_seconds": 3251.8624544143677,
+        "training_validation_checkpoint_seconds": 3037,
+        "evaluation_audit_seconds": 214.86245441436768,
+        "training_samples": 53600,
+        "validation_samples": 600,
+        "full_metric_samples": 600,
+        "optimizer_updates_this_epoch": 6700,
+        "global_batch_size": 8,
+        "limit_seconds": 3600
+      },
+      "checkpoint_sha256": "ab4e3f40cc2b72ae94119ea3c1be713d80ee037e8c3c2f64dd0ff6512567780d",
+      "mean": {
+        "enhanced": {
+          "pesq": 3.356492084066073,
+          "stoi": 0.9709183230776849,
+          "estoi": 0.9372100285789149,
+          "si_snr_db": 16.742900048473594,
+          "sdr_db": 18.18336381685575
+        },
+        "noisy": {
+          "pesq": 1.0880955342451732,
+          "stoi": 0.6510592990906214,
+          "estoi": 0.3667556529781415,
+          "si_snr_db": -1.2095493301340101,
+          "sdr_db": -1.1495106109218791
+        }
+      },
+      "adam_steps": 288100,
+      "training_pmsqe_weight": 0.3,
+      "validation_pmsqe_weight": 0.1
+    },
+    "44": {
+      "timing": {
+        "epoch": 44,
+        "status": "complete",
+        "started_unix": 1794424461,
+        "finished_unix": 1794427749.0783126,
+        "total_seconds": 3288.0783126354218,
+        "training_validation_checkpoint_seconds": 3074,
+        "evaluation_audit_seconds": 214.07831263542175,
+        "training_samples": 53600,
+        "validation_samples": 600,
+        "full_metric_samples": 600,
+        "optimizer_updates_this_epoch": 6700,
+        "global_batch_size": 8,
+        "limit_seconds": 3600
+      },
+      "checkpoint_sha256": "74be1c755c575cc2fb4bc0721e5bfc9a0413c65c5020fc5199830be41748a7df",
+      "mean": {
+        "enhanced": {
+          "pesq": 3.3580665304263433,
+          "stoi": 0.9708718772148398,
+          "estoi": 0.9371467664775033,
+          "si_snr_db": 16.734607586511494,
+          "sdr_db": 18.179651771473747
+        },
+        "noisy": {
+          "pesq": 1.0880955342451732,
+          "stoi": 0.6510592990906214,
+          "estoi": 0.3667556529781415,
+          "si_snr_db": -1.2095493301340101,
+          "sdr_db": -1.1495106109218791
+        }
+      },
+      "adam_steps": 294800,
+      "training_pmsqe_weight": 0.3,
+      "validation_pmsqe_weight": 0.1
+    }
+  },
+  "protocol": {
+    "metadata_sha256": "8d0b4d229ebc42cd9892e6d0e0d36416007ded01fbc0b753df4bf7e6b734eb02",
+    "selected_pairs_sha256": "18233928bdcb499f4e65e3b66a1f8c39387675d09f1621ae6ac94881d7444cfb",
+    "frontend_protocol": {
+      "window": "periodic Hann",
+      "center": true,
+      "pad_mode": "reflect",
+      "normalized": false,
+      "onesided": true,
+      "waveform_normalization": "none",
+      "compression": "Z * abs(Z).clamp_min(1e-8) ** (power - 1)",
+      "inverse_compression": "piecewise exact inverse including the epsilon region",
+      "mixture_channels": "first 8 channels, original order",
+      "evaluation_extent": "full common-length utterance; no training crop or batch padding",
+      "inference_precision": "float32"
+    },
+    "metric_protocol": {
+      "pesq": "pesq wideband",
+      "estoi": "pystoi extended=True; JSON estoi=fraction, CSV estoi_pct=100*estoi",
+      "stoi": "pystoi extended=False, fraction",
+      "si_snr_db": "zero-mean projection SI-SNR",
+      "si_snr_epsilon": 1e-08,
+      "sdr_db": "mir_eval.separation.bss_eval_sources, single source, 512-tap distortion filter; not SI-SNR",
+      "target_gain_matching": false,
+      "max_level_gain_db": 20.0,
+      "gain_rule": "none",
+      "external_normalization_clipping_or_alignment": false,
+      "length_policy": "truncate mixture and target to common length as in training Dataset; no delay correction",
+      "aggregation": "paired arithmetic mean over every selected utterance; failures abort with no mean"
+    },
+    "candidate_implementation_sha256": {
+      "light_causal_spatial_model.py": "b911ac848c86ca6b4a95933ae90d33a200d44f00ccaa8b98dc4b2cb7cf907a14",
+      "light_causal_stream.py": "86c266e39fd89227b99b1b6f46b943cff8b32a17c2c29f01234c3fcd18ebd42d",
+      "third_party/spatialnet/SpatialNet.py": "3baaa7136c893eba9aee9dfcdb40478a5f87f819682286abbec89a5d71d972f6",
+      "third_party/spatialnet/norm.py": "4c42f48a6d34dc82f25462782ba57e84dddfbfebb56b940f73a28b5ec41055cc",
+      "third_party/spatialnet/non_linear.py": "a985a7f81c8ebfbbd408ea753d7e9b81324d523c01afa1faca4285049640e79d",
+      "third_party/spatialnet/linear_group.py": "e6e0403b5dbdd787d511f0de9cef4335aa25ae46feee211554346c0a00cf2a43",
+      "light_causal_fast_model.py": "5d3f8153815e6a202b735ec3705c1f45a667557906bd299728c6cba7a5e126b9",
+      "light_causal_global_model.py": "43a7b8242a81fd0dcb922a82a2fa02e674f7d9340d78d1acb64952752162ec5e",
+      "light_causal_recurrent_model.py": "723a15ee4315bae86f4e4d632fcd25b9acfc8428c50263b6c8104cb7a2cacf8c",
+      "light_causal_recurrent65_model.py": "83977a1cce2eefa2fc66f2ac367499b7a6c8779feb63207f5f6bfed45dda2a68",
+      "experiments/causal_tcn_mapping.py": "9f6c7d0f011a19d03d2716b1bef2081d7b58d11b4d426e66bce1997de0ae82df",
+      "experiments/causal_frequency_attention.py": "ac4c1283ab0d225b608d164db3439ecef73a2c8518fe6f13a212bcaedc9a203f",
+      "experiments/causal_retention_mapping.py": "12ab7f2ab6584ce2f53ca93f972b952ba971a26606b7d9bb138630971c6a963c",
+      "experiments/causal_fullband_tcn.py": "d0a627624895b4e43484f74274cb63954cf4e517b956d5b670aeebec65403ed9",
+      "experiments/causal_subband_gru.py": "79fd8dca9b4e5541e77b99e338e71941d26868f266ba26a82e49471611e54227",
+      "experiments/causal_fullband_conditioned_subband.py": "8931dfa8d53c96654855427cf00c30f891fa051a279473088f329c8ca917710f",
+      "experiments/causal_frozen_conditioned_subband.py": "0d0094a3bdf3165fe9db11be86f6ed35cc778eb41918dac1a2ff8df46775305d",
+      "experiments/causal_spatial_conditioned_subband.py": "1f16997e919d1579712dd8073b0648c5ec08e11c38110b1a4f3816f95ae71652",
+      "experiments/causal_wide_conditioned_subband.py": "1d3b762acef8374be13675f40822998c2ec132d68a99c02e24f5e9bb54eaa53f",
+      "experiments/causal_monaural_spectral_branch.py": "d175416094e5cad1ed4279d74a2d71736e00fa5a35303e82a212dffa336f3463",
+      "experiments/causal_decoder_monaural.py": "d782d7602d4db171e02ce6b1c273f2ede68a0d749477f3cff48ddc8175234360",
+      "experiments/causal_mapping_monaural.py": "54579f1967ef7907a4aeea2e0109fe78be93f408d02c88696e72e0947e122ab3",
+      "experiments/causal_global_adapt_monaural.py": "78f83e71c586b8200fe3e8ea79585d0feb126aa13b6e037647edb934b873d81d",
+      "experiments/causal_recurrent_adapt_monaural.py": "eea857a31ae6e47ef12d63bda3fd8e725861b8b88c74c5835037dc6b588e04aa"
+    }
+  },
+  "final_audit": null
+}
