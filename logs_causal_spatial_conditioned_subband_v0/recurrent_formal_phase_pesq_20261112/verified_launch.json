@@ -1,0 +1,44 @@
+{
+  "controller": {
+    "status": "launcher_started",
+    "pid": 2816260,
+    "source_checkpoint_sha256": "9d1e584ef59166f9a4fe49ee6acbfc64220b88556f12bebba7f77b078b815bac",
+    "resumed_from_epoch": 48,
+    "adam_steps": 321600,
+    "training_pmsqe_weight": 0.6,
+    "learned_pesq_weight": 0.15,
+    "validation_pmsqe_weight": 0.1,
+    "requested_epoch_limit": 50,
+    "proxy_sha256": "6677a40c5c433ece56eca11b5123396369259586db8611c95c5e839218be6a92",
+    "matched_results_sha256": "766b8bc7995e28c02b8294c471e02f77a7e54fda42d8ec60c892b6c968b99831",
+    "diagnostic_weights_used": false,
+    "launcher_pid": 2816263,
+    "launcher_cookie": "241237317",
+    "launched_unix": 1794464242.7229125
+  },
+  "launcher_live": true,
+  "native": {
+    "status": "running",
+    "resumed_from_completed_epoch": 48,
+    "resumed_unix": 1794464247.989714
+  },
+  "ddp_rank_logs": [
+    true,
+    true
+  ],
+  "both_workers_resumed_epoch48": true,
+  "training_samples": 53600,
+  "validation_samples": 600,
+  "gpu_utilization_after_memory_allocation": {
+    "0": {
+      "samples": 6,
+      "average_pct": 95.83333333333333
+    },
+    "1": {
+      "samples": 6,
+      "average_pct": 96.83333333333333
+    }
+  },
+  "gpu_capture_interval_seconds": 10,
+  "verified_unix": 1794464324.2987192
+}

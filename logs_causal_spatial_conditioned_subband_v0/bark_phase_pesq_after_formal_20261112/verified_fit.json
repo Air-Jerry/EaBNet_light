@@ -1,0 +1,40 @@
+{
+  "status": "complete",
+  "pid": 2783992,
+  "cookie": "240438089",
+  "previous_pid": 2756105,
+  "previous_cookie": "239732707",
+  "planned_training_records": 640,
+  "planned_pesq_labels": 3840,
+  "comparison_audio_used_to_fit": false,
+  "source_epoch": 48,
+  "source_checkpoint_sha256": "9d1e584ef59166f9a4fe49ee6acbfc64220b88556f12bebba7f77b078b815bac",
+  "worker_pids": [
+    2807665,
+    2807666
+  ],
+  "fit": {
+    "status": "complete",
+    "training_samples": 512,
+    "calibration_samples": 64,
+    "heldout_samples": 64,
+    "calibration": {
+      "epoch": 19,
+      "slope": 0.7673021554946899,
+      "delta_mae": 0.049645133316516876,
+      "zero_delta_mae": 0.07566577196121216,
+      "direction_accuracy": 0.9211618304252625,
+      "direction_examples": 241,
+      "score_pearson": 0.9048770070075989
+    },
+    "holdout": {
+      "delta_mae": 0.04964390769600868,
+      "zero_delta_mae": 0.07237467169761658,
+      "direction_accuracy": 0.867521345615387,
+      "direction_examples": 234,
+      "score_pearson": 0.9393811225891113
+    }
+  },
+  "regressor_sha256": "a2fcafaa5deb6c7666c7f28377f0380b893b0f1f6afc105ae16455fd1c5745dd",
+  "coordinator_live": false
+}

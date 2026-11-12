@@ -198,4 +198,10 @@ Bark幅度监督系数0.15的同源1024步对照得3.36293，原控制为3.36299
 | 47 | 3.37120 | 54.61分钟 |
 | 48 | **3.37321** | **54.79分钟** |
 
-第47、48轮各完成53600条训练、600条验证、600条评估和6700次更新。第48轮比第46轮高0.01179，高相干组提高0.02356，−5及−2 dB组分别提高0.01836和0.02598。同期SI-SNR从16.67681降至16.24814 dB，ESTOI从0.93688降至0.93624。第49轮在运行，首段上限第50轮，距3.4仍差0.02679。证据见 `logs_causal_spatial_conditioned_subband_v0/recurrent_formal_learned_pesq_20261112/verified_through_epoch48.json`。
+第47至50轮各完成53600条训练、600条验证、600条评估和6700次更新。第48轮比第46轮高0.01179，高相干组提高0.02356，−5及−2 dB组分别提高0.01836和0.02598。同期SI-SNR从16.67681降至16.24814 dB，ESTOI从0.93688降至0.93624。第49轮为3.36768、54.93分钟，第50轮为3.35016、54.70分钟。最高仍为第48轮，距3.4差0.02679。证据见 `logs_causal_spatial_conditioned_subband_v0/recurrent_formal_learned_pesq_20261112/verified_through_epoch50.json`。
+
+相位感知评分器在Bark幅度特征上加入复数互功率的实部和虚部。使用同一640条训练源及第48轮估计构造六种输出条件，共3840个WB-PESQ标签，包含两种幅度不变的相位扰动。64条留出组的分差MAE为0.04964，零分差基线为0.07237，234项有效分差的方向正确率为86.75%。两版评分器使用的扰动条件不同。证据见 `logs_causal_spatial_conditioned_subband_v0/bark_phase_pesq_after_formal_20261112/verified_fit.json`。
+
+从同一正式第40轮及同一训练顺序做1024步对照，相位感知损失在固定600条上得3.37410，相比PMSQE 0.6控制提高0.01111，相比幅度评分器提高0.00209。103条高空间相干样本较控制提高0.00349，低于幅度评分器在该组的0.02190增幅。对照权重仅用于验证训练目标。证据见 `logs_causal_spatial_conditioned_subband_v0/phase_pesq_matched_source40_20261112/verified_result.json`。
+
+正式训练另开 `recurrent_adapt_phase_from48_20261112`，从第48轮模型和321600步Adam状态恢复。训练用PMSQE 0.6与相位感知评分损失0.15，验证用PMSQE 0.1。首启因Windows换行在解释器启动前退出，修正换行后复用已准备的状态。两张卡均进入第49轮，训练和验证条数分别为53600和600。启动后各6个采样点的GPU利用率平均为95.8%和96.8%，全轮耗时和PESQ待完成后核验。证据见 `logs_causal_spatial_conditioned_subband_v0/recurrent_formal_phase_pesq_20261112/verified_launch.json`。
