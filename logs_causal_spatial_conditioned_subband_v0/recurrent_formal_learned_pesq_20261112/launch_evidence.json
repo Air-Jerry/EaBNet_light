@@ -1,0 +1,31 @@
+{
+  "status": "launcher_started",
+  "pid": 2756102,
+  "source_checkpoint_sha256": "2234118d90c8f31c93168a154e648fefca31f1b103e59dd5ca49e1471ca3ed7f",
+  "resumed_from_epoch": 46,
+  "adam_steps": 308200,
+  "training_pmsqe_weight": 0.6,
+  "learned_pesq_weight": 0.15,
+  "validation_pmsqe_weight": 0.1,
+  "requested_epoch_limit": 50,
+  "proxy_sha256": "301904cfc1f213789cf6b306b540e7ce0b7eb4dfab375629dced35a7ab227f65",
+  "matched_results_sha256": "83be1a4edc009cac43a1d1ae3429eb790070b1e56202a44bc03ed9cbdea0dcc1",
+  "diagnostic_weights_used": false,
+  "launcher_pid": 2756105,
+  "launcher_cookie": "239732707",
+  "launched_unix": 1794449196.6211753,
+  "ranks": [
+    {
+      "pid": 2756166,
+      "cookie": "239733506",
+      "rank": 0
+    },
+    {
+      "pid": 2756167,
+      "cookie": "239733506",
+      "rank": 1
+    }
+  ],
+  "both_resumed_from_epoch_46": true,
+  "loss_weight_declared_by_both_ranks": true
+}

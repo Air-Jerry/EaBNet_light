@@ -1,0 +1,23 @@
+{
+  "status": "complete",
+  "training_samples": 512,
+  "calibration_samples": 64,
+  "heldout_samples": 64,
+  "calibration": {
+    "epoch": 22,
+    "slope": 0.7052912712097168,
+    "delta_mae": 0.08516961336135864,
+    "zero_delta_mae": 0.10725533217191696,
+    "direction_accuracy": 0.8786126971244812,
+    "direction_examples": 173,
+    "score_pearson": 0.8574689626693726
+  },
+  "holdout": {
+    "delta_mae": 0.0835774764418602,
+    "zero_delta_mae": 0.10161451250314713,
+    "direction_accuracy": 0.832335352897644,
+    "direction_examples": 167,
+    "score_pearson": 0.9114230275154114
+  },
+  "regressor_sha256": "e2875e0764516b7cfb82530414918d907bb30fa44928fa10d3322a38c5bdaa9e"
+}

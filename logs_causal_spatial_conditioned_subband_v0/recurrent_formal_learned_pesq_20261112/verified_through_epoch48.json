@@ -1,0 +1,317 @@
+{
+  "controller": {
+    "status": "launcher_started",
+    "pid": 2756102,
+    "source_checkpoint_sha256": "2234118d90c8f31c93168a154e648fefca31f1b103e59dd5ca49e1471ca3ed7f",
+    "resumed_from_epoch": 46,
+    "adam_steps": 308200,
+    "training_pmsqe_weight": 0.6,
+    "learned_pesq_weight": 0.15,
+    "validation_pmsqe_weight": 0.1,
+    "requested_epoch_limit": 50,
+    "proxy_sha256": "301904cfc1f213789cf6b306b540e7ce0b7eb4dfab375629dced35a7ab227f65",
+    "matched_results_sha256": "83be1a4edc009cac43a1d1ae3429eb790070b1e56202a44bc03ed9cbdea0dcc1",
+    "diagnostic_weights_used": false,
+    "launcher_pid": 2756105,
+    "launcher_cookie": "239732707",
+    "launched_unix": 1794449196.6211753
+  },
+  "owner": {
+    "pid": 2756105,
+    "cookie": "239732707",
+    "children": [
+      2756157,
+      2781823,
+      2781824
+    ]
+  },
+  "native": {
+    "status": "running",
+    "resumed_from_completed_epoch": 46,
+    "resumed_unix": 1794449202.7408855
+  },
+  "best": {
+    "best_completed_epoch": 48,
+    "best_completed_pesq": 3.373210813800494,
+    "target_reached": false
+  },
+  "epochs": {
+    "47": {
+      "timing": {
+        "epoch": 47,
+        "status": "complete",
+        "started_unix": 1794449203,
+        "finished_unix": 1794452479.3523421,
+        "total_seconds": 3276.3523421287537,
+        "training_validation_checkpoint_seconds": 3063,
+        "evaluation_audit_seconds": 213.35234212875366,
+        "training_samples": 53600,
+        "validation_samples": 600,
+        "full_metric_samples": 600,
+        "optimizer_updates_this_epoch": 6700,
+        "global_batch_size": 8,
+        "limit_seconds": 3600
+      },
+      "checkpoint_sha256": "c8722841ea8c856a99f90050bf5061a8f88ff8f3c4590bbb7580b20f970a1bce",
+      "mean": {
+        "enhanced": {
+          "pesq": 3.3711994967857994,
+          "stoi": 0.97037599551086,
+          "estoi": 0.9364297122870513,
+          "si_snr_db": 16.478240401776524,
+          "sdr_db": 18.100007435561928
+        },
+        "noisy": {
+          "pesq": 1.0880955342451732,
+          "stoi": 0.6510592990906214,
+          "estoi": 0.3667556529781415,
+          "si_snr_db": -1.2095493301340101,
+          "sdr_db": -1.1495106109218791
+        }
+      },
+      "adam_steps": 314900,
+      "training_pmsqe_weight": 0.6,
+      "learned_pesq_weight": 0.15,
+      "validation_pmsqe_weight": 0.1
+    },
+    "48": {
+      "timing": {
+        "epoch": 48,
+        "status": "complete",
+        "started_unix": 1794452479,
+        "finished_unix": 1794455766.4924686,
+        "total_seconds": 3287.4924685955048,
+        "training_validation_checkpoint_seconds": 3073,
+        "evaluation_audit_seconds": 214.49246859550476,
+        "training_samples": 53600,
+        "validation_samples": 600,
+        "full_metric_samples": 600,
+        "optimizer_updates_this_epoch": 6700,
+        "global_batch_size": 8,
+        "limit_seconds": 3600
+      },
+      "checkpoint_sha256": "9d1e584ef59166f9a4fe49ee6acbfc64220b88556f12bebba7f77b078b815bac",
+      "mean": {
+        "enhanced": {
+          "pesq": 3.373210813800494,
+          "stoi": 0.97021547403883,
+          "estoi": 0.9362387471626884,
+          "si_snr_db": 16.24813899925157,
+          "sdr_db": 17.919132374445294
+        },
+        "noisy": {
+          "pesq": 1.0880955342451732,
+          "stoi": 0.6510592990906214,
+          "estoi": 0.3667556529781415,
+          "si_snr_db": -1.2095493301340101,
+          "sdr_db": -1.1495106109218791
+        }
+      },
+      "adam_steps": 321600,
+      "training_pmsqe_weight": 0.6,
+      "learned_pesq_weight": 0.15,
+      "validation_pmsqe_weight": 0.1
+    }
+  },
+  "protocol": {
+    "metadata_sha256": "8d0b4d229ebc42cd9892e6d0e0d36416007ded01fbc0b753df4bf7e6b734eb02",
+    "selected_pairs_sha256": "18233928bdcb499f4e65e3b66a1f8c39387675d09f1621ae6ac94881d7444cfb",
+    "frontend_protocol": {
+      "window": "periodic Hann",
+      "center": true,
+      "pad_mode": "reflect",
+      "normalized": false,
+      "onesided": true,
+      "waveform_normalization": "none",
+      "compression": "Z * abs(Z).clamp_min(1e-8) ** (power - 1)",
+      "inverse_compression": "piecewise exact inverse including the epsilon region",
+      "mixture_channels": "first 8 channels, original order",
+      "evaluation_extent": "full common-length utterance; no training crop or batch padding",
+      "inference_precision": "float32"
+    },
+    "metric_protocol": {
+      "pesq": "pesq wideband",
+      "estoi": "pystoi extended=True; JSON estoi=fraction, CSV estoi_pct=100*estoi",
+      "stoi": "pystoi extended=False, fraction",
+      "si_snr_db": "zero-mean projection SI-SNR",
+      "si_snr_epsilon": 1e-08,
+      "sdr_db": "mir_eval.separation.bss_eval_sources, single source, 512-tap distortion filter; not SI-SNR",
+      "target_gain_matching": false,
+      "max_level_gain_db": 20.0,
+      "gain_rule": "none",
+      "external_normalization_clipping_or_alignment": false,
+      "length_policy": "truncate mixture and target to common length as in training Dataset; no delay correction",
+      "aggregation": "paired arithmetic mean over every selected utterance; failures abort with no mean"
+    },
+    "candidate_implementation_sha256": {
+      "light_causal_spatial_model.py": "b911ac848c86ca6b4a95933ae90d33a200d44f00ccaa8b98dc4b2cb7cf907a14",
+      "light_causal_stream.py": "86c266e39fd89227b99b1b6f46b943cff8b32a17c2c29f01234c3fcd18ebd42d",
+      "third_party/spatialnet/SpatialNet.py": "3baaa7136c893eba9aee9dfcdb40478a5f87f819682286abbec89a5d71d972f6",
+      "third_party/spatialnet/norm.py": "4c42f48a6d34dc82f25462782ba57e84dddfbfebb56b940f73a28b5ec41055cc",
+      "third_party/spatialnet/non_linear.py": "a985a7f81c8ebfbbd408ea753d7e9b81324d523c01afa1faca4285049640e79d",
+      "third_party/spatialnet/linear_group.py": "e6e0403b5dbdd787d511f0de9cef4335aa25ae46feee211554346c0a00cf2a43",
+      "light_causal_fast_model.py": "5d3f8153815e6a202b735ec3705c1f45a667557906bd299728c6cba7a5e126b9",
+      "light_causal_global_model.py": "43a7b8242a81fd0dcb922a82a2fa02e674f7d9340d78d1acb64952752162ec5e",
+      "light_causal_recurrent_model.py": "723a15ee4315bae86f4e4d632fcd25b9acfc8428c50263b6c8104cb7a2cacf8c",
+      "light_causal_recurrent65_model.py": "83977a1cce2eefa2fc66f2ac367499b7a6c8779feb63207f5f6bfed45dda2a68",
+      "experiments/causal_tcn_mapping.py": "9f6c7d0f011a19d03d2716b1bef2081d7b58d11b4d426e66bce1997de0ae82df",
+      "experiments/causal_frequency_attention.py": "ac4c1283ab0d225b608d164db3439ecef73a2c8518fe6f13a212bcaedc9a203f",
+      "experiments/causal_retention_mapping.py": "12ab7f2ab6584ce2f53ca93f972b952ba971a26606b7d9bb138630971c6a963c",
+      "experiments/causal_fullband_tcn.py": "d0a627624895b4e43484f74274cb63954cf4e517b956d5b670aeebec65403ed9",
+      "experiments/causal_subband_gru.py": "79fd8dca9b4e5541e77b99e338e71941d26868f266ba26a82e49471611e54227",
+      "experiments/causal_fullband_conditioned_subband.py": "8931dfa8d53c96654855427cf00c30f891fa051a279473088f329c8ca917710f",
+      "experiments/causal_frozen_conditioned_subband.py": "0d0094a3bdf3165fe9db11be86f6ed35cc778eb41918dac1a2ff8df46775305d",
+      "experiments/causal_spatial_conditioned_subband.py": "1f16997e919d1579712dd8073b0648c5ec08e11c38110b1a4f3816f95ae71652",
+      "experiments/causal_wide_conditioned_subband.py": "1d3b762acef8374be13675f40822998c2ec132d68a99c02e24f5e9bb54eaa53f",
+      "experiments/causal_monaural_spectral_branch.py": "d175416094e5cad1ed4279d74a2d71736e00fa5a35303e82a212dffa336f3463",
+      "experiments/causal_decoder_monaural.py": "d782d7602d4db171e02ce6b1c273f2ede68a0d749477f3cff48ddc8175234360",
+      "experiments/causal_mapping_monaural.py": "54579f1967ef7907a4aeea2e0109fe78be93f408d02c88696e72e0947e122ab3",
+      "experiments/causal_global_adapt_monaural.py": "78f83e71c586b8200fe3e8ea79585d0feb126aa13b6e037647edb934b873d81d",
+      "experiments/causal_recurrent_adapt_monaural.py": "eea857a31ae6e47ef12d63bda3fd8e725861b8b88c74c5835037dc6b588e04aa"
+    }
+  },
+  "final_audit": null,
+  "paired_46_to_48": {
+    "epochs": [
+      46,
+      48
+    ],
+    "groups": {
+      "all": {
+        "all": {
+          "samples": 600,
+          "control_pesq": 3.3614246771732965,
+          "variant_pesq": 3.373210813800494,
+          "delta": 0.011786136627197265,
+          "improved": 323,
+          "worse": 277
+        }
+      },
+      "requested_snr_db": {
+        "2.0": {
+          "samples": 150,
+          "control_pesq": 3.557218634287516,
+          "variant_pesq": 3.5623469312985736,
+          "delta": 0.0051282970110575355,
+          "improved": 78,
+          "worse": 72
+        },
+        "-5.0": {
+          "samples": 140,
+          "control_pesq": 3.0725272153105054,
+          "variant_pesq": 3.090887142079217,
+          "delta": 0.018359926768711635,
+          "improved": 78,
+          "worse": 62
+        },
+        "-2.0": {
+          "samples": 161,
+          "control_pesq": 3.221299596454786,
+          "variant_pesq": 3.247275850047236,
+          "delta": 0.025976253592449684,
+          "improved": 96,
+          "worse": 65
+        },
+        "0.0": {
+          "samples": 149,
+          "control_pesq": 3.5871742683769074,
+          "variant_pesq": 3.584153267361174,
+          "delta": -0.0030210010157335526,
+          "improved": 71,
+          "worse": 78
+        }
+      },
+      "free_field_1khz_geometry": {
+        "below_0.8": {
+          "samples": 409,
+          "control_pesq": 3.8052151144862467,
+          "variant_pesq": 3.8103573549639043,
+          "delta": 0.005142240477657552,
+          "improved": 187,
+          "worse": 222
+        },
+        "at_least_0.95": {
+          "samples": 103,
+          "control_pesq": 1.8600306997021425,
+          "variant_pesq": 1.8835879703169887,
+          "delta": 0.023557270614846238,
+          "improved": 67,
+          "worse": 36
+        },
+        "0.8_to_0.95": {
+          "samples": 88,
+          "control_pesq": 3.056121163747527,
+          "variant_pesq": 3.08500874042511,
+          "delta": 0.02888757667758248,
+          "improved": 69,
+          "worse": 19
+        }
+      },
+      "geometry_and_snr": {
+        "below_0.8:snr_gt_minus2": {
+          "samples": 208,
+          "control_pesq": 3.9475612078721705,
+          "variant_pesq": 3.938719718502118,
+          "delta": -0.008841489370052632,
+          "improved": 86,
+          "worse": 122
+        },
+        "at_least_0.95:snr_le_minus2": {
+          "samples": 61,
+          "control_pesq": 1.6930430267677932,
+          "variant_pesq": 1.7199315829355208,
+          "delta": 0.02688855616772761,
+          "improved": 41,
+          "worse": 20
+        },
+        "at_least_0.95:snr_gt_minus2": {
+          "samples": 42,
+          "control_pesq": 2.1025604151544117,
+          "variant_pesq": 2.121279390085311,
+          "delta": 0.018718974930899485,
+          "improved": 26,
+          "worse": 16
+        },
+        "below_0.8:snr_le_minus2": {
+          "samples": 201,
+          "control_pesq": 3.657911694464992,
+          "variant_pesq": 3.677524660357195,
+          "delta": 0.01961296589220341,
+          "improved": 101,
+          "worse": 100
+        },
+        "0.8_to_0.95:snr_gt_minus2": {
+          "samples": 49,
+          "control_pesq": 3.2381937236202005,
+          "variant_pesq": 3.266192667338313,
+          "delta": 0.027998943718112245,
+          "improved": 37,
+          "worse": 12
+        },
+        "0.8_to_0.95:snr_le_minus2": {
+          "samples": 39,
+          "control_pesq": 2.8273633321126304,
+          "variant_pesq": 2.8573673963546753,
+          "delta": 0.030004064242045086,
+          "improved": 32,
+          "worse": 7
+        }
+      }
+    },
+    "enhanced46": {
+      "pesq": 3.3614246771732965,
+      "stoi": 0.9707249744089794,
+      "estoi": 0.9368847620851107,
+      "si_snr_db": 16.676812618102304,
+      "sdr_db": 18.138475919905396
+    },
+    "enhanced48": {
+      "pesq": 3.373210813800494,
+      "stoi": 0.97021547403883,
+      "estoi": 0.9362387471626884,
+      "si_snr_db": 16.24813899925157,
+      "sdr_db": 17.919132374445294
+    },
+    "selected_pairs_sha256": "18233928bdcb499f4e65e3b66a1f8c39387675d09f1621ae6ac94881d7444cfb"
+  }
+}
