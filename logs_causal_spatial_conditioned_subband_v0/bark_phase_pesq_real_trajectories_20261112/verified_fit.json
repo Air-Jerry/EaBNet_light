@@ -1,0 +1,101 @@
+{
+  "fit": {
+    "status": "complete",
+    "pid": 2832436,
+    "cookie": "241580355",
+    "previous_pid": 2816263,
+    "previous_cookie": "241237317",
+    "planned_training_records": 640,
+    "planned_pesq_labels": 1920,
+    "comparison_audio_used_to_fit": false,
+    "source_epoch": 48,
+    "source_checkpoint_sha256": "9d1e584ef59166f9a4fe49ee6acbfc64220b88556f12bebba7f77b078b815bac",
+    "trajectory_checkpoints": [
+      {
+        "name": "pmsqe46",
+        "epoch": 46,
+        "path": "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_formal_stage_v2_20261110/checkpoints_causal_recurrent_adapt_monaural_v1_recurrent_adapt_20261110_063140_1982617/model_epoch_46.pt",
+        "sha256": "2234118d90c8f31c93168a154e648fefca31f1b103e59dd5ca49e1471ca3ed7f"
+      },
+      {
+        "name": "magnitude50",
+        "epoch": 50,
+        "path": "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_formal_stage_v2_20261110/checkpoints_causal_recurrent_adapt_monaural_v1_recurrent_adapt_20261110_063140_1982617/model_epoch_50.pt",
+        "sha256": "49c5f6d5a8f65c71a6e53d154a79fa0d069eac9d155200961700f0f4ae8b6001"
+      },
+      {
+        "name": "phase50",
+        "epoch": 50,
+        "path": "/home/nis/jinrui.yang/EaBNet_light/tmp/recurrent_formal_stage_v2_20261110/checkpoints_causal_recurrent_adapt_monaural_v1_recurrent_adapt_phase_from48_20261112/model_epoch_50.pt",
+        "sha256": "3909bfbddcfb3253ebc1f86d62af5a50546d90ef072fed7277ef63f03a74bb0d"
+      }
+    ],
+    "worker_pids": [
+      2845484,
+      2845485
+    ],
+    "fit": {
+      "status": "complete",
+      "training_samples": 512,
+      "calibration_samples": 64,
+      "heldout_samples": 64,
+      "calibration": {
+        "epoch": 22,
+        "slope": 0.31749144196510315,
+        "delta_mae": 0.02382945828139782,
+        "zero_delta_mae": 0.026685597375035286,
+        "direction_accuracy": 0.644444465637207,
+        "direction_examples": 135,
+        "score_pearson": 0.9178955554962158
+      },
+      "holdout": {
+        "delta_mae": 0.025090590119361877,
+        "zero_delta_mae": 0.026683837175369263,
+        "direction_accuracy": 0.6390977501869202,
+        "direction_examples": 133,
+        "score_pearson": 0.9567042589187622
+      },
+      "old_critic_on_real_checkpoints": {
+        "delta_mae": 0.05091152712702751,
+        "zero_delta_mae": 0.026683837175369263,
+        "direction_accuracy": 0.43609023094177246,
+        "direction_examples": 133,
+        "score_pearson": 0.9382172226905823
+      },
+      "compared_formal_epochs": [
+        46,
+        50,
+        50
+      ]
+    },
+    "regressor_sha256": "e51d229c1b56b9a3fcd2f92f07c3d49d78641d64c264ee7693d723df1e0b7a2c",
+    "label_shards": [
+      {
+        "status": "complete",
+        "samples": 320,
+        "scores": 960,
+        "shard": 0
+      },
+      {
+        "status": "complete",
+        "samples": 320,
+        "scores": 960,
+        "shard": 1
+      }
+    ]
+  },
+  "trial": {
+    "status": "evaluating",
+    "pid": 2833547,
+    "cookie": "241601397",
+    "fit_pid": 2832436,
+    "fit_cookie": "241580355",
+    "diagnostic_only": true,
+    "source_epoch": 48,
+    "source_checkpoint_sha256": "9d1e584ef59166f9a4fe49ee6acbfc64220b88556f12bebba7f77b078b815bac",
+    "source_adam_steps": 321600,
+    "previous_regressor_sha256": "a2fcafaa5deb6c7666c7f28377f0380b893b0f1f6afc105ae16455fd1c5745dd",
+    "control_zero_update_selfcheck": true,
+    "branch": "previous"
+  }
+}

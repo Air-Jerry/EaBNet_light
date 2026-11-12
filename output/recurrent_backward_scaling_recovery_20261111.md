@@ -209,3 +209,11 @@ Bark幅度监督系数0.15的同源1024步对照得3.36293，原控制为3.36299
 相位感知分支第49轮完成53600条训练、600条验证、6700次更新和固定600条评估，WB-PESQ为3.37308，耗时55.27分钟。第48轮3.37321仍为最高。训练和验证阶段每10秒采样一次，两卡各310个点，平均利用率95.15%和92.59%。第50轮已启动。证据见 `logs_causal_spatial_conditioned_subband_v0/recurrent_formal_phase_pesq_20261112/verified_through_epoch49.json`。
 
 用64条评分器训练留出样本重算正式第46、48、50轮的输出，核验评分器在真实检查点间的分差。相对于第48轮，原第50轮实测变化为−0.01414，评分器预测+0.04304，分差MAE为0.06332，零分差基线为0.03322。重复计算第48轮的WB-PESQ差异平均仅0.000003。已排队在相位分支退出后，对同一批640条原训练样本加入三个真实检查点输出的1920个WB-PESQ标签，分别拟合、校准和检验真实检查点分差。记录见 `logs_causal_spatial_conditioned_subband_v0/bark_phase_pesq_after_formal_20261112/real_checkpoint_holdout.json` 和同目录的 `real_trajectory_schedule.json`。
+
+相位分支第50轮达到3.37414，整轮54.69分钟，完成原数据、6700次更新和全600条评估。较第48轮PESQ提高0.00093，SI-SNR提高0.486 dB，ESTOI提高0.00043。103条高空间相干样本平均PESQ下降0.02793。见 `logs_causal_spatial_conditioned_subband_v0/recurrent_formal_phase_pesq_20261112/verified_through_epoch50.json` 与同目录的 `epoch50_paired_quality.json`。
+
+新增的1920个真实输出标签已完成。在同一64条留出样本上，真实检查点分差MAE从0.05091降到0.02509，零分差基线为0.02668。133项有效分差的方向正确率从43.61%提高到63.91%。拟合使用原训练数据，固定600条比较音频只用于评分。见 `logs_causal_spatial_conditioned_subband_v0/bark_phase_pesq_real_trajectories_20261112/verified_fit.json`。
+
+两版评分器均从正式第48轮、321600步Adam及相同8192条记录更新1024步。旧相位评分器得3.37510，真实输出重拟合版得3.37418。未将重拟合版转为正式损失。两组实际学习率均为1.5625e-6，为初始1e-4的1/64。相位分支第50轮末进一步降至1e-6。对照报告见 `logs_causal_spatial_conditioned_subband_v0/real_trajectory_pesq_matched48_20261112/verified_result.json`。
+
+从同一第48轮恢复同样的模型和Adam，沿用旧相位评分器，将实际学习率由1.5625e-6调到6.25e-6。匹配1024步后固定600条得3.37331，比控制3.37510低0.00179。训练及两个评分分片均完成。汇总首次比较了字符串和整数两种样本序号，统一序号后通过逐条noisy、评估协议、数据顺序和检查点身份核验，无需重新训练。记录见 `logs_causal_spatial_conditioned_subband_v0/phase_lr_matched48_20261112/verified_result.json`。
