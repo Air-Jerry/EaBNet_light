@@ -1,0 +1,35 @@
+{
+  "status": "complete",
+  "diagnostic_oracle": true,
+  "samples": 600,
+  "overall": {
+    "formal46": 3.3614244244496025,
+    "oracle_phase": 3.6007797374327977,
+    "oracle_magnitude": 3.9170173714558283
+  },
+  "requested_snr_db": {
+    "-5.0": {
+      "formal46": 3.072526852573667,
+      "oracle_phase": 3.3152016886643003,
+      "oracle_magnitude": 3.7056227598871505
+    },
+    "-2.0": {
+      "formal46": 3.2212979497376435,
+      "oracle_phase": 3.489484102829643,
+      "oracle_magnitude": 3.8148277672181217
+    },
+    "0.0": {
+      "formal46": 3.587174377985449,
+      "oracle_phase": 3.8123457847825635,
+      "oracle_magnitude": 4.080158976100435
+    },
+    "2.0": {
+      "formal46": 3.557219620545705,
+      "oracle_phase": 3.7766209570566813,
+      "oracle_magnitude": 4.061948523521424
+    }
+  },
+  "checkpoint_sha256": "2234118d90c8f31c93168a154e648fefca31f1b103e59dd5ca49e1471ca3ed7f",
+  "selected_pairs_sha256": "18233928bdcb499f4e65e3b66a1f8c39387675d09f1621ae6ac94881d7444cfb",
+  "worker_sha256": "dde59ddfae73545004ed01a843fd8c0231e421bbc8cfa24c46bb734747b08169"
+}

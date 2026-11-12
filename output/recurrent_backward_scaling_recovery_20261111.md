@@ -175,3 +175,11 @@ PMSQE 0.6的第45、46轮分别得到3.36094和3.36142，耗时54.73和54.63分�
 单尺度训练后的同一检查点通过RTX4070单条6秒筛查。600跳最慢7.29 ms，未来扰动误差0，整段和流式波形最大差5.07e-7。该检查只覆盖一条真实波形。多尺度CPU测试覆盖暖启动、分块、未来帧扰动及状态独立性。两种结构均未进入正式训练。
 
 同批600条的13个近期检查点，按参考评分为每条音频事后选择最高分时均值为3.38370。这是只针对这些既有输出的选择诊断。试验记录位于 `logs_causal_spatial_conditioned_subband_v0/interference_matched_source40_20261112` 和 `logs_causal_spatial_conditioned_subband_v0/multiscale_interference_matched_source46_20261112`。
+
+## 编码器残差梯度与全频带幅度分支
+
+编码器试验解冻stem和两层频率编码器。前三个冻结GRU仍执行前向，梯度经残差路径回到早期编码器。双卡预热确认96次冻结GRU前向均无反传图，15项新增可训练张量恢复为空Adam状态。前向和流式结构保持。首次80步用360秒余量投影3661.56秒，触发旧成本门限。第二次基于第40轮215.30秒实测评估时间另留60秒，长段推算3591.56秒，完成1024步和全600条，得3.36282，比控制低0.00018。正式完整轮次耗时尚未验证。
+
+用第46轮正式检查点对原600条做离线诊断。保留模型幅度、替换参考相位得3.60078，保留模型相位、替换参考幅度得3.91702，模型原输出为3.36142。幅度或相位替换均使用目标信号，仅用于定位误差。报告见 `logs_causal_spatial_conditioned_subband_v0/phase_magnitude_oracle_source46_20261112/verified_result.json`。
+
+随后实现全频带因果幅度分支，将八麦和初始估计的幅度编码到33频率位置，使用96维单向GRU估计当前帧幅度增益。新增131121参数和384字节流式状态，初始增益为1。两项本地测试通过，覆盖两种结构的热启动、训练梯度和分块一致性。幅度分支双卡同源1024步后得3.36236，比控制低0.00064，高相干组下降0.00135。两项对照均未改善正式分数，当前正式最好仍为第46轮3.36142。报告见 `logs_causal_spatial_conditioned_subband_v0/encoder_residual_matched_source40_v2_20261112/verified_result.json` 和 `logs_causal_spatial_conditioned_subband_v0/envelope_matched_source40_20261112/verified_result.json`。
