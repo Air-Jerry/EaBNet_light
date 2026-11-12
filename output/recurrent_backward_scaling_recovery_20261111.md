@@ -205,3 +205,7 @@ Bark幅度监督系数0.15的同源1024步对照得3.36293，原控制为3.36299
 从同一正式第40轮及同一训练顺序做1024步对照，相位感知损失在固定600条上得3.37410，相比PMSQE 0.6控制提高0.01111，相比幅度评分器提高0.00209。103条高空间相干样本较控制提高0.00349，低于幅度评分器在该组的0.02190增幅。对照权重仅用于验证训练目标。证据见 `logs_causal_spatial_conditioned_subband_v0/phase_pesq_matched_source40_20261112/verified_result.json`。
 
 正式训练另开 `recurrent_adapt_phase_from48_20261112`，从第48轮模型和321600步Adam状态恢复。训练用PMSQE 0.6与相位感知评分损失0.15，验证用PMSQE 0.1。首启因Windows换行在解释器启动前退出，修正换行后复用已准备的状态。两张卡均进入第49轮，训练和验证条数分别为53600和600。启动后各6个采样点的GPU利用率平均为95.8%和96.8%，全轮耗时和PESQ待完成后核验。证据见 `logs_causal_spatial_conditioned_subband_v0/recurrent_formal_phase_pesq_20261112/verified_launch.json`。
+
+相位感知分支第49轮完成53600条训练、600条验证、6700次更新和固定600条评估，WB-PESQ为3.37308，耗时55.27分钟。第48轮3.37321仍为最高。训练和验证阶段每10秒采样一次，两卡各310个点，平均利用率95.15%和92.59%。第50轮已启动。证据见 `logs_causal_spatial_conditioned_subband_v0/recurrent_formal_phase_pesq_20261112/verified_through_epoch49.json`。
+
+用64条评分器训练留出样本重算正式第46、48、50轮的输出，核验评分器在真实检查点间的分差。相对于第48轮，原第50轮实测变化为−0.01414，评分器预测+0.04304，分差MAE为0.06332，零分差基线为0.03322。重复计算第48轮的WB-PESQ差异平均仅0.000003。已排队在相位分支退出后，对同一批640条原训练样本加入三个真实检查点输出的1920个WB-PESQ标签，分别拟合、校准和检验真实检查点分差。记录见 `logs_causal_spatial_conditioned_subband_v0/bark_phase_pesq_after_formal_20261112/real_checkpoint_holdout.json` 和同目录的 `real_trajectory_schedule.json`。

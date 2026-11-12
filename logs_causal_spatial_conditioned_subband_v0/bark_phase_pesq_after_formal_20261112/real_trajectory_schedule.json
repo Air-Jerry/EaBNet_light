@@ -1,0 +1,25 @@
+{
+  "queue": {
+    "status": "waiting_for_formal_launcher_exit",
+    "pid": 2832436,
+    "cookie": "241580355",
+    "previous_pid": 2816263,
+    "previous_cookie": "241237317",
+    "planned_training_records": 640,
+    "planned_pesq_labels": 1920,
+    "comparison_audio_used_to_fit": false
+  },
+  "coordinator_live": true,
+  "epoch_49_gpu": {
+    "0": {
+      "samples": 310,
+      "average_pct": 95.15483870967742,
+      "median_pct": 97.0
+    },
+    "1": {
+      "samples": 310,
+      "average_pct": 92.59354838709677,
+      "median_pct": 95.0
+    }
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "samples": 64,
+  "source_split": "phase critic heldout from training set",
+  "critic_slope": 0.7673021554946899,
+  "epoch48_checkpoint_sha256": "9d1e584ef59166f9a4fe49ee6acbfc64220b88556f12bebba7f77b078b815bac",
+  "comparison_checkpoint_sha256": {
+    "46": "2234118d90c8f31c93168a154e648fefca31f1b103e59dd5ca49e1471ca3ed7f",
+    "48": "9d1e584ef59166f9a4fe49ee6acbfc64220b88556f12bebba7f77b078b815bac",
+    "50": "49c5f6d5a8f65c71a6e53d154a79fa0d069eac9d155200961700f0f4ae8b6001"
+  },
+  "elapsed_seconds": 829.6326242750511,
+  "epoch_deltas": {
+    "46": {
+      "actual_mean_change": -0.008439134806394577,
+      "predicted_mean_change": -0.06392163783311844,
+      "delta_mae": 0.06055668368935585,
+      "zero_delta_mae": 0.027163442224264145,
+      "direction_examples": 47,
+      "direction_accuracy": 0.5744680762290955,
+      "pearson": -0.03929997608065605
+    },
+    "48": {
+      "actual_mean_change": 2.941116690635681e-06,
+      "predicted_mean_change": -7.832078381397878e-07,
+      "delta_mae": 2.6482390239834785e-05,
+      "zero_delta_mae": 1.3073906302452087e-05,
+      "direction_examples": 0,
+      "direction_accuracy": null,
+      "pearson": -0.14541251957416534
+    },
+    "50": {
+      "actual_mean_change": -0.01414201594889164,
+      "predicted_mean_change": 0.04304468631744385,
+      "delta_mae": 0.06331563740968704,
+      "zero_delta_mae": 0.03322029858827591,
+      "direction_examples": 46,
+      "direction_accuracy": 0.43478259444236755,
+      "pearson": -0.5344860553741455
+    }
+  }
+}

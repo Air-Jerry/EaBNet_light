@@ -1,0 +1,37 @@
+{
+  "samples": 600,
+  "clean_filename_blocks": 600,
+  "resamples": 3000,
+  "max_diagnostic_formal_noisy_pesq_diff": 0.0,
+  "phase_vs_magnitude": {
+    "control": 3.372012743751208,
+    "candidate": 3.374103291233381,
+    "difference": 0.002090547482172648,
+    "intervals_95": [
+      -0.001381178895632426,
+      0.006324533820152283
+    ],
+    "improved": 309,
+    "worse": 291
+  },
+  "e48_vs_e46": {
+    "control": 3.3614246771732965,
+    "candidate": 3.373210813800494,
+    "difference": 0.011786136627197265,
+    "intervals_95": [
+      0.0040855177243550615,
+      0.020347034136454265
+    ],
+    "improved": 323,
+    "worse": 277
+  },
+  "oracle_epoch_pairs": {
+    "40": 3.3889166007439298,
+    "43": 3.387910345594088,
+    "46": 3.38869682431221,
+    "47": 3.378230827053388,
+    "49": 3.37728927453359,
+    "50": 3.379123250643412
+  },
+  "note": "Oracle chooses using reference-based scores and is a diagnostic bound for checkpoint selection."
+}
