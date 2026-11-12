@@ -1,0 +1,23 @@
+{
+  "sample_count": 600,
+  "selected_pairs_sha256": "18233928bdcb499f4e65e3b66a1f8c39387675d09f1621ae6ac94881d7444cfb",
+  "score_by_model": {
+    "formal_28": 3.3539184459050495,
+    "formal_40": 3.3563499542077384,
+    "formal_41": 3.360222084124883,
+    "formal_42": 3.3593392445643744,
+    "formal_43": 3.356492084066073,
+    "formal_44": 3.3580665304263433,
+    "formal_45": 3.3609423931439717,
+    "formal_46": 3.3614246771732965,
+    "pmsqe06": 3.3629941821098326,
+    "harmonic_mask": 3.3631189980109535,
+    "projection": 3.362731886903445,
+    "scene_weighted": 3.361914260586103,
+    "interference": 3.363686276872953
+  },
+  "best_single": 3.363686276872953,
+  "hindsight_per_utterance_maximum": 3.3836969371636707,
+  "hindsight_delta_vs_formal46": 0.022272259990374188,
+  "scope": "Ground-truth per-utterance score selection is an offline diagnostic"
+}

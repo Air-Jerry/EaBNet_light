@@ -1,0 +1,21 @@
+{
+  "status": "real_cpu_waveform_check_complete",
+  "source_epoch": 46,
+  "source_checkpoint_sha256": "2234118d90c8f31c93168a154e648fefca31f1b103e59dd5ca49e1471ca3ed7f",
+  "warm_identity": true,
+  "gradient_norms": {
+    "stem.weight": 0.03404488041996956,
+    "stem.bias": 0.01063930056989193,
+    "temporal.weight": 0.0017245494527742267,
+    "temporal.bias": 0.01189220231026411,
+    "noise.weight": 0.04237864166498184,
+    "noise.bias": 0.03253304213285446,
+    "gate.weight": 0.011235536076128483,
+    "gate.bias": 0.003842590842396021
+  },
+  "measured_waveform_hops": 600,
+  "future_error": 0.0,
+  "waveform_error": 8.046627044677734e-07,
+  "added_model_cache_bytes": 197376,
+  "optimizer_updates": 0
+}
