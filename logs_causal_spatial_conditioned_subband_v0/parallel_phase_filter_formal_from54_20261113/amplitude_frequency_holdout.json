@@ -1,0 +1,19 @@
+{
+  "epoch": 1,
+  "calibration": {
+    "original": 3.248283639550209,
+    "refined": 3.243773827329278,
+    "delta": -0.004509812220931053
+  },
+  "holdout": {
+    "original": 3.219265628606081,
+    "refined": 3.211091222241521,
+    "delta": -0.008174406364560127
+  },
+  "source_checkpoint_sha256": "1e19103b332bf9a82314da2c76b62cbd628dca87d1243ff3cf9f6457f0d2d008",
+  "diagnostic_only": true,
+  "comparison_audio_used": false,
+  "training_samples": 512,
+  "calibration_samples": 64,
+  "holdout_samples": 64
+}

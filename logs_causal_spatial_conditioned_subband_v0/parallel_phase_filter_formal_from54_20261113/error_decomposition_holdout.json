@@ -1,0 +1,26 @@
+{
+  "checkpoint_sha256": "1e19103b332bf9a82314da2c76b62cbd628dca87d1243ff3cf9f6457f0d2d008",
+  "calibration_records": 64,
+  "holdout_records": 64,
+  "comparison_audio_used": false,
+  "reference_used_for_diagnostic_only": true,
+  "calibration": {
+    "parallel": 3.2482821065932512,
+    "quarter_amplitude": 3.564277835190296,
+    "quarter_amplitude_low": 3.525883801281452,
+    "quarter_amplitude_high": 3.2818367443978786,
+    "quarter_phase": 3.3288992028683424,
+    "reference_amplitude": 3.826339676976204,
+    "reference_phase": 3.654182583093643
+  },
+  "holdout": {
+    "parallel": 3.219265768304467,
+    "quarter_amplitude": 3.53438806720078,
+    "quarter_amplitude_low": 3.502618646249175,
+    "quarter_amplitude_high": 3.24536238797009,
+    "quarter_phase": 3.291091751307249,
+    "reference_amplitude": 3.830855490639806,
+    "reference_phase": 3.607519257813692
+  },
+  "selected": "reference_amplitude"
+}

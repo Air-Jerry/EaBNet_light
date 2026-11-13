@@ -1,0 +1,82 @@
+{
+  "status": {
+    "status": "complete",
+    "pid": 3351893,
+    "source_checkpoint_sha256": "1e19103b332bf9a82314da2c76b62cbd628dca87d1243ff3cf9f6457f0d2d008",
+    "results": [
+      {
+        "epoch": 55,
+        "wb_pesq": 3.3832898704210916,
+        "seconds": 3329.2330725193024,
+        "checkpoint_sha256": "62abab0103985083dfb45dd8c4654f6874cc3c4bcee04ad9ccf46a809c84c12f"
+      }
+    ],
+    "resumed_from_epoch": 54,
+    "epoch": 55,
+    "started_unix": 1794566733.6178887,
+    "launcher_pid": 3351922,
+    "launcher_cookie": "251486407"
+  },
+  "controller_live": false,
+  "launcher_live": false,
+  "baseline_pesq": 3.384049152135849,
+  "epochs": {
+    "55": {
+      "timing": {
+        "status": "complete",
+        "epoch": 55,
+        "started_unix": 1794566733.6178887,
+        "finished_unix": 1794570062.8509612,
+        "total_seconds": 3329.2330725193024,
+        "training_validation_checkpoint_seconds": 3117.462175130844,
+        "evaluation_audit_seconds": 211.77089738845825,
+        "training_samples": 53600,
+        "validation_samples": 600,
+        "full_metric_samples": 600,
+        "optimizer_updates_this_epoch": 6700,
+        "global_batch_size": 8,
+        "gpu_utilization": {
+          "0": {
+            "samples": 312,
+            "average_pct": 94.03846153846153
+          },
+          "1": {
+            "samples": 312,
+            "average_pct": 93.44551282051282
+          }
+        }
+      },
+      "mean": {
+        "enhanced": {
+          "pesq": 3.3832898704210916,
+          "stoi": 0.9704637894316209,
+          "estoi": 0.936771184974537,
+          "si_snr_db": 16.719924767672833,
+          "sdr_db": 18.29837849100452
+        },
+        "noisy": {
+          "pesq": 1.0880955342451732,
+          "stoi": 0.6510592990906214,
+          "estoi": 0.3667556529781415,
+          "si_snr_db": -1.2095493301340101,
+          "sdr_db": -1.1495106109218791
+        }
+      },
+      "checkpoint_sha256": "62abab0103985083dfb45dd8c4654f6874cc3c4bcee04ad9ccf46a809c84c12f"
+    }
+  },
+  "final_audit": null,
+  "parallel": {
+    "status": "complete",
+    "pid": 3305951,
+    "scale": 2.0,
+    "component": "parallel",
+    "scale_selected_on_training_holdout": true,
+    "source_checkpoint_sha256": "1e19103b332bf9a82314da2c76b62cbd628dca87d1243ff3cf9f6457f0d2d008",
+    "baseline_pesq": 3.384049152135849,
+    "candidate_pesq": 3.388728270928065,
+    "comparison_samples": 600,
+    "diagnostic_only": true
+  },
+  "parallel_live": false
+}
