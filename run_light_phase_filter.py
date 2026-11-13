@@ -13,6 +13,7 @@ from pathlib import Path
 import torch
 
 from audit_light_final import require_protocol, sha
+from experiments.scaled_recurrent_entry import same_tensors
 from light_candidate_runtime import PHASE_FILTER_CANDIDATE, read_candidate_checkpoint
 from train_light_causal_phase_filter import initialize
 
@@ -31,41 +32,70 @@ def main():
     for name in ('source-path', 'output', 'regressor', 'scaling-helper'):
         parser.add_argument(f'--{name}', type=Path, required=True)
     parser.add_argument('--epochs', type=int, default=2)
+    parser.add_argument('--resume', action='store_true')
     args = parser.parse_args()
     torch.set_num_threads(2)
     if args.epochs <= 0 or sha('evaluate_light.py') != EVALUATOR_SHA256:
         raise ValueError('Use the original evaluator and request at least one epoch')
     root = args.output.resolve()
-    root.mkdir()
+    if not args.resume:
+        root.mkdir()
     status = root/'run_status.json'
-    settings = dict(status='initializing', pid=os.getpid(), source_checkpoint_sha256=sha(args.source_path))
+    source_digest = sha(args.source_path)
+    previous = json.loads(status.read_text()) if args.resume else None
+    if previous is not None:
+        if previous['status'] != 'complete' or previous['source_checkpoint_sha256'] != source_digest:
+            raise ValueError('Resume requires a completed run and its original source checkpoint')
+    settings = dict(status='initializing', pid=os.getpid(), source_checkpoint_sha256=source_digest)
 
     def record():
         temporary = status.with_suffix('.tmp')
         temporary.write_text(json.dumps(settings, indent=2, allow_nan=False)+'\n')
         temporary.replace(status)
 
-    record()
     checkpoints = root/'checkpoints'
+    selection = root/'pesq_selection'
+    timing_path = root/'epoch_timing.jsonl'
     env = dict(os.environ, CUDA_VISIBLE_DEVICES='0,1', OMP_NUM_THREADS='2', MKL_NUM_THREADS='2',
                OPENBLAS_NUM_THREADS='2', TORCHINDUCTOR_COMPILE_THREADS='1', PYTHONDONTWRITEBYTECODE='1')
     for key in ('RANK','LOCAL_RANK','WORLD_SIZE','MASTER_ADDR','MASTER_PORT','CUBLAS_WORKSPACE_CONFIG'):
         env.pop(key,None)
-    try:
+    if previous is None:
+        results = []
+        record()
         initialize(args.source_path, checkpoints, root/'best', root/'logs')
-        latest, _ = read_candidate_checkpoint(checkpoints/'checkpoint_latest.pt', PHASE_FILTER_CANDIDATE)
-        origin = latest['epoch']
+        selection.mkdir()
+    else:
+        results = previous['results']
+        last = results[-1]
+        epoch = last['epoch']
+        timing = json.loads(timing_path.read_text().splitlines()[-1])
+        scored = json.loads((selection/f'model_epoch_{epoch}/summary.json').read_text())
+        require_protocol(scored)
+        if (timing['status'] != 'complete' or timing['epoch'] != epoch
+                or scored['checkpoint_sha256'] != last['checkpoint_sha256']
+                or scored['mean']['enhanced']['pesq'] != last['wb_pesq']
+                or sha(checkpoints/f'model_epoch_{epoch}.pt') != last['checkpoint_sha256']):
+            raise ValueError('The latest checkpoint must match the last completed and scored epoch')
+    latest, _ = read_candidate_checkpoint(checkpoints/'checkpoint_latest.pt', PHASE_FILTER_CANDIDATE)
+    if previous is not None:
+        scored_state, _ = read_candidate_checkpoint(checkpoints/f'model_epoch_{epoch}.pt', PHASE_FILTER_CANDIDATE)
+        if not same_tensors(latest, scored_state):
+            raise ValueError('Saved model, Adam, or training state differs from the scored checkpoint')
+    origin = latest['args']['phase_filter_source_epoch']
+    start = latest['epoch'] + 1
+    if latest['args']['phase_filter_source_sha256'] != source_digest or (previous and start != previous['epoch']+1):
+        raise ValueError('Phase-filter checkpoint provenance differs from the requested run')
+    settings.update(results=results, resumed_from_epoch=start-1)
+    record()
+    try:
         train_dir, val_dir = (latest['args'][k] for k in ('train_dir','val_dir'))
         source, _ = read_candidate_checkpoint(args.source_path)
         comparison = Path(source['args']['log_dir'])
         if not comparison.is_absolute():
             comparison = args.source_path.resolve().parent.parent/comparison
         baseline = json.loads((comparison/f'pesq_selection/model_epoch_{origin}/summary.json').read_text())
-        selection = root/'pesq_selection'
-        selection.mkdir()
-        timing_path = root/'epoch_timing.jsonl'
-        results = []
-        for epoch in range(origin+1,origin+1+args.epochs):
+        for epoch in range(start,start+args.epochs):
             settings.update(status='waiting_for_idle_gpus',epoch=epoch)
             record()
             wait_for_idle_cards()

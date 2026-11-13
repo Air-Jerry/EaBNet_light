@@ -1,0 +1,117 @@
+{
+  "status": {
+    "status": "complete",
+    "pid": 3213385,
+    "source_checkpoint_sha256": "3909bfbddcfb3253ebc1f86d62af5a50546d90ef072fed7277ef63f03a74bb0d",
+    "epoch": 52,
+    "started_unix": 1794537221.045283,
+    "launcher_pid": 3227131,
+    "launcher_cookie": "248535150",
+    "results": [
+      {
+        "epoch": 51,
+        "wb_pesq": 3.382852230469386,
+        "seconds": 3335.3490006923676,
+        "checkpoint_sha256": "1f1c196731375dd31232f6033a4a3951ae04282a35a143d1cab6ea7e33c38c41"
+      },
+      {
+        "epoch": 52,
+        "wb_pesq": 3.383618225256602,
+        "seconds": 3339.769591808319,
+        "checkpoint_sha256": "60bc24fde641536b3beb1ea715711948153d3b6bff3d11937981693477584b7b"
+      }
+    ]
+  },
+  "controller_live": false,
+  "launcher_live": false,
+  "baseline_pesq": 3.3741427014271417,
+  "epochs": {
+    "51": {
+      "timing": {
+        "status": "complete",
+        "epoch": 51,
+        "started_unix": 1794533885.6403234,
+        "finished_unix": 1794537220.989324,
+        "total_seconds": 3335.3490006923676,
+        "training_validation_checkpoint_seconds": 3122.33295750618,
+        "evaluation_audit_seconds": 213.01604318618774,
+        "training_samples": 53600,
+        "validation_samples": 600,
+        "full_metric_samples": 600,
+        "optimizer_updates_this_epoch": 6700,
+        "global_batch_size": 8,
+        "gpu_utilization": {
+          "0": {
+            "samples": 313,
+            "average_pct": 93.87539936102236
+          },
+          "1": {
+            "samples": 313,
+            "average_pct": 92.46006389776358
+          }
+        }
+      },
+      "mean": {
+        "enhanced": {
+          "pesq": 3.382852230469386,
+          "stoi": 0.9704928881032917,
+          "estoi": 0.9367680906881496,
+          "si_snr_db": 16.727028622861095,
+          "sdr_db": 18.321817506083757
+        },
+        "noisy": {
+          "pesq": 1.0880955342451732,
+          "stoi": 0.6510592990906214,
+          "estoi": 0.3667556529781415,
+          "si_snr_db": -1.2095493301340101,
+          "sdr_db": -1.1495106109218791
+        }
+      },
+      "checkpoint_sha256": "1f1c196731375dd31232f6033a4a3951ae04282a35a143d1cab6ea7e33c38c41"
+    },
+    "52": {
+      "timing": {
+        "status": "complete",
+        "epoch": 52,
+        "started_unix": 1794537221.045283,
+        "finished_unix": 1794540560.814875,
+        "total_seconds": 3339.769591808319,
+        "training_validation_checkpoint_seconds": 3127.306319952011,
+        "evaluation_audit_seconds": 212.46327185630798,
+        "training_samples": 53600,
+        "validation_samples": 600,
+        "full_metric_samples": 600,
+        "optimizer_updates_this_epoch": 6700,
+        "global_batch_size": 8,
+        "gpu_utilization": {
+          "0": {
+            "samples": 313,
+            "average_pct": 94.59424920127796
+          },
+          "1": {
+            "samples": 313,
+            "average_pct": 93.46964856230032
+          }
+        }
+      },
+      "mean": {
+        "enhanced": {
+          "pesq": 3.383618225256602,
+          "stoi": 0.9704682805006254,
+          "estoi": 0.9367175491757803,
+          "si_snr_db": 16.720902463400037,
+          "sdr_db": 18.305010250942715
+        },
+        "noisy": {
+          "pesq": 1.0880955342451732,
+          "stoi": 0.6510592990906214,
+          "estoi": 0.3667556529781415,
+          "si_snr_db": -1.2095493301340101,
+          "sdr_db": -1.1495106109218791
+        }
+      },
+      "checkpoint_sha256": "60bc24fde641536b3beb1ea715711948153d3b6bff3d11937981693477584b7b"
+    }
+  },
+  "final_audit": null
+}
