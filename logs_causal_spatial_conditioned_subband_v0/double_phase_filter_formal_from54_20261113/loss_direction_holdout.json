@@ -1,0 +1,45 @@
+{
+  "samples": 64,
+  "checkpoint_sha256": "1e19103b332bf9a82314da2c76b62cbd628dca87d1243ff3cf9f6457f0d2d008",
+  "comparison_audio_used": false,
+  "results": {
+    "0.5": {
+      "mean": 3.2022590450942516,
+      "delta_from_checkpoint": -0.00738336518406868,
+      "improved": 3,
+      "worse": 61
+    },
+    "1.0": {
+      "mean": 3.2096424102783203,
+      "delta_from_checkpoint": 0.0,
+      "improved": 0,
+      "worse": 0
+    },
+    "2.0": {
+      "mean": 3.2201016321778297,
+      "delta_from_checkpoint": 0.01045922189950943,
+      "improved": 52,
+      "worse": 12
+    }
+  },
+  "objective_means": {
+    "0.5": {
+      "physical": 0.3229847973852884,
+      "pmsqe_penalty": 0.2753202292660717,
+      "learned_penalty": 0.14549500194694942,
+      "total": 0.7438000285983095
+    },
+    "1.0": {
+      "physical": 0.3229578767786734,
+      "pmsqe_penalty": 0.2742293689516373,
+      "learned_penalty": 0.14570031062839736,
+      "total": 0.7428875563587081
+    },
+    "2.0": {
+      "physical": 0.32516205962747335,
+      "pmsqe_penalty": 0.274521624611225,
+      "learned_penalty": 0.14659452947569152,
+      "total": 0.7462782137143898
+    }
+  }
+}
