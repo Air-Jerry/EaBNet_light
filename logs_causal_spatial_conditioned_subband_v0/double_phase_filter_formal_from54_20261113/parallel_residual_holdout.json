@@ -1,0 +1,63 @@
+{
+  "holdout": {
+    "samples": 64,
+    "checkpoint_sha256": "1e19103b332bf9a82314da2c76b62cbd628dca87d1243ff3cf9f6457f0d2d008",
+    "comparison_audio_used": false,
+    "results": {
+      "original": {
+        "mean": 3.2096424102783203,
+        "delta_from_checkpoint": 0.0,
+        "improved": 0,
+        "worse": 0
+      },
+      "double": {
+        "mean": 3.2201016321778297,
+        "delta_from_checkpoint": 0.01045922189950943,
+        "improved": 52,
+        "worse": 12
+      },
+      "low_only": {
+        "mean": 3.217916553840041,
+        "delta_from_checkpoint": 0.008274143561720848,
+        "improved": 49,
+        "worse": 15
+      },
+      "high_only": {
+        "mean": 3.212008187547326,
+        "delta_from_checkpoint": 0.0023657772690057755,
+        "improved": 53,
+        "worse": 11
+      },
+      "parallel_only": {
+        "mean": 3.2192661091685295,
+        "delta_from_checkpoint": 0.009623698890209198,
+        "improved": 48,
+        "worse": 16
+      },
+      "quadrature_only": {
+        "mean": 3.210441594943404,
+        "delta_from_checkpoint": 0.0007991846650838852,
+        "improved": 39,
+        "worse": 25
+      }
+    }
+  },
+  "scheduled_evaluation": {
+    "status": "waiting_for_formal",
+    "pid": 3305951,
+    "scale": 2.0,
+    "component": "parallel",
+    "scale_selected_on_training_holdout": true
+  },
+  "formal": {
+    "status": "training",
+    "pid": 3301157,
+    "source_checkpoint_sha256": "1e19103b332bf9a82314da2c76b62cbd628dca87d1243ff3cf9f6457f0d2d008",
+    "results": [],
+    "resumed_from_epoch": 54,
+    "epoch": 55,
+    "started_unix": 1794555021.0626848,
+    "launcher_pid": 3301185,
+    "launcher_cookie": "250315152"
+  }
+}

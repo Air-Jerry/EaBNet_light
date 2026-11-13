@@ -1,0 +1,27 @@
+{
+  "source_epoch": 54,
+  "unchanged_model_adam_scheduler_scaler": true,
+  "adam_steps": [
+    [
+      361800
+    ],
+    [
+      26800
+    ]
+  ],
+  "group_learning_rates": [
+    1e-06,
+    5e-05
+  ],
+  "active_run": {
+    "status": "training",
+    "pid": 3301157,
+    "source_checkpoint_sha256": "1e19103b332bf9a82314da2c76b62cbd628dca87d1243ff3cf9f6457f0d2d008",
+    "results": [],
+    "resumed_from_epoch": 54,
+    "epoch": 55,
+    "started_unix": 1794555021.0626848,
+    "launcher_pid": 3301185,
+    "launcher_cookie": "250315152"
+  }
+}

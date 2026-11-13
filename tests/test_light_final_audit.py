@@ -7,6 +7,7 @@ import torch
 
 from audit_light_final import validate_final, validate_training
 from evaluate_light_streaming import IDENTITY_FIELDS
+from light_candidate_runtime import DOUBLE_PHASE_FILTER_CANDIDATE
 
 
 def reports():
@@ -80,4 +81,24 @@ def test_training_proof_requires_complete_data_finite_state_and_full_budget(faul
     if fault:
         with pytest.raises(ValueError):validate_training(state, training, timing, 'actual')
     else:
+        validate_training(state, training, timing, 'actual')
+
+
+def test_double_phase_filter_audits_both_optimizer_histories():
+    training, _, _, _ = reports()
+    training['structure_candidate'] = DOUBLE_PHASE_FILTER_CANDIDATE
+    base = list(range(235))
+    added = list(range(235, 241))
+    optimizer = {i: dict(step=torch.tensor(55 * 6700)) for i in base}
+    optimizer.update({i: dict(step=torch.tensor(5 * 6700)) for i in added})
+    state = dict(epoch=55, args=dict(structure_candidate=DOUBLE_PHASE_FILTER_CANDIDATE,
+                                    phase_filter_source_epoch=50),
+                 model_state_dict={'weight': torch.ones(1)},
+                 optimizer_state_dict=dict(state=optimizer, param_groups=[dict(params=base), dict(params=added)]))
+    timing = dict(status='complete', epoch=55, training_samples=53600, validation_samples=600,
+                  full_metric_samples=600, optimizer_updates_this_epoch=6700,
+                  global_batch_size=8, total_seconds=3340.)
+    validate_training(state, training, timing, 'actual')
+    optimizer[added[0]]['step'] = torch.tensor(6700)
+    with pytest.raises(ValueError, match='Adam updates'):
         validate_training(state, training, timing, 'actual')
