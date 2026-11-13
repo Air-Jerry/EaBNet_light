@@ -1,0 +1,216 @@
+{
+  "status": {
+    "status": "complete",
+    "pid": 3261310,
+    "source_checkpoint_sha256": "3909bfbddcfb3253ebc1f86d62af5a50546d90ef072fed7277ef63f03a74bb0d",
+    "results": [
+      {
+        "epoch": 51,
+        "wb_pesq": 3.382852230469386,
+        "seconds": 3335.3490006923676,
+        "checkpoint_sha256": "1f1c196731375dd31232f6033a4a3951ae04282a35a143d1cab6ea7e33c38c41"
+      },
+      {
+        "epoch": 52,
+        "wb_pesq": 3.383618225256602,
+        "seconds": 3339.769591808319,
+        "checkpoint_sha256": "60bc24fde641536b3beb1ea715711948153d3b6bff3d11937981693477584b7b"
+      },
+      {
+        "epoch": 53,
+        "wb_pesq": 3.383562930226326,
+        "seconds": 3307.3424575328827,
+        "checkpoint_sha256": "398e7087805f5559ae9d81acf34f01f8faa5b1d9ed789e22109ea7a2c5abefd6"
+      },
+      {
+        "epoch": 54,
+        "wb_pesq": 3.384049152135849,
+        "seconds": 3329.9185230731964,
+        "checkpoint_sha256": "1e19103b332bf9a82314da2c76b62cbd628dca87d1243ff3cf9f6457f0d2d008"
+      }
+    ],
+    "resumed_from_epoch": 52,
+    "epoch": 54,
+    "started_unix": 1794548935.7678063,
+    "launcher_pid": 3275223,
+    "launcher_cookie": "249706622"
+  },
+  "controller_live": false,
+  "launcher_live": false,
+  "baseline_pesq": 3.3741427014271417,
+  "epochs": {
+    "51": {
+      "timing": {
+        "status": "complete",
+        "epoch": 51,
+        "started_unix": 1794533885.6403234,
+        "finished_unix": 1794537220.989324,
+        "total_seconds": 3335.3490006923676,
+        "training_validation_checkpoint_seconds": 3122.33295750618,
+        "evaluation_audit_seconds": 213.01604318618774,
+        "training_samples": 53600,
+        "validation_samples": 600,
+        "full_metric_samples": 600,
+        "optimizer_updates_this_epoch": 6700,
+        "global_batch_size": 8,
+        "gpu_utilization": {
+          "0": {
+            "samples": 313,
+            "average_pct": 93.87539936102236
+          },
+          "1": {
+            "samples": 313,
+            "average_pct": 92.46006389776358
+          }
+        }
+      },
+      "mean": {
+        "enhanced": {
+          "pesq": 3.382852230469386,
+          "stoi": 0.9704928881032917,
+          "estoi": 0.9367680906881496,
+          "si_snr_db": 16.727028622861095,
+          "sdr_db": 18.321817506083757
+        },
+        "noisy": {
+          "pesq": 1.0880955342451732,
+          "stoi": 0.6510592990906214,
+          "estoi": 0.3667556529781415,
+          "si_snr_db": -1.2095493301340101,
+          "sdr_db": -1.1495106109218791
+        }
+      },
+      "checkpoint_sha256": "1f1c196731375dd31232f6033a4a3951ae04282a35a143d1cab6ea7e33c38c41"
+    },
+    "52": {
+      "timing": {
+        "status": "complete",
+        "epoch": 52,
+        "started_unix": 1794537221.045283,
+        "finished_unix": 1794540560.814875,
+        "total_seconds": 3339.769591808319,
+        "training_validation_checkpoint_seconds": 3127.306319952011,
+        "evaluation_audit_seconds": 212.46327185630798,
+        "training_samples": 53600,
+        "validation_samples": 600,
+        "full_metric_samples": 600,
+        "optimizer_updates_this_epoch": 6700,
+        "global_batch_size": 8,
+        "gpu_utilization": {
+          "0": {
+            "samples": 313,
+            "average_pct": 94.59424920127796
+          },
+          "1": {
+            "samples": 313,
+            "average_pct": 93.46964856230032
+          }
+        }
+      },
+      "mean": {
+        "enhanced": {
+          "pesq": 3.383618225256602,
+          "stoi": 0.9704682805006254,
+          "estoi": 0.9367175491757803,
+          "si_snr_db": 16.720902463400037,
+          "sdr_db": 18.305010250942715
+        },
+        "noisy": {
+          "pesq": 1.0880955342451732,
+          "stoi": 0.6510592990906214,
+          "estoi": 0.3667556529781415,
+          "si_snr_db": -1.2095493301340101,
+          "sdr_db": -1.1495106109218791
+        }
+      },
+      "checkpoint_sha256": "60bc24fde641536b3beb1ea715711948153d3b6bff3d11937981693477584b7b"
+    },
+    "53": {
+      "timing": {
+        "status": "complete",
+        "epoch": 53,
+        "started_unix": 1794545628.365838,
+        "finished_unix": 1794548935.7082956,
+        "total_seconds": 3307.3424575328827,
+        "training_validation_checkpoint_seconds": 3095.5936160087585,
+        "evaluation_audit_seconds": 211.74884152412415,
+        "training_samples": 53600,
+        "validation_samples": 600,
+        "full_metric_samples": 600,
+        "optimizer_updates_this_epoch": 6700,
+        "global_batch_size": 8,
+        "gpu_utilization": {
+          "0": {
+            "samples": 310,
+            "average_pct": 95.16451612903226
+          },
+          "1": {
+            "samples": 310,
+            "average_pct": 93.78064516129032
+          }
+        }
+      },
+      "mean": {
+        "enhanced": {
+          "pesq": 3.383562930226326,
+          "stoi": 0.9705010591763668,
+          "estoi": 0.936801201850779,
+          "si_snr_db": 16.721269378441722,
+          "sdr_db": 18.297773954482796
+        },
+        "noisy": {
+          "pesq": 1.0880955342451732,
+          "stoi": 0.6510592990906214,
+          "estoi": 0.3667556529781415,
+          "si_snr_db": -1.2095493301340101,
+          "sdr_db": -1.1495106109218791
+        }
+      },
+      "checkpoint_sha256": "398e7087805f5559ae9d81acf34f01f8faa5b1d9ed789e22109ea7a2c5abefd6"
+    },
+    "54": {
+      "timing": {
+        "status": "complete",
+        "epoch": 54,
+        "started_unix": 1794548935.7678063,
+        "finished_unix": 1794552265.6863294,
+        "total_seconds": 3329.9185230731964,
+        "training_validation_checkpoint_seconds": 3119.263995409012,
+        "evaluation_audit_seconds": 210.65452766418457,
+        "training_samples": 53600,
+        "validation_samples": 600,
+        "full_metric_samples": 600,
+        "optimizer_updates_this_epoch": 6700,
+        "global_batch_size": 8,
+        "gpu_utilization": {
+          "0": {
+            "samples": 312,
+            "average_pct": 94.05128205128206
+          },
+          "1": {
+            "samples": 312,
+            "average_pct": 93.61217948717949
+          }
+        }
+      },
+      "mean": {
+        "enhanced": {
+          "pesq": 3.384049152135849,
+          "stoi": 0.9704835580835723,
+          "estoi": 0.9367895467603273,
+          "si_snr_db": 16.72377237537626,
+          "sdr_db": 18.296460853965364
+        },
+        "noisy": {
+          "pesq": 1.0880955342451732,
+          "stoi": 0.6510592990906214,
+          "estoi": 0.3667556529781415,
+          "si_snr_db": -1.2095493301340101,
+          "sdr_db": -1.1495106109218791
+        }
+      },
+      "checkpoint_sha256": "1e19103b332bf9a82314da2c76b62cbd628dca87d1243ff3cf9f6457f0d2d008"
+    }
+  },
+  "final_audit": null
+}
