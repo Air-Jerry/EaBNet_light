@@ -1,0 +1,167 @@
+"""Run complete phase-filter epochs and audit a checkpoint that reaches WB-PESQ 3.4."""
+import argparse
+import csv
+import json
+import os
+import re
+import subprocess
+import statistics
+import sys
+import time
+from pathlib import Path
+
+import torch
+
+from audit_light_final import require_protocol, sha
+from light_candidate_runtime import PHASE_FILTER_CANDIDATE, read_candidate_checkpoint
+from train_light_causal_phase_filter import initialize
+
+
+EVALUATOR_SHA256 = '0c3ada1425b33e16688e8424daba23681ac9ded4d8bee931ed24c69e59e5730b'
+
+
+def wait_for_idle_cards():
+    while subprocess.check_output(['nvidia-smi','--query-compute-apps=pid','--format=csv,noheader,nounits'],
+                                  text=True).strip():
+        time.sleep(300)
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    for name in ('source-path', 'output', 'regressor', 'scaling-helper'):
+        parser.add_argument(f'--{name}', type=Path, required=True)
+    parser.add_argument('--epochs', type=int, default=2)
+    args = parser.parse_args()
+    torch.set_num_threads(2)
+    if args.epochs <= 0 or sha('evaluate_light.py') != EVALUATOR_SHA256:
+        raise ValueError('Use the original evaluator and request at least one epoch')
+    root = args.output.resolve()
+    root.mkdir()
+    status = root/'run_status.json'
+    settings = dict(status='initializing', pid=os.getpid(), source_checkpoint_sha256=sha(args.source_path))
+
+    def record():
+        temporary = status.with_suffix('.tmp')
+        temporary.write_text(json.dumps(settings, indent=2, allow_nan=False)+'\n')
+        temporary.replace(status)
+
+    record()
+    checkpoints = root/'checkpoints'
+    env = dict(os.environ, CUDA_VISIBLE_DEVICES='0,1', OMP_NUM_THREADS='2', MKL_NUM_THREADS='2',
+               OPENBLAS_NUM_THREADS='2', TORCHINDUCTOR_COMPILE_THREADS='1', PYTHONDONTWRITEBYTECODE='1')
+    for key in ('RANK','LOCAL_RANK','WORLD_SIZE','MASTER_ADDR','MASTER_PORT','CUBLAS_WORKSPACE_CONFIG'):
+        env.pop(key,None)
+    try:
+        initialize(args.source_path, checkpoints, root/'best', root/'logs')
+        latest, _ = read_candidate_checkpoint(checkpoints/'checkpoint_latest.pt', PHASE_FILTER_CANDIDATE)
+        origin = latest['epoch']
+        train_dir, val_dir = (latest['args'][k] for k in ('train_dir','val_dir'))
+        source, _ = read_candidate_checkpoint(args.source_path)
+        comparison = Path(source['args']['log_dir'])
+        if not comparison.is_absolute():
+            comparison = args.source_path.resolve().parent.parent/comparison
+        baseline = json.loads((comparison/f'pesq_selection/model_epoch_{origin}/summary.json').read_text())
+        selection = root/'pesq_selection'
+        selection.mkdir()
+        timing_path = root/'epoch_timing.jsonl'
+        results = []
+        for epoch in range(origin+1,origin+1+args.epochs):
+            settings.update(status='waiting_for_idle_gpus',epoch=epoch)
+            record()
+            wait_for_idle_cards()
+            started = time.time()
+            settings.update(status='training',epoch=epoch,started_unix=started)
+            record()
+            gpu_path = root/f'gpu_epoch_{epoch}.csv'
+            with (root/f'train_epoch_{epoch}.log').open('x') as log, gpu_path.open('x') as gpu_log:
+                sampler = subprocess.Popen(['nvidia-smi','--query-gpu=timestamp,index,utilization.gpu,memory.used',
+                    '--format=csv,noheader,nounits','-l','10'],stdout=gpu_log,stderr=subprocess.STDOUT)
+                try:
+                    command = ['timeout','--kill-after=15s','3330s',sys.executable,'-u','-m','torch.distributed.run',
+                        '--standalone','--nproc_per_node=2','train_light_causal_phase_filter.py','train',
+                        '--checkpoint-dir',str(checkpoints),'--num-epochs',str(epoch),'--regressor',str(args.regressor.resolve()),
+                        '--scaling-helper',str(args.scaling_helper.resolve())]
+                    with subprocess.Popen(command,env=env,stdout=log,stderr=subprocess.STDOUT,stdin=subprocess.DEVNULL) as job:
+                        pid = job.pid
+                        cookie = (Path('/proc')/str(pid)/'stat').read_text().rsplit(') ',1)[1].split()[19]
+                        settings.update(launcher_pid=pid,launcher_cookie=cookie)
+                        record()
+                        if job.wait():
+                            raise RuntimeError(f'Dual-GPU epoch {epoch} failed, see {log.name}')
+                finally:
+                    sampler.terminate()
+                    sampler.wait(timeout=10)
+            training_end = time.time()
+            with gpu_path.open() as handle:
+                samples = list(csv.reader(handle))
+            utilization = {i:[int(row[2]) for row in samples if len(row)==4 and int(row[1])==i]
+                           for i in (0,1)}
+            text = (root/f'train_epoch_{epoch}.log').read_text()
+            for phase,count in [('train',53600),('val',600)]:
+                found = re.findall(r'\[PERF\]\['+phase+r'\] samples\(local/global\)=\d+/(\d+).*?non_finite_skips\(local\)=(\d+)',text)
+                assert found and found[-1] == (str(count),'0'), (phase, found)
+            checkpoint = checkpoints/f'model_epoch_{epoch}.pt'
+            state, _ = read_candidate_checkpoint(checkpoint, PHASE_FILTER_CANDIDATE)
+            adam = state['optimizer_state_dict']
+            groups = [set(group['params']) for group in adam['param_groups']]
+            assert len(adam['state'])==241 and len(groups)==2 and not (groups[0] & groups[1])
+            assert groups[1] <= adam['state'].keys() and len(groups[1])==6
+            assert {int(v['step']) for k,v in adam['state'].items() if k in groups[0]}=={epoch*6700}
+            assert {int(v['step']) for k,v in adam['state'].items() if k in groups[1]}=={(epoch-origin)*6700}
+            assert state['epoch']==epoch
+            settings['status']='evaluating'
+            record()
+            folder=selection/f'model_epoch_{epoch}'
+            folder.mkdir()
+            report_path=folder/'summary.json'
+            with (folder/'evaluation.log').open('x') as log:
+                subprocess.run([sys.executable,'-u','evaluate_light.py','--checkpoint',str(checkpoint),
+                    '--candidate',PHASE_FILTER_CANDIDATE,'--val-dir',val_dir,'--device','cuda',
+                    '--max-samples','0','--save-samples','no','--match-estimate-level','no',
+                    '--estimate-dir',str(folder),'--save-json',str(report_path)],
+                    env=dict(env,CUDA_VISIBLE_DEVICES='0'),stdout=log,stderr=subprocess.STDOUT,
+                    check=True,timeout=max(1,3600-(time.time()-started)))
+            report=json.loads(report_path.read_text())
+            require_protocol(report)
+            for key in ('frontend','frontend_protocol','metric_protocol','selected_pairs_sha256','metadata_sha256'):
+                assert report[key]==baseline[key],key
+            assert all(abs(v-baseline['mean']['noisy'][k])<1e-9 for k,v in report['mean']['noisy'].items())
+            assert report['checkpoint_sha256']==sha(checkpoint)
+            finished=time.time()
+            elapsed=finished-started
+            timing=dict(status='complete' if elapsed<=3600 else 'exceeded_one_hour',epoch=epoch,
+                started_unix=started,finished_unix=finished,total_seconds=elapsed,
+                training_validation_checkpoint_seconds=training_end-started,evaluation_audit_seconds=finished-training_end,
+                training_samples=53600,validation_samples=600,full_metric_samples=600,
+                optimizer_updates_this_epoch=6700,global_batch_size=8,
+                gpu_utilization={i:dict(samples=len(values),average_pct=statistics.mean(values) if values else None)
+                                 for i,values in utilization.items()})
+            with timing_path.open('a') as handle:
+                handle.write(json.dumps(timing,allow_nan=False)+'\n')
+            assert elapsed<=3600
+            score=report['mean']['enhanced']['pesq']
+            results.append(dict(epoch=epoch,wb_pesq=score,seconds=elapsed,checkpoint_sha256=sha(checkpoint)))
+            settings['results']=results
+            record()
+            if score>=3.4:
+                settings['status']='final_audit_running'
+                record()
+                with (root/'final_audit.log').open('x') as log:
+                    subprocess.run([sys.executable,'-u','audit_light_final.py','--checkpoint',str(checkpoint),
+                        '--training-summary',str(report_path),'--training-timings',str(timing_path),
+                        '--output-dir',str(root/'final_audit'),'--evaluator-sha256',EVALUATOR_SHA256,
+                        '--launcher-pid',str(pid),'--launcher-cookie',cookie,'--train-dir',train_dir,'--val-dir',val_dir],
+                        env=dict(env,CUDA_VISIBLE_DEVICES='0'),stdout=log,stderr=subprocess.STDOUT,check=True)
+                assert json.loads((root/'final_audit/final_audit.json').read_text())['status']=='passed'
+                settings['status']='final_audit_passed'
+                return
+        settings['status']='complete'
+    except BaseException as error:
+        settings.update(status='failed',error=f'{type(error).__name__}: {error}')
+        raise
+    finally:
+        record()
+
+
+if __name__=='__main__':
+    main()

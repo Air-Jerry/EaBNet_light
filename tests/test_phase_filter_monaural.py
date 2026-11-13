@@ -1,0 +1,42 @@
+import torch
+
+from experiments.causal_phase_filter_monaural import CausalPhaseFilterMonaural
+from light_candidate_runtime import RECURRENT_ADAPT_CANDIDATE, WIDE_CONDITIONED_CANDIDATE, build_model_candidate
+
+
+def test_phase_filter_preserves_warm_start_and_streams_after_training():
+    torch.set_num_threads(2)
+    source = build_model_candidate(RECURRENT_ADAPT_CANDIDATE).eval()
+    with torch.no_grad():
+        source.base.base.beamformer.weight.normal_(std=.01)
+        source.output.weight.normal_(std=.01)
+    model = CausalPhaseFilterMonaural(build_model_candidate(WIDE_CONDITIONED_CANDIDATE)).eval()
+    model.load_warm(source.state_dict())
+    mixture = torch.randn(1, 19, 257, 8, 2) * .1
+    with torch.inference_mode():
+        initial = model(mixture)
+        assert torch.equal(initial, source(mixture))
+    optimizer = torch.optim.Adam(model.phase_filter.parameters(), lr=.001)
+    target = mixture[..., 0, :].permute(0, 3, 1, 2) * .8
+    model.train()
+    for _ in range(2):
+        model.zero_grad(set_to_none=True)
+        (model(mixture) - target).square().mean().backward()
+        optimizer.step()
+    assert all(torch.isfinite(p.grad).all() and torch.count_nonzero(p.grad)
+               for p in model.phase_filter.parameters())
+    model.eval()
+    with torch.inference_mode():
+        expected = model(mixture)
+        assert not torch.equal(expected, initial)
+        changed = mixture.clone()
+        changed[:, 9:] *= 10
+        torch.testing.assert_close(model(changed)[:, :, :9], expected[:, :, :9], rtol=0, atol=1e-6)
+        first, state = model.forward_stream(mixture[:, :1])
+        history = state['phase_history'].clone()
+        middle, next_state = model.forward_stream(mixture[:, 1:9], state)
+        last, _ = model.forward_stream(mixture[:, 9:], next_state)
+        assert torch.equal(history, state['phase_history'])
+        assert next_state['phase_history'].data_ptr() != state['phase_history'].data_ptr()
+        assert history.numel() * history.element_size() == 8224
+        torch.testing.assert_close(torch.cat((first, middle, last), dim=2), expected, rtol=0, atol=1e-5)

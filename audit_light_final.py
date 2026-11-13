@@ -16,7 +16,7 @@ import torch
 import benchmark_light_causal as benchmark
 import evaluate_light as evaluator
 import evaluate_light_streaming as streaming
-from light_candidate_runtime import read_candidate_checkpoint
+from light_candidate_runtime import PHASE_FILTER_CANDIDATE, read_candidate_checkpoint
 
 
 def sha(path):
@@ -74,7 +74,18 @@ def validate_training(state, report, timing, checkpoint_sha):
     if not math.isfinite(seconds) or not 0 < seconds <= 3600:
         raise ValueError('Complete training epoch exceeded one hour')
     optimizer = state['optimizer_state_dict']['state']
-    if not optimizer or {int(item['step']) for item in optimizer.values()} != {epoch * 6700}:
+    if state.get('args', {}).get('structure_candidate') == PHASE_FILTER_CANDIDATE:
+        groups = state['optimizer_state_dict']['param_groups']
+        source_epoch = state['args']['phase_filter_source_epoch']
+        base, added = map(lambda group: set(group['params']), groups)
+        valid_updates = (0 < source_epoch < epoch and not (base & added)
+            and set(optimizer) <= base | added and len(base & optimizer.keys()) == 235
+            and len(added) == 6 and added <= optimizer.keys()
+            and all(int(optimizer[i]['step']) == epoch*6700 for i in base & optimizer.keys())
+            and all(int(optimizer[i]['step']) == (epoch-source_epoch)*6700 for i in added))
+    else:
+        valid_updates = bool(optimizer) and {int(item['step']) for item in optimizer.values()} == {epoch * 6700}
+    if not valid_updates:
         raise ValueError('Saved Adam updates do not match the complete epoch budget')
     if not all(torch.isfinite(value).all() for value in state['model_state_dict'].values()):
         raise ValueError('Model contains non-finite values')

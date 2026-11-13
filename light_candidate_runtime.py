@@ -49,16 +49,20 @@ GLOBAL_SPECTRAL_CANDIDATE = "causal_global_spectral_unet_v1"
 GLOBAL_SPECTRAL_BEAM_CANDIDATE = "causal_global_spectral_beamformer_v1"
 DECODER_MONAURAL_CANDIDATE = "causal_decoder_monaural_spectral_v1"
 RECURRENT_ADAPT_CANDIDATE = "causal_recurrent_adapt_monaural_v1"
+PHASE_FILTER_CANDIDATE = "causal_phase_filter_monaural_v1"
 IDENTITY_FIELDS = ("sample_rate", "n_fft", "hop_length", "win_length", "power", "target_ref_mic",
                    "channels", "num_mics", "embed_dim", "cd1", "dfsmn_layers", "dfsmn_memory_size",
                    "norm_type", "bf_type", "topo_type", "is_causal")
 
 
 def all_model_candidates():
-    return (*all_reference_candidates(), QUALITY_CANDIDATE, SPATIAL_CANDIDATE, CAUSAL_CANDIDATE, FAST_CANDIDATE, GLOBAL_CANDIDATE, RECURRENT_CANDIDATE, RECURRENT65_CANDIDATE, TCN_CANDIDATE, FOURIER_CANDIDATE, FREQUENCY_ATTENTION_CANDIDATE, POOLED_FREQUENCY_ATTENTION_CANDIDATE, RETENTION_CANDIDATE, FULLBAND_TCN_CANDIDATE, FULLBAND_SPATIAL_CANDIDATE, SUBBAND_GRU_CANDIDATE, CONDITIONED_SUBBAND_CANDIDATE, FROZEN_CONDITIONED_CANDIDATE, SPATIAL_CONDITIONED_CANDIDATE, GATED_MULTICHANNEL_CANDIDATE, FULLCHANNEL_DUALPATH_CANDIDATE, FOLDED_RETENTION_CANDIDATE, JOINT_CONDITIONED_CANDIDATE, JOINT_FIXED_CONDITIONED_CANDIDATE, WIDE_CONDITIONED_CANDIDATE, COVARIANCE_CANDIDATE, MONAURAL_SPECTRAL_CANDIDATE, GLOBAL_SPECTRAL_CANDIDATE, GLOBAL_SPECTRAL_BEAM_CANDIDATE, DECODER_MONAURAL_CANDIDATE, RECURRENT_ADAPT_CANDIDATE)
+    return (*all_reference_candidates(), QUALITY_CANDIDATE, SPATIAL_CANDIDATE, CAUSAL_CANDIDATE, FAST_CANDIDATE, GLOBAL_CANDIDATE, RECURRENT_CANDIDATE, RECURRENT65_CANDIDATE, TCN_CANDIDATE, FOURIER_CANDIDATE, FREQUENCY_ATTENTION_CANDIDATE, POOLED_FREQUENCY_ATTENTION_CANDIDATE, RETENTION_CANDIDATE, FULLBAND_TCN_CANDIDATE, FULLBAND_SPATIAL_CANDIDATE, SUBBAND_GRU_CANDIDATE, CONDITIONED_SUBBAND_CANDIDATE, FROZEN_CONDITIONED_CANDIDATE, SPATIAL_CONDITIONED_CANDIDATE, GATED_MULTICHANNEL_CANDIDATE, FULLCHANNEL_DUALPATH_CANDIDATE, FOLDED_RETENTION_CANDIDATE, JOINT_CONDITIONED_CANDIDATE, JOINT_FIXED_CONDITIONED_CANDIDATE, WIDE_CONDITIONED_CANDIDATE, COVARIANCE_CANDIDATE, MONAURAL_SPECTRAL_CANDIDATE, GLOBAL_SPECTRAL_CANDIDATE, GLOBAL_SPECTRAL_BEAM_CANDIDATE, DECODER_MONAURAL_CANDIDATE, RECURRENT_ADAPT_CANDIDATE, PHASE_FILTER_CANDIDATE)
 
 
 def build_model_candidate(candidate_id, **model_kwargs):
+    if candidate_id == PHASE_FILTER_CANDIDATE:
+        from experiments.causal_phase_filter_monaural import CausalPhaseFilterMonaural
+        return CausalPhaseFilterMonaural(build_model_candidate(WIDE_CONDITIONED_CANDIDATE, **model_kwargs))
     if candidate_id == RECURRENT_ADAPT_CANDIDATE:
         from experiments.causal_recurrent_adapt_monaural import CausalRecurrentAdaptMonaural
         return CausalRecurrentAdaptMonaural(build_model_candidate(WIDE_CONDITIONED_CANDIDATE, **model_kwargs))
@@ -163,6 +167,18 @@ def build_model_candidate(candidate_id, **model_kwargs):
 
 
 def candidate_metadata(candidate_id):
+    if candidate_id == PHASE_FILTER_CANDIDATE:
+        metadata = candidate_metadata(RECURRENT_ADAPT_CANDIDATE)
+        files = (*metadata['candidate_implementation_sha256'], 'experiments/causal_phase_filter_monaural.py')
+        metadata.update(structure_candidate=candidate_id, candidate_schema=32,
+                        candidate_implementation_sha256=source_hashes(files))
+        evidence = metadata['candidate_evidence']
+        evidence.update(candidate_id=candidate_id, warm_start_candidate=RECURRENT_ADAPT_CANDIDATE,
+                        purpose='Use current and past two STFT frames for complex speech refinement',
+                        initialization='Preserve recurrent weights and Adam; zero output correction')
+        evidence['model_config'].update(parameters=5687600, trainable_parameters=5102856,
+                                        phase_filter_history_frames=2)
+        return metadata
     if candidate_id == RECURRENT_ADAPT_CANDIDATE:
         metadata = candidate_metadata(DECODER_MONAURAL_CANDIDATE)
         files = (*metadata['candidate_implementation_sha256'], 'experiments/causal_mapping_monaural.py',

@@ -1,0 +1,12 @@
+{
+  "status": "training",
+  "pid": 3213385,
+  "source_checkpoint_sha256": "3909bfbddcfb3253ebc1f86d62af5a50546d90ef072fed7277ef63f03a74bb0d",
+  "epoch": 51,
+  "started_unix": 1794533885.6403234,
+  "launcher_pid": 3213414,
+  "launcher_cookie": "248201609",
+  "two_workers_resumed": true,
+  "training_samples": 53600,
+  "validation_samples": 600
+}
