@@ -11,7 +11,7 @@ import torch
 import train_light_causal_recurrent_adapt as entry
 from experiments.bark_phase_pesq_regressor import BarkPhasePESQRegressor, bark_phase_score_features
 from light_candidate_runtime import (
-    DOUBLE_PHASE_FILTER_CANDIDATE, PHASE_FILTER_CANDIDATE, RECURRENT_ADAPT_CANDIDATE, build_model_candidate,
+    PARALLEL_PHASE_FILTER_CANDIDATE, DOUBLE_PHASE_FILTER_CANDIDATE, PHASE_FILTER_CANDIDATE, RECURRENT_ADAPT_CANDIDATE, build_model_candidate,
     candidate_metadata, read_candidate_checkpoint,
 )
 
@@ -32,7 +32,8 @@ def phase_optimizer(parameters, **kwargs):
                              dict(params=parameters[-6:], lr=FILTER_LR)], **kwargs)
 
 
-def initialize(source_path, checkpoint_dir, best_dir, log_dir, double_filter=False, refit_regressor=None):
+def initialize(source_path, checkpoint_dir, best_dir, log_dir, double_filter=False, refit_regressor=None, parallel_filter=False):
+    double_filter = double_filter or parallel_filter
     source_path = source_path.resolve()
     source, _ = read_candidate_checkpoint(source_path,
         PHASE_FILTER_CANDIDATE if double_filter else RECURRENT_ADAPT_CANDIDATE)
@@ -68,7 +69,8 @@ def initialize(source_path, checkpoint_dir, best_dir, log_dir, double_filter=Fal
         assert not (base & added) and set(adam['state']) <= base | added
         assert {int(adam['state'][k]['step']) for k in base & adam['state'].keys()} == {epoch*6700}
         assert {int(adam['state'][k]['step']) for k in added} == {(epoch-saved['phase_filter_source_epoch'])*6700}
-        source['args'] = dict(saved, **candidate_metadata(DOUBLE_PHASE_FILTER_CANDIDATE))
+        candidate = PARALLEL_PHASE_FILTER_CANDIDATE if parallel_filter else DOUBLE_PHASE_FILTER_CANDIDATE
+        source['args'] = dict(saved, **candidate_metadata(candidate))
         source['args'].update({k:str(v) for k,v in outputs.items()}, double_filter_source_sha256=source_digest,
                               phase_filter_training_entry_sha256=sha(__file__))
         if refit_regressor is not None:
@@ -108,7 +110,7 @@ def initialize(source_path, checkpoint_dir, best_dir, log_dir, double_filter=Fal
 
 def train(checkpoint_dir, num_epochs, regressor, scaling_helper):
     latest, candidate = read_candidate_checkpoint(checkpoint_dir/'checkpoint_latest.pt')
-    if candidate not in (PHASE_FILTER_CANDIDATE, DOUBLE_PHASE_FILTER_CANDIDATE):
+    if candidate not in (PHASE_FILTER_CANDIDATE, DOUBLE_PHASE_FILTER_CANDIDATE, PARALLEL_PHASE_FILTER_CANDIDATE):
         raise ValueError('Expected a phase-filter checkpoint')
     saved = latest['args']
     if Path(saved['checkpoint_dir']).resolve() != checkpoint_dir.resolve():

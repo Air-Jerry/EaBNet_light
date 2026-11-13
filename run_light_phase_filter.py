@@ -14,7 +14,7 @@ import torch
 
 from audit_light_final import require_protocol, sha
 from experiments.scaled_recurrent_entry import same_tensors
-from light_candidate_runtime import DOUBLE_PHASE_FILTER_CANDIDATE, PHASE_FILTER_CANDIDATE, read_candidate_checkpoint
+from light_candidate_runtime import PARALLEL_PHASE_FILTER_CANDIDATE, DOUBLE_PHASE_FILTER_CANDIDATE, PHASE_FILTER_CANDIDATE, read_candidate_checkpoint
 from train_light_causal_phase_filter import initialize
 
 
@@ -33,7 +33,9 @@ def main():
         parser.add_argument(f'--{name}', type=Path, required=True)
     parser.add_argument('--epochs', type=int, default=2)
     parser.add_argument('--resume', action='store_true')
-    parser.add_argument('--double-filter', action='store_true')
+    mode = parser.add_mutually_exclusive_group()
+    mode.add_argument('--double-filter', action='store_true')
+    mode.add_argument('--parallel-filter', action='store_true')
     parser.add_argument('--refit-score', action='store_true')
     args = parser.parse_args()
     if args.refit_score and not args.double_filter:
@@ -42,7 +44,10 @@ def main():
     if args.epochs <= 0 or sha('evaluate_light.py') != EVALUATOR_SHA256:
         raise ValueError('Use the original evaluator and request at least one epoch')
     root = args.output.resolve()
-    candidate = DOUBLE_PHASE_FILTER_CANDIDATE if args.double_filter else PHASE_FILTER_CANDIDATE
+    transition = args.double_filter or args.parallel_filter
+    candidate = PHASE_FILTER_CANDIDATE
+    if transition:
+        candidate = PARALLEL_PHASE_FILTER_CANDIDATE if args.parallel_filter else DOUBLE_PHASE_FILTER_CANDIDATE
     if not args.resume:
         root.mkdir()
     status = root/'run_status.json'
@@ -69,7 +74,7 @@ def main():
         results = []
         record()
         initialize(args.source_path, checkpoints, root/'best', root/'logs', double_filter=args.double_filter,
-                   refit_regressor=args.regressor if args.refit_score else None)
+                   refit_regressor=args.regressor if args.refit_score else None, parallel_filter=args.parallel_filter)
         selection.mkdir()
     else:
         results = previous['results']
@@ -90,7 +95,7 @@ def main():
             raise ValueError('Saved model, Adam, or training state differs from the scored checkpoint')
     origin = latest['args']['phase_filter_source_epoch']
     start = latest['epoch'] + 1
-    source_key = 'double_filter_source_sha256' if args.double_filter else 'phase_filter_source_sha256'
+    source_key = 'double_filter_source_sha256' if transition else 'phase_filter_source_sha256'
     if latest['args'][source_key] != source_digest or (previous and start != previous['epoch']+1):
         raise ValueError('Phase-filter checkpoint provenance differs from the requested run')
     settings.update(results=results, resumed_from_epoch=start-1)
@@ -101,7 +106,7 @@ def main():
         comparison = Path(source['args']['log_dir'])
         if not comparison.is_absolute():
             comparison = args.source_path.resolve().parent.parent/comparison
-        if args.double_filter:
+        if transition:
             comparison = args.source_path.resolve().parent.parent
         baseline = json.loads((comparison/f"pesq_selection/model_epoch_{source['epoch']}/summary.json").read_text())
         for epoch in range(start,start+args.epochs):

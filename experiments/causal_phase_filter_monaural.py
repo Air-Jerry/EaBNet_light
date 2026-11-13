@@ -41,6 +41,9 @@ class CausalPhaseFilterMonaural(CausalRecurrentAdaptMonaural):
         self.load_state_dict({**weights, **{name: current[name] for name in added}})
         self._reset_filter()
 
+    def refine(self, estimate, correction):
+        return estimate + correction
+
     def process(self, inpt, state=None):
         streaming = state is not None
         if streaming and (not isinstance(state, dict) or (state and set(state) != {'speech', 'phase_history'})):
@@ -87,8 +90,14 @@ class CausalPhaseFilterMonaural(CausalRecurrentAdaptMonaural):
         if streaming:
             tail = extended[:, :, :, -self.history_frames:].reshape(shape)
             cache = dict(speech=updated, phase_history=tail.detach().clone())
-        return estimate + correction, cache
+        return self.refine(estimate, correction), cache
 
 
 class CausalDoublePhaseFilterMonaural(CausalPhaseFilterMonaural):
     coefficient_limit = .5
+
+class CausalParallelPhaseFilterMonaural(CausalPhaseFilterMonaural):
+    def refine(self, estimate, correction):
+        power = estimate.square().sum(dim=1, keepdim=True)
+        parallel = (estimate * correction).sum(dim=1, keepdim=True) * estimate
+        return estimate + correction + parallel / power.clamp_min(1e-8)

@@ -2,7 +2,8 @@ import torch
 
 from experiments.causal_phase_filter_monaural import CausalPhaseFilterMonaural
 from light_candidate_runtime import (
-    DOUBLE_PHASE_FILTER_CANDIDATE, RECURRENT_ADAPT_CANDIDATE, WIDE_CONDITIONED_CANDIDATE, build_model_candidate,
+    DOUBLE_PHASE_FILTER_CANDIDATE, PARALLEL_PHASE_FILTER_CANDIDATE, RECURRENT_ADAPT_CANDIDATE,
+    WIDE_CONDITIONED_CANDIDATE, build_model_candidate,
 )
 
 
@@ -34,6 +35,15 @@ def test_phase_filter_preserves_warm_start_and_streams_after_training():
         doubled = build_model_candidate(DOUBLE_PHASE_FILTER_CANDIDATE).eval()
         doubled.load_state_dict(model.state_dict())
         base = source(mixture)
+        parallel = build_model_candidate(PARALLEL_PHASE_FILTER_CANDIDATE).eval()
+        parallel.load_state_dict(model.state_dict())
+        residual = expected-base
+        correction = (base*residual).sum(1,keepdim=True)*base / base.square().sum(1,keepdim=True).clamp_min(1e-8)
+        torch.testing.assert_close(parallel(mixture), expected+correction, rtol=0, atol=1e-6)
+        first_parallel, state_parallel = parallel.forward_stream(mixture[:, :9])
+        last_parallel, _ = parallel.forward_stream(mixture[:, 9:], state_parallel)
+        torch.testing.assert_close(torch.cat((first_parallel, last_parallel), dim=2),
+                                   parallel(mixture), rtol=0, atol=1e-5)
         torch.testing.assert_close(doubled(mixture), base + 2*(expected-base), rtol=0, atol=1e-6)
         first_double, double_state = doubled.forward_stream(mixture[:, :9])
         last_double, _ = doubled.forward_stream(mixture[:, 9:], double_state)
