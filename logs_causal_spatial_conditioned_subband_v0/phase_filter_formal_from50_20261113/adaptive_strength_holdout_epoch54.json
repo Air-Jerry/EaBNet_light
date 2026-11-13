@@ -1,0 +1,23 @@
+{
+  "checkpoint_sha256": "1e19103b332bf9a82314da2c76b62cbd628dca87d1243ff3cf9f6457f0d2d008",
+  "calibration_records": 64,
+  "holdout_records": 64,
+  "comparison_audio_used": false,
+  "calibration": {
+    "original": 3.2456451393663883,
+    "double": 3.249017756432295,
+    "coherence": 3.2465469501912594,
+    "inverse_coherence": 3.2493713814765215,
+    "coherence_squared": 3.245764007791877,
+    "coherence_sqrt": 3.249945666640997
+  },
+  "holdout": {
+    "original": 3.2096475027501583,
+    "double": 3.2201030887663364,
+    "coherence": 3.2180013302713633,
+    "inverse_coherence": 3.2170309145003557,
+    "coherence_squared": 3.2163075525313616,
+    "coherence_sqrt": 3.2192407958209515
+  },
+  "selected": "coherence_sqrt"
+}

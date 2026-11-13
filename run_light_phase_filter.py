@@ -14,7 +14,7 @@ import torch
 
 from audit_light_final import require_protocol, sha
 from experiments.scaled_recurrent_entry import same_tensors
-from light_candidate_runtime import PHASE_FILTER_CANDIDATE, read_candidate_checkpoint
+from light_candidate_runtime import DOUBLE_PHASE_FILTER_CANDIDATE, PHASE_FILTER_CANDIDATE, read_candidate_checkpoint
 from train_light_causal_phase_filter import initialize
 
 
@@ -33,11 +33,13 @@ def main():
         parser.add_argument(f'--{name}', type=Path, required=True)
     parser.add_argument('--epochs', type=int, default=2)
     parser.add_argument('--resume', action='store_true')
+    parser.add_argument('--double-filter', action='store_true')
     args = parser.parse_args()
     torch.set_num_threads(2)
     if args.epochs <= 0 or sha('evaluate_light.py') != EVALUATOR_SHA256:
         raise ValueError('Use the original evaluator and request at least one epoch')
     root = args.output.resolve()
+    candidate = DOUBLE_PHASE_FILTER_CANDIDATE if args.double_filter else PHASE_FILTER_CANDIDATE
     if not args.resume:
         root.mkdir()
     status = root/'run_status.json'
@@ -63,7 +65,7 @@ def main():
     if previous is None:
         results = []
         record()
-        initialize(args.source_path, checkpoints, root/'best', root/'logs')
+        initialize(args.source_path, checkpoints, root/'best', root/'logs', double_filter=args.double_filter)
         selection.mkdir()
     else:
         results = previous['results']
@@ -77,14 +79,15 @@ def main():
                 or scored['mean']['enhanced']['pesq'] != last['wb_pesq']
                 or sha(checkpoints/f'model_epoch_{epoch}.pt') != last['checkpoint_sha256']):
             raise ValueError('The latest checkpoint must match the last completed and scored epoch')
-    latest, _ = read_candidate_checkpoint(checkpoints/'checkpoint_latest.pt', PHASE_FILTER_CANDIDATE)
+    latest, _ = read_candidate_checkpoint(checkpoints/'checkpoint_latest.pt', candidate)
     if previous is not None:
-        scored_state, _ = read_candidate_checkpoint(checkpoints/f'model_epoch_{epoch}.pt', PHASE_FILTER_CANDIDATE)
+        scored_state, _ = read_candidate_checkpoint(checkpoints/f'model_epoch_{epoch}.pt', candidate)
         if not same_tensors(latest, scored_state):
             raise ValueError('Saved model, Adam, or training state differs from the scored checkpoint')
     origin = latest['args']['phase_filter_source_epoch']
     start = latest['epoch'] + 1
-    if latest['args']['phase_filter_source_sha256'] != source_digest or (previous and start != previous['epoch']+1):
+    source_key = 'double_filter_source_sha256' if args.double_filter else 'phase_filter_source_sha256'
+    if latest['args'][source_key] != source_digest or (previous and start != previous['epoch']+1):
         raise ValueError('Phase-filter checkpoint provenance differs from the requested run')
     settings.update(results=results, resumed_from_epoch=start-1)
     record()
@@ -94,7 +97,9 @@ def main():
         comparison = Path(source['args']['log_dir'])
         if not comparison.is_absolute():
             comparison = args.source_path.resolve().parent.parent/comparison
-        baseline = json.loads((comparison/f'pesq_selection/model_epoch_{origin}/summary.json').read_text())
+        if args.double_filter:
+            comparison = args.source_path.resolve().parent.parent
+        baseline = json.loads((comparison/f"pesq_selection/model_epoch_{source['epoch']}/summary.json").read_text())
         for epoch in range(start,start+args.epochs):
             settings.update(status='waiting_for_idle_gpus',epoch=epoch)
             record()
@@ -131,7 +136,7 @@ def main():
                 found = re.findall(r'\[PERF\]\['+phase+r'\] samples\(local/global\)=\d+/(\d+).*?non_finite_skips\(local\)=(\d+)',text)
                 assert found and found[-1] == (str(count),'0'), (phase, found)
             checkpoint = checkpoints/f'model_epoch_{epoch}.pt'
-            state, _ = read_candidate_checkpoint(checkpoint, PHASE_FILTER_CANDIDATE)
+            state, _ = read_candidate_checkpoint(checkpoint, candidate)
             adam = state['optimizer_state_dict']
             groups = [set(group['params']) for group in adam['param_groups']]
             assert len(adam['state'])==241 and len(groups)==2 and not (groups[0] & groups[1])
@@ -146,7 +151,7 @@ def main():
             report_path=folder/'summary.json'
             with (folder/'evaluation.log').open('x') as log:
                 subprocess.run([sys.executable,'-u','evaluate_light.py','--checkpoint',str(checkpoint),
-                    '--candidate',PHASE_FILTER_CANDIDATE,'--val-dir',val_dir,'--device','cuda',
+                    '--candidate',candidate,'--val-dir',val_dir,'--device','cuda',
                     '--max-samples','0','--save-samples','no','--match-estimate-level','no',
                     '--estimate-dir',str(folder),'--save-json',str(report_path)],
                     env=dict(env,CUDA_VISIBLE_DEVICES='0'),stdout=log,stderr=subprocess.STDOUT,

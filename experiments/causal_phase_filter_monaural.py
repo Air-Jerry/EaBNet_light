@@ -9,6 +9,7 @@ from experiments.causal_recurrent_adapt_monaural import CausalRecurrentAdaptMona
 
 class CausalPhaseFilterMonaural(CausalRecurrentAdaptMonaural):
     history_frames = 2
+    coefficient_limit = .25
 
     def __init__(self, wide_source):
         super().__init__(wide_source)
@@ -77,7 +78,7 @@ class CausalPhaseFilterMonaural(CausalRecurrentAdaptMonaural):
                                   cross_imag.flatten(1, 2)), dim=1)
         enabled = self.training and inpt.device.type == 'cuda'
         with torch.autocast(inpt.device.type, dtype=torch.bfloat16, enabled=enabled):
-            coefficients = .25 * self.phase_filter(features).float().tanh()
+            coefficients = self.coefficient_limit * self.phase_filter(features).float().tanh()
         cr, ci = coefficients.reshape(batch, 3, 2, frames, bins).unbind(dim=2)
         er = torch.cat((estimate[:, 0:1], past_real[:, 1]), dim=1)
         ei = torch.cat((estimate[:, 1:2], past_imag[:, 1]), dim=1)
@@ -87,3 +88,7 @@ class CausalPhaseFilterMonaural(CausalRecurrentAdaptMonaural):
             tail = extended[:, :, :, -self.history_frames:].reshape(shape)
             cache = dict(speech=updated, phase_history=tail.detach().clone())
         return estimate + correction, cache
+
+
+class CausalDoublePhaseFilterMonaural(CausalPhaseFilterMonaural):
+    coefficient_limit = .5

@@ -11,7 +11,7 @@ import torch
 import train_light_causal_recurrent_adapt as entry
 from experiments.bark_phase_pesq_regressor import BarkPhasePESQRegressor, bark_phase_score_features
 from light_candidate_runtime import (
-    PHASE_FILTER_CANDIDATE, RECURRENT_ADAPT_CANDIDATE, build_model_candidate,
+    DOUBLE_PHASE_FILTER_CANDIDATE, PHASE_FILTER_CANDIDATE, RECURRENT_ADAPT_CANDIDATE, build_model_candidate,
     candidate_metadata, read_candidate_checkpoint,
 )
 
@@ -32,14 +32,17 @@ def phase_optimizer(parameters, **kwargs):
                              dict(params=parameters[-6:], lr=FILTER_LR)], **kwargs)
 
 
-def initialize(source_path, checkpoint_dir, best_dir, log_dir):
+def initialize(source_path, checkpoint_dir, best_dir, log_dir, double_filter=False):
     source_path = source_path.resolve()
-    source, _ = read_candidate_checkpoint(source_path, RECURRENT_ADAPT_CANDIDATE)
+    source, _ = read_candidate_checkpoint(source_path,
+        PHASE_FILTER_CANDIDATE if double_filter else RECURRENT_ADAPT_CANDIDATE)
     saved = source['args']
     epoch = int(source['epoch'])
     if epoch < 1 or source.get('diagnostic_only') or saved.get('diagnostic_only'):
         raise ValueError('Use a completed formal recurrent checkpoint')
     report_path = Path(saved['log_dir']).expanduser()
+    if double_filter:
+        report_path = source_path.parent.parent
     if not report_path.is_absolute():
         report_path = source_path.parent.parent/report_path
     from audit_light_final import require_protocol
@@ -58,6 +61,20 @@ def initialize(source_path, checkpoint_dir, best_dir, log_dir):
     entry.fullband.causal.quality._validate_output_paths(settings, source_path)
     if any(p.exists() for p in outputs.values()):
         raise FileExistsError('Use new output directories for the phase-filter transition')
+    if double_filter:
+        adam = source['optimizer_state_dict']
+        base, added = (set(group['params']) for group in adam['param_groups'])
+        assert len(base & adam['state'].keys()) == 235 and len(added) == 6
+        assert not (base & added) and set(adam['state']) <= base | added
+        assert {int(adam['state'][k]['step']) for k in base & adam['state'].keys()} == {epoch*6700}
+        assert {int(adam['state'][k]['step']) for k in added} == {(epoch-saved['phase_filter_source_epoch'])*6700}
+        source['args'] = dict(saved, **candidate_metadata(DOUBLE_PHASE_FILTER_CANDIDATE))
+        source['args'].update({k:str(v) for k,v in outputs.items()}, double_filter_source_sha256=source_digest,
+                              phase_filter_training_entry_sha256=sha(__file__))
+        for path in outputs.values():
+            path.mkdir(parents=True)
+        trainer.save_checkpoint(outputs['checkpoint_dir']/'checkpoint_latest.pt',source)
+        return
     torch.manual_seed(saved['seed'])
     model = build_model_candidate(PHASE_FILTER_CANDIDATE)
     model.load_warm(source['model_state_dict'])
@@ -83,7 +100,9 @@ def initialize(source_path, checkpoint_dir, best_dir, log_dir):
 
 
 def train(checkpoint_dir, num_epochs, regressor, scaling_helper):
-    latest, _ = read_candidate_checkpoint(checkpoint_dir/'checkpoint_latest.pt', PHASE_FILTER_CANDIDATE)
+    latest, candidate = read_candidate_checkpoint(checkpoint_dir/'checkpoint_latest.pt')
+    if candidate not in (PHASE_FILTER_CANDIDATE, DOUBLE_PHASE_FILTER_CANDIDATE):
+        raise ValueError('Expected a phase-filter checkpoint')
     saved = latest['args']
     if Path(saved['checkpoint_dir']).resolve() != checkpoint_dir.resolve():
         raise ValueError('Checkpoint does not belong to this run directory')
@@ -150,6 +169,7 @@ if __name__ == '__main__':
     prepare = commands.add_parser('initialize')
     for name in ('source-path','checkpoint-dir','best-dir','log-dir'):
         prepare.add_argument(f'--{name}', type=Path, required=True)
+    prepare.add_argument('--double-filter', action='store_true')
     resume = commands.add_parser('train')
     for name in ('checkpoint-dir','regressor','scaling-helper'):
         resume.add_argument(f'--{name}', type=Path, required=True)

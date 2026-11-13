@@ -1,0 +1,138 @@
+{
+  "52": {
+    "groups": {
+      "all": {
+        "all": {
+          "samples": 600,
+          "control_pesq": 3.383618225256602,
+          "variant_pesq": 3.386283057332039,
+          "delta": 0.00266483207543691,
+          "improved": 336,
+          "worse": 264
+        }
+      },
+      "requested_snr_db": {
+        "2.0": {
+          "samples": 150,
+          "control_pesq": 3.5808908994992574,
+          "variant_pesq": 3.5825070651372273,
+          "delta": 0.0016161656379699706,
+          "improved": 83,
+          "worse": 67
+        },
+        "-5.0": {
+          "samples": 140,
+          "control_pesq": 3.102101207630975,
+          "variant_pesq": 3.1036342126982555,
+          "delta": 0.0015330050672803606,
+          "improved": 89,
+          "worse": 51
+        },
+        "-2.0": {
+          "samples": 161,
+          "control_pesq": 3.2464835273553128,
+          "variant_pesq": 3.252880753937715,
+          "delta": 0.006397226582402768,
+          "improved": 94,
+          "worse": 67
+        },
+        "0.0": {
+          "samples": 149,
+          "control_pesq": 3.5977133104465153,
+          "variant_pesq": 3.598464318569875,
+          "delta": 0.0007510081233594242,
+          "improved": 70,
+          "worse": 79
+        }
+      },
+      "free_field_1khz_geometry": {
+        "below_0.8": {
+          "samples": 409,
+          "control_pesq": 3.8301179073842055,
+          "variant_pesq": 3.8294925060132314,
+          "delta": -0.0006254013709742166,
+          "improved": 196,
+          "worse": 213
+        },
+        "at_least_0.95": {
+          "samples": 103,
+          "control_pesq": 1.8586688030113294,
+          "variant_pesq": 1.87346411561503,
+          "delta": 0.014795312603700508,
+          "improved": 87,
+          "worse": 16
+        },
+        "0.8_to_0.95": {
+          "samples": 88,
+          "control_pesq": 3.093293458223343,
+          "variant_pesq": 3.0970522219484504,
+          "delta": 0.0037587637251073665,
+          "improved": 53,
+          "worse": 35
+        }
+      },
+      "geometry_and_snr": {
+        "below_0.8:snr_gt_minus2": {
+          "samples": 208,
+          "control_pesq": 3.9612926307779093,
+          "variant_pesq": 3.9613183530477376,
+          "delta": 2.5722269828502947e-05,
+          "improved": 94,
+          "worse": 114
+        },
+        "at_least_0.95:snr_le_minus2": {
+          "samples": 61,
+          "control_pesq": 1.6889713943981735,
+          "variant_pesq": 1.709291145449779,
+          "delta": 0.020319751051605724,
+          "improved": 52,
+          "worse": 9
+        },
+        "at_least_0.95:snr_gt_minus2": {
+          "samples": 42,
+          "control_pesq": 2.1051340869494846,
+          "variant_pesq": 2.111905810378847,
+          "delta": 0.0067717234293619795,
+          "improved": 35,
+          "worse": 7
+        },
+        "below_0.8:snr_le_minus2": {
+          "samples": 201,
+          "control_pesq": 3.6943749100414673,
+          "variant_pesq": 3.693075709082001,
+          "delta": -0.0012992009594665831,
+          "improved": 102,
+          "worse": 99
+        },
+        "0.8_to_0.95:snr_gt_minus2": {
+          "samples": 49,
+          "control_pesq": 3.282212639341549,
+          "variant_pesq": 3.2835302401562125,
+          "delta": 0.001317600814663634,
+          "improved": 24,
+          "worse": 25
+        },
+        "0.8_to_0.95:snr_le_minus2": {
+          "samples": 39,
+          "control_pesq": 2.855933461433802,
+          "variant_pesq": 2.862759327277159,
+          "delta": 0.006825865843357184,
+          "improved": 29,
+          "worse": 10
+        }
+      }
+    },
+    "checkpoint_sha256": "60bc24fde641536b3beb1ea715711948153d3b6bff3d11937981693477584b7b",
+    "paired_bootstrap_interval": [
+      -0.0008521797259648641,
+      0.006479860146840414
+    ],
+    "metric_delta": {
+      "pesq": 0.002664832075436774,
+      "stoi": -0.00021109127467344724,
+      "estoi": -0.0003028391528510088,
+      "si_snr_db": -0.11726021743940507,
+      "sdr_db": -0.17360401587756513
+    }
+  }
+}

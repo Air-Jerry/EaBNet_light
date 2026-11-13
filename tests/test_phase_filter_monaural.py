@@ -1,7 +1,9 @@
 import torch
 
 from experiments.causal_phase_filter_monaural import CausalPhaseFilterMonaural
-from light_candidate_runtime import RECURRENT_ADAPT_CANDIDATE, WIDE_CONDITIONED_CANDIDATE, build_model_candidate
+from light_candidate_runtime import (
+    DOUBLE_PHASE_FILTER_CANDIDATE, RECURRENT_ADAPT_CANDIDATE, WIDE_CONDITIONED_CANDIDATE, build_model_candidate,
+)
 
 
 def test_phase_filter_preserves_warm_start_and_streams_after_training():
@@ -29,6 +31,14 @@ def test_phase_filter_preserves_warm_start_and_streams_after_training():
     with torch.inference_mode():
         expected = model(mixture)
         assert not torch.equal(expected, initial)
+        doubled = build_model_candidate(DOUBLE_PHASE_FILTER_CANDIDATE).eval()
+        doubled.load_state_dict(model.state_dict())
+        base = source(mixture)
+        torch.testing.assert_close(doubled(mixture), base + 2*(expected-base), rtol=0, atol=1e-6)
+        first_double, double_state = doubled.forward_stream(mixture[:, :9])
+        last_double, _ = doubled.forward_stream(mixture[:, 9:], double_state)
+        torch.testing.assert_close(torch.cat((first_double, last_double), dim=2),
+                                   doubled(mixture), rtol=0, atol=1e-5)
         changed = mixture.clone()
         changed[:, 9:] *= 10
         torch.testing.assert_close(model(changed)[:, :, :9], expected[:, :, :9], rtol=0, atol=1e-6)

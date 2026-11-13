@@ -50,16 +50,20 @@ GLOBAL_SPECTRAL_BEAM_CANDIDATE = "causal_global_spectral_beamformer_v1"
 DECODER_MONAURAL_CANDIDATE = "causal_decoder_monaural_spectral_v1"
 RECURRENT_ADAPT_CANDIDATE = "causal_recurrent_adapt_monaural_v1"
 PHASE_FILTER_CANDIDATE = "causal_phase_filter_monaural_v1"
+DOUBLE_PHASE_FILTER_CANDIDATE = "causal_double_phase_filter_monaural_v1"
 IDENTITY_FIELDS = ("sample_rate", "n_fft", "hop_length", "win_length", "power", "target_ref_mic",
                    "channels", "num_mics", "embed_dim", "cd1", "dfsmn_layers", "dfsmn_memory_size",
                    "norm_type", "bf_type", "topo_type", "is_causal")
 
 
 def all_model_candidates():
-    return (*all_reference_candidates(), QUALITY_CANDIDATE, SPATIAL_CANDIDATE, CAUSAL_CANDIDATE, FAST_CANDIDATE, GLOBAL_CANDIDATE, RECURRENT_CANDIDATE, RECURRENT65_CANDIDATE, TCN_CANDIDATE, FOURIER_CANDIDATE, FREQUENCY_ATTENTION_CANDIDATE, POOLED_FREQUENCY_ATTENTION_CANDIDATE, RETENTION_CANDIDATE, FULLBAND_TCN_CANDIDATE, FULLBAND_SPATIAL_CANDIDATE, SUBBAND_GRU_CANDIDATE, CONDITIONED_SUBBAND_CANDIDATE, FROZEN_CONDITIONED_CANDIDATE, SPATIAL_CONDITIONED_CANDIDATE, GATED_MULTICHANNEL_CANDIDATE, FULLCHANNEL_DUALPATH_CANDIDATE, FOLDED_RETENTION_CANDIDATE, JOINT_CONDITIONED_CANDIDATE, JOINT_FIXED_CONDITIONED_CANDIDATE, WIDE_CONDITIONED_CANDIDATE, COVARIANCE_CANDIDATE, MONAURAL_SPECTRAL_CANDIDATE, GLOBAL_SPECTRAL_CANDIDATE, GLOBAL_SPECTRAL_BEAM_CANDIDATE, DECODER_MONAURAL_CANDIDATE, RECURRENT_ADAPT_CANDIDATE, PHASE_FILTER_CANDIDATE)
+    return (*all_reference_candidates(), QUALITY_CANDIDATE, SPATIAL_CANDIDATE, CAUSAL_CANDIDATE, FAST_CANDIDATE, GLOBAL_CANDIDATE, RECURRENT_CANDIDATE, RECURRENT65_CANDIDATE, TCN_CANDIDATE, FOURIER_CANDIDATE, FREQUENCY_ATTENTION_CANDIDATE, POOLED_FREQUENCY_ATTENTION_CANDIDATE, RETENTION_CANDIDATE, FULLBAND_TCN_CANDIDATE, FULLBAND_SPATIAL_CANDIDATE, SUBBAND_GRU_CANDIDATE, CONDITIONED_SUBBAND_CANDIDATE, FROZEN_CONDITIONED_CANDIDATE, SPATIAL_CONDITIONED_CANDIDATE, GATED_MULTICHANNEL_CANDIDATE, FULLCHANNEL_DUALPATH_CANDIDATE, FOLDED_RETENTION_CANDIDATE, JOINT_CONDITIONED_CANDIDATE, JOINT_FIXED_CONDITIONED_CANDIDATE, WIDE_CONDITIONED_CANDIDATE, COVARIANCE_CANDIDATE, MONAURAL_SPECTRAL_CANDIDATE, GLOBAL_SPECTRAL_CANDIDATE, GLOBAL_SPECTRAL_BEAM_CANDIDATE, DECODER_MONAURAL_CANDIDATE, RECURRENT_ADAPT_CANDIDATE, PHASE_FILTER_CANDIDATE, DOUBLE_PHASE_FILTER_CANDIDATE)
 
 
 def build_model_candidate(candidate_id, **model_kwargs):
+    if candidate_id == DOUBLE_PHASE_FILTER_CANDIDATE:
+        from experiments.causal_phase_filter_monaural import CausalDoublePhaseFilterMonaural
+        return CausalDoublePhaseFilterMonaural(build_model_candidate(WIDE_CONDITIONED_CANDIDATE, **model_kwargs))
     if candidate_id == PHASE_FILTER_CANDIDATE:
         from experiments.causal_phase_filter_monaural import CausalPhaseFilterMonaural
         return CausalPhaseFilterMonaural(build_model_candidate(WIDE_CONDITIONED_CANDIDATE, **model_kwargs))
@@ -167,6 +171,14 @@ def build_model_candidate(candidate_id, **model_kwargs):
 
 
 def candidate_metadata(candidate_id):
+    if candidate_id == DOUBLE_PHASE_FILTER_CANDIDATE:
+        metadata = candidate_metadata(PHASE_FILTER_CANDIDATE)
+        metadata.update(structure_candidate=candidate_id, candidate_schema=33)
+        evidence = metadata['candidate_evidence']
+        evidence.update(candidate_id=candidate_id, warm_start_candidate=PHASE_FILTER_CANDIDATE,
+                        initialization='Preserve trained phase-filter model and both Adam groups')
+        evidence['model_config']['phase_filter_coefficient_limit'] = .5
+        return metadata
     if candidate_id == PHASE_FILTER_CANDIDATE:
         metadata = candidate_metadata(RECURRENT_ADAPT_CANDIDATE)
         files = (*metadata['candidate_implementation_sha256'], 'experiments/causal_phase_filter_monaural.py')
@@ -694,7 +706,13 @@ def read_candidate_checkpoint(path, expected_candidate=None, expected_args=None)
     if expected_candidate is not None and candidate_id != expected_candidate:
         raise ValueError(f"Candidate mismatch: checkpoint={candidate_id}, requested={expected_candidate}")
     for name, value in candidate_metadata(candidate_id).items():
-        if saved.get(name) != value:
+        actual = saved.get(name)
+        if candidate_id == PHASE_FILTER_CANDIDATE and name == "candidate_implementation_sha256":
+            legacy = dict(value)
+            legacy['experiments/causal_phase_filter_monaural.py'] = 'd6d4b92aee7f9ea69c7a7d1bfd7a5e0dc1801a088daa7ce2f471cf1de4f25c89'
+            if actual == legacy:
+                continue
+        if actual != value:
             raise ValueError(f"Candidate checkpoint {name} differs from the current implementation")
     if expected_args is not None:
         for name in IDENTITY_FIELDS:

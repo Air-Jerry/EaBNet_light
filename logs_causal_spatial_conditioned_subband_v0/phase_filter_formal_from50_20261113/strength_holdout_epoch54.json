@@ -1,0 +1,43 @@
+{
+  "samples": 64,
+  "checkpoint_sha256": "1e19103b332bf9a82314da2c76b62cbd628dca87d1243ff3cf9f6457f0d2d008",
+  "comparison_audio_used": false,
+  "results": {
+    "0.0": {
+      "mean": 3.19328092969954,
+      "delta_from_checkpoint": -0.016361480578780174,
+      "improved": 1,
+      "worse": 63
+    },
+    "0.5": {
+      "mean": 3.2022590450942516,
+      "delta_from_checkpoint": -0.00738336518406868,
+      "improved": 3,
+      "worse": 61
+    },
+    "1.0": {
+      "mean": 3.2096424102783203,
+      "delta_from_checkpoint": 0.0,
+      "improved": 0,
+      "worse": 0
+    },
+    "2.0": {
+      "mean": 3.2201016321778297,
+      "delta_from_checkpoint": 0.01045922189950943,
+      "improved": 52,
+      "worse": 12
+    },
+    "3.0": {
+      "mean": 3.2199248746037483,
+      "delta_from_checkpoint": 0.010282464325428009,
+      "improved": 44,
+      "worse": 20
+    },
+    "4.0": {
+      "mean": 3.212084935978055,
+      "delta_from_checkpoint": 0.002442525699734688,
+      "improved": 38,
+      "worse": 26
+    }
+  }
+}
