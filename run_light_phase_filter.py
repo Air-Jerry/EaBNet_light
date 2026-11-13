@@ -34,7 +34,10 @@ def main():
     parser.add_argument('--epochs', type=int, default=2)
     parser.add_argument('--resume', action='store_true')
     parser.add_argument('--double-filter', action='store_true')
+    parser.add_argument('--refit-score', action='store_true')
     args = parser.parse_args()
+    if args.refit_score and not args.double_filter:
+        parser.error('--refit-score requires --double-filter')
     torch.set_num_threads(2)
     if args.epochs <= 0 or sha('evaluate_light.py') != EVALUATOR_SHA256:
         raise ValueError('Use the original evaluator and request at least one epoch')
@@ -65,7 +68,8 @@ def main():
     if previous is None:
         results = []
         record()
-        initialize(args.source_path, checkpoints, root/'best', root/'logs', double_filter=args.double_filter)
+        initialize(args.source_path, checkpoints, root/'best', root/'logs', double_filter=args.double_filter,
+                   refit_regressor=args.regressor if args.refit_score else None)
         selection.mkdir()
     else:
         results = previous['results']

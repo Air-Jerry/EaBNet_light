@@ -32,7 +32,7 @@ def phase_optimizer(parameters, **kwargs):
                              dict(params=parameters[-6:], lr=FILTER_LR)], **kwargs)
 
 
-def initialize(source_path, checkpoint_dir, best_dir, log_dir, double_filter=False):
+def initialize(source_path, checkpoint_dir, best_dir, log_dir, double_filter=False, refit_regressor=None):
     source_path = source_path.resolve()
     source, _ = read_candidate_checkpoint(source_path,
         PHASE_FILTER_CANDIDATE if double_filter else RECURRENT_ADAPT_CANDIDATE)
@@ -71,6 +71,13 @@ def initialize(source_path, checkpoint_dir, best_dir, log_dir, double_filter=Fal
         source['args'] = dict(saved, **candidate_metadata(DOUBLE_PHASE_FILTER_CANDIDATE))
         source['args'].update({k:str(v) for k,v in outputs.items()}, double_filter_source_sha256=source_digest,
                               phase_filter_training_entry_sha256=sha(__file__))
+        if refit_regressor is not None:
+            score = torch.load(refit_regressor, map_location='cpu', weights_only=True)
+            if not score['training_only'] or score['source_checkpoint_sha256'] != source_digest:
+                raise ValueError('The refitted training score must come from the formal source checkpoint')
+            source['args'].update(learned_pesq_regressor_sha256=sha(refit_regressor),
+                                  learned_pesq_slope=float(score['slope']),
+                                  phase_filter_refit_score=True)
         for path in outputs.values():
             path.mkdir(parents=True)
         trainer.save_checkpoint(outputs['checkpoint_dir']/'checkpoint_latest.pt',source)
@@ -108,7 +115,8 @@ def train(checkpoint_dir, num_epochs, regressor, scaling_helper):
         raise ValueError('Checkpoint does not belong to this run directory')
     if latest.get('diagnostic_only') or saved.get('diagnostic_only') or latest['epoch']+1 != num_epochs:
         raise ValueError('Resume the next epoch from the latest formal checkpoint')
-    if sha(__file__) != saved['phase_filter_training_entry_sha256'] or sha(regressor) != REGRESSOR_SHA256:
+    expected_regressor = saved['learned_pesq_regressor_sha256'] if saved.get('phase_filter_refit_score') else REGRESSOR_SHA256
+    if sha(__file__) != saved['phase_filter_training_entry_sha256'] or sha(regressor) != expected_regressor:
         raise ValueError('Phase-filter training code or score weights differ')
     if sha(ROOT/'experiments/bark_phase_pesq_regressor.py') != saved['learned_pesq_regressor_implementation_sha256']:
         raise ValueError('Training score features differ from the source run')
@@ -121,7 +129,7 @@ def train(checkpoint_dir, num_epochs, regressor, scaling_helper):
     settings = argparse.Namespace(**dict(saved, num_epochs=num_epochs, resume='yes', resume_reset_lr='no'))
     score = torch.load(regressor,map_location='cpu',weights_only=True)
     assert score['training_only'] and float(score['slope']) == saved['learned_pesq_slope']
-    assert saved['learned_pesq_regressor_sha256'] == REGRESSOR_SHA256
+    assert saved['learned_pesq_regressor_sha256'] == expected_regressor
     original_parser, original_adam = entry.parse_args, trainer.Adam
     original_epoch, original_objective = trainer.run_epoch, entry.fullband.FrontendPMSQE
     scaling = runpy.run_path(str(scaling_helper))['backward_loss_scaling']

@@ -1,0 +1,21 @@
+{
+  "status": "complete",
+  "pid": 3305951,
+  "scale": 2.0,
+  "component": "parallel",
+  "scale_selected_on_training_holdout": true,
+  "source_checkpoint_sha256": "1e19103b332bf9a82314da2c76b62cbd628dca87d1243ff3cf9f6457f0d2d008",
+  "baseline_pesq": 3.384049152135849,
+  "candidate_pesq": 3.388728270928065,
+  "comparison_samples": 600,
+  "diagnostic_only": true,
+  "live": false,
+  "metric_deltas": {
+    "pesq": 0.004679118792215942,
+    "stoi": -0.00032108634681482506,
+    "estoi": -0.0005074836022492812,
+    "si_snr_db": -0.1122766837718423,
+    "sdr_db": -0.1649173379907367
+  },
+  "pairs_sha256": "18233928bdcb499f4e65e3b66a1f8c39387675d09f1621ae6ac94881d7444cfb"
+}
