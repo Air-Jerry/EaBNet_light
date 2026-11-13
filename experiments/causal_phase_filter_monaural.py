@@ -101,3 +101,15 @@ class CausalParallelPhaseFilterMonaural(CausalPhaseFilterMonaural):
         power = estimate.square().sum(dim=1, keepdim=True)
         parallel = (estimate * correction).sum(dim=1, keepdim=True) * estimate
         return estimate + correction + parallel / power.clamp_min(1e-8)
+
+
+class CausalBandGainPhaseFilterMonaural(CausalParallelPhaseFilterMonaural):
+    def __init__(self, wide_source):
+        super().__init__(wide_source)
+        frequency = torch.arange(257) * 31.25
+        bass = ((900-frequency)/600).clamp(0,1)
+        mid = ((frequency-450)/450).clamp(0,1) * ((3200-frequency)/1400).clamp(0,1)
+        self.register_buffer('band_gain', 1-.04*bass+.04*mid, persistent=False)
+
+    def refine(self, estimate, correction):
+        return super().refine(estimate, correction) * self.band_gain

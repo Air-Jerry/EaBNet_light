@@ -14,7 +14,7 @@ import torch
 
 from audit_light_final import require_protocol, sha
 from experiments.scaled_recurrent_entry import same_tensors
-from light_candidate_runtime import PARALLEL_PHASE_FILTER_CANDIDATE, DOUBLE_PHASE_FILTER_CANDIDATE, PHASE_FILTER_CANDIDATE, read_candidate_checkpoint
+from light_candidate_runtime import BAND_GAIN_PHASE_FILTER_CANDIDATE, PARALLEL_PHASE_FILTER_CANDIDATE, DOUBLE_PHASE_FILTER_CANDIDATE, PHASE_FILTER_CANDIDATE, read_candidate_checkpoint
 from train_light_causal_phase_filter import initialize
 
 
@@ -36,6 +36,7 @@ def main():
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument('--double-filter', action='store_true')
     mode.add_argument('--parallel-filter', action='store_true')
+    mode.add_argument('--band-gain', action='store_true')
     parser.add_argument('--refit-score', action='store_true')
     args = parser.parse_args()
     if args.refit_score and not args.double_filter:
@@ -44,10 +45,12 @@ def main():
     if args.epochs <= 0 or sha('evaluate_light.py') != EVALUATOR_SHA256:
         raise ValueError('Use the original evaluator and request at least one epoch')
     root = args.output.resolve()
-    transition = args.double_filter or args.parallel_filter
+    transition = args.double_filter or args.parallel_filter or args.band_gain
     candidate = PHASE_FILTER_CANDIDATE
     if transition:
         candidate = PARALLEL_PHASE_FILTER_CANDIDATE if args.parallel_filter else DOUBLE_PHASE_FILTER_CANDIDATE
+    if args.band_gain:
+        candidate = BAND_GAIN_PHASE_FILTER_CANDIDATE
     if not args.resume:
         root.mkdir()
     status = root/'run_status.json'
@@ -74,7 +77,7 @@ def main():
         results = []
         record()
         initialize(args.source_path, checkpoints, root/'best', root/'logs', double_filter=args.double_filter,
-                   refit_regressor=args.regressor if args.refit_score else None, parallel_filter=args.parallel_filter)
+                   refit_regressor=args.regressor if args.refit_score else None, parallel_filter=args.parallel_filter, band_gain=args.band_gain)
         selection.mkdir()
     else:
         results = previous['results']

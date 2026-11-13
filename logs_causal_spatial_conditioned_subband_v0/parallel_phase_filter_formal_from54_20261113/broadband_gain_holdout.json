@@ -1,0 +1,29 @@
+{
+  "checkpoint_sha256": "1e19103b332bf9a82314da2c76b62cbd628dca87d1243ff3cf9f6457f0d2d008",
+  "calibration_records": 64,
+  "holdout_records": 64,
+  "comparison_audio_used": false,
+  "calibration": {
+    "parallel": 3.248281393200159,
+    "bass_cut": 3.263430768623948,
+    "bass_boost": 3.236395440995693,
+    "mid_cut": 3.239841889590025,
+    "mid_boost": 3.259413840249181,
+    "high_cut": 3.2498902063816786,
+    "high_boost": 3.246590794995427,
+    "mid_up_high_down": 3.258011808618903,
+    "bass_down_mid_up": 3.2651060838252306
+  },
+  "holdout": {
+    "parallel": 3.219267463311553,
+    "bass_cut": 3.232247281819582,
+    "bass_boost": 3.1971270237118006,
+    "mid_cut": 3.201352695003152,
+    "mid_boost": 3.2276816684752703,
+    "high_cut": 3.219450004398823,
+    "high_boost": 3.2188070006668568,
+    "mid_up_high_down": 3.225710580125451,
+    "bass_down_mid_up": 3.234070412814617
+  },
+  "selected": "bass_down_mid_up"
+}

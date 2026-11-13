@@ -16,7 +16,7 @@ import torch
 import benchmark_light_causal as benchmark
 import evaluate_light as evaluator
 import evaluate_light_streaming as streaming
-from light_candidate_runtime import PARALLEL_PHASE_FILTER_CANDIDATE, DOUBLE_PHASE_FILTER_CANDIDATE, PHASE_FILTER_CANDIDATE, read_candidate_checkpoint
+from light_candidate_runtime import BAND_GAIN_PHASE_FILTER_CANDIDATE, PARALLEL_PHASE_FILTER_CANDIDATE, DOUBLE_PHASE_FILTER_CANDIDATE, PHASE_FILTER_CANDIDATE, read_candidate_checkpoint
 
 
 def sha(path):
@@ -74,7 +74,7 @@ def validate_training(state, report, timing, checkpoint_sha):
     if not math.isfinite(seconds) or not 0 < seconds <= 3600:
         raise ValueError('Complete training epoch exceeded one hour')
     optimizer = state['optimizer_state_dict']['state']
-    if state.get('args', {}).get('structure_candidate') in (PHASE_FILTER_CANDIDATE, DOUBLE_PHASE_FILTER_CANDIDATE, PARALLEL_PHASE_FILTER_CANDIDATE):
+    if state.get('args', {}).get('structure_candidate') in (PHASE_FILTER_CANDIDATE, DOUBLE_PHASE_FILTER_CANDIDATE, PARALLEL_PHASE_FILTER_CANDIDATE, BAND_GAIN_PHASE_FILTER_CANDIDATE):
         groups = state['optimizer_state_dict']['param_groups']
         source_epoch = state['args']['phase_filter_source_epoch']
         base, added = map(lambda group: set(group['params']), groups)

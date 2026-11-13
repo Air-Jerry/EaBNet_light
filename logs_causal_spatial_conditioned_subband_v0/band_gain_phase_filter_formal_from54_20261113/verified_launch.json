@@ -1,0 +1,13 @@
+{
+  "status": "training",
+  "pid": 3596073,
+  "source_checkpoint_sha256": "1e19103b332bf9a82314da2c76b62cbd628dca87d1243ff3cf9f6457f0d2d008",
+  "results": [],
+  "resumed_from_epoch": 54,
+  "epoch": 55,
+  "started_unix": 1794572403.890655,
+  "launcher_pid": 3596101,
+  "launcher_cookie": "252053434",
+  "two_workers_resumed": true,
+  "candidate": "causal_band_gain_phase_filter_monaural_v1"
+}
